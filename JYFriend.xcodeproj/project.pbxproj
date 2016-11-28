@@ -1,0 +1,644 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		58EBD024B4F3FC6F743B661D /* libPods-JYFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */; };
+		ECCFA0441DEBF0D4000F4E7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0431DEBF0D4000F4E7A /* main.m */; };
+		ECCFA0471DEBF0D4000F4E7A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0461DEBF0D4000F4E7A /* AppDelegate.m */; };
+		ECCFA04F1DEBF0D4000F4E7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECCFA04E1DEBF0D4000F4E7A /* Assets.xcassets */; };
+		ECCFA0521DEBF0D4000F4E7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECCFA0501DEBF0D4000F4E7A /* LaunchScreen.storyboard */; };
+		ECCFA0631DEBF60A000F4E7A /* JYTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0621DEBF60A000F4E7A /* JYTabBarController.m */; };
+		ECCFA06A1DEBF86A000F4E7A /* JYBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0691DEBF86A000F4E7A /* JYBaseViewController.m */; };
+		ECCFA06F1DEBF917000F4E7A /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = ECCFA06E1DEBF917000F4E7A /* config.plist */; };
+		ECCFA0721DEBF975000F4E7A /* JYMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0711DEBF975000F4E7A /* JYMineViewController.m */; };
+		ECCFA0751DEC049D000F4E7A /* JYUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0741DEC049D000F4E7A /* JYUtil.m */; };
+		ECCFA07A1DEC060C000F4E7A /* JYConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0791DEC060C000F4E7A /* JYConfiguration.m */; };
+		ECCFA0801DEC0697000F4E7A /* JYHudManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA07F1DEC0697000F4E7A /* JYHudManager.m */; };
+		ECCFA0881DEC093E000F4E7A /* JYActivateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0871DEC093E000F4E7A /* JYActivateModel.m */; };
+		ECCFA08B1DEC0A8F000F4E7A /* JYUserAccessModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA08A1DEC0A8F000F4E7A /* JYUserAccessModel.m */; };
+		ECCFA08E1DEC0AE7000F4E7A /* JYSystemConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA08D1DEC0AE7000F4E7A /* JYSystemConfig.m */; };
+		ECCFA0911DEC0B0B000F4E7A /* JYSystemConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0901DEC0B0B000F4E7A /* JYSystemConfigModel.m */; };
+		ECCFA0941DEC0C9D000F4E7A /* JYVideoTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0931DEC0C9D000F4E7A /* JYVideoTokenManager.m */; };
+		ECCFA0971DEC0CC9000F4E7A /* JYApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0961DEC0CC9000F4E7A /* JYApplication.m */; };
+		ECCFA09A1DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0991DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.m */; };
+		ECCFA09D1DEC0EC0000F4E7A /* JYApplicationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA09C1DEC0EC0000F4E7A /* JYApplicationManager.m */; };
+		ECCFA0A01DEC0F56000F4E7A /* JYAppSpread.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA09F1DEC0F56000F4E7A /* JYAppSpread.m */; };
+		ECCFA0A31DEC0F81000F4E7A /* JYAppSpreadBannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0A21DEC0F81000F4E7A /* JYAppSpreadBannerModel.m */; };
+		ECCFA0A61DEC11C1000F4E7A /* JYSpreadBannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0A51DEC11C1000F4E7A /* JYSpreadBannerViewController.m */; };
+		ECCFA0AC1DEC182B000F4E7A /* JKDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0A91DEC182B000F4E7A /* JKDBHelper.m */; };
+		ECCFA0AD1DEC182B000F4E7A /* JKDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0AB1DEC182B000F4E7A /* JKDBModel.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4DE2D66049E36091993382B8 /* Pods-JYFriend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYFriend.release.xcconfig"; path = "Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend.release.xcconfig"; sourceTree = "<group>"; };
+		C68BEEC20755E0EF1FE6927C /* Pods-JYFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend.debug.xcconfig"; sourceTree = "<group>"; };
+		DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JYFriend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECCFA03F1DEBF0D4000F4E7A /* JYFriend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JYFriend.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECCFA0431DEBF0D4000F4E7A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		ECCFA0451DEBF0D4000F4E7A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		ECCFA0461DEBF0D4000F4E7A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		ECCFA04E1DEBF0D4000F4E7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ECCFA0511DEBF0D4000F4E7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		ECCFA0531DEBF0D4000F4E7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ECCFA0611DEBF60A000F4E7A /* JYTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYTabBarController.h; sourceTree = "<group>"; };
+		ECCFA0621DEBF60A000F4E7A /* JYTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYTabBarController.m; sourceTree = "<group>"; };
+		ECCFA0681DEBF86A000F4E7A /* JYBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYBaseViewController.h; sourceTree = "<group>"; };
+		ECCFA0691DEBF86A000F4E7A /* JYBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYBaseViewController.m; sourceTree = "<group>"; };
+		ECCFA06B1DEBF888000F4E7A /* JYPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPrefixHeader.pch; sourceTree = "<group>"; };
+		ECCFA06C1DEBF8E3000F4E7A /* JYCommonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYCommonDef.h; sourceTree = "<group>"; };
+		ECCFA06D1DEBF8FF000F4E7A /* JYConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYConfig.h; sourceTree = "<group>"; };
+		ECCFA06E1DEBF917000F4E7A /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
+		ECCFA0701DEBF975000F4E7A /* JYMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMineViewController.h; sourceTree = "<group>"; };
+		ECCFA0711DEBF975000F4E7A /* JYMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMineViewController.m; sourceTree = "<group>"; };
+		ECCFA0731DEC049D000F4E7A /* JYUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUtil.h; sourceTree = "<group>"; };
+		ECCFA0741DEC049D000F4E7A /* JYUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYUtil.m; sourceTree = "<group>"; };
+		ECCFA0771DEC04D8000F4E7A /* JYExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYExtensions.h; sourceTree = "<group>"; };
+		ECCFA0781DEC060C000F4E7A /* JYConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYConfiguration.h; sourceTree = "<group>"; };
+		ECCFA0791DEC060C000F4E7A /* JYConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYConfiguration.m; sourceTree = "<group>"; };
+		ECCFA07E1DEC0697000F4E7A /* JYHudManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYHudManager.h; sourceTree = "<group>"; };
+		ECCFA07F1DEC0697000F4E7A /* JYHudManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYHudManager.m; sourceTree = "<group>"; };
+		ECCFA0861DEC093E000F4E7A /* JYActivateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYActivateModel.h; sourceTree = "<group>"; };
+		ECCFA0871DEC093E000F4E7A /* JYActivateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYActivateModel.m; sourceTree = "<group>"; };
+		ECCFA0891DEC0A8F000F4E7A /* JYUserAccessModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUserAccessModel.h; sourceTree = "<group>"; };
+		ECCFA08A1DEC0A8F000F4E7A /* JYUserAccessModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYUserAccessModel.m; sourceTree = "<group>"; };
+		ECCFA08C1DEC0AE7000F4E7A /* JYSystemConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSystemConfig.h; sourceTree = "<group>"; };
+		ECCFA08D1DEC0AE7000F4E7A /* JYSystemConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSystemConfig.m; sourceTree = "<group>"; };
+		ECCFA08F1DEC0B0B000F4E7A /* JYSystemConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSystemConfigModel.h; sourceTree = "<group>"; };
+		ECCFA0901DEC0B0B000F4E7A /* JYSystemConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSystemConfigModel.m; sourceTree = "<group>"; };
+		ECCFA0921DEC0C9D000F4E7A /* JYVideoTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYVideoTokenManager.h; sourceTree = "<group>"; };
+		ECCFA0931DEC0C9D000F4E7A /* JYVideoTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYVideoTokenManager.m; sourceTree = "<group>"; };
+		ECCFA0951DEC0CC9000F4E7A /* JYApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYApplication.h; sourceTree = "<group>"; };
+		ECCFA0961DEC0CC9000F4E7A /* JYApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYApplication.m; sourceTree = "<group>"; };
+		ECCFA0981DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PropertyAccessInspecting.h"; sourceTree = "<group>"; };
+		ECCFA0991DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PropertyAccessInspecting.m"; sourceTree = "<group>"; };
+		ECCFA09B1DEC0EC0000F4E7A /* JYApplicationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYApplicationManager.h; sourceTree = "<group>"; };
+		ECCFA09C1DEC0EC0000F4E7A /* JYApplicationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYApplicationManager.m; sourceTree = "<group>"; };
+		ECCFA09E1DEC0F56000F4E7A /* JYAppSpread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYAppSpread.h; sourceTree = "<group>"; };
+		ECCFA09F1DEC0F56000F4E7A /* JYAppSpread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYAppSpread.m; sourceTree = "<group>"; };
+		ECCFA0A11DEC0F81000F4E7A /* JYAppSpreadBannerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYAppSpreadBannerModel.h; sourceTree = "<group>"; };
+		ECCFA0A21DEC0F81000F4E7A /* JYAppSpreadBannerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYAppSpreadBannerModel.m; sourceTree = "<group>"; };
+		ECCFA0A41DEC11C1000F4E7A /* JYSpreadBannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSpreadBannerViewController.h; sourceTree = "<group>"; };
+		ECCFA0A51DEC11C1000F4E7A /* JYSpreadBannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSpreadBannerViewController.m; sourceTree = "<group>"; };
+		ECCFA0A81DEC182B000F4E7A /* JKDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKDBHelper.h; sourceTree = "<group>"; };
+		ECCFA0A91DEC182B000F4E7A /* JKDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKDBHelper.m; sourceTree = "<group>"; };
+		ECCFA0AA1DEC182B000F4E7A /* JKDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKDBModel.h; sourceTree = "<group>"; };
+		ECCFA0AB1DEC182B000F4E7A /* JKDBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKDBModel.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ECCFA03C1DEBF0D4000F4E7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58EBD024B4F3FC6F743B661D /* libPods-JYFriend.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3776DB255E2EB21A8AEC365F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C137E121D1CD4C8AD6CBB731 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C68BEEC20755E0EF1FE6927C /* Pods-JYFriend.debug.xcconfig */,
+				4DE2D66049E36091993382B8 /* Pods-JYFriend.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		ECCFA0361DEBF0D4000F4E7A = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0411DEBF0D4000F4E7A /* JYFriend */,
+				ECCFA0401DEBF0D4000F4E7A /* Products */,
+				C137E121D1CD4C8AD6CBB731 /* Pods */,
+				3776DB255E2EB21A8AEC365F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		ECCFA0401DEBF0D4000F4E7A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA03F1DEBF0D4000F4E7A /* JYFriend.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ECCFA0411DEBF0D4000F4E7A /* JYFriend */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0451DEBF0D4000F4E7A /* AppDelegate.h */,
+				ECCFA0461DEBF0D4000F4E7A /* AppDelegate.m */,
+				ECCFA04E1DEBF0D4000F4E7A /* Assets.xcassets */,
+				ECCFA0421DEBF0D4000F4E7A /* Supporting Files */,
+				ECCFA05A1DEBF1F3000F4E7A /* Resources */,
+				ECCFA0591DEBF1F3000F4E7A /* Class */,
+			);
+			path = JYFriend;
+			sourceTree = "<group>";
+		};
+		ECCFA0421DEBF0D4000F4E7A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0501DEBF0D4000F4E7A /* LaunchScreen.storyboard */,
+				ECCFA0531DEBF0D4000F4E7A /* Info.plist */,
+				ECCFA0431DEBF0D4000F4E7A /* main.m */,
+				ECCFA06B1DEBF888000F4E7A /* JYPrefixHeader.pch */,
+				ECCFA06C1DEBF8E3000F4E7A /* JYCommonDef.h */,
+				ECCFA06D1DEBF8FF000F4E7A /* JYConfig.h */,
+				ECCFA06E1DEBF917000F4E7A /* config.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ECCFA0591DEBF1F3000F4E7A /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA05D1DEBF5B7000F4E7A /* Vendor */,
+				ECCFA05C1DEBF5B7000F4E7A /* Utils */,
+				ECCFA05B1DEBF5B7000F4E7A /* Base */,
+				ECCFA0641DEBF821000F4E7A /* Mine */,
+			);
+			path = Class;
+			sourceTree = "<group>";
+		};
+		ECCFA05A1DEBF1F3000F4E7A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		ECCFA05B1DEBF5B7000F4E7A /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0601DEBF5E3000F4E7A /* View */,
+				ECCFA05E1DEBF5E3000F4E7A /* Controller */,
+				ECCFA05F1DEBF5E3000F4E7A /* Model */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		ECCFA05C1DEBF5B7000F4E7A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0841DEC08FD000F4E7A /* Ad */,
+				ECCFA0851DEC08FD000F4E7A /* System */,
+				ECCFA0761DEC04BF000F4E7A /* Extensions */,
+				ECCFA0731DEC049D000F4E7A /* JYUtil.h */,
+				ECCFA0741DEC049D000F4E7A /* JYUtil.m */,
+				ECCFA0781DEC060C000F4E7A /* JYConfiguration.h */,
+				ECCFA0791DEC060C000F4E7A /* JYConfiguration.m */,
+				ECCFA07E1DEC0697000F4E7A /* JYHudManager.h */,
+				ECCFA07F1DEC0697000F4E7A /* JYHudManager.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		ECCFA05D1DEBF5B7000F4E7A /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0A71DEC182B000F4E7A /* DBModel */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		ECCFA05E1DEBF5E3000F4E7A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0681DEBF86A000F4E7A /* JYBaseViewController.h */,
+				ECCFA0691DEBF86A000F4E7A /* JYBaseViewController.m */,
+				ECCFA0611DEBF60A000F4E7A /* JYTabBarController.h */,
+				ECCFA0621DEBF60A000F4E7A /* JYTabBarController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		ECCFA05F1DEBF5E3000F4E7A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ECCFA0601DEBF5E3000F4E7A /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ECCFA0641DEBF821000F4E7A /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0651DEBF821000F4E7A /* Controller */,
+				ECCFA0661DEBF821000F4E7A /* Model */,
+				ECCFA0671DEBF821000F4E7A /* View */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		ECCFA0651DEBF821000F4E7A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0701DEBF975000F4E7A /* JYMineViewController.h */,
+				ECCFA0711DEBF975000F4E7A /* JYMineViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		ECCFA0661DEBF821000F4E7A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ECCFA0671DEBF821000F4E7A /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ECCFA0761DEC04BF000F4E7A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0771DEC04D8000F4E7A /* JYExtensions.h */,
+				ECCFA0981DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.h */,
+				ECCFA0991DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		ECCFA0841DEC08FD000F4E7A /* Ad */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA09E1DEC0F56000F4E7A /* JYAppSpread.h */,
+				ECCFA09F1DEC0F56000F4E7A /* JYAppSpread.m */,
+				ECCFA0A11DEC0F81000F4E7A /* JYAppSpreadBannerModel.h */,
+				ECCFA0A21DEC0F81000F4E7A /* JYAppSpreadBannerModel.m */,
+				ECCFA0A41DEC11C1000F4E7A /* JYSpreadBannerViewController.h */,
+				ECCFA0A51DEC11C1000F4E7A /* JYSpreadBannerViewController.m */,
+			);
+			path = Ad;
+			sourceTree = "<group>";
+		};
+		ECCFA0851DEC08FD000F4E7A /* System */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0861DEC093E000F4E7A /* JYActivateModel.h */,
+				ECCFA0871DEC093E000F4E7A /* JYActivateModel.m */,
+				ECCFA0891DEC0A8F000F4E7A /* JYUserAccessModel.h */,
+				ECCFA08A1DEC0A8F000F4E7A /* JYUserAccessModel.m */,
+				ECCFA08C1DEC0AE7000F4E7A /* JYSystemConfig.h */,
+				ECCFA08D1DEC0AE7000F4E7A /* JYSystemConfig.m */,
+				ECCFA08F1DEC0B0B000F4E7A /* JYSystemConfigModel.h */,
+				ECCFA0901DEC0B0B000F4E7A /* JYSystemConfigModel.m */,
+				ECCFA0921DEC0C9D000F4E7A /* JYVideoTokenManager.h */,
+				ECCFA0931DEC0C9D000F4E7A /* JYVideoTokenManager.m */,
+				ECCFA0951DEC0CC9000F4E7A /* JYApplication.h */,
+				ECCFA0961DEC0CC9000F4E7A /* JYApplication.m */,
+				ECCFA09B1DEC0EC0000F4E7A /* JYApplicationManager.h */,
+				ECCFA09C1DEC0EC0000F4E7A /* JYApplicationManager.m */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		ECCFA0A71DEC182B000F4E7A /* DBModel */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0A81DEC182B000F4E7A /* JKDBHelper.h */,
+				ECCFA0A91DEC182B000F4E7A /* JKDBHelper.m */,
+				ECCFA0AA1DEC182B000F4E7A /* JKDBModel.h */,
+				ECCFA0AB1DEC182B000F4E7A /* JKDBModel.m */,
+			);
+			path = DBModel;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ECCFA03E1DEBF0D4000F4E7A /* JYFriend */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ECCFA0561DEBF0D4000F4E7A /* Build configuration list for PBXNativeTarget "JYFriend" */;
+			buildPhases = (
+				80B835FA6FB0ABCB6E5A19DA /* [CP] Check Pods Manifest.lock */,
+				ECCFA03B1DEBF0D4000F4E7A /* Sources */,
+				ECCFA03C1DEBF0D4000F4E7A /* Frameworks */,
+				ECCFA03D1DEBF0D4000F4E7A /* Resources */,
+				B34B72174C977E02EDF688D7 /* [CP] Embed Pods Frameworks */,
+				33AEDE810017345062C201AC /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JYFriend;
+			productName = JYFriend;
+			productReference = ECCFA03F1DEBF0D4000F4E7A /* JYFriend.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ECCFA0371DEBF0D4000F4E7A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = Liang;
+				TargetAttributes = {
+					ECCFA03E1DEBF0D4000F4E7A = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 7VHT3KAS56;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = ECCFA03A1DEBF0D4000F4E7A /* Build configuration list for PBXProject "JYFriend" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ECCFA0361DEBF0D4000F4E7A;
+			productRefGroup = ECCFA0401DEBF0D4000F4E7A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ECCFA03E1DEBF0D4000F4E7A /* JYFriend */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ECCFA03D1DEBF0D4000F4E7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECCFA0521DEBF0D4000F4E7A /* LaunchScreen.storyboard in Resources */,
+				ECCFA04F1DEBF0D4000F4E7A /* Assets.xcassets in Resources */,
+				ECCFA06F1DEBF917000F4E7A /* config.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		33AEDE810017345062C201AC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		80B835FA6FB0ABCB6E5A19DA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B34B72174C977E02EDF688D7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ECCFA03B1DEBF0D4000F4E7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECCFA0801DEC0697000F4E7A /* JYHudManager.m in Sources */,
+				ECCFA0971DEC0CC9000F4E7A /* JYApplication.m in Sources */,
+				ECCFA0AC1DEC182B000F4E7A /* JKDBHelper.m in Sources */,
+				ECCFA09A1DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.m in Sources */,
+				ECCFA0A31DEC0F81000F4E7A /* JYAppSpreadBannerModel.m in Sources */,
+				ECCFA09D1DEC0EC0000F4E7A /* JYApplicationManager.m in Sources */,
+				ECCFA08B1DEC0A8F000F4E7A /* JYUserAccessModel.m in Sources */,
+				ECCFA0471DEBF0D4000F4E7A /* AppDelegate.m in Sources */,
+				ECCFA0441DEBF0D4000F4E7A /* main.m in Sources */,
+				ECCFA08E1DEC0AE7000F4E7A /* JYSystemConfig.m in Sources */,
+				ECCFA07A1DEC060C000F4E7A /* JYConfiguration.m in Sources */,
+				ECCFA0AD1DEC182B000F4E7A /* JKDBModel.m in Sources */,
+				ECCFA0941DEC0C9D000F4E7A /* JYVideoTokenManager.m in Sources */,
+				ECCFA0751DEC049D000F4E7A /* JYUtil.m in Sources */,
+				ECCFA0721DEBF975000F4E7A /* JYMineViewController.m in Sources */,
+				ECCFA0A01DEC0F56000F4E7A /* JYAppSpread.m in Sources */,
+				ECCFA06A1DEBF86A000F4E7A /* JYBaseViewController.m in Sources */,
+				ECCFA0A61DEC11C1000F4E7A /* JYSpreadBannerViewController.m in Sources */,
+				ECCFA0631DEBF60A000F4E7A /* JYTabBarController.m in Sources */,
+				ECCFA0911DEC0B0B000F4E7A /* JYSystemConfigModel.m in Sources */,
+				ECCFA0881DEC093E000F4E7A /* JYActivateModel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		ECCFA0501DEBF0D4000F4E7A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ECCFA0511DEBF0D4000F4E7A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ECCFA0541DEBF0D4000F4E7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ECCFA0551DEBF0D4000F4E7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ECCFA0571DEBF0D4000F4E7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C68BEEC20755E0EF1FE6927C /* Pods-JYFriend.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7VHT3KAS56;
+				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/JYFriend/JYPrefixHeader.pch";
+				INFOPLIST_FILE = JYFriend/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		ECCFA0581DEBF0D4000F4E7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DE2D66049E36091993382B8 /* Pods-JYFriend.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEPLOYMENT_POSTPROCESSING = YES;
+				DEVELOPMENT_TEAM = 7VHT3KAS56;
+				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/JYFriend/JYPrefixHeader.pch";
+				INFOPLIST_FILE = JYFriend/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ECCFA03A1DEBF0D4000F4E7A /* Build configuration list for PBXProject "JYFriend" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ECCFA0541DEBF0D4000F4E7A /* Debug */,
+				ECCFA0551DEBF0D4000F4E7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ECCFA0561DEBF0D4000F4E7A /* Build configuration list for PBXNativeTarget "JYFriend" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ECCFA0571DEBF0D4000F4E7A /* Debug */,
+				ECCFA0581DEBF0D4000F4E7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ECCFA0371DEBF0D4000F4E7A /* Project object */;
+}
