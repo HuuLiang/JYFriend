@@ -27,7 +27,9 @@ typedef NS_ENUM(NSUInteger, JYDeviceType) {
 };
 
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
+
 #define kPaidNotificationName             @"JYFriendPaidNotification"
+#define kUserLoginNotificationName        @"JYFriendUserLoginNotification"
 
 #define kTimeFormatShort                  @"yyyyMMdd"
 #define KTimeFormatLong                   @"yyyyMMddHHmmss"

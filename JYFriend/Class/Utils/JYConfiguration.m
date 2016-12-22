@@ -62,5 +62,4 @@ static NSString *const kDefaultStandbyConfigName = @"config_standby";
     }];
 }
 
-
 @end

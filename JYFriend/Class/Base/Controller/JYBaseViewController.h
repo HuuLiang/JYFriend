@@ -10,6 +10,8 @@
 
 @interface JYBaseViewController : UIViewController
 
+@property (nonatomic) BOOL alwaysHideNavigationBar;
+
 //- (instancetype)init __attribute__ ((unavailable("Use initWithTitle: instead")));
 - (instancetype)initWithTitle:(NSString *)title;
 

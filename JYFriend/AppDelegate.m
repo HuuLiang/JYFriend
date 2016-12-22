@@ -8,9 +8,11 @@
 
 #import "AppDelegate.h"
 #import "JYTabBarController.h"
+#import "AppDelegate+login.h"
+#import "AppDelegate+configuration.h"
 
 @interface AppDelegate ()
-@property (nonatomic) UIViewController *rootViewController;
+
 @end
 
 @implementation AppDelegate
@@ -35,9 +37,11 @@
     return _rootViewController;
 }
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window.rootViewController = self.rootViewController;
-    [self.window makeKeyAndVisible];
+    
+    [self setCommonStyle];
+    [self checkUserIsLoginWithApplication:application Options:launchOptions];
     
     return YES;
 }

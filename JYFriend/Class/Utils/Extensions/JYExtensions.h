@@ -15,5 +15,6 @@
 #import <RACEXTScope.h>
 
 #import "NSObject+PropertyAccessInspecting.h"
+#import "UIView+RoundCorner.h"
 
 #endif /* JYExtensions_h */
