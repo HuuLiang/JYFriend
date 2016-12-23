@@ -33,6 +33,11 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [_nickNameTextField becomeFirstResponder];
+}
+
 //主副标题
 - (void)setMainTitleLabelAndDescTitleLabel {
     UILabel *mainLabel = [[UILabel alloc] init];

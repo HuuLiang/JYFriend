@@ -7,8 +7,8 @@
 //
 
 #import "JYSpreadBannerViewController.h"
-#import <SDCycleScrollView.h>
 #import "JYAppSpread.h"
+#import <SDCycleScrollView/SDCycleScrollView.h>
 
 @interface JYSpreadBannerViewController () <SDCycleScrollViewDelegate>
 {

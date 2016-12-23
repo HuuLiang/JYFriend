@@ -33,6 +33,11 @@
 + (void)showBanner;
 + (NSArray <JYAppSpread *> *)getUnInstalledSpreads;
 
++ (NSDate *)dateFromString:(NSString *)dateString WithDateFormat:(NSString *)dateFormat;
++ (NSString *)timeStringFromDate:(NSDate *)date WithDateFormat:(NSString *)dateFormat;
+
 + (NSString *)getStandByUrlPathWithOriginalUrl:(NSString *)url params:(NSDictionary *)params;
+
+
 
 @end

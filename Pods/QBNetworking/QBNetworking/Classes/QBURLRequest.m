@@ -87,6 +87,10 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
     return _standbyRequestSessionManager;
 }
 
+- (NSTimeInterval)requestTimeInterval {
+    return 60;
+}
+
 -(BOOL)requestURLPath:(NSString *)urlPath
            withParams:(id)params
             isStandby:(BOOL)isStandBy
@@ -130,9 +134,12 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
         }
     };
     
+    
     if (isStandBy) {
+        self.standbyRequestSessionManager.requestSerializer.timeoutInterval = self.requestTimeInterval;
         self.standbyRequestSessionTask = [self.standbyRequestSessionManager GET:urlPath parameters:params progress:nil success:success failure:failure];
     } else {
+        self.requestSessionManager.requestSerializer.timeoutInterval = self.requestTimeInterval;
         if (self.requestMethod == QBURLGetRequest) {
             self.requestSessionTask = [self.requestSessionManager GET:urlPath parameters:params progress:nil success:success failure:failure];
         } else {
@@ -144,6 +151,21 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
 
 - (BOOL)requestURLPath:(NSString *)urlPath standbyURLPath:(NSString *)standbyUrlPath withParams:(id)params responseHandler:(QBURLResponseHandler)responseHandler {
     BOOL useStandbyRequest = standbyUrlPath.length > 0;
+    
+    if (useStandbyRequest && [QBNetworkingConfiguration defaultConfiguration].useStaticBaseUrl) {
+        BOOL success = [self requestURLPath:standbyUrlPath
+                                 withParams:params
+                                  isStandby:YES
+                          shouldNotifyError:YES
+                            responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
+                        {
+                            if (responseHandler) {
+                                responseHandler(respStatus,errorMessage);
+                            }
+                        }];
+        return success;
+    }
+    
     BOOL success = [self requestURLPath:urlPath
                              withParams:params
                               isStandby:NO

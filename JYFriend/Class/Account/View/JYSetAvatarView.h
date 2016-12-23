@@ -10,4 +10,6 @@
 
 @interface JYSetAvatarView : UIView
 
+- (instancetype)initWithFrame:(CGRect)frame action:(void (^)(void))handler;
+
 @end

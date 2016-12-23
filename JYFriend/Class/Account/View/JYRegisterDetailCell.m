@@ -25,9 +25,7 @@
     if (self) {
         self.textLabel.font = [UIFont systemFontOfSize:16.];
         self.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
-        
-
-        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
@@ -35,6 +33,11 @@
 - (void)setTitle:(NSString *)title {
     _title = title;
     self.textLabel.text = title;
+}
+
+- (void)setContent:(NSString *)content {
+    _content = content;
+    _contentLabel.text = content;
 }
 
 - (void)setCellType:(JYDetailCellType)cellType {
@@ -57,7 +60,7 @@
             
             [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(self.contentView);
-                make.right.equalTo(_arrowImgV.mas_right).offset(-kWidth(4));
+                make.right.equalTo(_arrowImgV.mas_left).offset(-kWidth(20));
                 make.height.mas_equalTo(kWidth(32));
             }];
         }
@@ -70,10 +73,10 @@
             } else {
                 self->_femaleBtn.selected = YES;
                 [self->_femaleBtn setBackgroundColor:kColor(@"#E147A5")];
-                self->_femaleBtn.layer.masksToBounds = NO;
+                self->_femaleBtn.layer.borderWidth = 0;
                 self->_maleBtn.selected = NO;
                 [self->_maleBtn setBackgroundColor:kColor(@"#ffffff")];
-                self->_maleBtn.layer.masksToBounds = YES;
+                self->_maleBtn.layer.borderWidth = 1;
                 if (self.sexSelected) {
                     self.sexSelected(@(JYUserSexFemale));
                 }
@@ -81,9 +84,11 @@
         }];
         [_femaleBtn setTitleColor:kColor(@"#999999") forState:UIControlStateNormal];
         [_femaleBtn setTitleColor:kColor(@"#ffffff") forState:UIControlStateSelected];
-        _femaleBtn.layer.borderWidth = 1;
+        _femaleBtn.layer.borderWidth = 0;
         _femaleBtn.layer.borderColor = kColor(@"#E6E6E6").CGColor;
         _femaleBtn.layer.masksToBounds = YES;
+        _femaleBtn.selected = YES;
+        [self.contentView addSubview:_femaleBtn];
         
         _maleBtn = [[JYNextButton alloc] initWithTitle:@"男" action:^{
             @strongify(self);
@@ -92,20 +97,23 @@
             } else {
                 self->_femaleBtn.selected = NO;
                 [self->_femaleBtn setBackgroundColor:kColor(@"#ffffff")];
-                self->_femaleBtn.layer.masksToBounds = YES;
+                self->_femaleBtn.layer.borderWidth = 1;
                 self->_maleBtn.selected = YES;
                 [self->_maleBtn setBackgroundColor:kColor(@"#E147A5")];
-                self->_maleBtn.layer.masksToBounds = NO;
+                self->_maleBtn.layer.borderWidth = 0;
                 if (self.sexSelected) {
                     self.sexSelected(@(JYUserSexMale));
                 }
             }
         }];
+        [_maleBtn setBackgroundColor:kColor(@"#ffffff")];
         [_maleBtn setTitleColor:kColor(@"#999999") forState:UIControlStateNormal];
         [_maleBtn setTitleColor:kColor(@"#ffffff") forState:UIControlStateSelected];
         _maleBtn.layer.borderWidth = 1;
         _maleBtn.layer.borderColor = kColor(@"#E6E6E6").CGColor;
-        _maleBtn.layer.masksToBounds = NO;
+        _maleBtn.layer.masksToBounds = YES;
+        _maleBtn.selected = NO;
+        [self.contentView addSubview:_maleBtn];
         
         if (self.sexSelected) {
             self.sexSelected(@(JYUserSexMale));

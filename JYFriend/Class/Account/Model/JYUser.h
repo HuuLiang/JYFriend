@@ -18,14 +18,31 @@ typedef NS_ENUM(NSUInteger,JYUserSex) {
 
 + (instancetype)currentUser;
 
-@property (nonatomic) BOOL          isHuman;    //是否是人
-@property (nonatomic) NSString      *userId;    //用户id
-@property (nonatomic) JYUserSex     userSex;    //性别
-@property (nonatomic) NSString      *nickName;  //昵称
-@property (nonatomic) NSString      *account;   //账号
-@property (nonatomic) NSString      *password;  //密码
-@property (nonatomic) NSString      *birthday;  //生日
-@property (nonatomic) NSString      *height;    //身高
-@property (nonatomic) NSString      *homeTown;  //家乡
+//是否是人
+@property (nonatomic) BOOL          isHuman;
+//用户id
+@property (nonatomic) NSString      *userId;
+//性别
+@property (nonatomic) JYUserSex     userSex;
+//昵称
+@property (nonatomic) NSString      *nickName;
+//账号
+@property (nonatomic) NSString      *account;
+//密码
+@property (nonatomic) NSString      *password;
+//生日
+@property (nonatomic) NSString      *birthday;
+//身高
+@property (nonatomic) NSString      *height;
+//家乡
+@property (nonatomic) NSString      *homeTown;
 
+//身高选择列表
++ (NSArray *)allUserHeights;
+//家乡选择列表
+//+ (NSArray *)allCities;
++ (NSArray *)allProvinces;
++ (NSArray *)allCities;
++ (NSArray *)home;
++ (NSArray *)allCitiesWihtProvince:(NSString *)province;
 @end
