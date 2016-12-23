@@ -24,7 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.tabBar.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:1].CGColor;
+    self.tabBar.layer.borderWidth = 0.5;
     [self setChildViewControlers];
 }
 

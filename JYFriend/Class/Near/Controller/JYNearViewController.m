@@ -7,8 +7,14 @@
 //
 
 #import "JYNearViewController.h"
+#import "JYNearPersonCell.h"
 
-@interface JYNearViewController ()
+static NSString *const kNearPersonCellIdentifier = @"knearpersoncell_identifier";
+
+@interface JYNearViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    UITableView *_layoutTableView;
+}
 
 @end
 
@@ -16,9 +22,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor brownColor];
+    @weakify(self);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[[UIImage imageNamed:@"near_ filtrate_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain handler:^(id sender) {
+        @strongify(self);
+//        [self->_layoutTableView setEditing:!self ->_layoutTableView.editing animated:YES];
+        [UIView animateWithDuration:0.3 animations:^{
+            
+          [self->_layoutTableView setEditing:!self ->_layoutTableView.editing animated:NO];
+            
+            if (self->_layoutTableView.editing) {
+                    self-> _layoutTableView.separatorInset = UIEdgeInsetsMake(0, 50, 0, 0);
+                
+            }else {
+               self-> _layoutTableView.separatorInset = UIEdgeInsetsMake(0, kWidth(30), 0, 0);
+            }
+        }];
+    }];
+    
+    _layoutTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _layoutTableView.backgroundColor = self.view.backgroundColor;
+    _layoutTableView.delegate = self;
+    _layoutTableView.dataSource = self;
+    _layoutTableView.allowsMultipleSelectionDuringEditing = YES;
 
+    _layoutTableView.separatorInset = UIEdgeInsetsMake(0, kWidth(30), 0, 0);
+    _layoutTableView.rowHeight = kWidth(180);
+    [_layoutTableView registerClass:[JYNearPersonCell class] forCellReuseIdentifier:kNearPersonCellIdentifier];
+    [self.view  addSubview:_layoutTableView];
+    {
+    [_layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.view);
+    }];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,14 +62,20 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma UITableViewDelegate UITableViewDatasource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
 }
-*/
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    JYNearPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:kNearPersonCellIdentifier forIndexPath:indexPath];
+    cell.headerImageUrl = @"http://v1.qzone.cc/avatar/201406/29/18/15/53afe73912959815.jpg%21200x200.jpg";
+
+    return cell;
+}
+
+
 
 @end
