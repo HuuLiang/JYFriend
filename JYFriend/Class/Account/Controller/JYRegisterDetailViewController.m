@@ -60,6 +60,7 @@ static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdent
     _nextButton = [[JYNextButton alloc] initWithTitle:@"下一步" action:^{
         @strongify(self);
         NSLog(@"下一步");
+        [[JYUser currentUser] saveOrUpdate];
     }];
 }
 
@@ -80,11 +81,15 @@ static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdent
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     JYRegisterDetailCell *cell;
-
+    @weakify(self);
     if (indexPath.row < JYRegisterDetailCount) {
         cell = [tableView dequeueReusableCellWithIdentifier:kDetailCellReusableIdentifier forIndexPath:indexPath];
         if (indexPath.row == JYRegisterDetailSexRow) {
             cell.title = @"性别";
+            cell.sexSelected = ^(NSNumber *userSex) {
+                @strongify(self);
+                [JYUser currentUser].userSex = [userSex unsignedIntegerValue];
+            };
         } else if(indexPath.row == JYRegisterDetailBirthRow){
             cell.title = @"生日";
         } else if (indexPath.row == JYRegisterDetailTallRow) {

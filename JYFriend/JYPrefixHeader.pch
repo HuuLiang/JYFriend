@@ -28,6 +28,7 @@
 #import "JYConfig.h"
 #import "JYConfiguration.h"
 #import "JYUtil.h"
+#import "JYUser.h"
 //#import "PPCacheModel.h"
 //#import "PPHudManager.h"
 //#import "PPColumnModel.h"

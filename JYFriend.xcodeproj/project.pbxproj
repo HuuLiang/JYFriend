@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		58EBD024B4F3FC6F743B661D /* libPods-JYFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */; };
-		B3FE6F251E0BD5430004B1CE /* JYNearPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3FE6F241E0BD5430004B1CE /* JYNearPersonCell.m */; };
 		EC2A71091E0B81E600BED161 /* JYMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A71081E0B81E600BED161 /* JYMessageViewController.m */; };
 		EC2A710C1E0B81F800BED161 /* JYNearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A710B1E0B81F800BED161 /* JYNearViewController.m */; };
 		EC4422BD1E09103900F48461 /* login_background.png in Resources */ = {isa = PBXBuildFile; fileRef = EC4422BC1E09103900F48461 /* login_background.png */; };
 		EC55CE6B1E077AEB0030C8F5 /* JYSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC55CE6A1E077AEB0030C8F5 /* JYSegmentViewController.m */; };
 		EC55CE6E1E077C730030C8F5 /* JYCharacterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC55CE6D1E077C730030C8F5 /* JYCharacterViewController.m */; };
 		EC55CE711E077C970030C8F5 /* JYDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC55CE701E077C970030C8F5 /* JYDynamicViewController.m */; };
+		EC804A621E0CC3F600191387 /* JYUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EC804A611E0CC3F600191387 /* JYUser.m */; };
 		EC9843D51E07905F00754471 /* JYTableHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9843D41E07905F00754471 /* JYTableHeaderFooterView.m */; };
 		EC9843D81E07A56B00754471 /* JYMineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9843D71E07A56B00754471 /* JYMineCell.m */; };
 		EC9843DB1E07A96C00754471 /* JYMineAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9843DA1E07A96C00754471 /* JYMineAvatarView.m */; };
@@ -58,8 +58,6 @@
 
 /* Begin PBXFileReference section */
 		4DE2D66049E36091993382B8 /* Pods-JYFriend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYFriend.release.xcconfig"; path = "Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend.release.xcconfig"; sourceTree = "<group>"; };
-		B3FE6F231E0BD5430004B1CE /* JYNearPersonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNearPersonCell.h; sourceTree = "<group>"; };
-		B3FE6F241E0BD5430004B1CE /* JYNearPersonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNearPersonCell.m; sourceTree = "<group>"; };
 		C68BEEC20755E0EF1FE6927C /* Pods-JYFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend.debug.xcconfig"; sourceTree = "<group>"; };
 		DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JYFriend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC2A71071E0B81E600BED161 /* JYMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMessageViewController.h; sourceTree = "<group>"; };
@@ -73,6 +71,8 @@
 		EC55CE6D1E077C730030C8F5 /* JYCharacterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCharacterViewController.m; sourceTree = "<group>"; };
 		EC55CE6F1E077C970030C8F5 /* JYDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDynamicViewController.h; sourceTree = "<group>"; };
 		EC55CE701E077C970030C8F5 /* JYDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDynamicViewController.m; sourceTree = "<group>"; };
+		EC804A601E0CC3F600191387 /* JYUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUser.h; sourceTree = "<group>"; };
+		EC804A611E0CC3F600191387 /* JYUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYUser.m; sourceTree = "<group>"; };
 		EC9843D31E07905F00754471 /* JYTableHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYTableHeaderFooterView.h; sourceTree = "<group>"; };
 		EC9843D41E07905F00754471 /* JYTableHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYTableHeaderFooterView.m; sourceTree = "<group>"; };
 		EC9843D61E07A56B00754471 /* JYMineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMineCell.h; sourceTree = "<group>"; };
@@ -246,8 +246,6 @@
 		EC2A71061E0B816800BED161 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B3FE6F231E0BD5430004B1CE /* JYNearPersonCell.h */,
-				B3FE6F241E0BD5430004B1CE /* JYNearPersonCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -315,6 +313,8 @@
 		EC9843E71E07E23300754471 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EC804A601E0CC3F600191387 /* JYUser.h */,
+				EC804A611E0CC3F600191387 /* JYUser.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -696,7 +696,7 @@
 				ECCFA0A31DEC0F81000F4E7A /* JYAppSpreadBannerModel.m in Sources */,
 				EC55CE6B1E077AEB0030C8F5 /* JYSegmentViewController.m in Sources */,
 				ECEFE33D1E0A5C3E002F9A1C /* JYRegisterNickNameViewController.m in Sources */,
-				B3FE6F251E0BD5430004B1CE /* JYNearPersonCell.m in Sources */,
+				EC804A621E0CC3F600191387 /* JYUser.m in Sources */,
 				ECCFA09D1DEC0EC0000F4E7A /* JYApplicationManager.m in Sources */,
 				EC9843E41E07CA7900754471 /* JYNavigationController.m in Sources */,
 				ECEFE3431E0A7271002F9A1C /* AppDelegate+configuration.m in Sources */,
