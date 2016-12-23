@@ -11,5 +11,12 @@
 @interface JYNearPersonCell : UITableViewCell
 
 @property (nonatomic) NSString *headerImageUrl;
+@property (nonatomic) NSString *name;
+@property (nonatomic) NSString *age;
+@property (nonatomic,assign) NSInteger gender;
+@property (nonatomic,assign) NSInteger distance;
+@property (nonatomic,assign) NSInteger height;
+@property (nonatomic,assign,getter=isVip) BOOL vip;
+@property (nonatomic) NSString *detaiTitle;
 
 @end
