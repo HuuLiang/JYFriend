@@ -26,6 +26,8 @@ typedef NS_ENUM(NSUInteger, JYDeviceType) {
     JYDeviceType_iPad = 100
 };
 
+
+
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 
 #define kPaidNotificationName             @"JYFriendPaidNotification"
@@ -35,6 +37,7 @@ typedef NS_ENUM(NSUInteger, JYDeviceType) {
 #define KTimeFormatLong                   @"yyyyMMddHHmmss"
 #define kWidth(width)                     kScreenWidth  * width  / 750
 #define kHeight(height)                   kScreenHeight * height / 1334.
+#define kColor(hexString)                 [UIColor colorWithHexString:[NSString stringWithFormat:@"%@",hexString]]
 
 #define JY_SYSTEM_CONTACT_NAME_1          @"CONTACT_NAME_1"
 #define JY_SYSTEM_CONTACT_NAME_2          @"CONTACT_NAME_2"

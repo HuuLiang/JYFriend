@@ -7,11 +7,14 @@
 //
 
 #import "JYRegisterDetailCell.h"
+#import "JYNextButton.h"
 
 @interface JYRegisterDetailCell ()
 {
     UILabel       *_contentLabel;
     UIImageView   *_arrowImgV;
+    JYNextButton  *_femaleBtn;
+    JYNextButton  *_maleBtn;
 }
 @end
 
@@ -23,9 +26,21 @@
         self.textLabel.font = [UIFont systemFontOfSize:16.];
         self.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         
+
+        
+    }
+    return self;
+}
+
+- (void)setTitle:(NSString *)title {
+    _title = title;
+    self.textLabel.text = title;
+}
+
+- (void)setCellType:(JYDetailCellType)cellType {
+    if (cellType == JYDetailCellTypeContent) {
         _arrowImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_arrow"]];
         [self.contentView addSubview:_arrowImgV];
-        _arrowImgV.hidden = YES;
         
         _contentLabel = [[UILabel alloc] init];
         _contentLabel.textColor = [UIColor colorWithHexString:@"#666666"];
@@ -46,21 +61,69 @@
                 make.height.mas_equalTo(kWidth(32));
             }];
         }
-        
-    }
-    return self;
-}
-
-- (void)setTitle:(NSString *)title {
-    _title = title;
-    self.textLabel.text = title;
-}
-
-- (void)setCellType:(JYDetailCellType)cellType {
-    if (cellType == JYDetailCellTypeContent) {
-        _arrowImgV.hidden = NO;
     } else if (cellType == JYDetailCellTypeSelect) {
+        @weakify(self);
+        _femaleBtn = [[JYNextButton alloc] initWithTitle:@"女" action:^{
+            @strongify(self);
+            if (self->_femaleBtn.isSelected) {
+                return ;
+            } else {
+                self->_femaleBtn.selected = YES;
+                [self->_femaleBtn setBackgroundColor:kColor(@"#E147A5")];
+                self->_femaleBtn.layer.masksToBounds = NO;
+                self->_maleBtn.selected = NO;
+                [self->_maleBtn setBackgroundColor:kColor(@"#ffffff")];
+                self->_maleBtn.layer.masksToBounds = YES;
+                if (self.sexSelected) {
+                    self.sexSelected(@(JYUserSexFemale));
+                }
+            }
+        }];
+        [_femaleBtn setTitleColor:kColor(@"#999999") forState:UIControlStateNormal];
+        [_femaleBtn setTitleColor:kColor(@"#ffffff") forState:UIControlStateSelected];
+        _femaleBtn.layer.borderWidth = 1;
+        _femaleBtn.layer.borderColor = kColor(@"#E6E6E6").CGColor;
+        _femaleBtn.layer.masksToBounds = YES;
         
+        _maleBtn = [[JYNextButton alloc] initWithTitle:@"男" action:^{
+            @strongify(self);
+            if (self->_maleBtn.isSelected) {
+                return ;
+            } else {
+                self->_femaleBtn.selected = NO;
+                [self->_femaleBtn setBackgroundColor:kColor(@"#ffffff")];
+                self->_femaleBtn.layer.masksToBounds = YES;
+                self->_maleBtn.selected = YES;
+                [self->_maleBtn setBackgroundColor:kColor(@"#E147A5")];
+                self->_maleBtn.layer.masksToBounds = NO;
+                if (self.sexSelected) {
+                    self.sexSelected(@(JYUserSexMale));
+                }
+            }
+        }];
+        [_maleBtn setTitleColor:kColor(@"#999999") forState:UIControlStateNormal];
+        [_maleBtn setTitleColor:kColor(@"#ffffff") forState:UIControlStateSelected];
+        _maleBtn.layer.borderWidth = 1;
+        _maleBtn.layer.borderColor = kColor(@"#E6E6E6").CGColor;
+        _maleBtn.layer.masksToBounds = NO;
+        
+        if (self.sexSelected) {
+            self.sexSelected(@(JYUserSexMale));
+        }
+        
+        {
+            [_maleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.contentView);
+                make.right.equalTo(self.contentView.mas_right).offset(-kWidth(70));
+                make.size.mas_equalTo(CGSizeMake(kWidth(110), kWidth(60)));
+            }];
+            
+            [_femaleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.contentView);
+                make.right.equalTo(_maleBtn.mas_left).offset(-kWidth(10));
+                make.size.mas_equalTo(CGSizeMake(kWidth(110), kWidth(60)));
+            }];
+        }
     }
 }
 

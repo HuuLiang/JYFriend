@@ -17,5 +17,5 @@ typedef NS_ENUM(NSUInteger, JYDetailCellType) {
 @property (nonatomic) NSString *title;
 
 @property (nonatomic) JYDetailCellType cellType;
-
+@property (nonatomic) QBAction sexSelected;
 @end
