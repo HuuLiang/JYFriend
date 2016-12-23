@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, JYDeviceType) {
 
 #define kTimeFormatShort                  @"yyyyMMdd"
 #define KTimeFormatLong                   @"yyyyMMddHHmmss"
-#define kWidth(width)                     kScreenWidth  * width  / 750
+#define kWidth(width)                     kScreenWidth  * width  / 750.
 #define kHeight(height)                   kScreenHeight * height / 1334.
 #define kColor(hexString)                 [UIColor colorWithHexString:[NSString stringWithFormat:@"%@",hexString]]
 
