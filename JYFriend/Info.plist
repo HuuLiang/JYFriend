@@ -8,6 +8,10 @@
 	<array>
 		<string>location</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>需要访问您的相机才可以获得照片哦。😄</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>需要访问您的相册才可以获得照片哦。😄</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleExecutable</key>
