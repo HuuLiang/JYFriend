@@ -11,6 +11,8 @@
 		B3A079761E0CCBA100395817 /* JYNearPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A079751E0CCBA100395817 /* JYNearPersonCell.m */; };
 		B3A079791E0CFE5300395817 /* JYNearPersonBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A079781E0CFE5300395817 /* JYNearPersonBtn.m */; };
 		B3A0797C1E0D1D8300395817 /* JYNearBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A0797B1E0D1D8300395817 /* JYNearBottomView.m */; };
+		B3D114D41E0E185C001DC147 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D114D31E0E185C001DC147 /* CoreLocation.framework */; };
+		B3D114D71E0E26E9001DC147 /* JYNotFetchUserlocalView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D114D61E0E26E9001DC147 /* JYNotFetchUserlocalView.m */; };
 		EC2A71091E0B81E600BED161 /* JYMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A71081E0B81E600BED161 /* JYMessageViewController.m */; };
 		EC2A710C1E0B81F800BED161 /* JYNearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A710B1E0B81F800BED161 /* JYNearViewController.m */; };
 		EC4422BD1E09103900F48461 /* login_background.png in Resources */ = {isa = PBXBuildFile; fileRef = EC4422BC1E09103900F48461 /* login_background.png */; };
@@ -67,6 +69,9 @@
 		B3A079781E0CFE5300395817 /* JYNearPersonBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNearPersonBtn.m; sourceTree = "<group>"; };
 		B3A0797A1E0D1D8300395817 /* JYNearBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNearBottomView.h; sourceTree = "<group>"; };
 		B3A0797B1E0D1D8300395817 /* JYNearBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNearBottomView.m; sourceTree = "<group>"; };
+		B3D114D31E0E185C001DC147 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B3D114D51E0E26E9001DC147 /* JYNotFetchUserlocalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNotFetchUserlocalView.h; sourceTree = "<group>"; };
+		B3D114D61E0E26E9001DC147 /* JYNotFetchUserlocalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNotFetchUserlocalView.m; sourceTree = "<group>"; };
 		C68BEEC20755E0EF1FE6927C /* Pods-JYFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend.debug.xcconfig"; sourceTree = "<group>"; };
 		DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JYFriend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC2A71071E0B81E600BED161 /* JYMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMessageViewController.h; sourceTree = "<group>"; };
@@ -169,6 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3D114D41E0E185C001DC147 /* CoreLocation.framework in Frameworks */,
 				58EBD024B4F3FC6F743B661D /* libPods-JYFriend.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -179,6 +185,7 @@
 		3776DB255E2EB21A8AEC365F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B3D114D31E0E185C001DC147 /* CoreLocation.framework */,
 				DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */,
 			);
 			name = Frameworks;
@@ -261,6 +268,8 @@
 				B3A079781E0CFE5300395817 /* JYNearPersonBtn.m */,
 				B3A0797A1E0D1D8300395817 /* JYNearBottomView.h */,
 				B3A0797B1E0D1D8300395817 /* JYNearBottomView.m */,
+				B3D114D51E0E26E9001DC147 /* JYNotFetchUserlocalView.h */,
+				B3D114D61E0E26E9001DC147 /* JYNotFetchUserlocalView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -725,6 +734,7 @@
 				EC9843DB1E07A96C00754471 /* JYMineAvatarView.m in Sources */,
 				ECAF89091E095BD0005A6C62 /* AppDelegate+login.m in Sources */,
 				ECCFA07A1DEC060C000F4E7A /* JYConfiguration.m in Sources */,
+				B3D114D71E0E26E9001DC147 /* JYNotFetchUserlocalView.m in Sources */,
 				ECEFE3491E0A816D002F9A1C /* JYSetAvatarView.m in Sources */,
 				ECCFA0AD1DEC182B000F4E7A /* JKDBModel.m in Sources */,
 				ECEFE3401E0A6255002F9A1C /* JYNextButton.m in Sources */,
