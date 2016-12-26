@@ -82,12 +82,13 @@
                 }
             }
         }];
+        [_femaleBtn setBackgroundColor:kColor(@"#ffffff")];
         [_femaleBtn setTitleColor:kColor(@"#999999") forState:UIControlStateNormal];
         [_femaleBtn setTitleColor:kColor(@"#ffffff") forState:UIControlStateSelected];
-        _femaleBtn.layer.borderWidth = 0;
+        _femaleBtn.layer.borderWidth = 1;
         _femaleBtn.layer.borderColor = kColor(@"#E6E6E6").CGColor;
         _femaleBtn.layer.masksToBounds = YES;
-        _femaleBtn.selected = YES;
+        _femaleBtn.selected = NO;
         [self.contentView addSubview:_femaleBtn];
         
         _maleBtn = [[JYNextButton alloc] initWithTitle:@"男" action:^{
@@ -106,13 +107,12 @@
                 }
             }
         }];
-        [_maleBtn setBackgroundColor:kColor(@"#ffffff")];
         [_maleBtn setTitleColor:kColor(@"#999999") forState:UIControlStateNormal];
         [_maleBtn setTitleColor:kColor(@"#ffffff") forState:UIControlStateSelected];
-        _maleBtn.layer.borderWidth = 1;
+        _maleBtn.layer.borderWidth = 0;
         _maleBtn.layer.borderColor = kColor(@"#E6E6E6").CGColor;
         _maleBtn.layer.masksToBounds = YES;
-        _maleBtn.selected = NO;
+        _maleBtn.selected = YES;
         [self.contentView addSubview:_maleBtn];
         
         if (self.sexSelected) {
@@ -131,6 +131,15 @@
                 make.right.equalTo(_maleBtn.mas_left).offset(-kWidth(10));
                 make.size.mas_equalTo(CGSizeMake(kWidth(110), kWidth(60)));
             }];
+        }
+    }
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    for (UIView *subview in self.contentView.superview.subviews) {
+        if ([NSStringFromClass(subview.class) hasSuffix:@"SeparatorView"]) {
+            subview.hidden = NO;
         }
     }
 }

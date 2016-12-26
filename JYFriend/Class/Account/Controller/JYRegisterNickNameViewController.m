@@ -104,6 +104,11 @@
     _nextButton = [[JYNextButton alloc] initWithTitle:@"下一步" action:^{
         @strongify(self);
         //下一步跳转到注册个人信息页面
+        if (_nickNameTextField.text.length < 2) {
+            [[JYHudManager manager] showHudWithText:@"昵称太短啦!"];
+            return ;
+        }
+        [JYUser currentUser].nickName = _nickNameTextField.text;
         JYRegisterDetailViewController *registerVC = [[JYRegisterDetailViewController alloc] initWithTitle:@"注册"];
         [self.navigationController pushViewController:registerVC animated:YES];
     }];

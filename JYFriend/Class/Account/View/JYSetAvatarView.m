@@ -46,7 +46,7 @@
             
             [_userImgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.center.equalTo(self);
-                make.size.mas_equalTo(CGSizeMake(kWidth(170), kWidth(170)));
+                make.size.mas_equalTo(CGSizeMake(kWidth(170), kWidth(170)*13/11));
             }];
         }
         
