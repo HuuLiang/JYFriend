@@ -54,6 +54,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, viewControllers)
                            context:nil];
     self.navigationItem.titleView = _segmentedControl;
 
+    @weakify(self);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@""] style:UIBarButtonItemStylePlain handler:^(id sender) {
+        @strongify(self);
+        
+    }];
+    
 }
 
 - (NSUInteger)currentIndex {

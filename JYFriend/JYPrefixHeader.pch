@@ -30,7 +30,7 @@
 #import "JYUtil.h"
 #import "JYUser.h"
 //#import "PPCacheModel.h"
-//#import "PPHudManager.h"
+#import "JYHudManager.h"
 //#import "PPColumnModel.h"
 
 #endif /* JYPrefixHeader_pch */

@@ -21,7 +21,7 @@
 
 - (void)checkUserIsLoginWithApplication:(UIApplication *)application Options:(NSDictionary *)launchOptions {
     
-    BOOL isLogin = YES;
+    BOOL isLogin = NO;
     
     if (isLogin) {
         self.window.rootViewController = self.rootViewController;

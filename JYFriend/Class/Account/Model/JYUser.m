@@ -34,30 +34,23 @@ static JYUser *_currentUser;
     return allHeights;
 }
 
-+ (NSArray *)home {
-    NSMutableArray *home = [NSMutableArray array];
-    NSArray *allProvinces = [self allProvinces];
-    [home addObject:allProvinces];
-    [home addObject:[self allCitiesWihtProvince:[allProvinces firstObject]]];
-    return home;
++ (NSMutableDictionary *)allProvincesAndCities {
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"provinces" ofType:@"plist"];
+    NSMutableDictionary *dataDic = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    return dataDic;
+}
+
++ (NSArray *)defaultHometown {
+    NSMutableArray *hometown = [NSMutableArray array];
+    NSDictionary *allProvincesAndCities = [self allProvincesAndCities];
+    [hometown addObject:allProvincesAndCities.allKeys];
+    [hometown addObject:[allProvincesAndCities objectForKey:[allProvincesAndCities.allKeys firstObject]][@"city"]];
+    return hometown;
 }
 
 + (NSArray *)allCitiesWihtProvince:(NSString *)province {
-    NSMutableArray *cities = [NSMutableArray array];
-    for (NSInteger i = 0; i < 50; i ++) {
-        NSString *str = [NSString stringWithFormat:@"%@第%ld个市",province,i];
-        [cities addObject:str];
-    }
-    return cities;
-}
-
-+ (NSArray *)allProvinces {
-    NSMutableArray *provinces = [NSMutableArray array];
-    for (NSInteger i = 0; i < 34; i ++) {
-        NSString *str = [NSString stringWithFormat:@"第%ld个省",i];
-        [provinces addObject:str];
-    }
-    return provinces;
+    NSArray *allCities = [self allProvincesAndCities][province][@"city"];
+    return allCities;
 }
 
 @end

@@ -22,6 +22,8 @@ typedef NS_ENUM(NSUInteger,JYUserSex) {
 @property (nonatomic) BOOL          isHuman;
 //用户id
 @property (nonatomic) NSString      *userId;
+//头像
+@property (nonatomic) NSData        *userImg;
 //性别
 @property (nonatomic) JYUserSex     userSex;
 //昵称
@@ -40,9 +42,8 @@ typedef NS_ENUM(NSUInteger,JYUserSex) {
 //身高选择列表
 + (NSArray *)allUserHeights;
 //家乡选择列表
-//+ (NSArray *)allCities;
-+ (NSArray *)allProvinces;
-+ (NSArray *)allCities;
-+ (NSArray *)home;
++ (NSMutableDictionary *)allProvincesAndCities;
++ (NSArray *)defaultHometown;
 + (NSArray *)allCitiesWihtProvince:(NSString *)province;
+
 @end

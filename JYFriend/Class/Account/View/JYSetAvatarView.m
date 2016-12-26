@@ -46,13 +46,17 @@
             
             [_userImgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.center.equalTo(self);
-                make.size.mas_equalTo(CGSizeMake(kWidth(170), kWidth(170)));
+                make.size.mas_equalTo(CGSizeMake(kWidth(170), kWidth(170)*13/11));
             }];
         }
         
         [self setNeedsDisplay];
     }
     return self;
+}
+
+- (void)setUserImg:(UIImage *)userImg {
+    _userImgV.image = userImg;
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -64,6 +68,11 @@
     _photoBtn.titleEdgeInsets =UIEdgeInsetsMake(0.5*_photoBtn.imageView.frame.size.height+10, -0.5*_photoBtn.imageView.frame.size.width, -0.5*_photoBtn.imageView.frame.size.height, 0.5*_photoBtn.imageView.frame.size.width);
     
     CGRect frame = _userImgV.frame;
+    frame.origin.x += 1.5;
+    frame.origin.y += 1.5;
+    frame.size.width -= 3;
+    frame.size.height -= 3;
+    
     CGContextRef context =UIGraphicsGetCurrentContext();
     CGContextBeginPath(context);
     CGContextSetLineWidth(context, 1.0);

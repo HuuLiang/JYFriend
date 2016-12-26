@@ -14,6 +14,5 @@ pod 'QBPayment', '~> 0.0.38' ,:subspecs => ['IappPay','VIAPay','HTPay']
 pod 'QBStatisticsManager', '~> 0.0.4'
 
 pod 'SDCycleScrollView', '~> 1.65'
-pod 'MessageDisplayKit', '~> 5.4'
 
 end

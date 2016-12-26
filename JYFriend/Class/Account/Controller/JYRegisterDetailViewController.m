@@ -12,6 +12,8 @@
 #import "JYNextButton.h"
 #import "JYRegisterDetailCell.h"
 #import "ActionSheetPicker.h"
+#import "VPImageCropperViewController.h"
+#import "JYRegisterPhoneNumberViewController.h"
 
 typedef NS_ENUM(NSUInteger, JYRegisterDetailRow) {
     JYRegisterDetailSexRow, //开通VIP
@@ -22,8 +24,9 @@ typedef NS_ENUM(NSUInteger, JYRegisterDetailRow) {
 };
 
 static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdentifier";
+static NSString *const kDetailHeaderViewReusableIdentifier = @"DetailHeaderViewReusableIdentifier";
 
-@interface JYRegisterDetailViewController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,ActionSheetMultipleStringPickerDelegate>
+@interface JYRegisterDetailViewController () <UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ActionSheetMultipleStringPickerDelegate,UIActionSheetDelegate,VPImageCropperDelegate>
 {
     UITableView     *_tableView;
     JYSetAvatarView *_setAvatarView;
@@ -37,14 +40,17 @@ static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdent
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _tableView.backgroundColor = self.view.backgroundColor;
+    [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.rowHeight = MAX(kScreenHeight*0.09, 44);
     _tableView.sectionFooterHeight = 0;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [_tableView registerClass:[JYRegisterDetailCell class] forCellReuseIdentifier:kDetailCellReusableIdentifier];
+    [_tableView registerClass:[JYTableHeaderFooterView class] forHeaderFooterViewReuseIdentifier:kDetailHeaderViewReusableIdentifier];
+    
     [self.view addSubview:_tableView];
     {
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -56,16 +62,12 @@ static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdent
     _setAvatarView = [[JYSetAvatarView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth(400)) action:^{
         @strongify(self);
         //图片获取
-        [self getImage];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"请选择图片获取方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"选择相册",@"选择相机", nil];
+        [actionSheet showInView:self.view];
     }];
     
     _tableView.tableHeaderView = _setAvatarView;
-    
-    _nextButton = [[JYNextButton alloc] initWithTitle:@"下一步" action:^{
-        @strongify(self);
-        NSLog(@"下一步");
-        [[JYUser currentUser] saveOrUpdate];
-    }];
+    _tableView.tableFooterView = [self setTableFooterView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,26 +75,62 @@ static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdent
     // Dispose of any resources that can be recreated.
 }
 
-- (void)getImage {
-    if ([JYUtil isIpad]) {
-        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary | UIImagePickerControllerSourceTypeCamera;
-        //sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum; //保存的相片
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.delegate = self;
-        picker.allowsEditing = YES;
-        picker.sourceType = sourceType;
-        UIPopoverController *popover = [[UIPopoverController alloc]initWithContentViewController:picker];
+- (UIView *)setTableFooterView {
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, kWidth(784), kScreenWidth, kWidth(190))];
+    footerView.backgroundColor = [UIColor clearColor];
+    UILabel *label = [[UILabel alloc] init];
+    label.text = @"注册成功后，性别不能修改";
+    label.textColor = kColor(@"#999999");
+    label.font = [UIFont systemFontOfSize:kWidth(24)];
+    [footerView addSubview:label];
+    
+    @weakify(self);
+    _nextButton = [[JYNextButton alloc] initWithTitle:@"下一步" action:^{
+        @strongify(self);
+        NSLog(@"下一步");
+        [[JYUser currentUser] saveOrUpdate];
+        JYRegisterPhoneNumberViewController *phoneNumVC = [[JYRegisterPhoneNumberViewController alloc] initWithTitle:@"注册"];
+        [self.navigationController pushViewController:phoneNumVC animated:YES];
+    }];
+    [_nextButton setTitleColor:kColor(@"#ffffff") forState:UIControlStateNormal];
+    
+    [footerView addSubview:_nextButton];
+    
+    {
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(footerView).offset(kWidth(kWidth(60)));
+            make.top.equalTo(footerView).offset(kWidth(15));
+            make.height.mas_equalTo(kWidth(24));
+        }];
         
-        [popover presentPopoverFromRect:CGRectMake(0, 0, kScreenWidth, 200) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-    } else {
-        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary | UIImagePickerControllerSourceTypeCamera;
+        [_nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(label.mas_bottom).offset(kWidth(56));
+            make.centerX.equalTo(footerView);
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth * 0.8, kWidth(88)));
+        }];
+    }
+    
+    return footerView;
+}
+
+- (void)getImageWithSourceType:(UIImagePickerControllerSourceType)sourceType {
+    if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.delegate = self;
-        picker.allowsEditing = self;
+//        picker.allowsEditing = YES;
         picker.sourceType = sourceType;
-        [self presentViewController:picker animated:YES completion:nil];
+        if ([JYUtil isIpad]) {
+            UIPopoverController *popover = [[UIPopoverController alloc]initWithContentViewController:picker];
+            [popover presentPopoverFromRect:CGRectMake(0, 0, kScreenWidth, 200) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        } else {
+            [self presentViewController:picker animated:YES completion:nil];
+        }
+    } else {
+        NSString *sourceTypeTitle = sourceType == UIImagePickerControllerSourceTypePhotoLibrary ? @"相册":@"相机";
+        [[JYHudManager manager] showHudWithTitle:sourceTypeTitle message:[NSString stringWithFormat:@"请在设备的\"设置-隐私-%@\"中允许访问%@",sourceTypeTitle,sourceTypeTitle]];
     }
 }
+
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource
 
@@ -137,10 +175,10 @@ static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdent
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsMake(0, kWidth(50), 0, kWidth(50))];
+        [cell setSeparatorInset:UIEdgeInsetsMake(-1, kWidth(50), -1, kWidth(50))];
     }
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsMake(0, kWidth(50), 0, kWidth(50))];
+        [cell setLayoutMargins:UIEdgeInsetsMake(-1, kWidth(50), -1, kWidth(50))];
     }
 }
 
@@ -181,7 +219,7 @@ static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdent
     } else if (indexPath.row == JYRegisterDetailHomeRow) {
         
         ActionSheetMultipleStringPicker *picker = [[ActionSheetMultipleStringPicker alloc] initWithTitle:@"家乡"
-                                                                                                    rows:[JYUser home]
+                                                                                                    rows:[JYUser defaultHometown]
                                                                                         initialSelection:@[@0,@0]
                                                                                                doneBlock:^(ActionSheetMultipleStringPicker *picker, NSArray *selectedIndexes, id selectedValues)
                                                    {
@@ -196,24 +234,56 @@ static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdent
     }
 }
 
+#pragma mark - UIActionSheetDelegate 
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    UIImagePickerControllerSourceType type;
+    if (buttonIndex == 0) {
+        //相册
+        type = UIImagePickerControllerSourceTypePhotoLibrary;
+    } else if (buttonIndex == 1)  {
+        //相机
+        type = UIImagePickerControllerSourceTypeCamera;
+    }
+    
+    if (type == UIImagePickerControllerSourceTypePhotoLibrary || type == UIImagePickerControllerSourceTypeCamera) {
+        [self getImageWithSourceType:type];
+    }
+}
+
+#pragma mark VPImageCropperDelegate
+- (void)imageCropper:(VPImageCropperViewController *)cropperViewController didFinished:(UIImage *)editedImage {
+    self->_setAvatarView.userImg = editedImage;
+    NSData *data;
+    if (UIImagePNGRepresentation(editedImage) == nil) {
+        data = UIImageJPEGRepresentation(editedImage, 1);
+    } else {
+        data = UIImagePNGRepresentation(editedImage);
+    }
+    [JYUser currentUser].userImg = data;
+    
+    [cropperViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imageCropperDidCancel:(VPImageCropperViewController *)cropperViewController {
+    [cropperViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     @weakify(self);
-    UIImage *pickedImage;
-    if (picker.allowsEditing) {
-        pickedImage = [info objectForKey:UIImagePickerControllerEditedImage];
-    } else {
-        pickedImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    }
-    
-    if (pickedImage) {
+    [picker dismissViewControllerAnimated:YES completion:^() {
         @strongify(self);
-
-    } else {
-        
-    }
-    [picker dismissViewControllerAnimated:YES completion:nil];
+        UIImage *portraitImg = [info objectForKey:UIImagePickerControllerOriginalImage];
+        // 裁剪
+        VPImageCropperViewController *imgEditorVC = [[VPImageCropperViewController alloc] initWithImage:portraitImg cropFrame:CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.width *13/11) limitScaleRatio:3.0];
+        imgEditorVC.delegate = self;
+        [self presentViewController:imgEditorVC animated:YES completion:nil];
+    }];
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
