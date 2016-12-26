@@ -82,5 +82,24 @@
 
 }
 
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *view = [super hitTest:point withEvent:event];
+    if (!view) {
+        return view;
+    }
+    CGRect bottomFrame = _notarizeBtn.frame;
+    if (CGRectIsEmpty(bottomFrame)) {
+        return view;
+    }
+    
+    CGRect expandedFrame = CGRectInset(bottomFrame, -10, -10);
+    
+    if (CGRectContainsPoint(expandedFrame, point)) {
+        return _notarizeBtn;
+    }
+    
+    return view;
+}
+
 
 @end

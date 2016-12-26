@@ -9,23 +9,53 @@
 #import "JYNearViewController.h"
 #import "JYNearPersonCell.h"
 #import "JYNearBottomView.h"
+#import <CoreLocation/CoreLocation.h>
+#import "JYNotFetchUserlocalView.h"
 
 static NSString *const kNearPersonCellIdentifier = @"knearpersoncell_identifier";
 
-@interface JYNearViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
+@interface JYNearViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,CLLocationManagerDelegate>
 {
     UITableView *_layoutTableView;
+    
 }
 
-@property (nonatomic,retain) JYNearBottomView *bottomView;
-@property (nonatomic,retain) NSMutableArray  *allSelectCells;
+@property (nonatomic,retain) JYNearBottomView *bottomView;//批量打招呼
+@property (nonatomic,retain) NSMutableArray  *allSelectCells;//所有选中的cell的indexPath
 @property (nonatomic,retain) UIActionSheet *actionSheetView;
+@property (nonatomic,retain) CLLocationManager  *locationManager;//定位
+@property (nonatomic,retain) JYNotFetchUserlocalView *notLocalView;
 
 @end
 
 @implementation JYNearViewController
 QBDefineLazyPropertyInitialization(NSMutableArray, allSelectCells)
-
+/**
+ 未获定位权限时的界面
+ */
+- (JYNotFetchUserlocalView *)notLocalView {
+    if (_notLocalView) {
+        return _notLocalView;
+    }
+    _notLocalView = [[JYNotFetchUserlocalView alloc] init];
+    [self.view addSubview:_notLocalView];
+    {
+    [_notLocalView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.view);
+    }];
+    }
+    
+    _notLocalView.settingAction = ^(id sender){
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        }
+    };
+    
+    return _notLocalView;
+}
+/**
+ 批量打招呼
+ */
 - (JYNearBottomView *)bottomView {
 
     if (_bottomView) {
@@ -61,17 +91,37 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allSelectCells)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    @weakify(self);
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[[UIImage imageNamed:@"near_ filtrate_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain handler:^(id sender) {
-        @strongify(self);
-        if (self ->_layoutTableView.editing) {
-             [self tableViewEditing];
-        }else {
-            [self.actionSheetView showFromTabBar:self.tabBarController.tabBar];
-        }
+    BOOL locationEnable = [CLLocationManager locationServicesEnabled];
+    int locationStatus = [CLLocationManager authorizationStatus];
+    if (!locationEnable || (locationStatus != kCLAuthorizationStatusAuthorizedAlways && locationStatus != kCLAuthorizationStatusAuthorizedWhenInUse)) {
+        [self requestLocationAuthority];
+    }
+    if(locationEnable && (locationStatus == kCLAuthorizationStatusAuthorizedAlways || locationStatus == kCLAuthorizationStatusAuthorizedWhenInUse)){
+        
+        [self creartTableViewAndRightBarButtonItem];
+        
+    }
+    if (locationEnable && locationStatus == kCLAuthorizationStatusDenied) {
+        
+        self.notLocalView.backgroundColor = self.view.backgroundColor;
+        
+    }
+}
 
-    }];
+/**
+ 创建tableView
+ */
+- (void)creartTableViewAndRightBarButtonItem {
     
+    if (_notLocalView) {
+       _notLocalView.hidden = YES;
+        [_notLocalView removeFromSuperview];
+    }
+    
+    if (_layoutTableView) {
+        return ;
+    }
+    @weakify(self);
     _layoutTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _layoutTableView.backgroundColor = self.view.backgroundColor;
     _layoutTableView.delegate = self;
@@ -84,13 +134,43 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allSelectCells)
     [_layoutTableView registerClass:[JYNearPersonCell class] forCellReuseIdentifier:kNearPersonCellIdentifier];
     [self.view  addSubview:_layoutTableView];
     {
-    [_layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [_layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(self.view);
-    }];
+        }];
     }
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[[UIImage imageNamed:@"near_ filtrate_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain handler:^(id sender) {
+        @strongify(self);
+        if (self ->_layoutTableView.editing) {
+            [self tableViewEditing];
+        }else {
+            [self.actionSheetView showFromTabBar:self.tabBarController.tabBar];
+        }
+        
+    }];
 }
 
+
+/**
+ 请求定位权限
+ */
+- (void)requestLocationAuthority {
+    
+//    if (!locationEnable ||  locationStatus == kCLAuthorizationStatusNotDetermined) {
+        if ([UIDevice currentDevice].systemVersion.floatValue >=8) {
+            _locationManager = [[CLLocationManager alloc] init];
+            _locationManager.delegate = self;
+            //获取授权认证
+//            [locationManager requestAlwaysAuthorization];
+            [_locationManager requestWhenInUseAuthorization];
+            
+//        }
+    }
+
+}
+/**
+ tableView的编辑模式
+ */
 - (void)tableViewEditing{
     
     [self.allSelectCells removeAllObjects];
@@ -185,5 +265,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allSelectCells)
     
 }
 
+#pragma mark CLLocationManagerDelegate
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        [self creartTableViewAndRightBarButtonItem];
+    }else if (status == kCLAuthorizationStatusDenied){
+        self.notLocalView.backgroundColor = self.view.backgroundColor;
+    }
+
+}
 
 @end
