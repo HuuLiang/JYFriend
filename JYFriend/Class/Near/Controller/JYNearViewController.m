@@ -30,6 +30,7 @@ static NSString *const kNearPersonCellIdentifier = @"knearpersoncell_identifier"
 
 @implementation JYNearViewController
 QBDefineLazyPropertyInitialization(NSMutableArray, allSelectCells)
+QBDefineLazyPropertyInitialization(CLLocationManager, locationManager)
 /**
  未获定位权限时的界面
  */
@@ -93,6 +94,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allSelectCells)
     [super viewDidLoad];
     BOOL locationEnable = [CLLocationManager locationServicesEnabled];
     int locationStatus = [CLLocationManager authorizationStatus];
+    self.locationManager.delegate  = self;
+    [self.locationManager startUpdatingLocation];
     if (!locationEnable || (locationStatus != kCLAuthorizationStatusAuthorizedAlways && locationStatus != kCLAuthorizationStatusAuthorizedWhenInUse)) {
         [self requestLocationAuthority];
     }
@@ -158,11 +161,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allSelectCells)
     
 //    if (!locationEnable ||  locationStatus == kCLAuthorizationStatusNotDetermined) {
         if ([UIDevice currentDevice].systemVersion.floatValue >=8) {
-            _locationManager = [[CLLocationManager alloc] init];
-            _locationManager.delegate = self;
+//            _locationManager = [[CLLocationManager alloc] init];
+//            _locationManager.delegate = self;
             //获取授权认证
 //            [locationManager requestAlwaysAuthorization];
-            [_locationManager requestWhenInUseAuthorization];
+            [self.locationManager requestWhenInUseAuthorization];
             
 //        }
     }
@@ -175,9 +178,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allSelectCells)
     
     [self.allSelectCells removeAllObjects];
     [UIView animateWithDuration:0.3 animations:^{
-//        if (isBtnClick) {
             self.bottomView.hidden = YES;
-//        }
         
         [self->_layoutTableView setEditing:!self ->_layoutTableView.editing animated:NO];
         
@@ -274,5 +275,19 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allSelectCells)
     }
 
 }
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        QBLog(@"%@",placemarks.lastObject.name);
+    }];
+    
+    [manager stopUpdatingLocation];
+
+}
+
+
+
 
 @end

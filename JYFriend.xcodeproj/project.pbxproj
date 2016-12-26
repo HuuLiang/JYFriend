@@ -220,6 +220,37 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B36184741E10FABE00DD55A5 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				B36184751E10FABE00DD55A5 /* Controller */,
+				B36184761E10FABE00DD55A5 /* Model */,
+				B36184771E10FABE00DD55A5 /* View */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		B36184751E10FABE00DD55A5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		B36184761E10FABE00DD55A5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B36184771E10FABE00DD55A5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		C137E121D1CD4C8AD6CBB731 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -473,6 +504,7 @@
 				EC2A70FF1E0B816800BED161 /* Message */,
 				EC55CE651E077A780030C8F5 /* Dynamic */,
 				EC2A71031E0B816800BED161 /* Near */,
+				B36184741E10FABE00DD55A5 /* Detail */,
 				ECCFA0641DEBF821000F4E7A /* Mine */,
 			);
 			path = Class;
