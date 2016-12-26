@@ -12,6 +12,7 @@
 #import "JYNextButton.h"
 #import "JYRegisterDetailCell.h"
 #import "ActionSheetPicker.h"
+#import "VPImageCropperViewController.h"
 
 typedef NS_ENUM(NSUInteger, JYRegisterDetailRow) {
     JYRegisterDetailSexRow, //开通VIP
@@ -23,7 +24,7 @@ typedef NS_ENUM(NSUInteger, JYRegisterDetailRow) {
 
 static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdentifier";
 
-@interface JYRegisterDetailViewController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,ActionSheetMultipleStringPickerDelegate>
+@interface JYRegisterDetailViewController () <UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ActionSheetMultipleStringPickerDelegate,UIActionSheetDelegate,VPImageCropperDelegate>
 {
     UITableView     *_tableView;
     JYSetAvatarView *_setAvatarView;
@@ -56,7 +57,8 @@ static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdent
     _setAvatarView = [[JYSetAvatarView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth(400)) action:^{
         @strongify(self);
         //图片获取
-        [self getImage];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"请选择图片获取方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"选择相册",@"选择相机", nil];
+        [actionSheet showInView:self.view];
     }];
     
     _tableView.tableHeaderView = _setAvatarView;
@@ -73,26 +75,24 @@ static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdent
     // Dispose of any resources that can be recreated.
 }
 
-- (void)getImage {
-    if ([JYUtil isIpad]) {
-        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary | UIImagePickerControllerSourceTypeCamera;
-        //sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum; //保存的相片
+- (void)getImageWithSourceType:(UIImagePickerControllerSourceType)sourceType {
+    if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.delegate = self;
-        picker.allowsEditing = YES;
+//        picker.allowsEditing = YES;
         picker.sourceType = sourceType;
-        UIPopoverController *popover = [[UIPopoverController alloc]initWithContentViewController:picker];
-        
-        [popover presentPopoverFromRect:CGRectMake(0, 0, kScreenWidth, 200) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        if ([JYUtil isIpad]) {
+            UIPopoverController *popover = [[UIPopoverController alloc]initWithContentViewController:picker];
+            [popover presentPopoverFromRect:CGRectMake(0, 0, kScreenWidth, 200) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        } else {
+            [self presentViewController:picker animated:YES completion:nil];
+        }
     } else {
-        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary | UIImagePickerControllerSourceTypeCamera;
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.delegate = self;
-        picker.allowsEditing = self;
-        picker.sourceType = sourceType;
-        [self presentViewController:picker animated:YES completion:nil];
+        NSString *sourceTypeTitle = sourceType == UIImagePickerControllerSourceTypePhotoLibrary ? @"相册":@"相机";
+        [[JYHudManager manager] showHudWithTitle:sourceTypeTitle message:[NSString stringWithFormat:@"请在设备的\"设置-隐私-%@\"中允许访问%@",sourceTypeTitle,sourceTypeTitle]];
     }
 }
+
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource
 
@@ -181,7 +181,7 @@ static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdent
     } else if (indexPath.row == JYRegisterDetailHomeRow) {
         
         ActionSheetMultipleStringPicker *picker = [[ActionSheetMultipleStringPicker alloc] initWithTitle:@"家乡"
-                                                                                                    rows:[JYUser home]
+                                                                                                    rows:[JYUser defaultHometown]
                                                                                         initialSelection:@[@0,@0]
                                                                                                doneBlock:^(ActionSheetMultipleStringPicker *picker, NSArray *selectedIndexes, id selectedValues)
                                                    {
@@ -196,24 +196,66 @@ static NSString *const kDetailCellReusableIdentifier = @"DetailCellReusableIdent
     }
 }
 
+#pragma mark - UIActionSheetDelegate 
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    UIImagePickerControllerSourceType type;
+    if (buttonIndex == 0) {
+        //相册
+        type = UIImagePickerControllerSourceTypePhotoLibrary;
+    } else if (buttonIndex == 1)  {
+        //相机
+        type = UIImagePickerControllerSourceTypeCamera;
+    }
+    
+    if (type == UIImagePickerControllerSourceTypePhotoLibrary || type == UIImagePickerControllerSourceTypeCamera) {
+        [self getImageWithSourceType:type];
+    }
+}
+
+#pragma mark VPImageCropperDelegate
+- (void)imageCropper:(VPImageCropperViewController *)cropperViewController didFinished:(UIImage *)editedImage {
+    self->_setAvatarView.userImg = editedImage;
+    [cropperViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imageCropperDidCancel:(VPImageCropperViewController *)cropperViewController {
+    [cropperViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     @weakify(self);
-    UIImage *pickedImage;
-    if (picker.allowsEditing) {
-        pickedImage = [info objectForKey:UIImagePickerControllerEditedImage];
-    } else {
-        pickedImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    }
+//    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+//    UIImage *pickedImage;
+//    
+//    if ([type isEqualToString:@"public.image"]) {
+//        pickedImage = [info objectForKey:UIImagePickerControllerEditedImage];
+//    }
+//    
+//    if (pickedImage) {
+//        @strongify(self);
+//        self->_setAvatarView.userImg = pickedImage;
+//    } else {
+//        [[JYHudManager manager] showHudWithText:@"图片获取失败"];
+//    }
+//    
+//    [picker dismissViewControllerAnimated:YES completion:nil];
     
-    if (pickedImage) {
+    
+    [picker dismissViewControllerAnimated:YES completion:^() {
         @strongify(self);
-
-    } else {
-        
-    }
-    [picker dismissViewControllerAnimated:YES completion:nil];
+        UIImage *portraitImg = [info objectForKey:UIImagePickerControllerOriginalImage];
+//        portraitImg = [self imageByScalingToMaxSize:portraitImg];
+        // 裁剪
+        VPImageCropperViewController *imgEditorVC = [[VPImageCropperViewController alloc] initWithImage:portraitImg cropFrame:CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.width) limitScaleRatio:3.0];
+        imgEditorVC.delegate = self;
+        [self presentViewController:imgEditorVC animated:YES completion:nil];
+    }];
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

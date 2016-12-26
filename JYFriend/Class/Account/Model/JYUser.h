@@ -40,9 +40,7 @@ typedef NS_ENUM(NSUInteger,JYUserSex) {
 //身高选择列表
 + (NSArray *)allUserHeights;
 //家乡选择列表
-//+ (NSArray *)allCities;
-+ (NSArray *)allProvinces;
-+ (NSArray *)allCities;
-+ (NSArray *)home;
++ (NSMutableDictionary *)allProvincesAndCities;
++ (NSArray *)defaultHometown;
 + (NSArray *)allCitiesWihtProvince:(NSString *)province;
 @end

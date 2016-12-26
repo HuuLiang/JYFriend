@@ -11,6 +11,8 @@
 		B3A079761E0CCBA100395817 /* JYNearPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A079751E0CCBA100395817 /* JYNearPersonCell.m */; };
 		B3A079791E0CFE5300395817 /* JYNearPersonBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A079781E0CFE5300395817 /* JYNearPersonBtn.m */; };
 		B3A0797C1E0D1D8300395817 /* JYNearBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A0797B1E0D1D8300395817 /* JYNearBottomView.m */; };
+		EC24A2F41E0E2887000B77A9 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC24A2F31E0E2887000B77A9 /* provinces.plist */; };
+		EC24A2F81E0E463E000B77A9 /* VPImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC24A2F71E0E463E000B77A9 /* VPImageCropperViewController.m */; };
 		EC2A71091E0B81E600BED161 /* JYMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A71081E0B81E600BED161 /* JYMessageViewController.m */; };
 		EC2A710C1E0B81F800BED161 /* JYNearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A710B1E0B81F800BED161 /* JYNearViewController.m */; };
 		EC4422BD1E09103900F48461 /* login_background.png in Resources */ = {isa = PBXBuildFile; fileRef = EC4422BC1E09103900F48461 /* login_background.png */; };
@@ -78,6 +80,9 @@
 		B3A0797B1E0D1D8300395817 /* JYNearBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNearBottomView.m; sourceTree = "<group>"; };
 		C68BEEC20755E0EF1FE6927C /* Pods-JYFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend.debug.xcconfig"; sourceTree = "<group>"; };
 		DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JYFriend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC24A2F31E0E2887000B77A9 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
+		EC24A2F61E0E463E000B77A9 /* VPImageCropperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPImageCropperViewController.h; sourceTree = "<group>"; };
+		EC24A2F71E0E463E000B77A9 /* VPImageCropperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VPImageCropperViewController.m; sourceTree = "<group>"; };
 		EC2A71071E0B81E600BED161 /* JYMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMessageViewController.h; sourceTree = "<group>"; };
 		EC2A71081E0B81E600BED161 /* JYMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMessageViewController.m; sourceTree = "<group>"; };
 		EC2A710A1E0B81F800BED161 /* JYNearViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNearViewController.h; sourceTree = "<group>"; };
@@ -220,6 +225,15 @@
 				4DE2D66049E36091993382B8 /* Pods-JYFriend.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		EC24A2F51E0E463E000B77A9 /* VPImageCropper */ = {
+			isa = PBXGroup;
+			children = (
+				EC24A2F61E0E463E000B77A9 /* VPImageCropperViewController.h */,
+				EC24A2F71E0E463E000B77A9 /* VPImageCropperViewController.m */,
+			);
+			path = VPImageCropper;
 			sourceTree = "<group>";
 		};
 		EC2A70FF1E0B816800BED161 /* Message */ = {
@@ -472,6 +486,7 @@
 		ECCFA05A1DEBF1F3000F4E7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EC24A2F31E0E2887000B77A9 /* provinces.plist */,
 				EC4422BC1E09103900F48461 /* login_background.png */,
 			);
 			path = Resources;
@@ -506,6 +521,7 @@
 		ECCFA05D1DEBF5B7000F4E7A /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				EC24A2F51E0E463E000B77A9 /* VPImageCropper */,
 				EC804A841E0D54FA00191387 /* ActionSheetPicker-3.0 */,
 				ECCFA0A71DEC182B000F4E7A /* DBModel */,
 			);
@@ -701,6 +717,7 @@
 			files = (
 				ECCFA0521DEBF0D4000F4E7A /* LaunchScreen.storyboard in Resources */,
 				EC4422BD1E09103900F48461 /* login_background.png in Resources */,
+				EC24A2F41E0E2887000B77A9 /* provinces.plist in Resources */,
 				ECCFA04F1DEBF0D4000F4E7A /* Assets.xcassets in Resources */,
 				ECCFA06F1DEBF917000F4E7A /* config.plist in Resources */,
 			);
@@ -796,6 +813,7 @@
 				EC9843E11E07ACC600754471 /* UIView+RoundCorner.m in Sources */,
 				EC2A710C1E0B81F800BED161 /* JYNearViewController.m in Sources */,
 				B3A079791E0CFE5300395817 /* JYNearPersonBtn.m in Sources */,
+				EC24A2F81E0E463E000B77A9 /* VPImageCropperViewController.m in Sources */,
 				ECCFA0751DEC049D000F4E7A /* JYUtil.m in Sources */,
 				EC2A71091E0B81E600BED161 /* JYMessageViewController.m in Sources */,
 				B3A0797C1E0D1D8300395817 /* JYNearBottomView.m in Sources */,

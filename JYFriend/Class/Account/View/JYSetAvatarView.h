@@ -12,4 +12,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame action:(void (^)(void))handler;
 
+@property (nonatomic) UIImage *userImg;
+
 @end
