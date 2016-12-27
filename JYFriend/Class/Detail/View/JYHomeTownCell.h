@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JYHomeTownCell : UITableViewCell
+@interface JYHomeTownCell : UICollectionViewCell
 
+@property (nonatomic) NSInteger gender;
+@property (nonatomic) NSInteger age;
+@property (nonatomic,assign) NSInteger height;
+@property (nonatomic,assign,getter=isVip) BOOL vip;
+@property (nonatomic,assign) NSInteger distance;
+@property (nonatomic) NSString *time;
+@property (nonatomic) NSString *homeTown;
 @end
