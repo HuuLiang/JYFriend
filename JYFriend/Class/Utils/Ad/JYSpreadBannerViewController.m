@@ -137,7 +137,4 @@
     _currentIndex = index;
 }
 
-
-
-
 @end

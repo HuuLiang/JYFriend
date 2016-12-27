@@ -1,28 +1,22 @@
 //
-//  JYDynamicViewController.m
+//  JYChatViewController.m
 //  JYFriend
 //
-//  Created by Liang on 2016/12/19.
+//  Created by Liang on 2016/12/26.
 //  Copyright © 2016年 Liang. All rights reserved.
 //
 
-#import "JYDynamicViewController.h"
+#import "JYChatViewController.h"
 
-@interface JYDynamicViewController ()
+@interface JYChatViewController ()
 
 @end
 
-@implementation JYDynamicViewController
+@implementation JYChatViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    @weakify(self);
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"发飙" style:UIBarButtonItemStylePlain handler:^(id sender) {
-        @strongify(self);
-        //发表动态
-    }];
 }
 
 - (void)didReceiveMemoryWarning {

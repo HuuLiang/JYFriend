@@ -9,6 +9,7 @@
 #import "JYSegmentViewController.h"
 #import "JYCharacterViewController.h"
 #import "JYDynamicViewController.h"
+#import "JYRecommendViewController.h"
 
 @interface JYSegmentViewController () <UIPageViewControllerDelegate,UIPageViewControllerDataSource>
 {
@@ -55,9 +56,17 @@ QBDefineLazyPropertyInitialization(NSMutableArray, viewControllers)
     self.navigationItem.titleView = _segmentedControl;
 
     @weakify(self);
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@""] style:UIBarButtonItemStylePlain handler:^(id sender) {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"动态" style:UIBarButtonItemStylePlain handler:^(id sender) {
         @strongify(self);
+        //发表动态
         
+    }];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"推荐" style:UIBarButtonItemStylePlain handler:^(id sender) {
+        @strongify(self);
+        //推荐
+        JYRecommendViewController *recommendVC = [[JYRecommendViewController alloc] init];
+        [recommendVC showInViewController:self];
     }];
     
 }
