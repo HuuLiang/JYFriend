@@ -176,6 +176,9 @@
     _vip = vip;
     if (vip) {
     self.vipLabel.text = @"VIP";
+    }else {
+        _vipLabel.hidden = YES;
+        [_vipLabel removeFromSuperview];
     }
 }
 

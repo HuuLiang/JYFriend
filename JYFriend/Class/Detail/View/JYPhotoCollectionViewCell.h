@@ -11,5 +11,6 @@
 @interface JYPhotoCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic) NSString *imageUrl;
+@property (nonatomic,assign)BOOL isVideoImage;
 
 @end
