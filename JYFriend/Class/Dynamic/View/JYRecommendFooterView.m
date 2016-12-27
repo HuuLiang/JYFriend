@@ -27,8 +27,8 @@
         @weakify(self);
         _greetButton = [[JYNextButton alloc] initWithTitle:@"跟她们打个招呼" action:^{
             @strongify(self);
-            if (self.refreshAction) {
-                self.refreshAction(self);
+            if (self.recommendAction) {
+                self.recommendAction(self);
             }
         }];
         [_greetButton setTitleColor:kColor(@"#ffffff") forState:UIControlStateNormal];
@@ -42,8 +42,8 @@
         [self addSubview:_refreshButton];
         [_refreshButton bk_addEventHandler:^(id sender) {
             @strongify(self);
-            if (self.recommendAction) {
-                self.recommendAction(self);
+            if (self.refreshAction) {
+                self.refreshAction(self);
             }
         } forControlEvents:UIControlEventTouchUpInside];
         

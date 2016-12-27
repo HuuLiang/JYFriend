@@ -20,9 +20,12 @@
 		B3D114D71E0E26E9001DC147 /* JYNotFetchUserlocalView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D114D61E0E26E9001DC147 /* JYNotFetchUserlocalView.m */; };
 		EC24A2F41E0E2887000B77A9 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC24A2F31E0E2887000B77A9 /* provinces.plist */; };
 		EC24A2F81E0E463E000B77A9 /* VPImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC24A2F71E0E463E000B77A9 /* VPImageCropperViewController.m */; };
-		EC2A71091E0B81E600BED161 /* JYMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A71081E0B81E600BED161 /* JYMessageViewController.m */; };
+		EC2A71091E0B81E600BED161 /* JYContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A71081E0B81E600BED161 /* JYContactViewController.m */; };
 		EC2A710C1E0B81F800BED161 /* JYNearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A710B1E0B81F800BED161 /* JYNearViewController.m */; };
 		EC4422BD1E09103900F48461 /* login_background.png in Resources */ = {isa = PBXBuildFile; fileRef = EC4422BC1E09103900F48461 /* login_background.png */; };
+		EC485D101E120F0B00F3F18B /* JYMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC485D0F1E120F0B00F3F18B /* JYMessageModel.m */; };
+		EC4C47C51E1274AD00AA47DC /* JYDynamicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C47C41E1274AD00AA47DC /* JYDynamicCell.m */; };
+		EC4C47C81E12807A00AA47DC /* JYDynamicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C47C71E12807A00AA47DC /* JYDynamicModel.m */; };
 		EC55CE6B1E077AEB0030C8F5 /* JYSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC55CE6A1E077AEB0030C8F5 /* JYSegmentViewController.m */; };
 		EC55CE6E1E077C730030C8F5 /* JYCharacterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC55CE6D1E077C730030C8F5 /* JYCharacterViewController.m */; };
 		EC55CE711E077C970030C8F5 /* JYDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC55CE701E077C970030C8F5 /* JYDynamicViewController.m */; };
@@ -151,9 +154,9 @@
 		EC88F8641E110D99009AAEED /* JYRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88F8631E110D99009AAEED /* JYRecommendCell.m */; };
 		EC88F86A1E111148009AAEED /* JYRecommendHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88F8691E111148009AAEED /* JYRecommendHeaderView.m */; };
 		EC88F86D1E111161009AAEED /* JYRecommendFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88F86C1E111161009AAEED /* JYRecommendFooterView.m */; };
-		EC88F8731E112CE8009AAEED /* JYMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88F8721E112CE8009AAEED /* JYMessageCell.m */; };
-		EC88F8761E11369D009AAEED /* JYChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88F8751E11369D009AAEED /* JYChatViewController.m */; };
-		EC88F8791E1137DB009AAEED /* JYMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88F8781E1137DB009AAEED /* JYMessageModel.m */; };
+		EC88F8731E112CE8009AAEED /* JYContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88F8721E112CE8009AAEED /* JYContactCell.m */; };
+		EC88F8761E11369D009AAEED /* JYMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88F8751E11369D009AAEED /* JYMessageViewController.m */; };
+		EC88F8791E1137DB009AAEED /* JYContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88F8781E1137DB009AAEED /* JYContactModel.m */; };
 		EC9843D51E07905F00754471 /* JYTableHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9843D41E07905F00754471 /* JYTableHeaderFooterView.m */; };
 		EC9843D81E07A56B00754471 /* JYMineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9843D71E07A56B00754471 /* JYMineCell.m */; };
 		EC9843DB1E07A96C00754471 /* JYMineAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9843DA1E07A96C00754471 /* JYMineAvatarView.m */; };
@@ -221,11 +224,17 @@
 		EC24A2F31E0E2887000B77A9 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
 		EC24A2F61E0E463E000B77A9 /* VPImageCropperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPImageCropperViewController.h; sourceTree = "<group>"; };
 		EC24A2F71E0E463E000B77A9 /* VPImageCropperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VPImageCropperViewController.m; sourceTree = "<group>"; };
-		EC2A71071E0B81E600BED161 /* JYMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMessageViewController.h; sourceTree = "<group>"; };
-		EC2A71081E0B81E600BED161 /* JYMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMessageViewController.m; sourceTree = "<group>"; };
+		EC2A71071E0B81E600BED161 /* JYContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYContactViewController.h; sourceTree = "<group>"; };
+		EC2A71081E0B81E600BED161 /* JYContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYContactViewController.m; sourceTree = "<group>"; };
 		EC2A710A1E0B81F800BED161 /* JYNearViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNearViewController.h; sourceTree = "<group>"; };
 		EC2A710B1E0B81F800BED161 /* JYNearViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNearViewController.m; sourceTree = "<group>"; };
 		EC4422BC1E09103900F48461 /* login_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_background.png; sourceTree = "<group>"; };
+		EC485D0E1E120F0B00F3F18B /* JYMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMessageModel.h; sourceTree = "<group>"; };
+		EC485D0F1E120F0B00F3F18B /* JYMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMessageModel.m; sourceTree = "<group>"; };
+		EC4C47C31E1274AD00AA47DC /* JYDynamicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDynamicCell.h; sourceTree = "<group>"; };
+		EC4C47C41E1274AD00AA47DC /* JYDynamicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDynamicCell.m; sourceTree = "<group>"; };
+		EC4C47C61E12807A00AA47DC /* JYDynamicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDynamicModel.h; sourceTree = "<group>"; };
+		EC4C47C71E12807A00AA47DC /* JYDynamicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDynamicModel.m; sourceTree = "<group>"; };
 		EC55CE691E077AEB0030C8F5 /* JYSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSegmentViewController.h; sourceTree = "<group>"; };
 		EC55CE6A1E077AEB0030C8F5 /* JYSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSegmentViewController.m; sourceTree = "<group>"; };
 		EC55CE6C1E077C730030C8F5 /* JYCharacterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYCharacterViewController.h; sourceTree = "<group>"; };
@@ -447,12 +456,12 @@
 		EC88F8691E111148009AAEED /* JYRecommendHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRecommendHeaderView.m; sourceTree = "<group>"; };
 		EC88F86B1E111161009AAEED /* JYRecommendFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRecommendFooterView.h; sourceTree = "<group>"; };
 		EC88F86C1E111161009AAEED /* JYRecommendFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRecommendFooterView.m; sourceTree = "<group>"; };
-		EC88F8711E112CE8009AAEED /* JYMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMessageCell.h; sourceTree = "<group>"; };
-		EC88F8721E112CE8009AAEED /* JYMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMessageCell.m; sourceTree = "<group>"; };
-		EC88F8741E11369D009AAEED /* JYChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYChatViewController.h; sourceTree = "<group>"; };
-		EC88F8751E11369D009AAEED /* JYChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYChatViewController.m; sourceTree = "<group>"; };
-		EC88F8771E1137DB009AAEED /* JYMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMessageModel.h; sourceTree = "<group>"; };
-		EC88F8781E1137DB009AAEED /* JYMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMessageModel.m; sourceTree = "<group>"; };
+		EC88F8711E112CE8009AAEED /* JYContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYContactCell.h; sourceTree = "<group>"; };
+		EC88F8721E112CE8009AAEED /* JYContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYContactCell.m; sourceTree = "<group>"; };
+		EC88F8741E11369D009AAEED /* JYMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMessageViewController.h; sourceTree = "<group>"; };
+		EC88F8751E11369D009AAEED /* JYMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMessageViewController.m; sourceTree = "<group>"; };
+		EC88F8771E1137DB009AAEED /* JYContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYContactModel.h; sourceTree = "<group>"; };
+		EC88F8781E1137DB009AAEED /* JYContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYContactModel.m; sourceTree = "<group>"; };
 		EC9843D31E07905F00754471 /* JYTableHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYTableHeaderFooterView.h; sourceTree = "<group>"; };
 		EC9843D41E07905F00754471 /* JYTableHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYTableHeaderFooterView.m; sourceTree = "<group>"; };
 		EC9843D61E07A56B00754471 /* JYMineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMineCell.h; sourceTree = "<group>"; };
@@ -627,10 +636,10 @@
 		EC2A71001E0B816800BED161 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EC2A71071E0B81E600BED161 /* JYMessageViewController.h */,
-				EC2A71081E0B81E600BED161 /* JYMessageViewController.m */,
-				EC88F8741E11369D009AAEED /* JYChatViewController.h */,
-				EC88F8751E11369D009AAEED /* JYChatViewController.m */,
+				EC2A71071E0B81E600BED161 /* JYContactViewController.h */,
+				EC2A71081E0B81E600BED161 /* JYContactViewController.m */,
+				EC88F8741E11369D009AAEED /* JYMessageViewController.h */,
+				EC88F8751E11369D009AAEED /* JYMessageViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -638,8 +647,10 @@
 		EC2A71011E0B816800BED161 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EC88F8771E1137DB009AAEED /* JYMessageModel.h */,
-				EC88F8781E1137DB009AAEED /* JYMessageModel.m */,
+				EC88F8771E1137DB009AAEED /* JYContactModel.h */,
+				EC88F8781E1137DB009AAEED /* JYContactModel.m */,
+				EC485D0E1E120F0B00F3F18B /* JYMessageModel.h */,
+				EC485D0F1E120F0B00F3F18B /* JYMessageModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -647,8 +658,8 @@
 		EC2A71021E0B816800BED161 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				EC88F8711E112CE8009AAEED /* JYMessageCell.h */,
-				EC88F8721E112CE8009AAEED /* JYMessageCell.m */,
+				EC88F8711E112CE8009AAEED /* JYContactCell.h */,
+				EC88F8721E112CE8009AAEED /* JYContactCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -722,6 +733,8 @@
 		EC55CE671E077A780030C8F5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EC4C47C61E12807A00AA47DC /* JYDynamicModel.h */,
+				EC4C47C71E12807A00AA47DC /* JYDynamicModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -731,6 +744,8 @@
 			children = (
 				EC88F85C1E10FBE7009AAEED /* JYCharacterCell.h */,
 				EC88F85D1E10FBE7009AAEED /* JYCharacterCell.m */,
+				EC4C47C31E1274AD00AA47DC /* JYDynamicCell.h */,
+				EC4C47C41E1274AD00AA47DC /* JYDynamicCell.m */,
 				EC88F8621E110D99009AAEED /* JYRecommendCell.h */,
 				EC88F8631E110D99009AAEED /* JYRecommendCell.m */,
 				EC88F8681E111148009AAEED /* JYRecommendHeaderView.h */,
@@ -1662,7 +1677,7 @@
 				EC88F8141E10B7B4009AAEED /* SEConstants.m in Sources */,
 				EC9843E41E07CA7900754471 /* JYNavigationController.m in Sources */,
 				EC88F7F41E10B7B4009AAEED /* UIView+XHRemoteImage.m in Sources */,
-				EC88F8761E11369D009AAEED /* JYChatViewController.m in Sources */,
+				EC88F8761E11369D009AAEED /* JYMessageViewController.m in Sources */,
 				EC88F80E1E10B7B4009AAEED /* XHMessage.m in Sources */,
 				EC804A9D1E0D54FA00191387 /* ActionSheetLocalePicker.m in Sources */,
 				EC88F8611E110C8D009AAEED /* JYRecommendViewController.m in Sources */,
@@ -1687,6 +1702,7 @@
 				EC88F7F01E10B7B4009AAEED /* UIImage+RoundedCorner.m in Sources */,
 				EC88F8291E10B7B5009AAEED /* XHVoiceRecordHUD.m in Sources */,
 				EC88F8051E10B7B4009AAEED /* XHOperationNetworkKit.m in Sources */,
+				EC485D101E120F0B00F3F18B /* JYMessageModel.m in Sources */,
 				EC88F7F21E10B7B4009AAEED /* UIImage+XHRounded.m in Sources */,
 				EC88F7F91E10B7B4009AAEED /* XHMessageBubbleHelper.m in Sources */,
 				B361847D1E11014A00DD55A5 /* JYDetailPhtoCell.m in Sources */,
@@ -1699,10 +1715,11 @@
 				EC88F8061E10B7B4009AAEED /* XHMessageAvatarFactory.m in Sources */,
 				EC804A9B1E0D54FA00191387 /* ActionSheetDatePicker.m in Sources */,
 				EC88F8001E10B7B4009AAEED /* XHDisplayTextViewController.m in Sources */,
-				EC88F8731E112CE8009AAEED /* JYMessageCell.m in Sources */,
+				EC88F8731E112CE8009AAEED /* JYContactCell.m in Sources */,
 				ECAF89091E095BD0005A6C62 /* AppDelegate+login.m in Sources */,
 				EC88F8641E110D99009AAEED /* JYRecommendCell.m in Sources */,
 				EC88F85B1E10DD33009AAEED /* JYRegisterPhoneNumberViewController.m in Sources */,
+				EC4C47C51E1274AD00AA47DC /* JYDynamicCell.m in Sources */,
 				ECCFA07A1DEC060C000F4E7A /* JYConfiguration.m in Sources */,
 				EC88F7EE1E10B7B4009AAEED /* UIImage+Alpha.m in Sources */,
 				EC88F7EF1E10B7B4009AAEED /* UIImage+Resize.m in Sources */,
@@ -1732,8 +1749,9 @@
 				EC88F86A1E111148009AAEED /* JYRecommendHeaderView.m in Sources */,
 				EC24A2F81E0E463E000B77A9 /* VPImageCropperViewController.m in Sources */,
 				EC88F7F11E10B7B4009AAEED /* UIImage+Utility.m in Sources */,
+				EC4C47C81E12807A00AA47DC /* JYDynamicModel.m in Sources */,
 				ECCFA0751DEC049D000F4E7A /* JYUtil.m in Sources */,
-				EC2A71091E0B81E600BED161 /* JYMessageViewController.m in Sources */,
+				EC2A71091E0B81E600BED161 /* JYContactViewController.m in Sources */,
 				B3A0797C1E0D1D8300395817 /* JYNearBottomView.m in Sources */,
 				B3A079761E0CCBA100395817 /* JYNearPersonCell.m in Sources */,
 				EC88F7FB1E10B7B4009AAEED /* XHVoiceCommonHelper.m in Sources */,
@@ -1771,7 +1789,7 @@
 				EC804A9E1E0D54FA00191387 /* ActionSheetMultipleStringPicker.m in Sources */,
 				EC88F8121E10B7B4009AAEED /* LKBadgeView.m in Sources */,
 				ECCFA0631DEBF60A000F4E7A /* JYTabBarController.m in Sources */,
-				EC88F8791E1137DB009AAEED /* JYMessageModel.m in Sources */,
+				EC88F8791E1137DB009AAEED /* JYContactModel.m in Sources */,
 				EC88F82C1E10B7B5009AAEED /* XHEmotionManagerView.m in Sources */,
 				EC88F86D1E111161009AAEED /* JYRecommendFooterView.m in Sources */,
 				ECCFA0911DEC0B0B000F4E7A /* JYSystemConfigModel.m in Sources */,

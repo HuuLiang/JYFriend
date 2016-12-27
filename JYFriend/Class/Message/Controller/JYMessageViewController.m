@@ -2,94 +2,108 @@
 //  JYMessageViewController.m
 //  JYFriend
 //
-//  Created by Liang on 2016/12/22.
+//  Created by Liang on 2016/12/26.
 //  Copyright © 2016年 Liang. All rights reserved.
 //
 
 #import "JYMessageViewController.h"
-#import "JYMessageCell.h"
-#import "JYChatViewController.h"
+#import "JYMessageModel.h"
 
-static NSString *const kMessageCellReusableIdentifier = @"MessageCellReusableIdentifier";
-
-@interface JYMessageViewController () <UITableViewDelegate,UITableViewDataSource>
-{
-    UITableView *_tableVC;
-}
+@interface JYMessageViewController ()
+@property (nonatomic,retain) NSMutableArray<JYMessageModel *> *chatMessages;
 @end
 
 @implementation JYMessageViewController
 
++ (instancetype)showMessageWithUser:(JYUser *)user inViewController:(UIViewController *)viewController {
+    JYMessageViewController *messageVC = [[self alloc] initWithUser:user];
+    [viewController.navigationController pushViewController:messageVC animated:YES];
+    return messageVC;
+}
+
+- (instancetype)initWithUser:(JYUser *)user {
+    self = [self init];
+    if (self) {
+        _user = user;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _tableVC = [[UITableView alloc] initWithFrame:CGRectZero];
-    _tableVC.delegate = self;
-    _tableVC.dataSource = self;
-    [_tableVC registerClass:[JYMessageCell class] forCellReuseIdentifier:kMessageCellReusableIdentifier];
-    [self.view addSubview:_tableVC];
-    {
-        [_tableVC mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
-    }
-    [_tableVC reloadData];
+    self.messageTableView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
+    self.title = self.user.nickName;
+    self.messageSender = [JYUser currentUser].userId;
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-#pragma mark -- UITableViewDelegate,UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 30;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    JYMessageCell *message = [tableView dequeueReusableCellWithIdentifier:kMessageCellReusableIdentifier forIndexPath:indexPath];
-    if (indexPath.row < 30) {
-        @weakify(self);
-        message.touchUserImgVAction = ^(id obj) {
-            @strongify(self);
-            //用户详情
-        };
-        message.userImgStr = @"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg";
-        message.nickNameStr = @"渣渣";
-        message.timeStr = @"1天前";
-        message.latestMessage = @"你好，很高兴认识你";
-    }
-    return message;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return kWidth(180);
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)reloadChatMessages {
+    self.chatMessages = [JYMessageModel allMessagesForUser:self.user.userId].mutableCopy;
     
-}
-
-- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    @weakify(self);
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        @strongify(self);
+    [self.chatMessages enumerateObjectsUsingBlock:^(JYMessageModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        XHMessage *message;
+        NSDate *date = [JYUtil dateFromString:@"19910901111111" WithDateFormat:KDateFormatLong];
+        if (obj.messageType == JYMessageTypeText || obj.messageType == JYMessageTypeSystem) {
+            message = [[XHMessage alloc] initWithText:obj.messageContent
+                                                              sender:obj.sendUserId
+                                                           timestamp:date];
+        } else if (obj.messageType == JYMessageTypePhoto) {
+            message = [[XHMessage alloc] initWithPhoto:nil thumbnailUrl:nil originPhotoUrl:nil sender:obj.sendUserId timestamp:date];
+        } else if (obj.messageType == JYMessageTypeVioce) {
+            message = [[XHMessage alloc] initWithVoicePath:@"" voiceUrl:nil voiceDuration:@"0" sender:obj.sendUserId timestamp:date];
+        }
         
+        if ([obj.sendUserId isEqualToString:[JYUser currentUser].userId]) {
+            message.bubbleMessageType = XHBubbleMessageTypeSending;
+        } else {
+            message.bubbleMessageType = XHBubbleMessageTypeReceiving;
+        }
+        [self.messages addObject:message];
     }];
-    deleteAction.backgroundColor = kColor(@"#E55D51");
-
-    UITableViewRowAction *editRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"置顶" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        @strongify(self);
-        
-        
-    }];
-    editRowAction.backgroundColor = kColor(@"#DEDEDE");
-    
-    return @[deleteAction,editRowAction];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self reloadChatMessages];
+}
+
+
+#pragma mark - XHMessageTableViewControllerDelegate
+
+- (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
     
 }
+
+- (void)didSendPhoto:(UIImage *)photo fromSender:(NSString *)sender onDate:(NSDate *)date {
+    
+}
+
+- (void)didSendVoice:(NSString *)voicePath voiceDuration:(NSString *)voiceDuration fromSender:(NSString *)sender onDate:(NSDate *)date {
+    
+}
+
+- (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)configureCell:(XHMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath targetMessage:(id<XHMessageModel>)message {
+    return 100;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath targetMessage:(id<XHMessageModel>)message {
+    return nil;
+}
+
+#pragma mark - XHMessageTableViewCellDelegate
+
+#pragma mark - XHMessageInputViewDelegate
 
 @end

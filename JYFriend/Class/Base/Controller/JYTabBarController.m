@@ -8,7 +8,7 @@
 
 #import "JYTabBarController.h"
 
-#import "JYMessageViewController.h"
+#import "JYContactViewController.h"
 #import "JYSegmentViewController.h"
 #import "JYNearViewController.h"
 #import "JYMineViewController.h"
@@ -41,9 +41,9 @@
                                                           image:[UIImage imageNamed:@"tabbar_dynamic_normal"]
                                                   selectedImage:[[UIImage imageNamed:@"tabbar_dynamic_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
 
-    JYMessageViewController *messageVC = [[JYMessageViewController alloc] initWithTitle:@"消息"];
-    JYNavigationController *messageNav = [[JYNavigationController alloc] initWithRootViewController:messageVC];
-    messageNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:messageVC.title
+    JYContactViewController *contactVC = [[JYContactViewController alloc] initWithTitle:@"消息"];
+    JYNavigationController *contactNav = [[JYNavigationController alloc] initWithRootViewController:contactVC];
+    contactNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:contactVC.title
                                                           image:[UIImage imageNamed:@"tabbar_message_normal"]
                                                   selectedImage:[[UIImage imageNamed:@"tabbar_message_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
@@ -63,7 +63,7 @@
     
     self.tabBar.translucent = NO;
     self.delegate = self;
-    self.viewControllers = @[dynamicNav,messageNav,nearNav,mineNav];
+    self.viewControllers = @[dynamicNav,contactNav,nearNav,mineNav];
 }
 
 #pragma mark -- UITabBarControllerDelegate

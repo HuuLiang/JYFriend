@@ -52,8 +52,8 @@
 }
 
 - (void)setIsSelected:(BOOL)isSelected {
+    _isSelected = isSelected;
     _selectedBtn.selected = isSelected;
 }
-
 
 @end

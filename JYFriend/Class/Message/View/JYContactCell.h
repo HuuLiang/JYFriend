@@ -1,5 +1,5 @@
 //
-//  JYMessageCell.h
+//  JYContactCell.h
 //  JYFriend
 //
 //  Created by Liang on 2016/12/26.
@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JYMessageCell : UITableViewCell
+@interface JYContactCell : UITableViewCell
 @property (nonatomic) QBAction touchUserImgVAction;
 @property (nonatomic) NSString *userImgStr;
 @property (nonatomic) NSString *nickNameStr;
-@property (nonatomic) NSString *timeStr;
-@property (nonatomic) NSString *latestMessage;
+@property (nonatomic) NSString *recentTimeStr;
+@property (nonatomic) NSString *recentMessage;
+@property (nonatomic) NSUInteger unreadMessage;
+@property (nonatomic) BOOL isStick;
 @end

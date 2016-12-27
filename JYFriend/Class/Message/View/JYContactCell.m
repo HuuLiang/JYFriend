@@ -1,14 +1,14 @@
 //
-//  JYMessageCell.m
+//  JYContactCell.m
 //  JYFriend
 //
 //  Created by Liang on 2016/12/26.
 //  Copyright © 2016年 Liang. All rights reserved.
 //
 
-#import "JYMessageCell.h"
+#import "JYContactCell.h"
 
-@interface JYMessageCell ()
+@interface JYContactCell ()
 {
     UIImageView *_userImgV;
     UILabel     *_nickNameLabel;
@@ -17,7 +17,7 @@
 }
 @end
 
-@implementation JYMessageCell
+@implementation JYContactCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -91,16 +91,21 @@
     _nickNameLabel.text = nickNameStr;
 }
 
-- (void)setTimeStr:(NSString *)timeStr {
-    _timeLabel.text = timeStr;
+- (void)setRecentTimeStr:(NSString *)recentTimeStr {
+    _timeLabel.text = recentTimeStr;
 }
 
-- (void)setLatestMessage:(NSString *)latestMessage {
-    _messageLabel.text = latestMessage;
+- (void)setRecentMessage:(NSString *)recentMessage {
+    _messageLabel.text = recentMessage;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (void)setIsStick:(BOOL)isStick {
+    if (isStick) {
+        self.contentView.backgroundColor = [[UIColor colorWithHexString:@"#efefef"] colorWithAlphaComponent:0.5];
+    } else {
+        self.contentView.backgroundColor = kColor(@"#ffffff");
+    }
 }
+
 
 @end

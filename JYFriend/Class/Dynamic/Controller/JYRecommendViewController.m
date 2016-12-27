@@ -19,6 +19,7 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
 {
     UICollectionView *_layoutCollectionView;
 }
+@property (nonatomic) NSMutableArray *dataSource;
 @end
 
 @implementation JYRecommendViewController
@@ -48,6 +49,8 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
             make.size.mas_equalTo(CGSizeMake(kScreenWidth * 0.8, kScreenWidth*0.8 * 18 / 30 + kWidth(300)));
         }];
     }
+    
+    
     [self reloadData];
 }
 
@@ -55,13 +58,52 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
     [super didReceiveMemoryWarning];
 }
 
-- (void)showInViewController:(UIViewController *)viewController {
-    [viewController.view addSubview:self.view];
-}
-
 - (void)reloadData {
     
 }
+
+
+- (void)showInViewController:(UIViewController *)viewController {
+    BOOL anyRecommendView = [viewController.childViewControllers bk_any:^BOOL(id obj) {
+        if ([obj isKindOfClass:[self class]]) {
+            return YES;
+        }
+        return NO;
+    }];
+    
+    if (anyRecommendView) {
+        return ;
+    }
+    
+    if ([viewController.view.subviews containsObject:self.view]) {
+        return ;
+    }
+    
+    [viewController addChildViewController:self];
+    self.view.frame = viewController.view.bounds;
+    self.view.alpha = 0;
+    [viewController.view addSubview:self.view];
+    [self didMoveToParentViewController:viewController];
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.view.alpha = 1;
+    }];
+}
+
+- (void)hide {
+    if (!self.view.superview) {
+        return ;
+    }
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.view.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self willMoveToParentViewController:nil];
+        [self.view removeFromSuperview];
+        [self removeFromParentViewController];
+    }];
+}
+
 
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
@@ -78,6 +120,7 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
     if (indexPath.item < 6) {
         recommendCell.selected = YES;
         recommendCell.userImgStr = @"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg";
+        recommendCell.isSelected = YES;
     }
     return recommendCell;
 }
@@ -97,8 +140,7 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
         footerView.recommendAction = ^(id obj) {
             @strongify(self);
             //批量打招呼 完成之后关闭弹窗
-            
-            [self removeFromParentViewController];
+            [self hide];
         };
         return footerView;
     }
@@ -133,7 +175,7 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.item < 6) {
         JYRecommendCell *recommendCell = (JYRecommendCell *)[collectionView cellForItemAtIndexPath:indexPath];
-        recommendCell.selected = !recommendCell.isSelected;
+        recommendCell.isSelected = !recommendCell.isSelected;
     }
 }
 

@@ -10,4 +10,5 @@
 
 @interface JYRecommendCell : UICollectionViewCell
 @property (nonatomic) NSString *userImgStr;
+@property (nonatomic) BOOL isSelected;
 @end
