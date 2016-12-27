@@ -1508,8 +1508,8 @@
 				TargetAttributes = {
 					ECCFA03E1DEBF0D4000F4E7A = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 7VHT3KAS56;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = NS6846Q9KM;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -1900,15 +1900,19 @@
 			baseConfigurationReference = C68BEEC20755E0EF1FE6927C /* Pods-JYFriend.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 7VHT3KAS56;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Liangliang Hu (56QY36P8TL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Liangliang Hu (56QY36P8TL)";
+				DEVELOPMENT_TEAM = NS6846Q9KM;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JYFriend/JYPrefixHeader.pch";
 				INFOPLIST_FILE = JYFriend/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "aef97c64-cd93-43e5-9598-3ed0fbcc2ab6";
+				PROVISIONING_PROFILE_SPECIFIER = PPSocialDevlopmentProvisoningProfile;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
@@ -1918,16 +1922,20 @@
 			baseConfigurationReference = 4DE2D66049E36091993382B8 /* Pods-JYFriend.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Huazhong Hengtai Network Technology Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Huazhong Hengtai Network Technology Co., Ltd.";
 				DEPLOYMENT_POSTPROCESSING = YES;
-				DEVELOPMENT_TEAM = 7VHT3KAS56;
+				DEVELOPMENT_TEAM = NS6846Q9KM;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JYFriend/JYPrefixHeader.pch";
 				INFOPLIST_FILE = JYFriend/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "51221846-87db-4da3-b1f6-320b5ca14803";
+				PROVISIONING_PROFILE_SPECIFIER = PPSocialDistributionProvisoningProfile;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
