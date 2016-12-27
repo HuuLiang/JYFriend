@@ -35,7 +35,6 @@ PODS:
   - FMDB/standard (2.6.2)
   - Masonry (0.6.4)
   - MBProgressHUD (0.9.2)
-  - MessageDisplayKit (5.4)
   - MJRefresh (2.4.12)
   - OpenSSL (1.0.208)
   - QBExtensions (0.0.7)
@@ -75,7 +74,6 @@ DEPENDENCIES:
   - BlocksKit (~> 2.2.5)
   - Masonry (~> 0.6.3)
   - MBProgressHUD (~> 0.9.2)
-  - MessageDisplayKit (~> 5.4)
   - MJRefresh (~> 2.4.12)
   - QBPayment/HTPay (~> 0.0.38)
   - QBPayment/IappPay (~> 0.0.38)
@@ -92,7 +90,6 @@ SPEC CHECKSUMS:
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  MessageDisplayKit: dfec1bb7cdd2881228459ede16b3a8a557c35f89
   MJRefresh: ca8e9589895977df32d379d46e6b8a5450b3ff44
   OpenSSL: b187269d386b07452f56af273764ea0636dd5da8
   QBExtensions: a32e8ae6e371c208e2efe2b2eec7251c36187b90
@@ -104,6 +101,6 @@ SPEC CHECKSUMS:
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664
   UMengAnalytics-NO-IDFA: f1b08b540eba6ebad044a574cae6d988cf40cfda
 
-PODFILE CHECKSUM: ca400142c827ca2cb80c7c5ddc290db93a11b7a0
+PODFILE CHECKSUM: 587c5aa37f75cd4c2388e30e41b126da58ee6ed1
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.1.1

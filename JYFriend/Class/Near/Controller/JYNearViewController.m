@@ -11,6 +11,7 @@
 #import "JYNearBottomView.h"
 #import <CoreLocation/CoreLocation.h>
 #import "JYNotFetchUserlocalView.h"
+#import "JYDetailViewController.h"
 
 static NSString *const kNearPersonCellIdentifier = @"knearpersoncell_identifier";
 
@@ -245,10 +246,11 @@ QBDefineLazyPropertyInitialization(CLLocationManager, locationManager)
         self.bottomView.hidden = NO;
         self.bottomView.personNumber = self.allSelectCells.count;
         
-    }else {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    JYDetailViewController *detailVC = [[JYDetailViewController alloc] init];
+    [self.navigationController pushViewController:detailVC animated:YES];
 
 }
 
