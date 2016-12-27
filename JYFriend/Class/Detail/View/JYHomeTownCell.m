@@ -139,9 +139,9 @@
         [self addSubview:_homeTownLabel];
         {
         [_homeTownLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.mas_equalTo(self.timeLabel);
+            make.top.mas_equalTo(homeLabel.mas_bottom).mas_offset(kWidth(28.));
             make.right.mas_equalTo(homeLabel);
-            make.size.mas_equalTo(CGSizeMake(kWidth(150), kWidth(28.)));
+            make.size.mas_equalTo(CGSizeMake(kWidth(150), kWidth(25.)));
         }];
         }
         
