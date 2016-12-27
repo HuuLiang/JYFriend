@@ -10,6 +10,7 @@
 		58EBD024B4F3FC6F743B661D /* libPods-JYFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */; };
 		B33E74C31E111CD70095F0DB /* JYHomeTownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */; };
 		B361847A1E10FB5500DD55A5 /* JYDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36184791E10FB5500DD55A5 /* JYDetailViewController.m */; };
+		B361847D1E11014A00DD55A5 /* JYDetailPhtoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B361847C1E11014A00DD55A5 /* JYDetailPhtoCell.m */; };
 		B36184801E11098100DD55A5 /* JYPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B361847F1E11098100DD55A5 /* JYPhotoCollectionViewCell.m */; };
 		B36184831E110CDE00DD55A5 /* UIImage+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = B36184821E110CDE00DD55A5 /* UIImage+Blur.m */; };
 		B3A079761E0CCBA100395817 /* JYNearPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A079751E0CCBA100395817 /* JYNearPersonCell.m */; };
@@ -17,9 +18,6 @@
 		B3A0797C1E0D1D8300395817 /* JYNearBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A0797B1E0D1D8300395817 /* JYNearBottomView.m */; };
 		B3D114D41E0E185C001DC147 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D114D31E0E185C001DC147 /* CoreLocation.framework */; };
 		B3D114D71E0E26E9001DC147 /* JYNotFetchUserlocalView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D114D61E0E26E9001DC147 /* JYNotFetchUserlocalView.m */; };
-		B3E6FC161E12576F0076ADE9 /* JYDetailUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E6FC151E12576F0076ADE9 /* JYDetailUserInfoCell.m */; };
-		B3E6FC191E1265050076ADE9 /* JYVideoAttestationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E6FC181E1265050076ADE9 /* JYVideoAttestationCell.m */; };
-		B3E6FC1C1E127BC40076ADE9 /* JYNewDynamicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E6FC1B1E127BC40076ADE9 /* JYNewDynamicCell.m */; };
 		EC24A2F41E0E2887000B77A9 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC24A2F31E0E2887000B77A9 /* provinces.plist */; };
 		EC24A2F81E0E463E000B77A9 /* VPImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC24A2F71E0E463E000B77A9 /* VPImageCropperViewController.m */; };
 		EC2A71091E0B81E600BED161 /* JYMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A71081E0B81E600BED161 /* JYMessageViewController.m */; };
@@ -203,6 +201,8 @@
 		B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYHomeTownCell.m; sourceTree = "<group>"; };
 		B36184781E10FB5500DD55A5 /* JYDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailViewController.h; sourceTree = "<group>"; };
 		B36184791E10FB5500DD55A5 /* JYDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailViewController.m; sourceTree = "<group>"; };
+		B361847B1E11014A00DD55A5 /* JYDetailPhtoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailPhtoCell.h; sourceTree = "<group>"; };
+		B361847C1E11014A00DD55A5 /* JYDetailPhtoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailPhtoCell.m; sourceTree = "<group>"; };
 		B361847E1E11098100DD55A5 /* JYPhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPhotoCollectionViewCell.h; sourceTree = "<group>"; };
 		B361847F1E11098100DD55A5 /* JYPhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		B36184811E110CDE00DD55A5 /* UIImage+Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blur.h"; sourceTree = "<group>"; };
@@ -216,12 +216,6 @@
 		B3D114D31E0E185C001DC147 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B3D114D51E0E26E9001DC147 /* JYNotFetchUserlocalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNotFetchUserlocalView.h; sourceTree = "<group>"; };
 		B3D114D61E0E26E9001DC147 /* JYNotFetchUserlocalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNotFetchUserlocalView.m; sourceTree = "<group>"; };
-		B3E6FC141E12576F0076ADE9 /* JYDetailUserInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailUserInfoCell.h; sourceTree = "<group>"; };
-		B3E6FC151E12576F0076ADE9 /* JYDetailUserInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailUserInfoCell.m; sourceTree = "<group>"; };
-		B3E6FC171E1265050076ADE9 /* JYVideoAttestationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYVideoAttestationCell.h; sourceTree = "<group>"; };
-		B3E6FC181E1265050076ADE9 /* JYVideoAttestationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYVideoAttestationCell.m; sourceTree = "<group>"; };
-		B3E6FC1A1E127BC40076ADE9 /* JYNewDynamicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNewDynamicCell.h; sourceTree = "<group>"; };
-		B3E6FC1B1E127BC40076ADE9 /* JYNewDynamicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNewDynamicCell.m; sourceTree = "<group>"; };
 		C68BEEC20755E0EF1FE6927C /* Pods-JYFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend.debug.xcconfig"; sourceTree = "<group>"; };
 		DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JYFriend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC24A2F31E0E2887000B77A9 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
@@ -592,16 +586,12 @@
 		B36184771E10FABE00DD55A5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B361847B1E11014A00DD55A5 /* JYDetailPhtoCell.h */,
+				B361847C1E11014A00DD55A5 /* JYDetailPhtoCell.m */,
 				B361847E1E11098100DD55A5 /* JYPhotoCollectionViewCell.h */,
 				B361847F1E11098100DD55A5 /* JYPhotoCollectionViewCell.m */,
 				B33E74C11E111CD70095F0DB /* JYHomeTownCell.h */,
 				B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */,
-				B3E6FC1A1E127BC40076ADE9 /* JYNewDynamicCell.h */,
-				B3E6FC1B1E127BC40076ADE9 /* JYNewDynamicCell.m */,
-				B3E6FC141E12576F0076ADE9 /* JYDetailUserInfoCell.h */,
-				B3E6FC151E12576F0076ADE9 /* JYDetailUserInfoCell.m */,
-				B3E6FC171E1265050076ADE9 /* JYVideoAttestationCell.h */,
-				B3E6FC181E1265050076ADE9 /* JYVideoAttestationCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1681,7 +1671,6 @@
 				B36184801E11098100DD55A5 /* JYPhotoCollectionViewCell.m in Sources */,
 				ECCFA08B1DEC0A8F000F4E7A /* JYUserAccessModel.m in Sources */,
 				EC88F8181E10B7B4009AAEED /* SETextAttachment.m in Sources */,
-				B3E6FC1C1E127BC40076ADE9 /* JYNewDynamicCell.m in Sources */,
 				EC9843EB1E07E26E00754471 /* JYLoginViewController.m in Sources */,
 				EC88F8021E10B7B4009AAEED /* XHCacheManager.m in Sources */,
 				ECEFE34C1E0A865C002F9A1C /* JYRegisterDetailCell.m in Sources */,
@@ -1700,8 +1689,8 @@
 				EC88F8051E10B7B4009AAEED /* XHOperationNetworkKit.m in Sources */,
 				EC88F7F21E10B7B4009AAEED /* UIImage+XHRounded.m in Sources */,
 				EC88F7F91E10B7B4009AAEED /* XHMessageBubbleHelper.m in Sources */,
+				B361847D1E11014A00DD55A5 /* JYDetailPhtoCell.m in Sources */,
 				EC9843DB1E07A96C00754471 /* JYMineAvatarView.m in Sources */,
-				B3E6FC191E1265050076ADE9 /* JYVideoAttestationCell.m in Sources */,
 				EC88F8151E10B7B4009AAEED /* SELineLayout.m in Sources */,
 				EC804AA11E0D54FA00191387 /* SWActionSheet.m in Sources */,
 				EC88F8211E10B7B5009AAEED /* SETextView.m in Sources */,
@@ -1745,7 +1734,6 @@
 				EC88F7F11E10B7B4009AAEED /* UIImage+Utility.m in Sources */,
 				ECCFA0751DEC049D000F4E7A /* JYUtil.m in Sources */,
 				EC2A71091E0B81E600BED161 /* JYMessageViewController.m in Sources */,
-				B3E6FC161E12576F0076ADE9 /* JYDetailUserInfoCell.m in Sources */,
 				B3A0797C1E0D1D8300395817 /* JYNearBottomView.m in Sources */,
 				B3A079761E0CCBA100395817 /* JYNearPersonCell.m in Sources */,
 				EC88F7FB1E10B7B4009AAEED /* XHVoiceCommonHelper.m in Sources */,
@@ -1912,6 +1900,8 @@
 			baseConfigurationReference = C68BEEC20755E0EF1FE6927C /* Pods-JYFriend.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Liangliang Hu (56QY36P8TL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Liangliang Hu (56QY36P8TL)";
 				DEVELOPMENT_TEAM = NS6846Q9KM;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1921,7 +1911,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f52c1db7-5db0-4030-a2c7-fc49717eb4ea";
+				PROVISIONING_PROFILE = "aef97c64-cd93-43e5-9598-3ed0fbcc2ab6";
 				PROVISIONING_PROFILE_SPECIFIER = PPSocialDevlopmentProvisoningProfile;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -1932,7 +1922,8 @@
 			baseConfigurationReference = 4DE2D66049E36091993382B8 /* Pods-JYFriend.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Huazhong Hengtai Network Technology Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Huazhong Hengtai Network Technology Co., Ltd.";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DEVELOPMENT_TEAM = NS6846Q9KM;
 				ENABLE_BITCODE = NO;
@@ -1943,7 +1934,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f2fa357f-3495-40cd-8060-c326dd81823d";
+				PROVISIONING_PROFILE = "51221846-87db-4da3-b1f6-320b5ca14803";
 				PROVISIONING_PROFILE_SPECIFIER = PPSocialDistributionProvisoningProfile;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
