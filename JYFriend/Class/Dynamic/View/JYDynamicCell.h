@@ -10,18 +10,19 @@
 
 @class JYDynamic;
 
-typedef NS_ENUM(NSUInteger, JYDynamicType) {
-    JYDynamicTypeOnePhoto = 0,  //1张照片
-    JYDynamicTypeTwoPhotos,     //2张照片
-    JYDynamicTypeThreePhotos,   //3张照片
-    JYDynamicTypeVideo,         //视频
-    JYDynamicTypeCount
-};
-
 
 @interface JYDynamicCell : UICollectionViewCell
 
-- (void)updateCellContentWithInfo:(JYDynamic *)dynamic;
+//- (void)updateCellContentWithInfo:(JYDynamic *)dynamic;
+
+@property (nonatomic) NSString *logoUrl;
+@property (nonatomic) NSString *nickName;
+@property (nonatomic) JYUserSex userSex;
+@property (nonatomic) NSString * age;
+@property (nonatomic) BOOL isFocus;
+@property (nonatomic) BOOL isGreet;
+@property (nonatomic) NSString *time;
+@property (nonatomic) NSString *content; 
 
 @property (nonatomic) JYDynamicType dynamicType;
 
