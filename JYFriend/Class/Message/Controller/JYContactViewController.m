@@ -10,6 +10,8 @@
 #import "JYContactCell.h"
 #import "JYMessageViewController.h"
 #import "JYContactModel.h"
+#import "JYDetailViewController.h"
+#import "JYMessageModel.h"
 
 typedef NS_ENUM(NSUInteger, JYUserState) {
     JYUserStick = 0,//置顶用户
@@ -151,7 +153,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
             contactCell.touchUserImgVAction = ^(id obj) {
                 @strongify(self);
                 //用户详情
-                
+                JYDetailViewController *detailVC = [[JYDetailViewController alloc] init];
+                [self.navigationController pushViewController:detailVC animated:YES];
             };
             contactCell.userImgStr = contact.logoUrl;
             contactCell.nickNameStr = contact.nickName;
@@ -233,7 +236,43 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [JYUser currentUser].userId = @"93867";
+    [JYUser currentUser].nickName = @"我";
+    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:@"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg"]
+                                                    options:SDWebImageAvoidAutoSetImage
+                                                   progress:nil
+                                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                      NSData *data;
+                                                      if (UIImagePNGRepresentation(image) == nil) {
+                                                          data = UIImageJPEGRepresentation(image, 1);
+                                                      } else {
+                                                          data = UIImagePNGRepresentation(image);
+                                                      }
+                                                      [JYUser currentUser].userImg = data;
+    }];
+    [[JYUser currentUser] saveOrUpdate];
     
+    JYUser *user = [[JYUser alloc] init];
+    user.userId = @"93866";
+    user.nickName = @"渣渣";
+    user.userImg = [JYUser currentUser].userImg;
+    [user saveOrUpdate];
+    
+    JYMessageModel *message = [[JYMessageModel alloc] init];
+    message.messageId = @"11";
+    message.messageType = JYMessageTypeText;
+    message.messageContent = @"你好，很高兴认识你";
+    message.sendUserId = [JYUser currentUser].userId;
+    message.receiveUserId = user.userId;
+    message.messageTime = @"19930218122211";
+    [message saveOrUpdate];
+    
+//    message.messageId = @"22";
+//    message.sendUserId = user.userId;
+//    message.receiveUserId = [JYUser currentUser].userId;;
+//    [message saveOrUpdate];
+    
+    [JYMessageViewController showMessageWithUser:user inViewController:self];
 }
 
 @end

@@ -65,8 +65,10 @@
     }
     
     UIImage *bublleImage = [UIImage imageNamed:messageTypeString];
+    
     UIEdgeInsets bubbleImageEdgeInsets = [self bubbleImageEdgeInsetsWithStyle:style];
-    UIImage *edgeBubbleImage = XH_STRETCH_IMAGE(bublleImage, bubbleImageEdgeInsets);
+//    UIImage *edgeBubbleImage = XH_STRETCH_IMAGE(bublleImage, bubbleImageEdgeInsets);
+    UIImage *edgeBubbleImage = [bublleImage resizableImageWithCapInsets:bubbleImageEdgeInsets];
     return edgeBubbleImage;
 }
 
@@ -75,7 +77,7 @@
     switch (style) {
         case XHBubbleImageViewStyleWeChat:
             // 类似微信的
-            edgeInsets = UIEdgeInsetsMake(30, 28, 85, 28);
+            edgeInsets = UIEdgeInsetsMake(30, 5, 10, 10);
             break;
         default:
             break;

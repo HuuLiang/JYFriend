@@ -9,12 +9,12 @@
 #import "JKDBModel.h"
 
 typedef NS_ENUM(NSUInteger,JYUserSex) {
-    JYUserSexUnKnow,
+    JYUserSexUnKnow = 0,
     JYUserSexMale, //男
     JYUserSexFemale //女
 };
 
-@interface JYUser : JKDBModel
+@interface JYUser : JKDBModel <NSCoding>
 
 + (instancetype)currentUser;
 

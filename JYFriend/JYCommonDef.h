@@ -26,7 +26,13 @@ typedef NS_ENUM(NSUInteger, JYDeviceType) {
     JYDeviceType_iPad = 100
 };
 
-
+typedef NS_ENUM(NSUInteger, JYDynamicType) {
+    JYDynamicTypeOnePhoto = 0,  //1张照片
+    JYDynamicTypeTwoPhotos,     //2张照片
+    JYDynamicTypeThreePhotos,   //3张照片
+    JYDynamicTypeVideo,         //视频
+    JYDynamicTypeCount
+};
 
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 

@@ -8,7 +8,7 @@
 
 #import "JYCharacterViewController.h"
 #import "JYCharacterCell.h"
-
+#import "JYDetailViewController.h"
 
 static NSString *const kCharacterCellReusableIdentifier = @"CharacterCellReusableIdentifier";
 
@@ -85,7 +85,8 @@ static NSString *const kCharacterCellReusableIdentifier = @"CharacterCellReusabl
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.item < 100) {
-        
+        JYDetailViewController *detailVC = [[JYDetailViewController alloc] init];
+        [self.navigationController pushViewController:detailVC animated:YES];
     }
 }
 

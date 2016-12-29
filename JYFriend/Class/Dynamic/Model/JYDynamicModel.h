@@ -8,6 +8,8 @@
 
 #import <QBEncryptedURLRequest.h>
 
+
+
 @interface JYDynamic : JKDBModel
 @property (nonatomic) NSString *userId;
 @property (nonatomic) NSString *nickName;
@@ -19,6 +21,7 @@
 @property (nonatomic) NSArray *imgUrls;
 @property (nonatomic) BOOL isGreet;
 @property (nonatomic) BOOL isFocus;
+@property (nonatomic) JYDynamicType dynamicType;
 @end
 
 @interface JYDynamicResponse : QBURLResponse

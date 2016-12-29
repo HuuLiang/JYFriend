@@ -51,6 +51,7 @@
             message = [[XHMessage alloc] initWithText:obj.messageContent
                                                               sender:obj.sendUserId
                                                            timestamp:date];
+            message.messageMediaType = XHBubbleMessageMediaTypeText;
         } else if (obj.messageType == JYMessageTypePhoto) {
             message = [[XHMessage alloc] initWithPhoto:nil thumbnailUrl:nil originPhotoUrl:nil sender:obj.sendUserId timestamp:date];
         } else if (obj.messageType == JYMessageTypeVioce) {
@@ -62,6 +63,7 @@
         } else {
             message.bubbleMessageType = XHBubbleMessageTypeReceiving;
         }
+//        message.shouldShowUserName = YES;
         [self.messages addObject:message];
     }];
 }
@@ -91,15 +93,23 @@
 }
 
 - (void)configureCell:(XHMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    XHMessage *message = self.messages[indexPath.row];
     
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath targetMessage:(id<XHMessageModel>)message {
-    return 100;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath targetMessage:(id<XHMessageModel>)message {
-    return nil;
+    BOOL isCurrentUser = [message.sender isEqualToString:[JYUser currentUser].userId];
+    if (isCurrentUser) {
+        [cell.avatarButton setImage:[UIImage imageWithData:[JYUser currentUser].userImg] forState:UIControlStateNormal];
+        [cell.avatarButton bk_removeEventHandlersForControlEvents:UIControlEventTouchUpInside];
+        cell.userNameLabel.text = [JYUser currentUser].nickName;
+    } else {
+        [cell.avatarButton setImage:[UIImage imageWithData:[JYUser currentUser].userImg] forState:UIControlStateNormal];
+        @weakify(self);
+        [cell.avatarButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            
+        } forControlEvents:UIControlEventTouchUpInside];
+    }
+//    cell.avatarButton.layer.cornerRadius = CGRectGetWidth(cell.avatarButton.frame) / 2;
+//    cell.avatarButton.layer.masksToBounds = YES;
 }
 
 #pragma mark - XHMessageTableViewCellDelegate
