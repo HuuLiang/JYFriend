@@ -63,7 +63,6 @@
         } else {
             message.bubbleMessageType = XHBubbleMessageTypeReceiving;
         }
-//        message.shouldShowUserName = YES;
         [self.messages addObject:message];
     }];
 }
@@ -73,11 +72,49 @@
     [self reloadChatMessages];
 }
 
+- (void)addTextMessage:(NSString *)message
+            withSender:(NSString *)sender
+              receiver:(NSString *)receiver
+              dateTime:(NSString *)dateTime
+{
+    JYMessageModel *chatMessage = [[JYMessageModel alloc] init];
+    chatMessage.sendUserId = sender;
+    chatMessage.receiveUserId = receiver;
+    chatMessage.messageType = JYMessageTypeText;
+    chatMessage.messageContent = message;
+    chatMessage.messageTime = dateTime;
+
+    [self addChatMessage:chatMessage];
+}
+
+- (void)addChatMessage:(JYMessageModel *)chatMessage {
+    [self.chatMessages addObject:chatMessage];
+    [chatMessage saveOrUpdate];
+    
+    if (self.isViewLoaded) {
+        XHMessage *xhMsg;
+        NSDate *date = [JYUtil dateFromString:@"19910901111111" WithDateFormat:KDateFormatLong];
+        if (chatMessage.messageType == JYMessageTypeText) {
+            xhMsg = [[XHMessage alloc] initWithText:chatMessage.messageContent
+                                             sender:chatMessage.sendUserId
+                                          timestamp:date];
+        }
+        if ([chatMessage.sendUserId isEqualToString:[JYUser currentUser].userId]) {
+            xhMsg.bubbleMessageType = XHBubbleMessageTypeSending;
+        } else {
+            xhMsg.bubbleMessageType = XHBubbleMessageTypeReceiving;
+        }
+        xhMsg.avatarUrl = @"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg";
+        [self addMessage:xhMsg];
+    }
+}
+
 
 #pragma mark - XHMessageTableViewControllerDelegate
 
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
-    
+    [self addTextMessage:text withSender:sender receiver:_user.userId dateTime:[JYUtil timeStringFromDate:date WithDateFormat:KDateFormatLong]];
+    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
 }
 
 - (void)didSendPhoto:(UIImage *)photo fromSender:(NSString *)sender onDate:(NSDate *)date {
@@ -108,8 +145,6 @@
             
         } forControlEvents:UIControlEventTouchUpInside];
     }
-//    cell.avatarButton.layer.cornerRadius = CGRectGetWidth(cell.avatarButton.frame) / 2;
-//    cell.avatarButton.layer.masksToBounds = YES;
 }
 
 #pragma mark - XHMessageTableViewCellDelegate

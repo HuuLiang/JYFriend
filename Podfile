@@ -12,7 +12,4 @@ pod 'MBProgressHUD', '~> 0.9.2'
 pod 'SFHFKeychainUtils', '~> 0.0.1'
 pod 'QBPayment', '~> 0.0.38' ,:subspecs => ['IappPay','VIAPay','HTPay']
 pod 'QBStatisticsManager', '~> 0.0.4'
-
-#pod 'SDCycleScrollView', '~> 1.65'
-
 end
