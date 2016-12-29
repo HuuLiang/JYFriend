@@ -64,11 +64,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SDCycleScrollView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -82,12 +77,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>41F20EA0D4C215BB4D9F752DB9D0995C</key>
+		<key>0520B2CF953DC32A892FFFB6FBE37E3B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>479A95D2A3B40B9477C23E3300A0760F</key>
+		<key>16813104F64A72B703D21FD45B2A4C60</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27838EBD43AA5FF3BCAFCB46AC1A6AA5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,12 +97,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5D524A1886E07492411FF8FD32B6358F</key>
+		<key>5F13211C7A86E37942248E510BCA030E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>714254EF5907BA838EB401DAB9977607</key>
+		<key>774B8E515CC911E3B5813E260EDDF5E0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8DFD11D87DB3BF002C9244E70448C077</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,27 +122,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9B0DFA46D3FFB1FCACDE94A545D732A6</key>
+		<key>9B544A93D25A022A038D34D1C7FD89B2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>9F12FB4A63E20F601CFB2E64A65B57C1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A626F64DD5A6E4E3311B8287499AD1E1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D69620052AE619BAC8095BC164D616CA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D9A9134F10F777996EC8A7D1E0369A3E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

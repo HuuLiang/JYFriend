@@ -62,8 +62,6 @@ PODS:
     - FMDB (~> 2.6.2)
     - QBPayment/Core
     - UMengAnalytics-NO-IDFA (~> 4.1.1)
-  - SDCycleScrollView (1.65):
-    - SDWebImage (~> 3.7)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
@@ -79,7 +77,6 @@ DEPENDENCIES:
   - QBPayment/IappPay (~> 0.0.38)
   - QBPayment/VIAPay (~> 0.0.38)
   - QBStatisticsManager (~> 0.0.4)
-  - SDCycleScrollView (~> 1.65)
   - SDWebImage (= 3.7.3)
   - SFHFKeychainUtils (~> 0.0.1)
 
@@ -96,11 +93,10 @@ SPEC CHECKSUMS:
   QBNetworking: 8fa657e142a09c06056ee34bb9e9084b51e4b8a0
   QBPayment: 48ccc46486835857268b0739f5081b2cf38abf21
   QBStatisticsManager: 41f447ddb3cebf76d8629fa7e590e9a3d06831a9
-  SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664
   UMengAnalytics-NO-IDFA: f1b08b540eba6ebad044a574cae6d988cf40cfda
 
-PODFILE CHECKSUM: 587c5aa37f75cd4c2388e30e41b126da58ee6ed1
+PODFILE CHECKSUM: 34fdae4adbef456a73d18f95890cf235c7cc7fbd
 
 COCOAPODS: 1.1.1

@@ -113,6 +113,7 @@ typedef enum {
 /** block方式监听滚动 */
 @property (nonatomic, copy) void (^itemDidScrollOperationBlock)(NSInteger currentIndex);
 
+@property (nonatomic, copy) CGFloat (^pageControlPositionY)(CGFloat superViewHeight);
 /** 解决viewWillAppear时出现时轮播图卡在一半的问题，在控制器viewWillAppear时调用此方法 */
 - (void)adjustWhenControllerViewWillAppera;
 
@@ -168,6 +169,7 @@ typedef enum {
 @property (nonatomic, assign) CGFloat titleLabelHeight;
 
 
+@property (nonatomic) NSInteger currentPage;
 
 //////////////////////  清除缓存接口  //////////////////////
 

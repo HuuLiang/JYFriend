@@ -10,6 +10,8 @@
 #import "JYTableHeaderFooterView.h"
 #import "JYMineCell.h"
 #import "JYMineAvatarView.h"
+#import "JYDredgeVipViewController.h"
+#import "JYMyPhotosController.h"
 
 typedef NS_ENUM(NSUInteger, JYMineSection) {
     JYMineFunctinSection,//功能分组
@@ -166,7 +168,9 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == JYMineFunctinSection) {
         if (indexPath.row == JYMineFunctionVipRow) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginNotificationName object:nil];
+            JYDredgeVipViewController *vipVC  = [[JYDredgeVipViewController alloc] init];
+            [self.navigationController pushViewController:vipVC animated:YES];
+            
         } else if (indexPath.row == JYMineFunctionRobotRow) {
             
         } else if (indexPath.row == JYMineFunctionGuestRow) {
@@ -174,6 +178,8 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
         }
     } else if (indexPath.section == JYMineDetailSection) {
         if (indexPath.row == JYMineDetailAlbumRow)  {
+            JYMyPhotosController *photoVC = [[JYMyPhotosController alloc] init];
+            [self.navigationController pushViewController:photoVC animated:YES];
             
         } else if (indexPath.row == JYMineDetailVideoRow) {
             

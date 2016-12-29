@@ -1,0 +1,185 @@
+//
+//  JYMyPhotosController.m
+//  JYFriend
+//
+//  Created by ylz on 2016/12/28.
+//  Copyright © 2016年 Liang. All rights reserved.
+//
+
+#import "JYMyPhotosController.h"
+#import "JYMyPhotoCell.h"
+#import "JYMyPhotoBigImageView.h"
+
+static CGFloat klineSpace = 7.;
+static CGFloat kitemSpace = 10.;
+
+static NSString *const kMyPhotoCellIndetifier = @"myphotocell_indetifier";
+
+@interface JYMyPhotosController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+{
+    UICollectionView *_layoutCollectionView;
+}
+
+@property (nonatomic,retain) UIActionSheet *photoActionSheet;
+@property (nonatomic,retain) NSMutableArray *dataSource;
+@end
+
+@implementation JYMyPhotosController
+QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
+
+- (UIActionSheet *)photoActionSheet {
+    if (_photoActionSheet) {
+        return _photoActionSheet;
+    }
+    _photoActionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册",@"相机", nil];
+    
+    return _photoActionSheet;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.minimumInteritemSpacing = kWidth(kitemSpace *2);
+    layout.minimumLineSpacing = kWidth(klineSpace *2);
+    _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+    _layoutCollectionView.backgroundColor = self.view.backgroundColor;
+    _layoutCollectionView.delegate = self;
+    _layoutCollectionView.dataSource = self;
+    _layoutCollectionView.contentInset = UIEdgeInsetsMake(kWidth(40), kWidth(30), kWidth(20), kWidth(30));
+    [_layoutCollectionView registerClass:[JYMyPhotoCell class] forCellWithReuseIdentifier:kMyPhotoCellIndetifier];
+    [self.view addSubview:_layoutCollectionView];
+    {
+    [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.view);
+    }];
+    }
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+- (void)getImageWithSourceType:(UIImagePickerControllerSourceType)sourceType {
+    if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+//        picker.
+        picker.allowsEditing = YES;
+        picker.sourceType = sourceType;
+        if ([JYUtil isIpad]) {
+            UIPopoverController *popover = [[UIPopoverController alloc]initWithContentViewController:picker];
+            [popover presentPopoverFromRect:CGRectMake(0, 0, kScreenWidth, 200) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        } else {
+            [self presentViewController:picker animated:YES completion:nil];
+        }
+    } else {
+        NSString *sourceTypeTitle = sourceType == UIImagePickerControllerSourceTypePhotoLibrary ? @"相册":@"相机";
+        [[JYHudManager manager] showHudWithTitle:sourceTypeTitle message:[NSString stringWithFormat:@"请在设备的\"设置-隐私-%@\"中允许访问%@",sourceTypeTitle,sourceTypeTitle]];
+    }
+}
+
+
+#pragma mark UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+
+    return self.dataSource.count +1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    JYMyPhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMyPhotoCellIndetifier forIndexPath:indexPath];
+    if (indexPath.item == self.dataSource.count) {
+        cell.isAdd = YES;
+        cell.imageUrl = nil;
+    }else {
+        cell.isAdd = NO;
+        cell.image = self.dataSource[indexPath.item];
+    }
+    return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+        CGFloat width = (kScreenWidth - kWidth(30)*2 - kWidth(kitemSpace*2)*2)/3.;
+    
+        return CGSizeMake(width, width);
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.item == self.dataSource.count) {
+        [self.photoActionSheet showFromTabBar:self.tabBarController.tabBar];
+    }else {
+//        UIImageView *imageView = [[UIImageView alloc] init];
+//        //    imageView.backgroundColor = [UIColor whiteColor];
+//        imageView.contentMode = UIViewContentModeScaleAspectFit;
+//        imageView.frame = collectionView.frame;
+//        [self.view.window addSubview:imageView];
+        JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:self.dataSource];
+        bigImageView.frame = self.view.window.frame;
+        bigImageView.backgroundColor = [UIColor whiteColor];
+        bigImageView.currentIndex = indexPath.item;
+//        bigImageView.images = self.dataSource;
+        bigImageView.shouldAutoScroll = NO;
+        bigImageView.shouldInfiniteScroll = NO;
+        bigImageView.pageControlYAspect = 0.8;
+        @weakify(bigImageView);
+        bigImageView.action = ^(id sender){
+            @strongify(bigImageView);
+//            [UIView animateWithDuration:0.5 animations:^{
+//                bigImageView.alpha = 0;
+//            }];
+            [UIView animateWithDuration:0.5 animations:^{
+                bigImageView.alpha = 0;
+
+            } completion:^(BOOL finished) {
+                
+                [bigImageView removeFromSuperview];
+            }];
+        };
+        [self.view.window addSubview:bigImageView];
+        bigImageView.alpha = 0;
+        [UIView animateWithDuration:0.5 animations:^{
+            bigImageView.alpha = 1;
+        }];
+        
+    }
+
+}
+
+#pragma mark UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    UIImagePickerControllerSourceType type;
+    if (buttonIndex == 0) {
+        //相册
+        type = UIImagePickerControllerSourceTypePhotoLibrary;
+    }else if (buttonIndex == 1){//相机
+        type = UIImagePickerControllerSourceTypeCamera;
+    }
+    
+    if (type == UIImagePickerControllerSourceTypePhotoLibrary || type == UIImagePickerControllerSourceTypeCamera) {
+        [self getImageWithSourceType:type];
+    }
+    
+}
+
+
+#pragma mark UIImagePickerControllerDelegate 相机相册访问
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+
+    if (![self.dataSource containsObject:info[UIImagePickerControllerMediaURL]]) {
+        
+        [self.dataSource addObject:info[UIImagePickerControllerOriginalImage]];
+        [_layoutCollectionView reloadData];
+    }
+        [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
+@end

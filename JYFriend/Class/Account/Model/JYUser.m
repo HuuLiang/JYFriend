@@ -28,7 +28,7 @@ static JYUser *_currentUser;
 + (NSArray *)allUserHeights {
     NSMutableArray *allHeights = [NSMutableArray array];
     for (NSInteger height = 150; height <= 200; height++) {
-        NSString *str = [NSString stringWithFormat:@"%ldcm",height];
+        NSString *str = [NSString stringWithFormat:@"%ldcm",(long)height];
         [allHeights addObject:str];
     }
     return allHeights;

@@ -17,5 +17,6 @@
 #import "NSObject+PropertyAccessInspecting.h"
 #import "UIView+RoundCorner.h"
 #import "UIImage+Blur.h"
+#import "UIImage+JYResource.h"
 
 #endif /* JYExtensions_h */
