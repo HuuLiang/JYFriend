@@ -42,13 +42,11 @@
     } else {
         _imageView.image = nil;
     }
-
 }
 
 - (void)setImage:(UIImage *)image {
     _image = image;
     _imageView.image = image;
-    
-}
+    }
 
 @end

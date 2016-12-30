@@ -19,5 +19,6 @@
 #import "UIImage+Blur.h"
 #import "UIImage+JYResource.h"
 #import "NSDate+timeStamp.h"
+#import "UIScrollView+Refresh.h"
 
 #endif /* JYExtensions_h */
