@@ -17,18 +17,18 @@
 
 @implementation JYMyPhotoBigImageView
 
-- (instancetype)initWithImageGroup:(NSArray *)imageGroup
+- (instancetype)initWithImageGroup:(NSArray *)imageGroup frame:(CGRect)frame
 {
-    self = [super init];
+    self = [super initWithFrame:frame];
     if (self) {
         _shouldAutoScroll = YES;
         _shouldInfiniteScroll = YES;
         
         _bannerView = [SDCycleScrollView cycleScrollViewWithFrame:self.bounds shouldInfiniteLoop:NO imageNamesGroup:imageGroup];
-//        [SDCycleScrollView cycleScrollViewWithFrame:self.bounds delegate:self placeholderImage:nil];
         _bannerView.backgroundColor = self.backgroundColor;
-        _bannerView.infiniteLoop = NO;
+//        _bannerView.infiniteLoop = NO;
         _bannerView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;
+        _bannerView.backgroundColor = [UIColor blackColor];
         _bannerView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
         _bannerView.autoScrollTimeInterval = 5;
         _bannerView.autoScroll = _shouldAutoScroll;
@@ -37,14 +37,14 @@
         _bannerView.currentPageDotColor = [UIColor colorWithHexString:@"#FF206F"];
         _bannerView.delegate = self;
           [self addSubview:_bannerView];
-        {
-        [_bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(self);
-        }];
-        }
         
     }
     return self;
+}
+
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    _bannerView.frame = frame;
 }
 
 - (void)setPageControlYAspect:(CGFloat)pageControlYAspect {
@@ -95,7 +95,6 @@
 - (void)setImages:(NSArray<UIImage *> *)images {
     _images = images;
     _bannerView.localizationImageNamesGroup = images;
-//    _bannerView 
 
 }
 

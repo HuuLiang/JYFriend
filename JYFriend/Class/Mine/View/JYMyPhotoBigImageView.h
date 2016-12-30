@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+//typedef void(^JYSelectionAction)(NSInteger index, id obj);
+
 @interface JYMyPhotoBigImageView : UIView
 
 @property (nonatomic,retain) NSArray *imageURLStrings;
@@ -17,7 +19,7 @@
 @property (nonatomic) CGFloat pageControlYAspect;
 @property (nonatomic,retain) NSArray <UIImage *>*images;
 
-- (instancetype)initWithImageGroup:(NSArray *)imageGroup;
+- (instancetype)initWithImageGroup:(NSArray *)imageGroup frame:(CGRect)frame;
 @property (nonatomic,copy) QBAction action;
 
 @end

@@ -9,10 +9,12 @@
 #import "JYMyPhotosController.h"
 #import "JYMyPhotoCell.h"
 #import "JYMyPhotoBigImageView.h"
+#import "JYUsrImageCache.h"
 
 static CGFloat klineSpace = 7.;
 static CGFloat kitemSpace = 10.;
 
+static NSString *const kMyPhotoChcheIndex = @"my_photo_chche_index";
 static NSString *const kMyPhotoCellIndetifier = @"myphotocell_indetifier";
 
 @interface JYMyPhotosController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -22,6 +24,7 @@ static NSString *const kMyPhotoCellIndetifier = @"myphotocell_indetifier";
 
 @property (nonatomic,retain) UIActionSheet *photoActionSheet;
 @property (nonatomic,retain) NSMutableArray *dataSource;
+@property (nonatomic) NSString *imagePath;
 @end
 
 @implementation JYMyPhotosController
@@ -38,6 +41,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"我的相册";
+    
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumInteritemSpacing = kWidth(kitemSpace *2);
@@ -46,7 +51,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _layoutCollectionView.backgroundColor = self.view.backgroundColor;
     _layoutCollectionView.delegate = self;
     _layoutCollectionView.dataSource = self;
-    _layoutCollectionView.contentInset = UIEdgeInsetsMake(kWidth(40), kWidth(30), kWidth(20), kWidth(30));
+    _layoutCollectionView.contentInset = UIEdgeInsetsMake(kWidth(30), kWidth(30), kWidth(20), kWidth(30));
     [_layoutCollectionView registerClass:[JYMyPhotoCell class] forCellWithReuseIdentifier:kMyPhotoCellIndetifier];
     [self.view addSubview:_layoutCollectionView];
     {
@@ -54,8 +59,29 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         make.edges.mas_equalTo(self.view);
     }];
     }
+    
+    [_layoutCollectionView JY_addPullToRefreshWithHandler:^{
+        [self loadPhotoMode];
+    }];
+    [_layoutCollectionView JY_triggerPullToRefresh];
 }
 
+- (void)loadPhotoMode {
+    @weakify(self);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        @strongify(self);
+        self.dataSource = [JYUsrImageCache fetchAllImages].mutableCopy;
+        [self->_layoutCollectionView reloadData];
+        [self->_layoutCollectionView JY_endPullToRefresh];
+    });
+
+}
+
+- (NSData *)imageTranslationDateWithImageArr:(NSArray *)imageArr {
+    NSData *date = [NSKeyedArchiver archivedDataWithRootObject:imageArr];
+    return date;
+
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -110,25 +136,20 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     if (indexPath.item == self.dataSource.count) {
         [self.photoActionSheet showFromTabBar:self.tabBarController.tabBar];
     }else {
-//        UIImageView *imageView = [[UIImageView alloc] init];
-//        //    imageView.backgroundColor = [UIColor whiteColor];
-//        imageView.contentMode = UIViewContentModeScaleAspectFit;
-//        imageView.frame = collectionView.frame;
-//        [self.view.window addSubview:imageView];
-        JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:self.dataSource];
-        bigImageView.frame = self.view.window.frame;
+        
+        JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:self.dataSource frame:self.view.window.frame];
+//        bigImageView.frame = self.view.window.frame;
         bigImageView.backgroundColor = [UIColor whiteColor];
-        bigImageView.currentIndex = indexPath.item;
 //        bigImageView.images = self.dataSource;
         bigImageView.shouldAutoScroll = NO;
         bigImageView.shouldInfiniteScroll = NO;
         bigImageView.pageControlYAspect = 0.8;
+        bigImageView.currentIndex = indexPath.item;
+        
         @weakify(bigImageView);
         bigImageView.action = ^(id sender){
             @strongify(bigImageView);
-//            [UIView animateWithDuration:0.5 animations:^{
-//                bigImageView.alpha = 0;
-//            }];
+            
             [UIView animateWithDuration:0.5 animations:^{
                 bigImageView.alpha = 0;
 
@@ -136,6 +157,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
                 
                 [bigImageView removeFromSuperview];
             }];
+         
         };
         [self.view.window addSubview:bigImageView];
         bigImageView.alpha = 0;
@@ -167,11 +189,19 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 #pragma mark UIImagePickerControllerDelegate 相机相册访问
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
 
-    if (![self.dataSource containsObject:info[UIImagePickerControllerMediaURL]]) {
-        
-        [self.dataSource addObject:info[UIImagePickerControllerOriginalImage]];
-        [_layoutCollectionView reloadData];
-    }
+    [JYUsrImageCache writeToFileWithImage:info[UIImagePickerControllerOriginalImage]];
+    [_layoutCollectionView JY_triggerPullToRefresh];
+    @weakify(self);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        @strongify(self);
+        if (self.dataSource.count != [JYUsrImageCache fetchAllImages].count) {
+            
+            [self.dataSource addObject:[JYUsrImageCache fetchAllImages].lastObject];
+            [self->_layoutCollectionView reloadData];
+            [self->_layoutCollectionView JY_triggerPullToRefresh];
+        }
+    });
+
         [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -179,6 +209,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 
 
 
