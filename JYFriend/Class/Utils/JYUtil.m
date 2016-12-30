@@ -189,7 +189,7 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
     return uninstalledSpreads;
 }
 
-#pragma mark -- 时间转换
+#pragma mark -- 时间
 
 + (NSDate *)dateFromString:(NSString *)dateString WithDateFormat:(NSString *)dateFormat {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

@@ -12,6 +12,7 @@ typedef NS_ENUM(NSUInteger, JYMessageType) {
     JYMessageTypeText,      //文字消息
     JYMessageTypePhoto,     //图片消息
     JYMessageTypeVioce,     //声音消息
+    JYMessageTypeEmotion,   //表情消息
     JYMessageTypeSystem,    //系统消息
     JYMessageTypeCount
 };
@@ -24,16 +25,18 @@ typedef NS_ENUM(NSUInteger, JYMessageType) {
 
 @interface JYMessageModel : JKDBModel
 
-//@property (nonatomic) NSString *sendUserId;
-//@property (nonatomic) NSString *receiveUserId;
-
-@property (nonatomic) NSString *messageId;
 @property (nonatomic) NSString *sendUserId;
 @property (nonatomic) NSString *receiveUserId;
+@property (nonatomic) NSString *messageTime;
 
 @property (nonatomic) JYMessageType messageType;
+
 @property (nonatomic) NSString *messageContent;
-@property (nonatomic) NSString *messageTime;
+
+@property (nonatomic) UIImage  *photo;
+@property (nonatomic) NSString *standbyContent;
+@property (nonatomic) BOOL     isRead;
+
 
 //@property (nonatomic) NSString *options;
 

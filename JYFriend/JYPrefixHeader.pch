@@ -31,6 +31,7 @@
 #import "JYUser.h"
 //#import "PPCacheModel.h"
 #import "JYHudManager.h"
+#import "JYVoicePlayer.h"
 //#import "PPColumnModel.h"
 
 #endif /* JYPrefixHeader_pch */

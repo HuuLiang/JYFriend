@@ -12,4 +12,11 @@
 + (NSArray<JYMessageModel *> *)allMessagesForUser:(NSString *)userId {
     return [self findByCriteria:[NSString stringWithFormat:@"WHERE sendUserId=%@ or receiveUserId=%@",userId,userId]];
 }
+
++ (NSArray *)transients
+{
+    return @[@"photo"];
+}
+
+
 @end
