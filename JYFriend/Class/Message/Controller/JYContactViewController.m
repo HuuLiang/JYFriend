@@ -259,7 +259,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
     [user saveOrUpdate];
     
     JYMessageModel *message = [[JYMessageModel alloc] init];
-    message.messageId = @"11";
+
+//    message.messageId = @"11";
     message.messageType = JYMessageTypeText;
     message.messageContent = @"你好，很高兴认识你";
     message.sendUserId = [JYUser currentUser].userId;

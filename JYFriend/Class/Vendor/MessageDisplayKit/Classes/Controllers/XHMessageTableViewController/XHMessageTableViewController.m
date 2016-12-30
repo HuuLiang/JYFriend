@@ -1222,7 +1222,7 @@ static CGPoint  delayOffset = {0.0};
     id <XHMessageModel> message = [self.dataSource messageForRowAtIndexPath:indexPath];
     
     // 如果需要定制复杂的业务UI，那么就实现该DataSource方法
-    if ([self.dataSource respondsToSelector:@selector(tableView:cellForRowAtIndexPath:targetMessage:)]) {
+    if ([self.dataSource respondsToSelector:@selector(tableView:cellForRowAtIndexPath:targetMessage:)] && message.messageMediaType == XHBubbleMessageMediaTypeCustom) {
         UITableViewCell *tableViewCell = [self.dataSource tableView:tableView cellForRowAtIndexPath:indexPath targetMessage:message];
         return tableViewCell;
     }
@@ -1259,7 +1259,7 @@ static CGPoint  delayOffset = {0.0};
     
     CGFloat calculateCellHeight = 0;
     
-    if ([self.delegate respondsToSelector:@selector(tableView:heightForRowAtIndexPath:targetMessage:)]) {
+    if ([self.delegate respondsToSelector:@selector(tableView:heightForRowAtIndexPath:targetMessage:)] && message.messageMediaType == XHBubbleMessageMediaTypeCustom) {
         calculateCellHeight = [self.delegate tableView:tableView heightForRowAtIndexPath:indexPath targetMessage:message];
         return calculateCellHeight;
     } else {
