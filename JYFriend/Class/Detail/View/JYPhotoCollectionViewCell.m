@@ -64,9 +64,8 @@
         if (_playImageView) {
             _playImageView.hidden = YES;
             [_playImageView removeFromSuperview];
-        }
     }
-
+    }
 }
 
 

@@ -12,6 +12,8 @@
 #import "JYMineAvatarView.h"
 #import "JYDredgeVipViewController.h"
 #import "JYMyPhotosController.h"
+#import "JYVisitMeController.h"
+#import "JYDetailVideoViewController.h"
 
 typedef NS_ENUM(NSUInteger, JYMineSection) {
     JYMineFunctinSection,//功能分组
@@ -174,6 +176,8 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
         } else if (indexPath.row == JYMineFunctionRobotRow) {
             
         } else if (indexPath.row == JYMineFunctionGuestRow) {
+            JYVisitMeController *visitVC = [[JYVisitMeController alloc] init];
+            [self.navigationController pushViewController:visitVC animated:YES];
             
         }
     } else if (indexPath.section == JYMineDetailSection) {
@@ -182,6 +186,8 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
             [self.navigationController pushViewController:photoVC animated:YES];
             
         } else if (indexPath.row == JYMineDetailVideoRow) {
+            JYDetailVideoViewController *detailVC = [[JYDetailVideoViewController alloc] init];
+            [self.navigationController pushViewController:detailVC animated:YES];
             
         }
     } else if (indexPath.section == JYMineEditSection) {

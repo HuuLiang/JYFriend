@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		58EBD024B4F3FC6F743B661D /* libPods-JYFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */; };
 		B3195E611E16258500193D4F /* UIScrollView+Refresh.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E601E16258500193D4F /* UIScrollView+Refresh.m */; };
+		B3195E641E16398B00193D4F /* JYVisitMeController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E631E16398B00193D4F /* JYVisitMeController.m */; };
+		B3195E671E16432E00193D4F /* JYDetailVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */; };
 		B33E74C31E111CD70095F0DB /* JYHomeTownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */; };
 		B361847A1E10FB5500DD55A5 /* JYDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36184791E10FB5500DD55A5 /* JYDetailViewController.m */; };
 		B36184801E11098100DD55A5 /* JYPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B361847F1E11098100DD55A5 /* JYPhotoCollectionViewCell.m */; };
@@ -218,6 +220,10 @@
 		4DE2D66049E36091993382B8 /* Pods-JYFriend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYFriend.release.xcconfig"; path = "Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend.release.xcconfig"; sourceTree = "<group>"; };
 		B3195E5F1E16258500193D4F /* UIScrollView+Refresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Refresh.h"; sourceTree = "<group>"; };
 		B3195E601E16258500193D4F /* UIScrollView+Refresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Refresh.m"; sourceTree = "<group>"; };
+		B3195E621E16398B00193D4F /* JYVisitMeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYVisitMeController.h; sourceTree = "<group>"; };
+		B3195E631E16398B00193D4F /* JYVisitMeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYVisitMeController.m; sourceTree = "<group>"; };
+		B3195E651E16432E00193D4F /* JYDetailVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailVideoViewController.h; sourceTree = "<group>"; };
+		B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailVideoViewController.m; sourceTree = "<group>"; };
 		B33E74C11E111CD70095F0DB /* JYHomeTownCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYHomeTownCell.h; sourceTree = "<group>"; };
 		B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYHomeTownCell.m; sourceTree = "<group>"; };
 		B36184781E10FB5500DD55A5 /* JYDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailViewController.h; sourceTree = "<group>"; };
@@ -1490,6 +1496,10 @@
 				B39531871E1385C900B5C78E /* JYDredgeVipViewController.m */,
 				B39531891E13993500B5C78E /* JYMyPhotosController.h */,
 				B395318A1E13993600B5C78E /* JYMyPhotosController.m */,
+				B3195E621E16398B00193D4F /* JYVisitMeController.h */,
+				B3195E631E16398B00193D4F /* JYVisitMeController.m */,
+				B3195E651E16432E00193D4F /* JYDetailVideoViewController.h */,
+				B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1759,6 +1769,7 @@
 				ECCFA0971DEC0CC9000F4E7A /* JYApplication.m in Sources */,
 				ECCFA0AC1DEC182B000F4E7A /* JKDBHelper.m in Sources */,
 				EC804A9A1E0D54FA00191387 /* ActionSheetCustomPicker.m in Sources */,
+				B3195E641E16398B00193D4F /* JYVisitMeController.m in Sources */,
 				ECCFA09A1DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.m in Sources */,
 				ECCFA0A31DEC0F81000F4E7A /* JYAppSpreadBannerModel.m in Sources */,
 				EC804AA01E0D54FA00191387 /* DistancePickerView.m in Sources */,
@@ -1820,6 +1831,7 @@
 				EC88F85B1E10DD33009AAEED /* JYRegisterPhoneNumberViewController.m in Sources */,
 				EC4C47C51E1274AD00AA47DC /* JYDynamicCell.m in Sources */,
 				ECCFA07A1DEC060C000F4E7A /* JYConfiguration.m in Sources */,
+				B3195E671E16432E00193D4F /* JYDetailVideoViewController.m in Sources */,
 				EC88F7EE1E10B7B4009AAEED /* UIImage+Alpha.m in Sources */,
 				EC88F7EF1E10B7B4009AAEED /* UIImage+Resize.m in Sources */,
 				B3D114D71E0E26E9001DC147 /* JYNotFetchUserlocalView.m in Sources */,
