@@ -7,6 +7,8 @@
 //
 
 #import "JYBaseViewController.h"
+#import <AVKit/AVKit.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface JYBaseViewController ()
 
@@ -34,5 +36,41 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//- (UIViewController *)playerVCWithData:(NSData *)videoData {
+//
+//}
+
+- (UIViewController *)playerVCWithVideo:(NSString *)videoUrl {
+    UIViewController *retVC;
+    if (NSClassFromString(@"AVPlayerViewController")) {
+        AVPlayerViewController *playerVC = [[AVPlayerViewController alloc] init];
+
+        playerVC.player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:videoUrl]];//[[AVPlayer alloc] initWithURL:[NSURL URLWithString:videoPath]];
+        [playerVC aspect_hookSelector:@selector(viewDidAppear:)
+                          withOptions:AspectPositionAfter
+                           usingBlock:^(id<AspectInfo> aspectInfo){
+                               AVPlayerViewController *thisPlayerVC = [aspectInfo instance];
+                               [thisPlayerVC.player play];
+                           } error:nil];
+        
+        retVC = playerVC;
+    } else {
+        retVC = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:videoUrl]];
+    }
+    
+    [retVC aspect_hookSelector:@selector(supportedInterfaceOrientations) withOptions:AspectPositionInstead usingBlock:^(id<AspectInfo> aspectInfo){
+        UIInterfaceOrientationMask mask = UIInterfaceOrientationMaskAll;
+        [[aspectInfo originalInvocation] setReturnValue:&mask];
+    } error:nil];
+    
+    [retVC aspect_hookSelector:@selector(shouldAutorotate) withOptions:AspectPositionInstead usingBlock:^(id<AspectInfo> aspectInfo){
+        BOOL rotate = YES;
+        [[aspectInfo originalInvocation] setReturnValue:&rotate];
+    } error:nil];
+    return retVC;
+}
+
+
 
 @end

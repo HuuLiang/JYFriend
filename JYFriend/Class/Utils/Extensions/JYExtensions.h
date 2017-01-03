@@ -20,5 +20,6 @@
 #import "UIImage+JYResource.h"
 #import "NSDate+timeStamp.h"
 #import "UIScrollView+Refresh.h"
+#import <NSDate+Utilities.h>
 
 #endif /* JYExtensions_h */

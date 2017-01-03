@@ -10,6 +10,7 @@
 #import "JYMyPhotoCell.h"
 #import "JYMyPhotoBigImageView.h"
 #import "JYUsrImageCache.h"
+#import "JYLocalPhotoUtils.h"
 
 static CGFloat klineSpace = 7.;
 static CGFloat kitemSpace = 10.;
@@ -17,7 +18,7 @@ static CGFloat kitemSpace = 10.;
 static NSString *const kMyPhotoChcheIndex = @"my_photo_chche_index";
 static NSString *const kMyPhotoCellIndetifier = @"myphotocell_indetifier";
 
-@interface JYMyPhotosController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface JYMyPhotosController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIActionSheetDelegate,JYLocalPhotoUtilsDelegate>
 {
     UICollectionView *_layoutCollectionView;
 }
@@ -87,24 +88,23 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [super didReceiveMemoryWarning];
 }
 
-- (void)getImageWithSourceType:(UIImagePickerControllerSourceType)sourceType {
-    if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.delegate = self;
-//        picker.
-        picker.allowsEditing = YES;
-        picker.sourceType = sourceType;
-        if ([JYUtil isIpad]) {
-            UIPopoverController *popover = [[UIPopoverController alloc]initWithContentViewController:picker];
-            [popover presentPopoverFromRect:CGRectMake(0, 0, kScreenWidth, 200) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-        } else {
-            [self presentViewController:picker animated:YES completion:nil];
-        }
-    } else {
-        NSString *sourceTypeTitle = sourceType == UIImagePickerControllerSourceTypePhotoLibrary ? @"相册":@"相机";
-        [[JYHudManager manager] showHudWithTitle:sourceTypeTitle message:[NSString stringWithFormat:@"请在设备的\"设置-隐私-%@\"中允许访问%@",sourceTypeTitle,sourceTypeTitle]];
-    }
-}
+//- (void)getImageWithSourceType:(UIImagePickerControllerSourceType)sourceType {
+//    if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
+//        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+//        picker.delegate = self;
+//        picker.allowsEditing = YES;
+//        picker.sourceType = sourceType;
+//        if ([JYUtil isIpad]) {
+//            UIPopoverController *popover = [[UIPopoverController alloc]initWithContentViewController:picker];
+//            [popover presentPopoverFromRect:CGRectMake(0, 0, kScreenWidth, 200) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+//        } else {
+//            [self presentViewController:picker animated:YES completion:nil];
+//        }
+//    } else {
+//        NSString *sourceTypeTitle = sourceType == UIImagePickerControllerSourceTypePhotoLibrary ? @"相册":@"相机";
+//        [[JYHudManager manager] showHudWithTitle:sourceTypeTitle message:[NSString stringWithFormat:@"请在设备的\"设置-隐私-%@\"中允许访问%@",sourceTypeTitle,sourceTypeTitle]];
+//    }
+//}
 
 
 #pragma mark UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
@@ -180,37 +180,30 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     }
     
     if (type == UIImagePickerControllerSourceTypePhotoLibrary || type == UIImagePickerControllerSourceTypeCamera) {
-        [self getImageWithSourceType:type];
+        [JYLocalPhotoUtils shareManager].delegate = self;
+        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:type WithCurrentVC:self isVideo:NO];
     }
     
 }
 
 
-#pragma mark UIImagePickerControllerDelegate 相机相册访问
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+#pragma mark JYLocalPhotoUtilsDelegate 相机相册访问
 
-    [JYUsrImageCache writeToFileWithImage:info[UIImagePickerControllerOriginalImage]];
-    [_layoutCollectionView JY_triggerPullToRefresh];
-    @weakify(self);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        @strongify(self);
-        if (self.dataSource.count != [JYUsrImageCache fetchAllImages].count) {
-            
-            [self.dataSource addObject:[JYUsrImageCache fetchAllImages].lastObject];
-            [self->_layoutCollectionView reloadData];
-            [self->_layoutCollectionView JY_triggerPullToRefresh];
-        }
-    });
+- (void)JYLocalPhotoUtilsWithPicker:(UIImagePickerController *)picker DidFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+     [JYUsrImageCache writeToFileWithImage:info[UIImagePickerControllerOriginalImage]];
+     [_layoutCollectionView JY_triggerPullToRefresh];
+        @weakify(self);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            @strongify(self);
+            if (self.dataSource.count != [JYUsrImageCache fetchAllImages].count) {
+    
+                [self.dataSource addObject:[JYUsrImageCache fetchAllImages].lastObject];
+                [self->_layoutCollectionView reloadData];
+                [self->_layoutCollectionView JY_triggerPullToRefresh];
+            }
+        });
 
-        [picker dismissViewControllerAnimated:YES completion:nil];
 }
-
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
-
-
 
 
 

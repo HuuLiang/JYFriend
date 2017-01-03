@@ -89,5 +89,25 @@
     [self.progressHud show:YES];
     [self.progressHud hide:YES];
 }
+
+- (void)showProlgressShowTitle:(NSString *)title withDuration:(NSTimeInterval)duration progress:(CGFloat)progress completeHanlder:(void(^)(void))completeHanlder{
+    if (progress == 0) {
+        self.progressHud.mode = MBProgressHUDModeAnnularDeterminate;
+        self.progressHud.labelText = title;
+        self.progressHud.minShowTime = duration;
+//        [self.progressHud show:YES];
+    
+        [self.progressHud hide:YES];
+
+        [self.progressHud showAnimated:YES whileExecutingBlock:^{
+            
+        } completionBlock:^{
+            QBSafelyCallBlock(completeHanlder);
+        }];
+    }
+
+        self.progressHud.progress = progress;
+}
+
 @end
 

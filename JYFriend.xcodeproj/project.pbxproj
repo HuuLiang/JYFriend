@@ -12,6 +12,9 @@
 		B3195E641E16398B00193D4F /* JYVisitMeController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E631E16398B00193D4F /* JYVisitMeController.m */; };
 		B3195E671E16432E00193D4F /* JYDetailVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */; };
 		B33E74C31E111CD70095F0DB /* JYHomeTownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */; };
+		B35DCEFA1E1B36FB005C5969 /* JYLocalPhotoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B35DCEF91E1B36FB005C5969 /* JYLocalPhotoUtils.m */; };
+		B35DCF031E1BA3D4005C5969 /* JYLocalVideoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B35DCF021E1BA3D4005C5969 /* JYLocalVideoUtils.m */; };
+		B35DCF091E1BCDDC005C5969 /* JYChangeUserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = B35DCF081E1BCDDC005C5969 /* JYChangeUserInfoController.m */; };
 		B361847A1E10FB5500DD55A5 /* JYDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36184791E10FB5500DD55A5 /* JYDetailViewController.m */; };
 		B36184801E11098100DD55A5 /* JYPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B361847F1E11098100DD55A5 /* JYPhotoCollectionViewCell.m */; };
 		B36184831E110CDE00DD55A5 /* UIImage+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = B36184821E110CDE00DD55A5 /* UIImage+Blur.m */; };
@@ -284,6 +287,12 @@
 		B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailVideoViewController.m; sourceTree = "<group>"; };
 		B33E74C11E111CD70095F0DB /* JYHomeTownCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYHomeTownCell.h; sourceTree = "<group>"; };
 		B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYHomeTownCell.m; sourceTree = "<group>"; };
+		B35DCEF81E1B36FB005C5969 /* JYLocalPhotoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JYLocalPhotoUtils.h; path = JYFriend/Class/Mine/Controller/JYLocalPhotoUtils.h; sourceTree = SOURCE_ROOT; };
+		B35DCEF91E1B36FB005C5969 /* JYLocalPhotoUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JYLocalPhotoUtils.m; path = JYFriend/Class/Mine/Controller/JYLocalPhotoUtils.m; sourceTree = SOURCE_ROOT; };
+		B35DCF011E1BA3D4005C5969 /* JYLocalVideoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JYLocalVideoUtils.h; path = JYFriend/Class/Mine/View/JYLocalVideoUtils.h; sourceTree = SOURCE_ROOT; };
+		B35DCF021E1BA3D4005C5969 /* JYLocalVideoUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JYLocalVideoUtils.m; path = JYFriend/Class/Mine/View/JYLocalVideoUtils.m; sourceTree = SOURCE_ROOT; };
+		B35DCF071E1BCDDC005C5969 /* JYChangeUserInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYChangeUserInfoController.h; sourceTree = "<group>"; };
+		B35DCF081E1BCDDC005C5969 /* JYChangeUserInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYChangeUserInfoController.m; sourceTree = "<group>"; };
 		B36184781E10FB5500DD55A5 /* JYDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailViewController.h; sourceTree = "<group>"; };
 		B36184791E10FB5500DD55A5 /* JYDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailViewController.m; sourceTree = "<group>"; };
 		B361847E1E11098100DD55A5 /* JYPhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPhotoCollectionViewCell.h; sourceTree = "<group>"; };
@@ -1686,6 +1695,8 @@
 				B3195E631E16398B00193D4F /* JYVisitMeController.m */,
 				B3195E651E16432E00193D4F /* JYDetailVideoViewController.h */,
 				B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */,
+				B35DCF071E1BCDDC005C5969 /* JYChangeUserInfoController.h */,
+				B35DCF081E1BCDDC005C5969 /* JYChangeUserInfoController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1697,6 +1708,10 @@
 				B3C0DFD81E1502F500621FC5 /* JYUsrImageCache.m */,
 				B3C0DFDA1E152C7B00621FC5 /* JYMD5Utils.h */,
 				B3C0DFDB1E152C7B00621FC5 /* JYMD5Utils.m */,
+				B35DCEF81E1B36FB005C5969 /* JYLocalPhotoUtils.h */,
+				B35DCEF91E1B36FB005C5969 /* JYLocalPhotoUtils.m */,
+				B35DCF011E1BA3D4005C5969 /* JYLocalVideoUtils.h */,
+				B35DCF021E1BA3D4005C5969 /* JYLocalVideoUtils.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1818,7 +1833,7 @@
 					ECCFA03E1DEBF0D4000F4E7A = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = NS6846Q9KM;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -2019,6 +2034,7 @@
 				EC55CE6B1E077AEB0030C8F5 /* JYSegmentViewController.m in Sources */,
 				EC88F81A1E10B7B4009AAEED /* SETextGeometry.m in Sources */,
 				ECEFE33D1E0A5C3E002F9A1C /* JYRegisterNickNameViewController.m in Sources */,
+				B35DCEFA1E1B36FB005C5969 /* JYLocalPhotoUtils.m in Sources */,
 				EC804A621E0CC3F600191387 /* JYUser.m in Sources */,
 				EC88F8081E10B7B4009AAEED /* XHMessageVideoConverPhotoFactory.m in Sources */,
 				EC88F7F51E10B7B4009AAEED /* XHAudioPlayerHelper.m in Sources */,
@@ -2119,6 +2135,7 @@
 				ECCFA0A01DEC0F56000F4E7A /* JYAppSpread.m in Sources */,
 				EC88F8091E10B7B4009AAEED /* XHMessageVoiceFactory.m in Sources */,
 				EC88F8191E10B7B4009AAEED /* SETextEditingCaret.m in Sources */,
+				B35DCF031E1BA3D4005C5969 /* JYLocalVideoUtils.m in Sources */,
 				EC88F81D1E10B7B5009AAEED /* SETextMagnifierCaret.m in Sources */,
 				EC88F7F71E10B7B4009AAEED /* XHConfigurationHelper.m in Sources */,
 				EC4F98A11E164212005818F1 /* NSDate+timeStamp.m in Sources */,
@@ -2131,6 +2148,7 @@
 				B39531931E13A63C00B5C78E /* UIImage+JYResource.m in Sources */,
 				B361847A1E10FB5500DD55A5 /* JYDetailViewController.m in Sources */,
 				EC804A9C1E0D54FA00191387 /* ActionSheetDistancePicker.m in Sources */,
+				B35DCF091E1BCDDC005C5969 /* JYChangeUserInfoController.m in Sources */,
 				EC88F8281E10B7B5009AAEED /* XHMessageTextView.m in Sources */,
 				EC88F82D1E10B7B5009AAEED /* XHEmotionSectionBar.m in Sources */,
 				ECCFA0A61DEC11C1000F4E7A /* JYSpreadBannerViewController.m in Sources */,
@@ -2290,7 +2308,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Liangliang Hu (56QY36P8TL)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = NS6846Q9KM;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JYFriend/JYPrefixHeader.pch";
@@ -2299,8 +2317,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9e34a4c6-6c68-427d-a918-967d12a121d9";
-				PROVISIONING_PROFILE_SPECIFIER = PPSocialDevlopmentProvisoningProfile;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
@@ -2311,9 +2329,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Huazhong Hengtai Network Technology Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEPLOYMENT_POSTPROCESSING = YES;
-				DEVELOPMENT_TEAM = NS6846Q9KM;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JYFriend/JYPrefixHeader.pch";
@@ -2322,8 +2340,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "51221846-87db-4da3-b1f6-320b5ca14803";
-				PROVISIONING_PROFILE_SPECIFIER = PPSocialDistributionProvisoningProfile;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;

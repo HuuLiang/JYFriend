@@ -16,6 +16,6 @@
 -(void)showHudWithText:(NSString *)text;
 -(void)showHudWithTitle:(NSString *)title message:(NSString *)msg;
 -(void)showProgressInDuration:(NSTimeInterval)duration;
-
+- (void)showProlgressShowTitle:(NSString *)title withDuration:(NSTimeInterval)duration progress:(CGFloat)progress completeHanlder:(void(^)(void))completeHanlder;
 
 @end
