@@ -14,6 +14,7 @@
 #import "JYMyPhotosController.h"
 #import "JYVisitMeController.h"
 #import "JYDetailVideoViewController.h"
+#import "JYChangeUserInfoController.h"
 
 typedef NS_ENUM(NSUInteger, JYMineSection) {
     JYMineFunctinSection,//功能分组
@@ -192,7 +193,8 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
         }
     } else if (indexPath.section == JYMineEditSection) {
         if (indexPath.row == JYMineEditUpdateRow) {
-            
+            JYChangeUserInfoController *InfoVC = [[JYChangeUserInfoController alloc] init];
+            [self.navigationController pushViewController:InfoVC animated:YES];
         }
     }
 }

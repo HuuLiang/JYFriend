@@ -38,6 +38,14 @@ typedef NS_ENUM(NSUInteger,JYUserSex) {
 @property (nonatomic) NSString      *height;
 //家乡
 @property (nonatomic) NSString      *homeTown;
+//微信
+@property (nonatomic) NSString      *wechat;
+//QQ
+@property (nonatomic) NSString      *QQ;
+//手机
+@property (nonatomic) NSString      *phoneNum;
+//签名
+@property (nonatomic) NSString      *signature;
 
 //身高选择列表
 + (NSArray *)allUserHeights;
