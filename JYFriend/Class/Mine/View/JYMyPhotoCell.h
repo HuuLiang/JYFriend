@@ -13,4 +13,7 @@
 @property (nonatomic,assign)BOOL isAdd;
 @property (nonatomic) NSString *imageUrl;
 @property (nonatomic) UIImage *image;
+
+@property (nonatomic) BOOL isDelegate;
+@property (nonatomic,copy) QBAction action;
 @end

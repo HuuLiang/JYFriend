@@ -69,10 +69,10 @@ static NSString *const kJYImageCacheImageName = @"jiaoyou_imagemodel_imagechche_
         }
     UIImage *newImage = [UIImage imageWithData:imageData];
     
-    QBLog(@"newImage%@",newImage)
+//    QBLog(@"newImage%@",newImage)
     
     NSString *imageDataMd5 = [JYMD5Utils md5Data:imageData];
-    QBLog(@"---md5 %@",imageDataMd5)
+//    QBLog(@"---md5 %@",imageDataMd5)
     [self saveImageWithImageName:imageDataMd5];
     
     [[SDImageCache sharedImageCache] storeImage:newImage forKey:imageDataMd5 toDisk:YES];
@@ -115,5 +115,14 @@ static NSString *const kJYImageCacheImageName = @"jiaoyou_imagemodel_imagechche_
     return imageArr.copy;
 }
 
+
++ (BOOL)deleteCurrentImageWithIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.item >= [JYImageCacheModel findAll].count) {
+        return NO;
+    }
+  JYImageCacheModel *model =  [JYImageCacheModel findAll][indexPath.item];
+    [[SDImageCache sharedImageCache] removeImageForKey:model.imageName];
+  return  [model deleteObject];
+}
 
 @end

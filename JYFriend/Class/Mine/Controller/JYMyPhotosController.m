@@ -12,8 +12,8 @@
 #import "JYUsrImageCache.h"
 #import "JYLocalPhotoUtils.h"
 
-static CGFloat klineSpace = 7.;
-static CGFloat kitemSpace = 10.;
+static CGFloat klineSpace = 0;
+static CGFloat kitemSpace = 2.5;
 
 static NSString *const kMyPhotoChcheIndex = @"my_photo_chche_index";
 static NSString *const kMyPhotoCellIndetifier = @"myphotocell_indetifier";
@@ -25,7 +25,7 @@ static NSString *const kMyPhotoCellIndetifier = @"myphotocell_indetifier";
 
 @property (nonatomic,retain) UIActionSheet *photoActionSheet;
 @property (nonatomic,retain) NSMutableArray *dataSource;
-@property (nonatomic) NSString *imagePath;
+@property (nonatomic) BOOL isDelete;//是否是删除模式
 @end
 
 @implementation JYMyPhotosController
@@ -52,7 +52,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _layoutCollectionView.backgroundColor = self.view.backgroundColor;
     _layoutCollectionView.delegate = self;
     _layoutCollectionView.dataSource = self;
-    _layoutCollectionView.contentInset = UIEdgeInsetsMake(kWidth(30), kWidth(30), kWidth(20), kWidth(30));
+    _layoutCollectionView.contentInset = UIEdgeInsetsMake(kWidth(15), kWidth(30), kWidth(20), kWidth(15));
     [_layoutCollectionView registerClass:[JYMyPhotoCell class] forCellWithReuseIdentifier:kMyPhotoCellIndetifier];
     [self.view addSubview:_layoutCollectionView];
     {
@@ -65,6 +65,28 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [self loadPhotoMode];
     }];
     [_layoutCollectionView JY_triggerPullToRefresh];
+    
+    @weakify(self);//退出删除
+     UIBarButtonItem *rightItem =  [[UIBarButtonItem alloc] bk_initWithTitle:@"退出" style:UIBarButtonItemStyleBordered handler:^(UIBarButtonItem *sender) {
+         @strongify(self);
+         [self->_layoutCollectionView reloadData];
+         [self quitDeletePattern];
+    }];
+    
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] bk_initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+        @strongify(self);
+        if (sender.state == UIGestureRecognizerStateBegan) {
+//            NSIndexPath *indexPath = [self->_layoutCollectionView indexPathForItemAtPoint:location];
+            self.isDelete = YES;
+            [self->_layoutCollectionView reloadData];
+            self.navigationItem.rightBarButtonItem = rightItem;
+        }
+        
+        
+    }];
+    longPress.minimumPressDuration = 1.0;
+    [_layoutCollectionView addGestureRecognizer:longPress];
+    
 }
 
 - (void)loadPhotoMode {
@@ -72,39 +94,26 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         @strongify(self);
         self.dataSource = [JYUsrImageCache fetchAllImages].mutableCopy;
+        if (self.dataSource.count == 0) {
+            [self quitDeletePattern];
+        }
         [self->_layoutCollectionView reloadData];
         [self->_layoutCollectionView JY_endPullToRefresh];
     });
 
 }
-
-- (NSData *)imageTranslationDateWithImageArr:(NSArray *)imageArr {
-    NSData *date = [NSKeyedArchiver archivedDataWithRootObject:imageArr];
-    return date;
+/**
+ 退出编辑模式
+ */
+- (void)quitDeletePattern {
+    self.isDelete = NO;
+    self.navigationItem.rightBarButtonItem = nil;
 
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-//- (void)getImageWithSourceType:(UIImagePickerControllerSourceType)sourceType {
-//    if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
-//        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-//        picker.delegate = self;
-//        picker.allowsEditing = YES;
-//        picker.sourceType = sourceType;
-//        if ([JYUtil isIpad]) {
-//            UIPopoverController *popover = [[UIPopoverController alloc]initWithContentViewController:picker];
-//            [popover presentPopoverFromRect:CGRectMake(0, 0, kScreenWidth, 200) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-//        } else {
-//            [self presentViewController:picker animated:YES completion:nil];
-//        }
-//    } else {
-//        NSString *sourceTypeTitle = sourceType == UIImagePickerControllerSourceTypePhotoLibrary ? @"相册":@"相机";
-//        [[JYHudManager manager] showHudWithTitle:sourceTypeTitle message:[NSString stringWithFormat:@"请在设备的\"设置-隐私-%@\"中允许访问%@",sourceTypeTitle,sourceTypeTitle]];
-//    }
-//}
 
 
 #pragma mark UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
@@ -116,11 +125,20 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JYMyPhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMyPhotoCellIndetifier forIndexPath:indexPath];
     if (indexPath.item == self.dataSource.count) {
-        cell.isAdd = YES;
+        cell.isAdd = YES;//添加照片的cell
         cell.imageUrl = nil;
+        cell.isDelegate = NO;
     }else {
         cell.isAdd = NO;
         cell.image = self.dataSource[indexPath.item];
+        cell.action = ^(id sender){
+        
+        };
+        if (self.isDelete) {
+            cell.isDelegate = YES;
+        }else{
+            cell.isDelegate = NO;
+        }
     }
     return cell;
 }
@@ -133,14 +151,21 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.isDelete) {
+
+        if (indexPath.item == self.dataSource.count) {
+            return;
+        }
+        [JYUsrImageCache deleteCurrentImageWithIndexPath:indexPath];
+        [collectionView JY_triggerPullToRefresh];
+    }else{
+        
     if (indexPath.item == self.dataSource.count) {
         [self.photoActionSheet showFromTabBar:self.tabBarController.tabBar];
     }else {
         
         JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:self.dataSource frame:self.view.window.frame];
-//        bigImageView.frame = self.view.window.frame;
         bigImageView.backgroundColor = [UIColor whiteColor];
-//        bigImageView.images = self.dataSource;
         bigImageView.shouldAutoScroll = NO;
         bigImageView.shouldInfiniteScroll = NO;
         bigImageView.pageControlYAspect = 0.8;
@@ -166,6 +191,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         }];
         
     }
+    }
 
 }
 
@@ -185,7 +211,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     }
     
 }
-
 
 #pragma mark JYLocalPhotoUtilsDelegate 相机相册访问
 

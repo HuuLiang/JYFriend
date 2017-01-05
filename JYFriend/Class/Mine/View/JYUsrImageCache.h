@@ -19,4 +19,6 @@
 + (void)writeToFileWithImage:(UIImage *)image;
 
 + (NSArray <UIImage *>*)fetchAllImages;
+
++ (BOOL)deleteCurrentImageWithIndexPath:(NSIndexPath *)indexPath;
 @end
