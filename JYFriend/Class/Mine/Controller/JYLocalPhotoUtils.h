@@ -20,6 +20,6 @@
 @property (nonatomic,weak) id<JYLocalPhotoUtilsDelegate>delegate;
 
 + (instancetype)shareManager;
-- (void)getImageWithSourceType:(UIImagePickerControllerSourceType)sourceType WithCurrentVC:(UIViewController *)currentVC isVideo:(BOOL)isVideo;
+- (void)getImageWithSourceType:(UIImagePickerControllerSourceType)sourceType inViewController:(UIViewController *)viewController popoverPoint:(CGPoint)popoverPoint isVideo:(BOOL)isVideo;
 
 @end

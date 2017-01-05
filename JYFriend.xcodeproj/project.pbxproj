@@ -11,6 +11,8 @@
 		B3195E611E16258500193D4F /* UIScrollView+Refresh.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E601E16258500193D4F /* UIScrollView+Refresh.m */; };
 		B3195E641E16398B00193D4F /* JYVisitMeController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E631E16398B00193D4F /* JYVisitMeController.m */; };
 		B3195E671E16432E00193D4F /* JYDetailVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */; };
+		B32317101E1E3A0A00932531 /* JYDetailBottotmView.m in Sources */ = {isa = PBXBuildFile; fileRef = B323170F1E1E3A0A00932531 /* JYDetailBottotmView.m */; };
+		B32317131E1E3D3100932531 /* JYDetailBottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B32317121E1E3D3100932531 /* JYDetailBottomButton.m */; };
 		B33E74C31E111CD70095F0DB /* JYHomeTownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */; };
 		B35DCEFA1E1B36FB005C5969 /* JYLocalPhotoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B35DCEF91E1B36FB005C5969 /* JYLocalPhotoUtils.m */; };
 		B35DCF031E1BA3D4005C5969 /* JYLocalVideoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B35DCF021E1BA3D4005C5969 /* JYLocalVideoUtils.m */; };
@@ -288,6 +290,10 @@
 		B3195E631E16398B00193D4F /* JYVisitMeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYVisitMeController.m; sourceTree = "<group>"; };
 		B3195E651E16432E00193D4F /* JYDetailVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailVideoViewController.h; sourceTree = "<group>"; };
 		B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailVideoViewController.m; sourceTree = "<group>"; };
+		B323170E1E1E3A0A00932531 /* JYDetailBottotmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailBottotmView.h; sourceTree = "<group>"; };
+		B323170F1E1E3A0A00932531 /* JYDetailBottotmView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailBottotmView.m; sourceTree = "<group>"; };
+		B32317111E1E3D3100932531 /* JYDetailBottomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailBottomButton.h; sourceTree = "<group>"; };
+		B32317121E1E3D3100932531 /* JYDetailBottomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailBottomButton.m; sourceTree = "<group>"; };
 		B33E74C11E111CD70095F0DB /* JYHomeTownCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYHomeTownCell.h; sourceTree = "<group>"; };
 		B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYHomeTownCell.m; sourceTree = "<group>"; };
 		B35DCEF81E1B36FB005C5969 /* JYLocalPhotoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JYLocalPhotoUtils.h; path = JYFriend/Class/Mine/Controller/JYLocalPhotoUtils.h; sourceTree = SOURCE_ROOT; };
@@ -794,6 +800,10 @@
 				B3E6FC1E1E12A1B50076ADE9 /* JYDetailUserInfoCell.m */,
 				B3E6FC201E12A1CD0076ADE9 /* JYNewDynamicCell.h */,
 				B3E6FC211E12A1CD0076ADE9 /* JYNewDynamicCell.m */,
+				B323170E1E1E3A0A00932531 /* JYDetailBottotmView.h */,
+				B323170F1E1E3A0A00932531 /* JYDetailBottotmView.m */,
+				B32317111E1E3D3100932531 /* JYDetailBottomButton.h */,
+				B32317121E1E3D3100932531 /* JYDetailBottomButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2086,6 +2096,7 @@
 				ECEFE3461E0A7D7C002F9A1C /* JYRegisterDetailViewController.m in Sources */,
 				EC88F8131E10B7B4009AAEED /* SECompatibility.m in Sources */,
 				EC88F8161E10B7B4009AAEED /* SELinkText.m in Sources */,
+				B32317101E1E3A0A00932531 /* JYDetailBottotmView.m in Sources */,
 				EC88F7F01E10B7B4009AAEED /* UIImage+RoundedCorner.m in Sources */,
 				EC88F8291E10B7B5009AAEED /* XHVoiceRecordHUD.m in Sources */,
 				EC88F8051E10B7B4009AAEED /* XHOperationNetworkKit.m in Sources */,
@@ -2162,6 +2173,7 @@
 				EC5707AE1E15466600EAFC6E /* JYMessageViewController+XHBMessageDelegate.m in Sources */,
 				B36F15261E1C89540081500B /* JYChangeInfoCell.m in Sources */,
 				EC88F81B1E10B7B4009AAEED /* SETextInput.m in Sources */,
+				B32317131E1E3D3100932531 /* JYDetailBottomButton.m in Sources */,
 				B395318E1E13A18400B5C78E /* JYMyPhotoCell.m in Sources */,
 				B39531931E13A63C00B5C78E /* UIImage+JYResource.m in Sources */,
 				B361847A1E10FB5500DD55A5 /* JYDetailViewController.m in Sources */,

@@ -17,6 +17,7 @@ static CGFloat kitemSpace = 2.5;
 
 static NSString *const kMyPhotoChcheIndex = @"my_photo_chche_index";
 static NSString *const kMyPhotoCellIndetifier = @"myphotocell_indetifier";
+static const void *kActionPopCellAssociatedKey = &kActionPopCellAssociatedKey;
 
 @interface JYMyPhotosController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIActionSheetDelegate,JYLocalPhotoUtilsDelegate>
 {
@@ -26,6 +27,7 @@ static NSString *const kMyPhotoCellIndetifier = @"myphotocell_indetifier";
 @property (nonatomic,retain) UIActionSheet *photoActionSheet;
 @property (nonatomic,retain) NSMutableArray *dataSource;
 @property (nonatomic) BOOL isDelete;//是否是删除模式
+@property (nonatomic) CGPoint currentCellPoint;
 @end
 
 @implementation JYMyPhotosController
@@ -43,7 +45,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"我的相册";
-    
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumInteritemSpacing = kWidth(kitemSpace *2);
@@ -131,9 +132,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     }else {
         cell.isAdd = NO;
         cell.image = self.dataSource[indexPath.item];
-        cell.action = ^(id sender){
-        
-        };
         if (self.isDelete) {
             cell.isDelegate = YES;
         }else{
@@ -151,6 +149,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     if (self.isDelete) {
 
         if (indexPath.item == self.dataSource.count) {
@@ -161,9 +160,11 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     }else{
         
     if (indexPath.item == self.dataSource.count) {
+        UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+        self.currentCellPoint = cell.center;
         [self.photoActionSheet showFromTabBar:self.tabBarController.tabBar];
     }else {
-        
+        //图片放大浏览
         JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:self.dataSource frame:self.view.window.frame];
         bigImageView.backgroundColor = [UIColor whiteColor];
         bigImageView.shouldAutoScroll = NO;
@@ -207,7 +208,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     
     if (type == UIImagePickerControllerSourceTypePhotoLibrary || type == UIImagePickerControllerSourceTypeCamera) {
         [JYLocalPhotoUtils shareManager].delegate = self;
-        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:type WithCurrentVC:self isVideo:NO];
+        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:type inViewController:self popoverPoint:self.currentCellPoint  isVideo:NO];
     }
     
 }

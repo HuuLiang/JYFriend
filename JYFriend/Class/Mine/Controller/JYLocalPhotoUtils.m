@@ -25,7 +25,7 @@
     return _instance;
 }
 
-- (void)getImageWithSourceType:(UIImagePickerControllerSourceType)sourceType WithCurrentVC:(UIViewController *)currentVC isVideo:(BOOL)isVideo{
+- (void)getImageWithSourceType:(UIImagePickerControllerSourceType)sourceType inViewController:(UIViewController *)viewController popoverPoint:(CGPoint)popoverPoint isVideo:(BOOL)isVideo{
     if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.allowsEditing = YES;
@@ -37,10 +37,13 @@
             picker.mediaTypes =  [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
         }
         if ([JYUtil isIpad]) {
-            UIPopoverController *popover = [[UIPopoverController alloc]initWithContentViewController:picker];
-            [popover presentPopoverFromRect:CGRectMake(0, 0, kScreenWidth, 200) inView:currentVC.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIPopoverController *popover = [[UIPopoverController alloc]initWithContentViewController:picker];
+                [popover presentPopoverFromRect:CGRectMake(popoverPoint.x, popoverPoint.y, kScreenWidth, 200) inView:viewController.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            });
+            
         } else {
-            [currentVC presentViewController:picker animated:YES completion:nil];
+            [viewController presentViewController:picker animated:YES completion:nil];
         }
     } else {
         NSString *sourceTypeTitle = sourceType == (UIImagePickerControllerSourceTypePhotoLibrary | UIImagePickerControllerSourceTypeSavedPhotosAlbum) ? @"相册":@"相机";
@@ -48,9 +51,6 @@
     }
 }
 
-- (void)dealloc {
-
-}
 
 #pragma mark UIImagePickerControllerDelegate 相机相册访问
 

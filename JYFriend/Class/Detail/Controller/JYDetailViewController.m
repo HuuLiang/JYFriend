@@ -11,6 +11,7 @@
 #import "JYHomeTownCell.h"
 #import "JYPhotoCollectionViewCell.h"
 #import "JYDetailUserInfoCell.h"
+#import "JYDetailBottotmView.h"
 
 static NSString *const kPhotoCollectionViewCellIdentifier = @"PhotoCollectionViewCell_Identifier";
 static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
@@ -72,9 +73,40 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
     UICollectionView *_layoutCollectionView;
 }
 
+@property (nonatomic,retain) JYDetailBottotmView *bottomView;
 @end
 
 @implementation JYDetailViewController
+
+- (JYDetailBottotmView *)bottomView {
+    if (_bottomView) {
+        return _bottomView;
+    }
+    _bottomView = [[JYDetailBottotmView alloc] init];
+//    _bottomView.backgroundColor = [UIColor colorWithHexString:@"#E147a5"];
+    _bottomView.buttonModels = @[[JYDetailBottomModel creatBottomModelWith:@"关注TA" withImage:@"detail_attention_icon"],
+                                 [JYDetailBottomModel creatBottomModelWith:@"发短信" withImage:@"detail_message_icon"],
+                                 [JYDetailBottomModel creatBottomModelWith:@"打招呼" withImage:@"detail_greet_icon"]];
+    _bottomView.action = ^(UIButton *btn){
+        if ([btn.titleLabel.text isEqualToString:@"关注TA"]) {
+            btn.selected = !btn.selected;
+            CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+            animation.values = @[@(0.4),@(0.6),@(0.8),@(1.0)];
+            animation.keyTimes = @[@(0.0),@(0.3),@(0.7),@(1.0)];
+            animation.calculationMode = kCAAnimationLinear;
+            [btn.imageView.layer addAnimation:animation forKey:@"SHOW"];
+        }
+    };
+    
+    [self.view addSubview:_bottomView];
+    {
+    [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.left.right.mas_equalTo(self.view);
+        make.height.mas_equalTo(kWidth(88));
+    }];
+    }
+    return _bottomView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -90,6 +122,7 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
     [_layoutCollectionView registerClass:[JYHomeTownCell class] forCellWithReuseIdentifier:kHomeTownCellIdetifier];
     [_layoutCollectionView registerClass:[UICollectionReusableView  class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kSectionHeaderIndetifier];
     
+    _layoutCollectionView.contentInset = UIEdgeInsetsMake(0, 0, kWidth(88.), 0);
     [self.view addSubview:_layoutCollectionView];
     {
     [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -97,6 +130,7 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
     }];
     }
     
+    self.bottomView.backgroundColor = [UIColor colorWithHexString:@"#E147a5"];;
 }
 
 - (void)didReceiveMemoryWarning {

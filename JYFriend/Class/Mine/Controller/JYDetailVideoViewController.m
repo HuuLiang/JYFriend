@@ -20,7 +20,7 @@ static NSInteger const kUploadTiem = 1;
 @property (nonatomic,retain) UIView *holdRZVideoView;//待认证
 @property (nonatomic,retain) UIImageView *holdImageView;//图片
 @property (nonatomic,retain) UIView *successVideoView;//认证通过的视频
-
+@property (nonatomic) CGPoint currentCellPoint;
 
 @end
 
@@ -140,7 +140,7 @@ static NSInteger const kUploadTiem = 1;
 //    @weakify(self);
     [rzImageBtn bk_addEventHandler:^(id sender) {
         [JYLocalPhotoUtils shareManager].delegate = self;
-        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum WithCurrentVC:self isVideo:YES];
+        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum inViewController:self popoverPoint:self.currentCellPoint isVideo:YES];
         
     } forControlEvents:UIControlEventTouchUpInside];
     {

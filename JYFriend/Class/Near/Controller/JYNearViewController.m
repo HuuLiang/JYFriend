@@ -240,18 +240,19 @@ QBDefineLazyPropertyInitialization(CLLocationManager, locationManager)
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+   
     if (tableView.editing) {
         
         if (![self.allSelectCells containsObject:indexPath]) [self.allSelectCells addObject:indexPath];
         self.bottomView.hidden = NO;
         self.bottomView.personNumber = self.allSelectCells.count;
         
-    }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }else {
     
     JYDetailViewController *detailVC = [[JYDetailViewController alloc] init];
     [self.navigationController pushViewController:detailVC animated:YES];
-
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
