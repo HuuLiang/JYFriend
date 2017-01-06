@@ -21,7 +21,7 @@
 @property (nonatomic) NSString *userInfo;
 
 @property (nonatomic,retain) UITextField *textField;
-@property (nonatomic) BOOL cancleEditing;
+//@property (nonatomic) BOOL cancleEditing;
 
 @property (nonatomic,weak)id<JYChangeInfoCellDelegate>delegate;
 

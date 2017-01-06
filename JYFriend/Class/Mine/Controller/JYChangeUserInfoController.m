@@ -194,7 +194,7 @@ typedef NS_ENUM(NSInteger,JYUserInfoContactRow) {
         }else if (indexPath.row == JYUserInfoDataRowBirthDay){
             cell.title = @"生日";
             cell.userInfo = [JYUser currentUser].birthday;
-            cell.cancleEditing = YES;
+//            cell.cancleEditing = YES;
             cell.textField.userInteractionEnabled = NO;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
@@ -207,14 +207,14 @@ typedef NS_ENUM(NSInteger,JYUserInfoContactRow) {
         }else if (indexPath.row == JYUserInfoDataRowHeight){
         cell.title = @"身高";
             cell.userInfo = [JYUser currentUser].height;
-            cell.cancleEditing = YES;
+//            cell.cancleEditing = YES;
             cell.textField.userInteractionEnabled = NO;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
         }else if (indexPath.row == JYUserInfoDataRowHome){
             cell.title = @"家乡";
             cell.userInfo = [JYUser currentUser].homeTown;
-            cell.cancleEditing = YES;
+//            cell.cancleEditing = YES;
             cell.textField.userInteractionEnabled = NO;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;

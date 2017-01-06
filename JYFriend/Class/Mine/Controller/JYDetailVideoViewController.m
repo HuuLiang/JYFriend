@@ -277,8 +277,6 @@ static NSInteger const kUploadTiem = 1;
     
 }
 
-
-
 - (void)dealloc {
 
 }

@@ -65,10 +65,13 @@
 
 #pragma mark - Life cycle
 
+/**
+ self.isShowEmotionStoreButton 原本为YES这里改动为NO
+ */
 - (void)setup {
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.backgroundColor = [UIColor colorWithWhite:0.961 alpha:1.000];
-    self.isShowEmotionStoreButton = YES;
+    self.isShowEmotionStoreButton = NO;
     
     
     if (!_emotionCollectionView) {

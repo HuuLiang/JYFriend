@@ -91,7 +91,7 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
         if ([btn.titleLabel.text isEqualToString:@"关注TA"]) {
             btn.selected = !btn.selected;
             CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
-            animation.values = @[@(0.4),@(0.6),@(0.8),@(1.0)];
+            animation.values = @[@(0.4),@(0.6),@(0.8),@(1.5)];
             animation.keyTimes = @[@(0.0),@(0.3),@(0.7),@(1.0)];
             animation.calculationMode = kCAAnimationLinear;
             [btn.imageView.layer addAnimation:animation forKey:@"SHOW"];
@@ -317,8 +317,7 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
     }else if (section == JYSectionTypeVideo){
         return UIEdgeInsetsMake(0, 0, kWidth(20), 0);
     }
-    return UIEdgeInsetsZero;
-}
+    return UIEdgeInsetsZero; }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     return CGSizeMake(kScreenWidth, kWidth(20.));
