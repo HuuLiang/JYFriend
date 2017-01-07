@@ -15,6 +15,7 @@
 #import "JYAppSpread.h"
 
 static NSString *const kRegisterKeyName         = @"JY_register_keyname";
+static NSString *const kUserRegisterKeyName     = @"JY_userRegister_keyname";
 static NSString *const kUserAccessUsername      = @"JY_user_access_username";
 static NSString *const kUserAccessServicename   = @"JY_user_access_service";
 static NSString *const kLaunchSeqKeyName        = @"JY_launchseq_keyname";
@@ -37,18 +38,34 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
     return accessIdInKeyChain;
 }
 
-+ (NSString *)userId {
+//设备激活
++ (NSString *)UUID {
     return [[NSUserDefaults standardUserDefaults] objectForKey:kRegisterKeyName];
 }
 
-+ (BOOL)isRegistered {
++ (BOOL)isRegisteredUUID {
+    return [self UUID] != nil;
+}
+
++ (void)setRegisteredWithUUID:(NSString *)uuid {
+    [[NSUserDefaults standardUserDefaults] setObject:uuid forKey:kRegisterKeyName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+//用户注册
++ (NSString *)userId {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:kUserRegisterKeyName];
+}
+
++ (BOOL)isRegisteredUserId {
     return [self userId] != nil;
 }
 
 + (void)setRegisteredWithUserId:(NSString *)userId {
-    [[NSUserDefaults standardUserDefaults] setObject:userId forKey:kRegisterKeyName];
+    [[NSUserDefaults standardUserDefaults] setObject:userId forKey:kUserRegisterKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
 
 + (NSUInteger)launchSeq {
     NSNumber *launchSeq = [[NSUserDefaults standardUserDefaults] objectForKey:kLaunchSeqKeyName];

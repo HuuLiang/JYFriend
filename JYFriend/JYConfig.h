@@ -18,11 +18,11 @@
 #define JY_REST_APP_VERSION         ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]))
 //#define JY_PAYMENT_RESERVE_DATA     [NSString stringWithFormat:@"%@$%@", JY_REST_APPID, JY_CHANNEL_NO]
 
-#define JY_BASE_URL                    @"http://iv.zcqcmj.com" //@""
+#define JY_BASE_URL                    @"http://192.168.1.123:8099"//@"http://iv.zcqcmj.com"
 #define JY_STANDBY_BASE_URL            @"http://sfs.dswtg.com/"
 
 
-#define JY_ACTIVATION_URL              @"/iosvideo/activat.htm"
+#define JY_ACTIVATION_URL              @"/mfwcps/jihuo.htm"
 #define JY_ACCESS_URL                  @"/iosvideo/userAccess.htm"
 #define JY_SYSTEM_CONFIG_URL           @"/iosvideo/systemConfig.htm"
 

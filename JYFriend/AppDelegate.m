@@ -40,8 +40,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    //设置共同样式
     [self setCommonStyle];
-    [self checkUserIsLoginWithApplication:application Options:launchOptions];
+    //检查网络状态 基本信息获取
+    [self checkNetworkInfoState];
+    //检查用户注册
+    [self checkUserIsLogin];
     
     return YES;
 }

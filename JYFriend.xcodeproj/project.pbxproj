@@ -280,6 +280,8 @@
 		ECEFE3461E0A7D7C002F9A1C /* JYRegisterDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEFE3451E0A7D7C002F9A1C /* JYRegisterDetailViewController.m */; };
 		ECEFE3491E0A816D002F9A1C /* JYSetAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEFE3481E0A816D002F9A1C /* JYSetAvatarView.m */; };
 		ECEFE34C1E0A865C002F9A1C /* JYRegisterDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEFE34B1E0A865C002F9A1C /* JYRegisterDetailCell.m */; };
+		ECF118B81E20BE7F0077BB5F /* QBJYFriendURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF118B71E20BE7F0077BB5F /* QBJYFriendURLRequest.m */; };
+		ECF118BB1E20CB0F0077BB5F /* UIView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF118BA1E20CB0F0077BB5F /* UIView+Loading.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -739,6 +741,10 @@
 		ECEFE3481E0A816D002F9A1C /* JYSetAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSetAvatarView.m; sourceTree = "<group>"; };
 		ECEFE34A1E0A865C002F9A1C /* JYRegisterDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRegisterDetailCell.h; sourceTree = "<group>"; };
 		ECEFE34B1E0A865C002F9A1C /* JYRegisterDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRegisterDetailCell.m; sourceTree = "<group>"; };
+		ECF118B61E20BE7F0077BB5F /* QBJYFriendURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBJYFriendURLRequest.h; sourceTree = "<group>"; };
+		ECF118B71E20BE7F0077BB5F /* QBJYFriendURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBJYFriendURLRequest.m; sourceTree = "<group>"; };
+		ECF118B91E20CB0F0077BB5F /* UIView+Loading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Loading.h"; sourceTree = "<group>"; };
+		ECF118BA1E20CB0F0077BB5F /* UIView+Loading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Loading.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1766,6 +1772,8 @@
 				ECCFA0991DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.m */,
 				EC9843DF1E07ACC600754471 /* UIView+RoundCorner.h */,
 				EC9843E01E07ACC600754471 /* UIView+RoundCorner.m */,
+				ECF118B91E20CB0F0077BB5F /* UIView+Loading.h */,
+				ECF118BA1E20CB0F0077BB5F /* UIView+Loading.m */,
 				B36184811E110CDE00DD55A5 /* UIImage+Blur.h */,
 				B36184821E110CDE00DD55A5 /* UIImage+Blur.m */,
 				B39531911E13A63C00B5C78E /* UIImage+JYResource.h */,
@@ -1808,6 +1816,8 @@
 				ECCFA0961DEC0CC9000F4E7A /* JYApplication.m */,
 				ECCFA09B1DEC0EC0000F4E7A /* JYApplicationManager.h */,
 				ECCFA09C1DEC0EC0000F4E7A /* JYApplicationManager.m */,
+				ECF118B61E20BE7F0077BB5F /* QBJYFriendURLRequest.h */,
+				ECF118B71E20BE7F0077BB5F /* QBJYFriendURLRequest.m */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -2151,6 +2161,7 @@
 				EC88F7F11E10B7B4009AAEED /* UIImage+Utility.m in Sources */,
 				B39531AA1E13E6F000B5C78E /* TAAnimatedDotView.m in Sources */,
 				EC4C47C81E12807A00AA47DC /* JYDynamicModel.m in Sources */,
+				ECF118B81E20BE7F0077BB5F /* QBJYFriendURLRequest.m in Sources */,
 				ECCFA0751DEC049D000F4E7A /* JYUtil.m in Sources */,
 				EC2A71091E0B81E600BED161 /* JYContactViewController.m in Sources */,
 				B3A0797C1E0D1D8300395817 /* JYNearBottomView.m in Sources */,
@@ -2197,6 +2208,7 @@
 				B39531AE1E13E6F000B5C78E /* SDCycleScrollView.m in Sources */,
 				EC804A9F1E0D54FA00191387 /* ActionSheetStringPicker.m in Sources */,
 				B33E74C31E111CD70095F0DB /* JYHomeTownCell.m in Sources */,
+				ECF118BB1E20CB0F0077BB5F /* UIView+Loading.m in Sources */,
 				EC55CE6E1E077C730030C8F5 /* JYCharacterViewController.m in Sources */,
 				ECEFE33A1E0A4D75002F9A1C /* JYTextField.m in Sources */,
 				B3C0DFDC1E152C7B00621FC5 /* JYMD5Utils.m in Sources */,

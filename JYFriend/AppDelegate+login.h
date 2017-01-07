@@ -12,6 +12,8 @@
 
 //@property (strong, nonatomic) UIWindow *window;
 
-- (void)checkUserIsLoginWithApplication:(UIApplication *)application Options:(NSDictionary *)launchOptions;
+- (void)checkNetworkInfoState;
+
+- (void)checkUserIsLogin;
 
 @end

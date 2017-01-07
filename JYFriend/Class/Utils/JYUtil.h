@@ -13,9 +13,15 @@
 @interface JYUtil : NSObject
 
 + (NSString *)accessId;
+
++ (NSString *)UUID;
++ (BOOL)isRegisteredUUID;
++ (void)setRegisteredWithUUID:(NSString *)uuid;
+
 + (NSString *)userId;
-+ (BOOL)isRegistered;
++ (BOOL)isRegisteredUserId;
 + (void)setRegisteredWithUserId:(NSString *)userId;
+
 + (NSUInteger)launchSeq;
 + (void)accumateLaunchSeq;
 
