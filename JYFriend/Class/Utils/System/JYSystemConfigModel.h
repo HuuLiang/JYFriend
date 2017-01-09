@@ -6,7 +6,7 @@
 //  Copyright © 2016年 Liang. All rights reserved.
 //
 
-#import "QBJYFriendURLRequest.h"
+#import <QBEncryptedURLRequest.h>
 #import "JYSystemConfig.h"
 
 @interface JYSystemConfigResponse : QBURLResponse
@@ -15,7 +15,7 @@
 
 typedef void (^JYFetchSystemConfigCompletionHandler)(BOOL success);
 
-@interface JYSystemConfigModel : QBJYFriendURLRequest
+@interface JYSystemConfigModel : QBEncryptedURLRequest
 
 @property (nonatomic) NSInteger payAmount;
 @property (nonatomic) NSInteger payzsAmount;

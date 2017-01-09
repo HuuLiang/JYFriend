@@ -12,6 +12,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "JYNotFetchUserlocalView.h"
 #import "JYDetailViewController.h"
+#import "JYNearPesonModel.h"
 
 static NSString *const kNearPersonCellIdentifier = @"knearpersoncell_identifier";
 
@@ -27,11 +28,14 @@ static NSString *const kNearPersonCellIdentifier = @"knearpersoncell_identifier"
 @property (nonatomic,retain) CLLocationManager  *locationManager;//定位
 @property (nonatomic,retain) JYNotFetchUserlocalView *notLocalView;
 
+@property (nonatomic,retain) JYNearPesonModel *personModel;
+
 @end
 
 @implementation JYNearViewController
 QBDefineLazyPropertyInitialization(NSMutableArray, allSelectCells)
 QBDefineLazyPropertyInitialization(CLLocationManager, locationManager)
+QBDefineLazyPropertyInitialization(JYNearPesonModel, personModel)
 /**
  未获定位权限时的界面
  */
@@ -152,8 +156,22 @@ QBDefineLazyPropertyInitialization(CLLocationManager, locationManager)
         }
         
     }];
+    
+    [_layoutTableView JY_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        [self loadModels];
+    }];
+    
 }
 
+- (void)loadModels {
+    @weakify(self);
+    [self.personModel fetchNearPersonModelWithPage:0 pageSize:10 completeHandler:^(BOOL success, id model) {
+        @strongify(self);
+        [self->_layoutTableView JY_endPullToRefresh];
+    }];
+
+}
 
 /**
  请求定位权限

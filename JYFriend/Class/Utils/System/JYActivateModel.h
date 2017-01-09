@@ -6,11 +6,11 @@
 //  Copyright © 2016年 Liang. All rights reserved.
 //
 
-#import "QBJYFriendURLRequest.h"
+#import <QBEncryptedURLRequest.h>
 
 typedef void (^JYActivateHandler)(BOOL success, NSString *uuid);
 
-@interface JYActivateModel : QBJYFriendURLRequest
+@interface JYActivateModel : QBEncryptedURLRequest
 
 + (instancetype)sharedModel;
 

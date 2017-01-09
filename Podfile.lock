@@ -38,7 +38,7 @@ PODS:
   - MJRefresh (2.4.12)
   - OpenSSL (1.0.208)
   - QBExtensions (0.0.7)
-  - QBNetworking (0.0.8):
+  - QBNetworking (0.0.13):
     - AFNetworking (~> 3.1.0)
     - QBExtensions (~> 0.0.3)
   - QBPayment/Core (0.0.38):
@@ -57,7 +57,7 @@ PODS:
   - QBPayment/VIAPay (0.0.38):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBStatisticsManager (0.0.4):
+  - QBStatisticsManager (0.0.5):
     - BlocksKit (~> 2.2.5)
     - FMDB (~> 2.6.2)
     - QBPayment/Core
@@ -66,7 +66,7 @@ PODS:
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
   - SFHFKeychainUtils (0.0.1)
-  - UMengAnalytics-NO-IDFA (4.1.5)
+  - UMengAnalytics-NO-IDFA (4.1.9)
 
 DEPENDENCIES:
   - BlocksKit (~> 2.2.5)
@@ -90,13 +90,13 @@ SPEC CHECKSUMS:
   MJRefresh: ca8e9589895977df32d379d46e6b8a5450b3ff44
   OpenSSL: b187269d386b07452f56af273764ea0636dd5da8
   QBExtensions: a32e8ae6e371c208e2efe2b2eec7251c36187b90
-  QBNetworking: 8fa657e142a09c06056ee34bb9e9084b51e4b8a0
+  QBNetworking: c37f2f03e6bba223319c6f31291bfae4009a28e5
   QBPayment: 48ccc46486835857268b0739f5081b2cf38abf21
-  QBStatisticsManager: 41f447ddb3cebf76d8629fa7e590e9a3d06831a9
+  QBStatisticsManager: 9f12ff2198fbddd3705a2b94786415e2b983f7b4
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664
-  UMengAnalytics-NO-IDFA: f1b08b540eba6ebad044a574cae6d988cf40cfda
+  UMengAnalytics-NO-IDFA: 985292af177111685325c90c321094172b95d2cb
 
-PODFILE CHECKSUM: 34fdae4adbef456a73d18f95890cf235c7cc7fbd
+PODFILE CHECKSUM: 5d286fa14fefbc89d02130d9a77a08d60c5f184a
 
 COCOAPODS: 1.1.1

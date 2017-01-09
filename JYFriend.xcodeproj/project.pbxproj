@@ -44,6 +44,8 @@
 		B3D114D71E0E26E9001DC147 /* JYNotFetchUserlocalView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D114D61E0E26E9001DC147 /* JYNotFetchUserlocalView.m */; };
 		B3E6FC1F1E12A1B50076ADE9 /* JYDetailUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E6FC1E1E12A1B50076ADE9 /* JYDetailUserInfoCell.m */; };
 		B3E6FC221E12A1CD0076ADE9 /* JYNewDynamicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E6FC211E12A1CD0076ADE9 /* JYNewDynamicCell.m */; };
+		B3F551741E234136007CE12B /* JYNearPesonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F551731E234136007CE12B /* JYNearPesonModel.m */; };
+		B3F551781E23A33D007CE12B /* NSArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F551771E23A33D007CE12B /* NSArray+Log.m */; };
 		EC24A2F41E0E2887000B77A9 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC24A2F31E0E2887000B77A9 /* provinces.plist */; };
 		EC24A2F81E0E463E000B77A9 /* VPImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC24A2F71E0E463E000B77A9 /* VPImageCropperViewController.m */; };
 		EC2A71091E0B81E600BED161 /* JYContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A71081E0B81E600BED161 /* JYContactViewController.m */; };
@@ -280,7 +282,6 @@
 		ECEFE3461E0A7D7C002F9A1C /* JYRegisterDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEFE3451E0A7D7C002F9A1C /* JYRegisterDetailViewController.m */; };
 		ECEFE3491E0A816D002F9A1C /* JYSetAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEFE3481E0A816D002F9A1C /* JYSetAvatarView.m */; };
 		ECEFE34C1E0A865C002F9A1C /* JYRegisterDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEFE34B1E0A865C002F9A1C /* JYRegisterDetailCell.m */; };
-		ECF118B81E20BE7F0077BB5F /* QBJYFriendURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF118B71E20BE7F0077BB5F /* QBJYFriendURLRequest.m */; };
 		ECF118BB1E20CB0F0077BB5F /* UIView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF118BA1E20CB0F0077BB5F /* UIView+Loading.m */; };
 /* End PBXBuildFile section */
 
@@ -357,6 +358,10 @@
 		B3E6FC1E1E12A1B50076ADE9 /* JYDetailUserInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailUserInfoCell.m; sourceTree = "<group>"; };
 		B3E6FC201E12A1CD0076ADE9 /* JYNewDynamicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNewDynamicCell.h; sourceTree = "<group>"; };
 		B3E6FC211E12A1CD0076ADE9 /* JYNewDynamicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNewDynamicCell.m; sourceTree = "<group>"; };
+		B3F551721E234136007CE12B /* JYNearPesonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNearPesonModel.h; sourceTree = "<group>"; };
+		B3F551731E234136007CE12B /* JYNearPesonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNearPesonModel.m; sourceTree = "<group>"; };
+		B3F551761E23A33D007CE12B /* NSArray+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Log.h"; sourceTree = "<group>"; };
+		B3F551771E23A33D007CE12B /* NSArray+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Log.m"; sourceTree = "<group>"; };
 		C68BEEC20755E0EF1FE6927C /* Pods-JYFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend.debug.xcconfig"; sourceTree = "<group>"; };
 		DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JYFriend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC24A2F31E0E2887000B77A9 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
@@ -741,8 +746,6 @@
 		ECEFE3481E0A816D002F9A1C /* JYSetAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSetAvatarView.m; sourceTree = "<group>"; };
 		ECEFE34A1E0A865C002F9A1C /* JYRegisterDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRegisterDetailCell.h; sourceTree = "<group>"; };
 		ECEFE34B1E0A865C002F9A1C /* JYRegisterDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRegisterDetailCell.m; sourceTree = "<group>"; };
-		ECF118B61E20BE7F0077BB5F /* QBJYFriendURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBJYFriendURLRequest.h; sourceTree = "<group>"; };
-		ECF118B71E20BE7F0077BB5F /* QBJYFriendURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBJYFriendURLRequest.m; sourceTree = "<group>"; };
 		ECF118B91E20CB0F0077BB5F /* UIView+Loading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Loading.h"; sourceTree = "<group>"; };
 		ECF118BA1E20CB0F0077BB5F /* UIView+Loading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Loading.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -843,6 +846,24 @@
 			path = PageControl;
 			sourceTree = "<group>";
 		};
+		B3F551711E234136007CE12B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B3F551721E234136007CE12B /* JYNearPesonModel.h */,
+				B3F551731E234136007CE12B /* JYNearPesonModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B3F551751E23A33D007CE12B /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				B3F551761E23A33D007CE12B /* NSArray+Log.h */,
+				B3F551771E23A33D007CE12B /* NSArray+Log.m */,
+			);
+			path = Log;
+			sourceTree = "<group>";
+		};
 		C137E121D1CD4C8AD6CBB731 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -907,8 +928,8 @@
 		EC2A71031E0B816800BED161 /* Near */ = {
 			isa = PBXGroup;
 			children = (
+				B3F551711E234136007CE12B /* Model */,
 				EC2A71041E0B816800BED161 /* Controller */,
-				EC2A71051E0B816800BED161 /* Model */,
 				EC2A71061E0B816800BED161 /* View */,
 			);
 			path = Near;
@@ -921,13 +942,6 @@
 				EC2A710B1E0B81F800BED161 /* JYNearViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		EC2A71051E0B816800BED161 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		EC2A71061E0B816800BED161 /* View */ = {
@@ -1574,6 +1588,7 @@
 		ECCFA0411DEBF0D4000F4E7A /* JYFriend */ = {
 			isa = PBXGroup;
 			children = (
+				B3F551751E23A33D007CE12B /* Log */,
 				ECCFA0451DEBF0D4000F4E7A /* AppDelegate.h */,
 				ECCFA0461DEBF0D4000F4E7A /* AppDelegate.m */,
 				ECAF89071E095BD0005A6C62 /* AppDelegate+login.h */,
@@ -1816,8 +1831,6 @@
 				ECCFA0961DEC0CC9000F4E7A /* JYApplication.m */,
 				ECCFA09B1DEC0EC0000F4E7A /* JYApplicationManager.h */,
 				ECCFA09C1DEC0EC0000F4E7A /* JYApplicationManager.m */,
-				ECF118B61E20BE7F0077BB5F /* QBJYFriendURLRequest.h */,
-				ECF118B71E20BE7F0077BB5F /* QBJYFriendURLRequest.m */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -2117,6 +2130,7 @@
 				EC88F8151E10B7B4009AAEED /* SELineLayout.m in Sources */,
 				EC804AA11E0D54FA00191387 /* SWActionSheet.m in Sources */,
 				EC88F8211E10B7B5009AAEED /* SETextView.m in Sources */,
+				B3F551741E234136007CE12B /* JYNearPesonModel.m in Sources */,
 				EC88F7ED1E10B7B4009AAEED /* NSString+XHMD5.m in Sources */,
 				EC88F8031E10B7B4009AAEED /* XHFileAttribute.m in Sources */,
 				EC88F8061E10B7B4009AAEED /* XHMessageAvatarFactory.m in Sources */,
@@ -2161,7 +2175,6 @@
 				EC88F7F11E10B7B4009AAEED /* UIImage+Utility.m in Sources */,
 				B39531AA1E13E6F000B5C78E /* TAAnimatedDotView.m in Sources */,
 				EC4C47C81E12807A00AA47DC /* JYDynamicModel.m in Sources */,
-				ECF118B81E20BE7F0077BB5F /* QBJYFriendURLRequest.m in Sources */,
 				ECCFA0751DEC049D000F4E7A /* JYUtil.m in Sources */,
 				EC2A71091E0B81E600BED161 /* JYContactViewController.m in Sources */,
 				B3A0797C1E0D1D8300395817 /* JYNearBottomView.m in Sources */,
@@ -2173,6 +2186,7 @@
 				EC88F82A1E10B7B5009AAEED /* XHEmotionCollectionViewCell.m in Sources */,
 				ECCFA0A01DEC0F56000F4E7A /* JYAppSpread.m in Sources */,
 				EC88F8091E10B7B4009AAEED /* XHMessageVoiceFactory.m in Sources */,
+				B3F551781E23A33D007CE12B /* NSArray+Log.m in Sources */,
 				EC88F8191E10B7B4009AAEED /* SETextEditingCaret.m in Sources */,
 				B35DCF031E1BA3D4005C5969 /* JYLocalVideoUtils.m in Sources */,
 				EC88F81D1E10B7B5009AAEED /* SETextMagnifierCaret.m in Sources */,

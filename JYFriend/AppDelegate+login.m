@@ -28,6 +28,7 @@
     [QBNetworkingConfiguration defaultConfiguration].channelNo = JY_CHANNEL_NO;
     [QBNetworkingConfiguration defaultConfiguration].baseURL = JY_BASE_URL;
     [QBNetworkingConfiguration defaultConfiguration].useStaticBaseUrl = NO;
+    [QBNetworkingConfiguration defaultConfiguration].encryptedType = QBURLEncryptedTypeNew;
 #ifdef DEBUG
     //    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];
 #endif

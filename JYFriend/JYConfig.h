@@ -25,6 +25,8 @@
 #define JY_ACTIVATION_URL              @"/mfwcps/jihuo.htm"
 #define JY_ACCESS_URL                  @"/iosvideo/userAccess.htm"
 #define JY_SYSTEM_CONFIG_URL           @"/iosvideo/systemConfig.htm"
+#define JY_NEAR_PERSON_URL             @"/mfwcps/peopleNearby.htm"
+
 
 //#define JY_TRAIL_URL                   @"/iosvideo/homePage.htm"
 //#define JY_VIPA_URL                    @"/iosvideo/vipVideo.htm"

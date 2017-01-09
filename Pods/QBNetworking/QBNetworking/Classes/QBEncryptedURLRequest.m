@@ -97,7 +97,7 @@ static NSString *const kNewEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
 
 - (void)processResponseObject:(id)responseObject withResponseHandler:(QBURLResponseHandler)responseHandler {
 
-    if (![responseObject isKindOfClass:[NSDictionary class]]) {
+    if (![responseObject isKindOfClass:[NSDictionary class]] && self.configuration.encryptedType ==  QBURLEncryptedTypeOriginal) {
         [super processResponseObject:nil withResponseHandler:responseHandler];
         return ;
     }

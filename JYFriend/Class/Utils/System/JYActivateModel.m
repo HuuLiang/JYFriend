@@ -22,7 +22,7 @@ static NSString *const kSuccessResponse = @"SUCCESS";
 }
 
 + (Class)responseClass {
-    return [NSString class];
+    return [QBURLResponse class];
 }
 
 - (BOOL)shouldPostErrorNotification {
