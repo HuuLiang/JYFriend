@@ -10,7 +10,16 @@
 
 static NSString *const kSuccessResponse = @"SUCCESS";
 
+@implementation JYActivate
+
+
+@end
+
 @implementation JYActivateModel
+
++ (Class)responseClass {
+    return [JYActivate class];
+}
 
 + (instancetype)sharedModel {
     static JYActivateModel *_sharedModel;
@@ -19,10 +28,6 @@ static NSString *const kSuccessResponse = @"SUCCESS";
         _sharedModel = [[JYActivateModel alloc] init];
     });
     return _sharedModel;
-}
-
-+ (Class)responseClass {
-    return [QBURLResponse class];
 }
 
 - (BOOL)shouldPostErrorNotification {
@@ -58,19 +63,20 @@ static NSString *const kSuccessResponse = @"SUCCESS";
                          standbyURLPath:[JYUtil getStandByUrlPathWithOriginalUrl:JY_ACTIVATION_URL params:nil]
                              withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
-                            NSString *uuid;
+//                            NSString *uuid;
+                            JYActivate *resp;
                             if (respStatus == QBURLResponseSuccess) {
-                                NSString *resp = self.response;
-                                NSArray *resps = [resp componentsSeparatedByString:@";"];
-                                
-                                NSString *success = resps.firstObject;
-                                if ([success isEqualToString:kSuccessResponse]) {
-                                    uuid = resps.count == 2 ? resps[1] : nil;
-                                }
+                                resp = self.response;
+//                                NSArray *resps = [resp componentsSeparatedByString:@";"];
+//                                
+//                                NSString *success = resps.firstObject;
+//                                if ([success isEqualToString:kSuccessResponse]) {
+//                                    uuid = resps.count == 2 ? resps[1] : nil;
+//                                }
                             }
                             
                             if (handler) {
-                                handler(respStatus == QBURLResponseSuccess && uuid, uuid);
+                                handler(respStatus == QBURLResponseSuccess , resp.uuid);
                             }
                         }];
     return success;

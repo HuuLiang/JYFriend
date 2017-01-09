@@ -204,8 +204,11 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
         if ([self.response isKindOfClass:[QBURLResponse class]]) {
             QBURLResponse *urlResp = self.response;
             [urlResp parseResponseWithDictionary:responseObject];
-            
+            if (self.configuration.encryptedType == QBURLEncryptedTypeOriginal) {
             status = urlResp.success.boolValue ? QBURLResponseSuccess : QBURLResponseFailedByInterface;
+            }else if(self.configuration.encryptedType == QBURLEncryptedTypeNew){
+                status = urlResp.resultSuccess ? QBURLResponseSuccess :QBURLResponseFailedByInterface;
+            }
             errorMessage = (status == QBURLResponseSuccess) ? nil : [NSString stringWithFormat:@"ResultCode: %@", urlResp.resultCode];
         } else {
             status = QBURLResponseFailedByParsing;

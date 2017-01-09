@@ -38,10 +38,13 @@
                              };
     BOOL result = [self requestURLPath:JY_NEAR_PERSON_URL standbyURLPath:nil withParams:params responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
         
-        JYNearPerson *person = self.response;
+        JYNearPerson *persons;
+        if (respStatus == QBURLResponseSuccess) {
+            persons = self.response;
+        }
         
             if (handler) {
-                handler(respStatus == QBURLResponseSuccess , self.response);
+                handler(respStatus == QBURLResponseSuccess , persons);
             }
         
         

@@ -10,6 +10,11 @@
 
 typedef void (^JYActivateHandler)(BOOL success, NSString *uuid);
 
+@interface JYActivate : QBURLResponse
+@property (nonatomic) NSString *uuid;
+
+@end
+
 @interface JYActivateModel : QBEncryptedURLRequest
 
 + (instancetype)sharedModel;

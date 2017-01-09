@@ -7,8 +7,9 @@
 //
 
 #import <QBEncryptedURLRequest.h>
+@class JYNearPerson;
 
-typedef void(^JYNearPersonCompleteHander)(BOOL success , id model);
+typedef void(^JYNearPersonCompleteHander)(BOOL success , JYNearPerson * nearPersons);
 
 @interface JYNearPersonList : NSObject
 @property (nonatomic) NSNumber *age;

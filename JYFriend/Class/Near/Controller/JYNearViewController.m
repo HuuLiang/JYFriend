@@ -15,6 +15,7 @@
 #import "JYNearPesonModel.h"
 
 static NSString *const kNearPersonCellIdentifier = @"knearpersoncell_identifier";
+static NSString *const kSexTypeLocalCacheKey = @"kjysextype_local_cache_key";
 
 @interface JYNearViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,CLLocationManagerDelegate>
 {
@@ -26,9 +27,13 @@ static NSString *const kNearPersonCellIdentifier = @"knearpersoncell_identifier"
 @property (nonatomic,retain) NSMutableArray  *allSelectCells;//所有选中的cell的indexPath
 @property (nonatomic,retain) UIActionSheet *actionSheetView;
 @property (nonatomic,retain) CLLocationManager  *locationManager;//定位
-@property (nonatomic,retain) JYNotFetchUserlocalView *notLocalView;
+@property (nonatomic,retain) JYNotFetchUserlocalView *notLocalView;//没有登录时的view
+
+@property (nonatomic) JYUserSex sexType;//性别筛选
 
 @property (nonatomic,retain) JYNearPesonModel *personModel;
+@property (nonatomic,retain) NSArray <JYNearPersonList *>*allPersons;
+@property (nonatomic,retain) NSMutableArray *dataSource;
 
 @end
 
@@ -36,6 +41,7 @@ static NSString *const kNearPersonCellIdentifier = @"knearpersoncell_identifier"
 QBDefineLazyPropertyInitialization(NSMutableArray, allSelectCells)
 QBDefineLazyPropertyInitialization(CLLocationManager, locationManager)
 QBDefineLazyPropertyInitialization(JYNearPesonModel, personModel)
+QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 /**
  未获定位权限时的界面
  */
@@ -94,9 +100,10 @@ QBDefineLazyPropertyInitialization(JYNearPesonModel, personModel)
     return _actionSheetView;
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"附近的人";
+    self.sexType = [[[NSUserDefaults standardUserDefaults] objectForKey:kSexTypeLocalCacheKey] integerValue] != 0 ? : JYUserSexALL;
     BOOL locationEnable = [CLLocationManager locationServicesEnabled];
     int locationStatus = [CLLocationManager authorizationStatus];
     self.locationManager.delegate  = self;
@@ -163,15 +170,63 @@ QBDefineLazyPropertyInitialization(JYNearPesonModel, personModel)
     }];
     
 }
-
+/**
+ 加载全部模型
+ */
 - (void)loadModels {
     @weakify(self);
-    [self.personModel fetchNearPersonModelWithPage:0 pageSize:10 completeHandler:^(BOOL success, id model) {
+    [self.personModel fetchNearPersonModelWithPage:0 pageSize:10 completeHandler:^(BOOL success, JYNearPerson *nearPersons) {
         @strongify(self);
         [self->_layoutTableView JY_endPullToRefresh];
+        self.allPersons = nearPersons.programList;
+       NSArray *arr = [self fetchPersonListWith:self.sexType];
+//        QBLog(@"%@",arr)
+ 
+    }];
+}
+/**
+ 模拟上拉加载
+ */
+- (void)pageLoadModelWithPersonSex:(JYUserSex)sex {
+    if (!self.allPersons.count) {
+        return;
+    }
+    
+}
+
+/**
+ 根据性别把所有附近的人进行筛选
+ */
+
+- (NSArray <JYNearPersonList *>*)fetchPersonListWith:(JYUserSex)sex {
+    NSString *gender = nil;
+    switch (sex) {
+        case 1:
+            gender = @"M";
+            break;
+        case 2:
+            gender = @"F";
+            break;
+        case 3:
+            gender = @"ALL";
+            break;
+            
+        default:
+            break;
+    }
+    if (sex == JYUserSexALL) {
+        return self.allPersons;
+    }
+   return  [self.allPersons bk_select:^BOOL(JYNearPersonList *obj) {
+        if ([obj.sex isEqualToString:gender]) {
+            return YES;
+        }
+      return NO;
     }];
 
 }
+
+
 
 /**
  请求定位权限
@@ -281,10 +336,27 @@ QBDefineLazyPropertyInitialization(JYNearPesonModel, personModel)
 #pragma mark UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 3) {
-        [self tableViewEditing];
+
+    switch (buttonIndex) {
+        case 0:
+            self.sexType = JYUserSexFemale;
+            break;
+        case 1:
+            self.sexType = JYUserSexMale;
+            break;
+        case 2:
+            self.sexType = JYUserSexALL;
+            break;
+        case 3:
+             [self tableViewEditing];
+            break;
+        default:
+            break;
     }
-    
+    if (buttonIndex <3) {//保存筛选性别
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:self.sexType] forKey:kSexTypeLocalCacheKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 #pragma mark CLLocationManagerDelegate

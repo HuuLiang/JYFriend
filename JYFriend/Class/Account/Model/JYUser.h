@@ -11,7 +11,8 @@
 typedef NS_ENUM(NSUInteger,JYUserSex) {
     JYUserSexUnKnow = 0,
     JYUserSexMale, //男
-    JYUserSexFemale //女
+    JYUserSexFemale, //女
+    JYUserSexALL//所有人(附近的人)
 };
 
 @interface JYUser : JKDBModel <NSCoding>
