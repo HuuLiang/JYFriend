@@ -58,7 +58,6 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
 }
 
 + (BOOL)isRegisteredUserId {
-    return YES;
     return [self userId] != nil;
 }
 
