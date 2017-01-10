@@ -37,10 +37,10 @@
     
     [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^ (BOOL reachable) {
         
-//        if (reachable && ![JYSystemConfigModel sharedModel].loaded) {
-//            //系统配置
-//            [self fetchSystemConfigWithCompletionHandler:nil];
-//        }
+        if (reachable && ![JYSystemConfigModel sharedModel].loaded) {
+            //系统配置
+            [self fetchSystemConfigWithCompletionHandler:nil];
+        }
         
         //激活信息
         if (reachable && ![JYUtil isRegisteredUUID]) {
@@ -72,36 +72,35 @@
         }
     };
     
-    //设置图片referer
-//    BOOL requestedSystemConfig = NO;
-//    NSString *imageToken = [JYUtil imageToken];
-//    if (imageToken) {
-//        [[SDWebImageManager sharedManager].imageDownloader setValue:imageToken forHTTPHeaderField:@"Referer"];
-//        [self checkUserIsLogin];
-//    } else {
-//        self.window.rootViewController = [[UIViewController alloc] init];
-//        [self.window makeKeyAndVisible];
-//        
-//        [self.window beginProgressingWithTitle:@"更新系统配置..." subtitle:nil];
-//        
-//        requestedSystemConfig = [self fetchSystemConfigWithCompletionHandler:^(BOOL success) {
-//            [self.window endProgressing];
-//            [self checkUserIsLogin];
-//        }];
-//        
-//    }
-//    
-//    if (!requestedSystemConfig) {
-//        [[JYSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
-//            if (success) {
-//                [JYUtil setImageToken:[JYSystemConfigModel sharedModel].imageToken];
-//            }
-//            NSUInteger statsTimeInterval = 180;
-//            [[QBStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
-//        }];
-//    }
+//    设置图片referer
+    BOOL requestedSystemConfig = NO;
+    NSString *imageToken = [JYUtil imageToken];
+    if (imageToken) {
+        [[SDWebImageManager sharedManager].imageDownloader setValue:imageToken forHTTPHeaderField:@"Referer"];
+        [self checkUserIsLogin];
+    } else {
+        self.window.rootViewController = [[UIViewController alloc] init];
+        [self.window makeKeyAndVisible];
+        
+        [self.window beginProgressingWithTitle:@"更新系统配置..." subtitle:nil];
+        
+        requestedSystemConfig = [self fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+            [self.window endProgressing];
+            [self checkUserIsLogin];
+        }];
+        
+    }
     
-    
+    if (!requestedSystemConfig) {
+        [[JYSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+            if (success) {
+                [JYUtil setImageToken:[JYSystemConfigModel sharedModel].imageToken];
+            }
+            NSUInteger statsTimeInterval = 180;
+            //数据统计相关
+            [[QBStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
+        }];
+    }
 }
 
 - (void)checkUserIsLogin {
@@ -117,6 +116,8 @@
     [self.window makeKeyAndVisible];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userloginSuccess:) name:kUserLoginNotificationName object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(responseErrorInfo:) name:kQBNetworkingErrorNotification object:nil];
 }
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(void (^)(BOOL success))completionHandler {
@@ -136,7 +137,14 @@
 }
 
 - (void)userloginSuccess:(NSNotification *)notification {
-    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:self.rootViewController animated:YES completion:nil];
+    [self.window.rootViewController presentViewController:self.rootViewController animated:YES completion:^{
+        self.window.rootViewController = self.rootViewController;
+        [self.window makeKeyAndVisible];
+    }];
+}
+
+- (void)responseErrorInfo:(NSNotification *)notification {
+    
 }
 
 @end

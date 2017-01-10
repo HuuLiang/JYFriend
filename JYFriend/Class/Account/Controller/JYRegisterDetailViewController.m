@@ -144,16 +144,16 @@ static NSString *const kDetailHeaderViewReusableIdentifier = @"DetailHeaderViewR
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     JYRegisterDetailCell *cell;
-    @weakify(self);
+
     if (indexPath.row < JYRegisterDetailCount) {
         cell = [tableView dequeueReusableCellWithIdentifier:kDetailCellReusableIdentifier forIndexPath:indexPath];
         if (indexPath.row == JYRegisterDetailSexRow) {
             cell.cellType = JYDetailCellTypeSelect;
             cell.title = @"性别";
             cell.sexSelected = ^(NSNumber *userSex) {
-//                @strongify(self);
-                [JYUser currentUser].userSex = [userSex unsignedIntegerValue];
-            };
+            [JYUser currentUser].userSex = [userSex unsignedIntegerValue];
+        };
+            
         } else if(indexPath.row == JYRegisterDetailBirthRow){
             cell.cellType = JYDetailCellTypeContent;
             cell.title = @"生日";

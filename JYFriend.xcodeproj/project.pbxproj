@@ -48,7 +48,6 @@
 		B3E6FC1F1E12A1B50076ADE9 /* JYDetailUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E6FC1E1E12A1B50076ADE9 /* JYDetailUserInfoCell.m */; };
 		B3E6FC221E12A1CD0076ADE9 /* JYNewDynamicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E6FC211E12A1CD0076ADE9 /* JYNewDynamicCell.m */; };
 		B3F551741E234136007CE12B /* JYNearPesonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F551731E234136007CE12B /* JYNearPesonModel.m */; };
-		B3F551781E23A33D007CE12B /* NSArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F551771E23A33D007CE12B /* NSArray+Log.m */; };
 		EC24A2F41E0E2887000B77A9 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC24A2F31E0E2887000B77A9 /* provinces.plist */; };
 		EC24A2F81E0E463E000B77A9 /* VPImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC24A2F71E0E463E000B77A9 /* VPImageCropperViewController.m */; };
 		EC2A71091E0B81E600BED161 /* JYContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A71081E0B81E600BED161 /* JYContactViewController.m */; };
@@ -128,6 +127,7 @@
 		EC804A9F1E0D54FA00191387 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = EC804A941E0D54FA00191387 /* ActionSheetStringPicker.m */; };
 		EC804AA01E0D54FA00191387 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC804A961E0D54FA00191387 /* DistancePickerView.m */; };
 		EC804AA11E0D54FA00191387 /* SWActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = EC804A981E0D54FA00191387 /* SWActionSheet.m */; };
+		EC8596DD1E24AF9600137F6B /* JYRegisterUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC8596DC1E24AF9600137F6B /* JYRegisterUserModel.m */; };
 		EC88F7EC1E10B7B4009AAEED /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88F71D1E10B7B4009AAEED /* NSString+MessageInputView.m */; };
 		EC88F7ED1E10B7B4009AAEED /* NSString+XHMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88F71F1E10B7B4009AAEED /* NSString+XHMD5.m */; };
 		EC88F7EE1E10B7B4009AAEED /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = EC88F7221E10B7B4009AAEED /* UIImage+Alpha.m */; };
@@ -369,8 +369,6 @@
 		B3E6FC211E12A1CD0076ADE9 /* JYNewDynamicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNewDynamicCell.m; sourceTree = "<group>"; };
 		B3F551721E234136007CE12B /* JYNearPesonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNearPesonModel.h; sourceTree = "<group>"; };
 		B3F551731E234136007CE12B /* JYNearPesonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNearPesonModel.m; sourceTree = "<group>"; };
-		B3F551761E23A33D007CE12B /* NSArray+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Log.h"; sourceTree = "<group>"; };
-		B3F551771E23A33D007CE12B /* NSArray+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Log.m"; sourceTree = "<group>"; };
 		C68BEEC20755E0EF1FE6927C /* Pods-JYFriend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYFriend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend.debug.xcconfig"; sourceTree = "<group>"; };
 		DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JYFriend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC24A2F31E0E2887000B77A9 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
@@ -476,6 +474,8 @@
 		EC804A961E0D54FA00191387 /* DistancePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistancePickerView.m; sourceTree = "<group>"; };
 		EC804A971E0D54FA00191387 /* SWActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWActionSheet.h; sourceTree = "<group>"; };
 		EC804A981E0D54FA00191387 /* SWActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWActionSheet.m; sourceTree = "<group>"; };
+		EC8596DB1E24AF9600137F6B /* JYRegisterUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRegisterUserModel.h; sourceTree = "<group>"; };
+		EC8596DC1E24AF9600137F6B /* JYRegisterUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRegisterUserModel.m; sourceTree = "<group>"; };
 		EC88F71C1E10B7B4009AAEED /* NSString+MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MessageInputView.h"; sourceTree = "<group>"; };
 		EC88F71D1E10B7B4009AAEED /* NSString+MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MessageInputView.m"; sourceTree = "<group>"; };
 		EC88F71E1E10B7B4009AAEED /* NSString+XHMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XHMD5.h"; sourceTree = "<group>"; };
@@ -866,15 +866,6 @@
 				B3F551731E234136007CE12B /* JYNearPesonModel.m */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		B3F551751E23A33D007CE12B /* Log */ = {
-			isa = PBXGroup;
-			children = (
-				B3F551761E23A33D007CE12B /* NSArray+Log.h */,
-				B3F551771E23A33D007CE12B /* NSArray+Log.m */,
-			);
-			path = Log;
 			sourceTree = "<group>";
 		};
 		C137E121D1CD4C8AD6CBB731 /* Pods */ = {
@@ -1561,6 +1552,8 @@
 			children = (
 				EC804A601E0CC3F600191387 /* JYUser.h */,
 				EC804A611E0CC3F600191387 /* JYUser.m */,
+				EC8596DB1E24AF9600137F6B /* JYRegisterUserModel.h */,
+				EC8596DC1E24AF9600137F6B /* JYRegisterUserModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1601,7 +1594,6 @@
 		ECCFA0411DEBF0D4000F4E7A /* JYFriend */ = {
 			isa = PBXGroup;
 			children = (
-				B3F551751E23A33D007CE12B /* Log */,
 				ECCFA0451DEBF0D4000F4E7A /* AppDelegate.h */,
 				ECCFA0461DEBF0D4000F4E7A /* AppDelegate.m */,
 				ECAF89071E095BD0005A6C62 /* AppDelegate+login.h */,
@@ -2204,7 +2196,6 @@
 				EC88F82A1E10B7B5009AAEED /* XHEmotionCollectionViewCell.m in Sources */,
 				ECCFA0A01DEC0F56000F4E7A /* JYAppSpread.m in Sources */,
 				EC88F8091E10B7B4009AAEED /* XHMessageVoiceFactory.m in Sources */,
-				B3F551781E23A33D007CE12B /* NSArray+Log.m in Sources */,
 				EC88F8191E10B7B4009AAEED /* SETextEditingCaret.m in Sources */,
 				B35DCF031E1BA3D4005C5969 /* JYLocalVideoUtils.m in Sources */,
 				EC88F81D1E10B7B5009AAEED /* SETextMagnifierCaret.m in Sources */,
@@ -2216,6 +2207,7 @@
 				EC5707AE1E15466600EAFC6E /* JYMessageViewController+XHBMessageDelegate.m in Sources */,
 				B36F15261E1C89540081500B /* JYChangeInfoCell.m in Sources */,
 				EC88F81B1E10B7B4009AAEED /* SETextInput.m in Sources */,
+				EC8596DD1E24AF9600137F6B /* JYRegisterUserModel.m in Sources */,
 				B32317131E1E3D3100932531 /* JYDetailBottomButton.m in Sources */,
 				B395318E1E13A18400B5C78E /* JYMyPhotoCell.m in Sources */,
 				B39531931E13A63C00B5C78E /* UIImage+JYResource.m in Sources */,

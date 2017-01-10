@@ -8,6 +8,7 @@
 
 #import "JYRegisterPhoneNumberViewController.h"
 #import "JYNextButton.h"
+#import "JYRegisterUserModel.h"
 
 @interface JYRegisterPhoneNumberViewController ()
 {
@@ -17,9 +18,11 @@
     JYNextButton *_endButton;
     UIButton     *_skipButton;
 }
+@property (nonatomic) JYRegisterUserModel *userModel;
 @end
 
 @implementation JYRegisterPhoneNumberViewController
+QBDefineLazyPropertyInitialization(JYRegisterUserModel, userModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -147,7 +150,7 @@
         if ([self checkFieldContent]) {
             [JYUser currentUser].account = _phoneNumberField.text;
             [JYUser currentUser].password = _passwordField.text;
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginNotificationName object:nil];
+            [self registerUserInfo];
         }
     }];
     [_endButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
@@ -163,7 +166,8 @@
     
     [_skipButton bk_addEventHandler:^(id sender) {
         @strongify(self);
-        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginNotificationName object:nil];
+        [self registerUserInfo];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginNotificationName object:nil];
     } forControlEvents:UIControlEventTouchUpInside];
     
     {
@@ -182,7 +186,14 @@
 }
 
 - (void)registerUserInfo {
-    
+    [self.userModel registerUserWithUserInfo:[JYUser currentUser] completionHandler:^(BOOL success, id obj) {
+        if (success) {
+            [JYUser currentUser].userId = obj;
+            [JYUtil setRegisteredWithUserId:obj];
+            [[JYUser currentUser] saveOrUpdate];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginNotificationName object:nil];
+        }
+    }];
 }
 
 //检查用户输入的内容
