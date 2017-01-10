@@ -31,7 +31,7 @@
                              @"sex":sexStr[@(user.userSex)],
                              @"userType":@(2),
                              @"height":user.height,
-                             @"birthday":user.birthday};
+                             @"birthday":[JYUtil timeStringFromDate:[JYUtil dateFromString:user.birthday WithDateFormat:kDateFormatChina] WithDateFormat:kDateFormatShort]};
     
     BOOL success = [self requestURLPath:JY_USERCREATE_URL
                          standbyURLPath:nil//[JYUtil getStandByUrlPathWithOriginalUrl:JY_USERCREATE_URL params:nil]

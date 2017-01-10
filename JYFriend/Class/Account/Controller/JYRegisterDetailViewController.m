@@ -150,6 +150,7 @@ static NSString *const kDetailHeaderViewReusableIdentifier = @"DetailHeaderViewR
         if (indexPath.row == JYRegisterDetailSexRow) {
             cell.cellType = JYDetailCellTypeSelect;
             cell.title = @"性别";
+            [JYUser currentUser].userSex = JYUserSexMale;
             cell.sexSelected = ^(NSNumber *userSex) {
             [JYUser currentUser].userSex = [userSex unsignedIntegerValue];
         };
