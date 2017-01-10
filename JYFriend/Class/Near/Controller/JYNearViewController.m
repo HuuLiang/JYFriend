@@ -16,6 +16,8 @@
 
 static NSString *const kNearPersonCellIdentifier = @"knearpersoncell_identifier";
 static NSString *const kSexTypeLocalCacheKey = @"kjysextype_local_cache_key";
+static NSUInteger const kPageSize = 5;//每次上拉加载的条数
+static NSUInteger const kDefaultSize = 4;
 
 @interface JYNearViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,CLLocationManagerDelegate>
 {
@@ -33,7 +35,8 @@ static NSString *const kSexTypeLocalCacheKey = @"kjysextype_local_cache_key";
 
 @property (nonatomic,retain) JYNearPesonModel *personModel;
 @property (nonatomic,retain) NSArray <JYNearPersonList *>*allPersons;
-@property (nonatomic,retain) NSMutableArray *dataSource;
+@property (nonatomic,retain) NSMutableArray <JYNearPersonList *>*dataSource;
+@property (nonatomic,retain) NSArray <JYNearPersonList *>*currentSexPersons;
 
 @end
 
@@ -103,7 +106,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"附近的人";
-    self.sexType = [[[NSUserDefaults standardUserDefaults] objectForKey:kSexTypeLocalCacheKey] integerValue] != 0 ? : JYUserSexALL;
+    self.sexType = [[NSUserDefaults standardUserDefaults] objectForKey:kSexTypeLocalCacheKey] ? [[[NSUserDefaults standardUserDefaults] objectForKey:kSexTypeLocalCacheKey] integerValue] : JYUserSexALL;
+        QBLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:kSexTypeLocalCacheKey])
     BOOL locationEnable = [CLLocationManager locationServicesEnabled];
     int locationStatus = [CLLocationManager authorizationStatus];
     self.locationManager.delegate  = self;
@@ -143,7 +147,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     _layoutTableView.dataSource = self;
     _layoutTableView.allowsMultipleSelectionDuringEditing = YES;
     _layoutTableView.tintColor = [UIColor colorWithHexString:@"#e147a5"];
-    
+    _layoutTableView.tableFooterView = [UIView new];
     _layoutTableView.separatorInset = UIEdgeInsetsMake(0, kWidth(30), 0, 0);
     _layoutTableView.rowHeight = kWidth(180);
     [_layoutTableView registerClass:[JYNearPersonCell class] forCellReuseIdentifier:kNearPersonCellIdentifier];
@@ -169,6 +173,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [self loadModels];
     }];
     
+    [_layoutTableView JY_triggerPullToRefresh];
+    
+    [_layoutTableView JY_addPagingRefreshWithHandler:^{
+        @strongify(self);
+        [self pageLoadModelWithPersonSex:self.sexType isPullDown:NO];
+    }];
+    
 }
 /**
  加载全部模型
@@ -177,44 +188,70 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     @weakify(self);
     [self.personModel fetchNearPersonModelWithPage:0 pageSize:10 completeHandler:^(BOOL success, JYNearPerson *nearPersons) {
         @strongify(self);
-        [self->_layoutTableView JY_endPullToRefresh];
         self.allPersons = nearPersons.programList;
-       NSArray *arr = [self fetchPersonListWith:self.sexType];
-//        QBLog(@"%@",arr)
- 
+        self.currentSexPersons = [self fetchPersonListWithSexType:self.sexType];
+        [self pageLoadModelWithPersonSex:self.sexType isPullDown:YES];
+//        [self->_layoutTableView reloadData];
+//        [self->_layoutTableView JY_endPullToRefresh];
     }];
 }
 /**
  模拟上拉加载
  */
-- (void)pageLoadModelWithPersonSex:(JYUserSex)sex {
-    if (!self.allPersons.count) {
+- (void)pageLoadModelWithPersonSex:(JYUserSex)sex isPullDown:(BOOL)isPullDown{
+    
+    @weakify(self);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        @strongify(self);
+        [self->_layoutTableView reloadData];
+        [self->_layoutTableView JY_endPullToRefresh];
+    });
+    QBLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:kSexTypeLocalCacheKey])
+    if (self.currentSexPersons.count == 0) {
+        [self.dataSource removeAllObjects];
         return;
     }
     
+    if (isPullDown) {
+        if (self.dataSource.count)  [self.dataSource removeAllObjects];
+        [self.currentSexPersons enumerateObjectsUsingBlock:^(JYNearPersonList * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (idx < kDefaultSize) {
+                [self.dataSource addObject:obj];
+            }
+        }];
+    }else {
+        if (self.dataSource.count == self.currentSexPersons.count) {
+            [_layoutTableView JY_pagingRefreshNoMoreData];
+            return;
+        }
+        [self.currentSexPersons enumerateObjectsUsingBlock:^(JYNearPersonList * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (idx >= self.dataSource.count) {
+                [self.dataSource addObject:obj];
+            }else if (idx == self.dataSource.count + kPageSize - 1){
+                *stop = YES;
+            }
+        }];
+    }
 }
 
 /**
  根据性别把所有附近的人进行筛选
  */
 
-- (NSArray <JYNearPersonList *>*)fetchPersonListWith:(JYUserSex)sex {
+- (NSArray <JYNearPersonList *>*)fetchPersonListWithSexType:(JYUserSex)sexType {
     NSString *gender = nil;
-    switch (sex) {
+    switch (sexType) {
         case 1:
             gender = @"M";
             break;
         case 2:
             gender = @"F";
             break;
-        case 3:
-            gender = @"ALL";
-            break;
             
         default:
             break;
     }
-    if (sex == JYUserSexALL) {
+    if (sexType == JYUserSexALL) {
         return self.allPersons;
     }
    return  [self.allPersons bk_select:^BOOL(JYNearPersonList *obj) {
@@ -275,36 +312,31 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 #pragma UITableViewDelegate UITableViewDatasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    JYNearPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:kNearPersonCellIdentifier forIndexPath:indexPath];
-    cell.headerImageUrl = @"http://v1.qzone.cc/avatar/201406/29/18/15/53afe73912959815.jpg%21200x200.jpg";
-
-    cell.age = @"23";
-    if (indexPath.row %3 == 0) {
-        cell.name = @"新手上路";
-        cell.gender = 0;
-        cell.distance = 456;
-        cell.height = 177;
-        cell.vip = NO;
-        cell.detaiTitle = @"风流妹逗老司机";
-    }else {
-        cell.name = @"高冷小仙女";
-        cell.gender = 1;
-        cell.distance = 1234;
-        cell.height = 165;
-        cell.vip = YES;
-        cell.detaiTitle = @"有句话叫,没有高冷的人,只是她暖的不是你";
+    if (indexPath.row < self.dataSource.count) {
+        JYNearPersonList *person = self.dataSource[indexPath.row];
+        JYNearPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:kNearPersonCellIdentifier forIndexPath:indexPath];
+        cell.headerImageUrl = person.logoUrl;
+        cell.age = person.age.stringValue;
+        cell.name = person.nickName;
+        cell.gender = [person.sex isEqualToString:@"F"] ? 2 : 1;
+        cell.distance = person.note.integerValue;
+        cell.height = person.height.integerValue;
+        cell.vip = person.isVip.integerValue;
+        cell.detaiTitle = person.note;
+        return cell;
     }
+    
 //    UIView *view = [[UIView alloc] initWithFrame:cell.bounds];
 //    
 //    view.backgroundColor = [UIColor whiteColor];
 ////    view.alpha = 0;
 //    
 //    cell.multipleSelectionBackgroundView = view;
-    return cell;
+    return nil;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -354,6 +386,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             break;
     }
     if (buttonIndex <3) {//保存筛选性别
+         self.currentSexPersons = [self fetchPersonListWithSexType:self.sexType];
+        [_layoutTableView JY_triggerPullToRefresh];
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:self.sexType] forKey:kSexTypeLocalCacheKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
