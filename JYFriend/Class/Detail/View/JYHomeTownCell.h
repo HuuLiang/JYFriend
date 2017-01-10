@@ -10,7 +10,7 @@
 
 @interface JYHomeTownCell : UICollectionViewCell
 
-@property (nonatomic) NSInteger gender;
+@property (nonatomic) JYUserSex gender;
 @property (nonatomic) NSInteger age;
 @property (nonatomic,assign) NSInteger height;
 @property (nonatomic,assign,getter=isVip) BOOL vip;

@@ -22,5 +22,7 @@
 @property (nonatomic) NSString *city;
 @property (nonatomic) NSNumber *qq;
 @property (nonatomic) NSString *weixinNum;
+@property (nonatomic) NSString *starSign;
+@property (nonatomic) NSString *phone;
 
 @end

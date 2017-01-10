@@ -43,6 +43,7 @@
 		B3A0797C1E0D1D8300395817 /* JYNearBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A0797B1E0D1D8300395817 /* JYNearBottomView.m */; };
 		B3C0DFD91E1502F500621FC5 /* JYUsrImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C0DFD81E1502F500621FC5 /* JYUsrImageCache.m */; };
 		B3C0DFDC1E152C7B00621FC5 /* JYMD5Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C0DFDB1E152C7B00621FC5 /* JYMD5Utils.m */; };
+		B3C28D481E250308005E9BB7 /* NSArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C28D471E250308005E9BB7 /* NSArray+Log.m */; };
 		B3D114D41E0E185C001DC147 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D114D31E0E185C001DC147 /* CoreLocation.framework */; };
 		B3D114D71E0E26E9001DC147 /* JYNotFetchUserlocalView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D114D61E0E26E9001DC147 /* JYNotFetchUserlocalView.m */; };
 		B3E6FC1F1E12A1B50076ADE9 /* JYDetailUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E6FC1E1E12A1B50076ADE9 /* JYDetailUserInfoCell.m */; };
@@ -360,6 +361,8 @@
 		B3C0DFD81E1502F500621FC5 /* JYUsrImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JYUsrImageCache.m; path = JYFriend/Class/Mine/View/JYUsrImageCache.m; sourceTree = SOURCE_ROOT; };
 		B3C0DFDA1E152C7B00621FC5 /* JYMD5Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JYMD5Utils.h; path = JYFriend/Class/Mine/View/JYMD5Utils.h; sourceTree = SOURCE_ROOT; };
 		B3C0DFDB1E152C7B00621FC5 /* JYMD5Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JYMD5Utils.m; path = JYFriend/Class/Mine/View/JYMD5Utils.m; sourceTree = SOURCE_ROOT; };
+		B3C28D461E250308005E9BB7 /* NSArray+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Log.h"; sourceTree = "<group>"; };
+		B3C28D471E250308005E9BB7 /* NSArray+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Log.m"; sourceTree = "<group>"; };
 		B3D114D31E0E185C001DC147 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B3D114D51E0E26E9001DC147 /* JYNotFetchUserlocalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNotFetchUserlocalView.h; sourceTree = "<group>"; };
 		B3D114D61E0E26E9001DC147 /* JYNotFetchUserlocalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNotFetchUserlocalView.m; sourceTree = "<group>"; };
@@ -857,6 +860,15 @@
 				B39531A21E13E6F000B5C78E /* TAPageControl.m */,
 			);
 			path = PageControl;
+			sourceTree = "<group>";
+		};
+		B3C28D451E250308005E9BB7 /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				B3C28D461E250308005E9BB7 /* NSArray+Log.h */,
+				B3C28D471E250308005E9BB7 /* NSArray+Log.m */,
+			);
+			path = Log;
 			sourceTree = "<group>";
 		};
 		B3F551711E234136007CE12B /* Model */ = {
@@ -1661,6 +1673,7 @@
 		ECCFA05C1DEBF5B7000F4E7A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B3C28D451E250308005E9BB7 /* Log */,
 				ECCFA0841DEC08FD000F4E7A /* Ad */,
 				ECCFA0851DEC08FD000F4E7A /* System */,
 				ECCFA0761DEC04BF000F4E7A /* Extensions */,
@@ -2225,6 +2238,7 @@
 				EC88F8101E10B7B4009AAEED /* FLAnimatedImage.m in Sources */,
 				B3E6FC221E12A1CD0076ADE9 /* JYNewDynamicCell.m in Sources */,
 				EC88F85E1E10FBE7009AAEED /* JYCharacterCell.m in Sources */,
+				B3C28D481E250308005E9BB7 /* NSArray+Log.m in Sources */,
 				B3E6FC1F1E12A1B50076ADE9 /* JYDetailUserInfoCell.m in Sources */,
 				EC88F81C1E10B7B4009AAEED /* SETextLayout.m in Sources */,
 				EC55CE711E077C970030C8F5 /* JYDynamicViewController.m in Sources */,

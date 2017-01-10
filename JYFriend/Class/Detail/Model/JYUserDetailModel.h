@@ -36,7 +36,12 @@ typedef void(^JYUserDetailCompleteHandler)(BOOL success , JYUserDetail *useDetai
 
 @interface JYUserDetailModel : QBEncryptedURLRequest
 
-@property (nonatomic,retain) JYUserDetail *userDetail;
+//@property (nonatomic,retain) JYUserDetail *userDetail;
+@property (nonatomic,retain) NSArray <JYUserPhoto *> *userPhoto;
+@property (nonatomic,retain) JYUserVideo *userVideo;
+@property (nonatomic,retain) JYUserInfoModel *userInfo;
+@property (nonatomic,retain) JYUserDetailMoodModel *mood;
+
 - (BOOL)fetchUserDetailModelWithCompleteHandler:(JYUserDetailCompleteHandler)handler;
 
 @end

@@ -23,7 +23,6 @@ static NSString *const kSectionHeaderIndetifier = @"sectionHeader_indetifier";
 static CGFloat const kPhotoItemSpce = 6.;
 static CGFloat const kPhotoLineSpace = 10.;
 
-static NSInteger const kDynamicImageCount = 1;
 
 typedef NS_ENUM(NSInteger,JYSectionType) {
     JYSectionTypePhoto,
@@ -151,6 +150,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 [self.detailModel fetchUserDetailModelWithCompleteHandler:^(BOOL success, JYUserDetail *useDetai) {
     if (success) {
         @strongify(self);
+        [self->_layoutCollectionView reloadData];
         [self->_layoutCollectionView JY_endPullToRefresh];
     }
 }];
@@ -171,7 +171,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == JYSectionTypePhoto) {
-        return self.detailModel.userDetail.userPhoto.count;
+        return self.detailModel.userPhoto.count;
     }else if (section == JYSectionTypeDynamic){
         return JYNewDynamicItemCount ;
     }else if (section == JYSectionTypeInfo){
@@ -190,36 +190,39 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == JYSectionTypePhoto) {
         JYPhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPhotoCollectionViewCellIdentifier forIndexPath:indexPath];
-        cell.imageUrl = @"http://f.hiphotos.baidu.com/image/pic/item/b151f8198618367a9f738e022a738bd4b21ce573.jpg";
+        cell.imageUrl = self.detailModel.userPhoto[indexPath.item].smallPhoto;//@"http://f.hiphotos.baidu.com/image/pic/item/b151f8198618367a9f738e022a738bd4b21ce573.jpg";
         cell.isVideoImage = NO;
         return cell;
     }else if (indexPath.section == JYSectionTypeHomeTown){
         JYHomeTownCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kHomeTownCellIdetifier forIndexPath:indexPath];
-        cell.gender = 1;
-        cell.age = 19;
-        cell.height = 168;
-        cell.distance = 990;
-        cell.vip = YES;
-        cell.time = @"3分钟前";
-        cell.homeTown = @"安徽黄山";
+        cell.gender = [self.detailModel.userInfo.sex isEqualToString:@"F"] ? JYUserSexFemale : JYUserSexMale;
+        cell.age = self.detailModel.userInfo.age.integerValue;
+        cell.height = self.detailModel.userInfo.height.integerValue;
+        cell.distance = 990;//距离
+        cell.vip = self.detailModel.userInfo.isVip.integerValue;
+        cell.time = self.activeTiem;
+        cell.homeTown = [NSString stringWithFormat:@"%@%@",self.detailModel.userInfo.province,self.detailModel.userInfo.city];
         return cell;
     
     } else if (indexPath.section == JYSectionTypeDynamic){
         JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
+        cell.title = nil;
+        cell.detailTitle = nil;
+        cell.vipTitle = nil;
         if (indexPath.item == JYNewDynamicItemTitle) {
             cell.title = @"最新动态";
             return cell;
         }else if (indexPath.item == JYNewDynamicItemDetailTitle){
-        cell.detailTitle = @"找个帅哥一起去看日出";
+        cell.detailTitle = self.detailModel.mood.text;
             return cell;
         }else if (indexPath.item == JYNewDynamicItemTime ){
-        cell.detailTitle = @"2016年12月8日  11:11";
-            cell.detailLabel.font = [UIFont systemFontOfSize:kWidth(24.)];
+
+            cell.detailTitle = self.dynamicTiem ;
             return cell;
         }else if(indexPath.item == JYNewDynamicItemImage){
 
             JYNewDynamicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kNewDynamicCellIdentifier forIndexPath:indexPath];
-            cell.imageUrls = @[@"http://f.hiphotos.baidu.com/image/pic/item/b151f8198618367a9f738e022a738bd4b21ce573.jpg",@"http://f.hiphotos.baidu.com/image/pic/item/b151f8198618367a9f738e022a738bd4b21ce573.jpg",@"http://f.hiphotos.baidu.com/image/pic/item/b151f8198618367a9f738e022a738bd4b21ce573.jpg"];
+            cell.detaiMoods = self.detailModel.mood.moodUrl;
             cell.action = ^(NSInteger index){
                 QBLog(@"imageIndex:%ld",index);
             
@@ -229,43 +232,53 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
         
     }else if (indexPath.section == JYSectionTypeInfo){
         JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
+          cell.title = nil;
+          cell.detailTitle = nil;
+       cell.vipTitle = nil;
         if (indexPath.item == JYUserInfoItemTitle) {
             cell.title = @"个人信息";
+//             cell.detailTitle = nil;
             return cell;
         }else if (indexPath.item == JYUserInfoItemName){
-            cell.detailTitle = [NSString stringWithFormat:@"昵   称: %@",@"古风心悦"];//;
+            cell.detailTitle = [NSString stringWithFormat:@"昵   称: %@",self.detailModel.userInfo.nickName];//;
             return cell;
         }else if (indexPath.item == JYUserInfoItemAge){
-        cell.detailTitle = [NSString stringWithFormat:@"年   龄: %d",19];
+        cell.detailTitle = [NSString stringWithFormat:@"年   龄: %@",self.detailModel.userInfo.age];
             return cell;
         }else if (indexPath.item == JYUserInfoItemHeigth){
-            cell.detailTitle = [NSString stringWithFormat:@"身   高: %d",169];
+            cell.detailTitle = [NSString stringWithFormat:@"身   高: %@",self.detailModel.userInfo.height];
             return cell;
         }else if (indexPath.item == JYUserInfoItemConstellation){
-            cell.detailTitle = [NSString stringWithFormat:@"星   座: %@",@"狮子座"];
+            cell.detailTitle = [NSString stringWithFormat:@"星   座: %@",self.detailModel.userInfo.starSign];
             return cell;
         }else if (indexPath.item == JYUserInfoItemSignature){
-            cell.detailTitle = [NSString stringWithFormat:@"个性签名: %@",@"没有什么对不起,只有一句愿不愿意"];
+            cell.detailTitle = [NSString stringWithFormat:@"个性签名: %@",self.detailModel.userInfo.note];
             return cell;
         }
     
     } else if (indexPath.section == JYSectionTypeSectetInfo){
        JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
+         cell.title = nil;
+        cell.detailTitle = nil;
+        cell.vipTitle = nil;
         if (indexPath.item == JYSectetInfoItemTitle) {
             cell.title = @"私密资料";
-            [cell.vipBtn setTitle:@"成为VIP会员" forState:UIControlStateNormal];
+//             cell.detailTitle = nil;
+//            [cell.vipBtn setTitle:@"成为VIP会员" forState:UIControlStateNormal];
+            cell.vipTitle = @"成为VIP会员";
             cell.vipAction = ^(id sender){
             
             };
             return cell;
         }else if (indexPath.item == JYSectetInfoItemWechat){
-            cell.detailTitle = [NSString stringWithFormat:@"微   信: %@",@"仅限VIP会员查看"];
+            
+            cell.detailTitle = [NSString stringWithFormat:@"微   信: %@", [JYUser currentUser].isVip.integerValue ? self.detailModel.userInfo.weixinNum : @"仅限VIP会员查看"];
             return cell;
         }else if (indexPath.item == JYSectetInfoItemQQ){
-            cell.detailTitle = [NSString stringWithFormat:@"Q    Q: %@",@"仅限VIP会员查看"];
+            cell.detailTitle = [NSString stringWithFormat:@"Q    Q: %@",[JYUser currentUser].isVip.integerValue ? self.detailModel.userInfo.qq : @"仅限VIP会员查看"];
             return cell;
         }else if (indexPath.item == JYSectetInfoItemPhone){
-            cell.detailTitle = [NSString stringWithFormat:@"手机号: %@",@"仅限VIP会员查看"];
+            cell.detailTitle = [NSString stringWithFormat:@"手机号: %@",[JYUser currentUser].isVip.integerValue ? self.detailModel.userInfo.phone : @"仅限VIP会员查看"];
             return cell;
         }
     
@@ -273,10 +286,12 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
         if (indexPath.item == JYVideoItemTitle) {
              JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
             cell.title = @"TA的视频认证";
+             cell.detailTitle = nil;
+            cell.vipTitle = nil;
             return cell;
         }else if (indexPath.item == JYVideoItemVideo){
             JYPhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPhotoCollectionViewCellIdentifier forIndexPath:indexPath];
-            cell.imageUrl = @"http://f.hiphotos.baidu.com/image/pic/item/b151f8198618367a9f738e022a738bd4b21ce573.jpg";
+            cell.imageUrl = self.detailModel.userVideo.imgCover;//@"http://f.hiphotos.baidu.com/image/pic/item/b151f8198618367a9f738e022a738bd4b21ce573.jpg";
             cell.isVideoImage = YES;
             return cell;
         }

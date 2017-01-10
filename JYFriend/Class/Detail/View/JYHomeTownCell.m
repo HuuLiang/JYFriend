@@ -161,12 +161,12 @@
     return self;
 }
 
-- (void)setGender:(NSInteger)gender {
+- (void)setGender:(JYUserSex)gender {
     _gender = gender;
-    if (gender == 0) {
+    if (gender == JYUserSexMale) {
         [_genderBtn setImage:[UIImage imageNamed:@"near_gender_boy_icon"] forState:UIControlStateNormal];
         [_genderBtn setBackgroundColor:[UIColor colorWithHexString:@"#7b96ff"]];
-    }else {
+    }else if(gender == JYUserSexFemale){
         [_genderBtn setImage:[UIImage imageNamed:@"near_gender_girl_icon"] forState:UIControlStateNormal];
         [_genderBtn setBackgroundColor:[UIColor colorWithHexString:@"#e147a5"]];
     }

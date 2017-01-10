@@ -16,15 +16,16 @@
 @implementation JYNewDynamicCell
 QBDefineLazyPropertyInitialization(NSMutableArray, imageViews)
 
-- (void)setImageUrls:(NSArray<NSString *> *)imageUrls {
-    _imageUrls = imageUrls;
-    if (imageUrls.count > 0) {
+- (void)setDetaiMoods:(NSArray<JYUserDetailMood *> *)detaiMoods {
+    _detaiMoods = detaiMoods;
+    if (detaiMoods.count >0) {
+        [self.imageViews removeAllObjects];
         @weakify(self);
-        [imageUrls enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [detaiMoods enumerateObjectsUsingBlock:^(JYUserDetailMood * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            @strongify(self);
             UIImageView *imageView = [[UIImageView alloc] init];
             imageView.userInteractionEnabled = YES;
-            [imageView sd_setImageWithURL:[NSURL URLWithString:obj]];
-            @strongify(self);
+            [imageView sd_setImageWithURL:[NSURL URLWithString:obj.thumbnail]];
             [imageView bk_whenTouches:1 tapped:1 handler:^{
                 if (self.action) {
                     self.action(idx);
@@ -32,8 +33,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, imageViews)
             }];
             [self addSubview:imageView];
             [self.imageViews addObject:imageView];
+
         }];
     }
+
 }
 
 - (void)layoutSubviews {

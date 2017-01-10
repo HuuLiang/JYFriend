@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JYUserDetailMoodModel.h"
 
 typedef void(^JYImageClickBlock)(NSInteger idx);
 
 @interface JYNewDynamicCell : UICollectionViewCell
 
-@property (nonatomic,retain) NSArray<NSString *> *imageUrls;
+@property (nonatomic,retain) NSArray<JYUserDetailMood *> *detaiMoods;
 @property (nonatomic,copy)JYImageClickBlock action;
 
 @end

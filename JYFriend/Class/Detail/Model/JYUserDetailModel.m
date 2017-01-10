@@ -49,10 +49,10 @@
         @strongify(self);
         if (respStatus == QBURLResponseSuccess) {
             JYUserDetail *detail = self.response;
-            self.userDetail.userPhoto = detail.userPhoto;
-            self.userDetail.user = detail.user;
-            self.userDetail.userVideo = detail.userVideo;
-            self.userDetail.mood = detail.mood;
+            self.userPhoto = detail.userPhoto;
+            self.userInfo = detail.user;
+            self.userVideo = detail.userVideo;
+            self.mood = detail.mood;
         }
         if (handler) {
             handler(respStatus == QBURLResponseSuccess , self.response);

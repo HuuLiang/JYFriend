@@ -10,4 +10,8 @@
 
 @interface JYDetailViewController : JYBaseViewController
 
+@property (nonatomic) NSString *dynamicTiem;//动态时间
+@property (nonatomic) NSString *distance;//距离
+@property (nonatomic) NSString *activeTiem;//几分钟前
+
 @end

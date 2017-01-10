@@ -47,6 +47,8 @@ typedef NS_ENUM(NSUInteger,JYUserSex) {
 @property (nonatomic) NSString      *phoneNum;
 //签名
 @property (nonatomic) NSString      *signature;
+//是否是VIP
+@property (nonatomic) NSNumber *isVip;
 
 //身高选择列表
 + (NSArray *)allUserHeights;

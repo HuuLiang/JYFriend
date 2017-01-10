@@ -12,7 +12,7 @@
 
 @property (nonatomic,retain) UILabel *titleLabel;
 //@property (nonatomic,retain) UILabel *detailLabel;
-
+@property (nonatomic,retain) UIButton *vipBtn;
 
 @end
 
@@ -99,5 +99,17 @@
     self.detailLabel.text = detailTitle;
 }
 
+- (void)setVipTitle:(NSString *)vipTitle {
+    _vipTitle = vipTitle;
+    if (vipTitle) {
+        [self.vipBtn setTitle:vipTitle forState:UIControlStateNormal];
+    }else {
+        if (_vipBtn) {
+            _vipBtn.hidden = YES;
+            [_vipBtn removeFromSuperview];
+        }
+    }
+
+}
 
 @end

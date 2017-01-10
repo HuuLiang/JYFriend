@@ -13,6 +13,6 @@
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSString *detailTitle;
 @property (nonatomic,copy)QBAction vipAction;
-@property (nonatomic,retain) UIButton *vipBtn;
 @property (nonatomic,retain) UILabel *detailLabel;
+@property (nonatomic) NSString *vipTitle;
 @end
