@@ -8,14 +8,10 @@
 
 #import "JYNearPesonModel.h"
 
-@implementation JYNearPersonList
-
-@end
-
 @implementation JYNearPerson
 
 - (Class)programListElementClass {
-    return [JYNearPersonList class];
+    return [JYUserInfoModel class];
 }
 
 @end

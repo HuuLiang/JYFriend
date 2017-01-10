@@ -17,7 +17,7 @@
 static NSString *const kNearPersonCellIdentifier = @"knearpersoncell_identifier";
 static NSString *const kSexTypeLocalCacheKey = @"kjysextype_local_cache_key";
 static NSUInteger const kPageSize = 5;//每次上拉加载的条数
-static NSUInteger const kDefaultSize = 4;
+static NSUInteger const kDefaultSize = 7;
 
 @interface JYNearViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,CLLocationManagerDelegate>
 {
@@ -34,9 +34,9 @@ static NSUInteger const kDefaultSize = 4;
 @property (nonatomic) JYUserSex sexType;//性别筛选
 
 @property (nonatomic,retain) JYNearPesonModel *personModel;
-@property (nonatomic,retain) NSArray <JYNearPersonList *>*allPersons;
-@property (nonatomic,retain) NSMutableArray <JYNearPersonList *>*dataSource;
-@property (nonatomic,retain) NSArray <JYNearPersonList *>*currentSexPersons;
+@property (nonatomic,retain) NSArray <JYUserInfoModel *>*allPersons;
+@property (nonatomic,retain) NSMutableArray <JYUserInfoModel *>*dataSource;
+@property (nonatomic,retain) NSArray <JYUserInfoModel *>*currentSexPersons;
 
 @end
 
@@ -105,9 +105,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"附近的人";
+    self.navigationItem.title = @"附近的人";
     self.sexType = [[NSUserDefaults standardUserDefaults] objectForKey:kSexTypeLocalCacheKey] ? [[[NSUserDefaults standardUserDefaults] objectForKey:kSexTypeLocalCacheKey] integerValue] : JYUserSexALL;
-        QBLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:kSexTypeLocalCacheKey])
+//        QBLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:kSexTypeLocalCacheKey])
     BOOL locationEnable = [CLLocationManager locationServicesEnabled];
     int locationStatus = [CLLocationManager authorizationStatus];
     self.locationManager.delegate  = self;
@@ -165,8 +165,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         }else {
             [self.actionSheetView showFromTabBar:self.tabBarController.tabBar];
         }
-        
-    }];
+            }];
     
     [_layoutTableView JY_addPullToRefreshWithHandler:^{
         @strongify(self);
@@ -191,8 +190,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         self.allPersons = nearPersons.programList;
         self.currentSexPersons = [self fetchPersonListWithSexType:self.sexType];
         [self pageLoadModelWithPersonSex:self.sexType isPullDown:YES];
-//        [self->_layoutTableView reloadData];
-//        [self->_layoutTableView JY_endPullToRefresh];
     }];
 }
 /**
@@ -206,25 +203,25 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [self->_layoutTableView reloadData];
         [self->_layoutTableView JY_endPullToRefresh];
     });
-    QBLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:kSexTypeLocalCacheKey])
+//    QBLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:kSexTypeLocalCacheKey])
     if (self.currentSexPersons.count == 0) {
         [self.dataSource removeAllObjects];
         return;
     }
     
-    if (isPullDown) {
+    if (isPullDown) {//下拉
         if (self.dataSource.count)  [self.dataSource removeAllObjects];
-        [self.currentSexPersons enumerateObjectsUsingBlock:^(JYNearPersonList * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.currentSexPersons enumerateObjectsUsingBlock:^(JYUserInfoModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if (idx < kDefaultSize) {
                 [self.dataSource addObject:obj];
             }
         }];
-    }else {
+    }else {//上拉
         if (self.dataSource.count == self.currentSexPersons.count) {
             [_layoutTableView JY_pagingRefreshNoMoreData];
             return;
         }
-        [self.currentSexPersons enumerateObjectsUsingBlock:^(JYNearPersonList * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.currentSexPersons enumerateObjectsUsingBlock:^(JYUserInfoModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if (idx >= self.dataSource.count) {
                 [self.dataSource addObject:obj];
             }else if (idx == self.dataSource.count + kPageSize - 1){
@@ -238,14 +235,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
  根据性别把所有附近的人进行筛选
  */
 
-- (NSArray <JYNearPersonList *>*)fetchPersonListWithSexType:(JYUserSex)sexType {
+- (NSArray <JYUserInfoModel *>*)fetchPersonListWithSexType:(JYUserSex)sexType {
     NSString *gender = nil;
     switch (sexType) {
         case 1:
-            gender = @"M";
+            gender = @"M";//男
             break;
         case 2:
-            gender = @"F";
+            gender = @"F";//女
             break;
             
         default:
@@ -254,7 +251,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     if (sexType == JYUserSexALL) {
         return self.allPersons;
     }
-   return  [self.allPersons bk_select:^BOOL(JYNearPersonList *obj) {
+   return  [self.allPersons bk_select:^BOOL(JYUserInfoModel *obj) {
         if ([obj.sex isEqualToString:gender]) {
             return YES;
         }
@@ -317,7 +314,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row < self.dataSource.count) {
-        JYNearPersonList *person = self.dataSource[indexPath.row];
+        JYUserInfoModel *person = self.dataSource[indexPath.row];
         JYNearPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:kNearPersonCellIdentifier forIndexPath:indexPath];
         cell.headerImageUrl = person.logoUrl;
         cell.age = person.age.stringValue;
@@ -407,7 +404,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-        QBLog(@"%@",placemarks.lastObject.name);
+//        QBLog(@"%@",placemarks.lastObject.name);
     }];
     
     [manager stopUpdatingLocation];

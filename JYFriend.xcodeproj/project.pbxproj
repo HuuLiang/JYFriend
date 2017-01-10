@@ -14,6 +14,9 @@
 		B32317101E1E3A0A00932531 /* JYDetailBottotmView.m in Sources */ = {isa = PBXBuildFile; fileRef = B323170F1E1E3A0A00932531 /* JYDetailBottotmView.m */; };
 		B32317131E1E3D3100932531 /* JYDetailBottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B32317121E1E3D3100932531 /* JYDetailBottomButton.m */; };
 		B33E74C31E111CD70095F0DB /* JYHomeTownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */; };
+		B347A52A1E24B37000A4208F /* JYUserDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B347A5291E24B37000A4208F /* JYUserDetailModel.m */; };
+		B347A52D1E24B55300A4208F /* JYUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B347A52C1E24B55300A4208F /* JYUserInfoModel.m */; };
+		B347A5301E24D45800A4208F /* JYUserDetailMoodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B347A52F1E24D45800A4208F /* JYUserDetailMoodModel.m */; };
 		B35DCEFA1E1B36FB005C5969 /* JYLocalPhotoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B35DCEF91E1B36FB005C5969 /* JYLocalPhotoUtils.m */; };
 		B35DCF031E1BA3D4005C5969 /* JYLocalVideoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B35DCF021E1BA3D4005C5969 /* JYLocalVideoUtils.m */; };
 		B35DCF091E1BCDDC005C5969 /* JYChangeUserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = B35DCF081E1BCDDC005C5969 /* JYChangeUserInfoController.m */; };
@@ -299,6 +302,12 @@
 		B32317121E1E3D3100932531 /* JYDetailBottomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailBottomButton.m; sourceTree = "<group>"; };
 		B33E74C11E111CD70095F0DB /* JYHomeTownCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYHomeTownCell.h; sourceTree = "<group>"; };
 		B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYHomeTownCell.m; sourceTree = "<group>"; };
+		B347A5281E24B37000A4208F /* JYUserDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUserDetailModel.h; sourceTree = "<group>"; };
+		B347A5291E24B37000A4208F /* JYUserDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYUserDetailModel.m; sourceTree = "<group>"; };
+		B347A52B1E24B55300A4208F /* JYUserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JYUserInfoModel.h; path = JYFriend/Class/Detail/Model/JYUserInfoModel.h; sourceTree = SOURCE_ROOT; };
+		B347A52C1E24B55300A4208F /* JYUserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JYUserInfoModel.m; path = JYFriend/Class/Detail/Model/JYUserInfoModel.m; sourceTree = SOURCE_ROOT; };
+		B347A52E1E24D45800A4208F /* JYUserDetailMoodModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUserDetailMoodModel.h; sourceTree = "<group>"; };
+		B347A52F1E24D45800A4208F /* JYUserDetailMoodModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYUserDetailMoodModel.m; sourceTree = "<group>"; };
 		B35DCEF81E1B36FB005C5969 /* JYLocalPhotoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JYLocalPhotoUtils.h; path = JYFriend/Class/Mine/Controller/JYLocalPhotoUtils.h; sourceTree = SOURCE_ROOT; };
 		B35DCEF91E1B36FB005C5969 /* JYLocalPhotoUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JYLocalPhotoUtils.m; path = JYFriend/Class/Mine/Controller/JYLocalPhotoUtils.m; sourceTree = SOURCE_ROOT; };
 		B35DCF011E1BA3D4005C5969 /* JYLocalVideoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JYLocalVideoUtils.h; path = JYFriend/Class/Mine/View/JYLocalVideoUtils.h; sourceTree = SOURCE_ROOT; };
@@ -794,6 +803,10 @@
 		B36184761E10FABE00DD55A5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B347A52E1E24D45800A4208F /* JYUserDetailMoodModel.h */,
+				B347A52F1E24D45800A4208F /* JYUserDetailMoodModel.m */,
+				B347A5281E24B37000A4208F /* JYUserDetailModel.h */,
+				B347A5291E24B37000A4208F /* JYUserDetailModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1699,6 +1712,8 @@
 		ECCFA05F1DEBF5E3000F4E7A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B347A52B1E24B55300A4208F /* JYUserInfoModel.h */,
+				B347A52C1E24B55300A4208F /* JYUserInfoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2072,6 +2087,7 @@
 				EC88F7F31E10B7B4009AAEED /* UIScrollView+XHkeyboardControl.m in Sources */,
 				EC88F81E1E10B7B5009AAEED /* SETextMagnifierRanged.m in Sources */,
 				ECCFA0801DEC0697000F4E7A /* JYHudManager.m in Sources */,
+				B347A52A1E24B37000A4208F /* JYUserDetailModel.m in Sources */,
 				ECCFA0971DEC0CC9000F4E7A /* JYApplication.m in Sources */,
 				ECCFA0AC1DEC182B000F4E7A /* JKDBHelper.m in Sources */,
 				EC804A9A1E0D54FA00191387 /* ActionSheetCustomPicker.m in Sources */,
@@ -2140,6 +2156,7 @@
 				ECAF89091E095BD0005A6C62 /* AppDelegate+login.m in Sources */,
 				EC88F8641E110D99009AAEED /* JYRecommendCell.m in Sources */,
 				EC88F85B1E10DD33009AAEED /* JYRegisterPhoneNumberViewController.m in Sources */,
+				B347A5301E24D45800A4208F /* JYUserDetailMoodModel.m in Sources */,
 				EC4C47C51E1274AD00AA47DC /* JYDynamicCell.m in Sources */,
 				ECCFA07A1DEC060C000F4E7A /* JYConfiguration.m in Sources */,
 				B3195E671E16432E00193D4F /* JYDetailVideoViewController.m in Sources */,
@@ -2179,6 +2196,7 @@
 				EC2A71091E0B81E600BED161 /* JYContactViewController.m in Sources */,
 				B3A0797C1E0D1D8300395817 /* JYNearBottomView.m in Sources */,
 				B3A079761E0CCBA100395817 /* JYNearPersonCell.m in Sources */,
+				B347A52D1E24B55300A4208F /* JYUserInfoModel.m in Sources */,
 				B39531A91E13E6F000B5C78E /* TAAbstractDotView.m in Sources */,
 				B3195E611E16258500193D4F /* UIScrollView+Refresh.m in Sources */,
 				EC88F7FB1E10B7B4009AAEED /* XHVoiceCommonHelper.m in Sources */,

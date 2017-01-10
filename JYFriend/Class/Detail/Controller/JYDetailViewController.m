@@ -12,6 +12,7 @@
 #import "JYPhotoCollectionViewCell.h"
 #import "JYDetailUserInfoCell.h"
 #import "JYDetailBottotmView.h"
+#import "JYUserDetailModel.h"
 
 static NSString *const kPhotoCollectionViewCellIdentifier = @"PhotoCollectionViewCell_Identifier";
 static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
@@ -38,6 +39,7 @@ typedef NS_ENUM(NSInteger,JYSectionType) {
 typedef NS_ENUM(NSInteger , JYNewDynamicItem){
     JYNewDynamicItemTitle,
     JYNewDynamicItemDetailTitle,
+    JYNewDynamicItemImage,
     JYNewDynamicItemTime,
     JYNewDynamicItemCount
 } ;
@@ -73,10 +75,14 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
     UICollectionView *_layoutCollectionView;
 }
 
-@property (nonatomic,retain) JYDetailBottotmView *bottomView;
+@property (nonatomic,retain) JYDetailBottotmView *bottomView;//底部视图
+@property (nonatomic,retain) JYUserDetailModel *detailModel;
+
 @end
 
 @implementation JYDetailViewController
+QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
+
 
 - (JYDetailBottotmView *)bottomView {
     if (_bottomView) {
@@ -91,7 +97,7 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
         if ([btn.titleLabel.text isEqualToString:@"关注TA"]) {
             btn.selected = !btn.selected;
             CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
-            animation.values = @[@(0.4),@(0.6),@(0.8),@(1.5)];
+            animation.values = @[@(0.4),@(0.7),@(1.0),@(1.5)];
             animation.keyTimes = @[@(0.0),@(0.3),@(0.7),@(1.0)];
             animation.calculationMode = kCAAnimationLinear;
             [btn.imageView.layer addAnimation:animation forKey:@"SHOW"];
@@ -130,8 +136,27 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
     }];
     }
     
-    self.bottomView.backgroundColor = [UIColor colorWithHexString:@"#E147a5"];;
+    self.bottomView.backgroundColor = [UIColor colorWithHexString:@"#E147a5"];
+    @weakify(self);
+    [_layoutCollectionView JY_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        [self loadModels];
+    }];
+    
+    [_layoutCollectionView JY_triggerPullToRefresh];
 }
+
+- (void)loadModels {
+    @weakify(self);
+[self.detailModel fetchUserDetailModelWithCompleteHandler:^(BOOL success, JYUserDetail *useDetai) {
+    if (success) {
+        @strongify(self);
+        [self->_layoutCollectionView JY_endPullToRefresh];
+    }
+}];
+
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -146,9 +171,9 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == JYSectionTypePhoto) {
-        return 6;
+        return self.detailModel.userDetail.userPhoto.count;
     }else if (section == JYSectionTypeDynamic){
-        return JYNewDynamicItemCount + kDynamicImageCount;
+        return JYNewDynamicItemCount ;
     }else if (section == JYSectionTypeInfo){
         return JYUserInfoItemCount;
     }else if (section == JYSectionTypeSectetInfo){
@@ -187,11 +212,11 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
         }else if (indexPath.item == JYNewDynamicItemDetailTitle){
         cell.detailTitle = @"找个帅哥一起去看日出";
             return cell;
-        }else if (indexPath.item == JYNewDynamicItemTime +kDynamicImageCount){
+        }else if (indexPath.item == JYNewDynamicItemTime ){
         cell.detailTitle = @"2016年12月8日  11:11";
             cell.detailLabel.font = [UIFont systemFontOfSize:kWidth(24.)];
             return cell;
-        }else {
+        }else if(indexPath.item == JYNewDynamicItemImage){
 
             JYNewDynamicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kNewDynamicCellIdentifier forIndexPath:indexPath];
             cell.imageUrls = @[@"http://f.hiphotos.baidu.com/image/pic/item/b151f8198618367a9f738e022a738bd4b21ce573.jpg",@"http://f.hiphotos.baidu.com/image/pic/item/b151f8198618367a9f738e022a738bd4b21ce573.jpg",@"http://f.hiphotos.baidu.com/image/pic/item/b151f8198618367a9f738e022a738bd4b21ce573.jpg"];
@@ -272,9 +297,9 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
            return CGSizeMake(kScreenWidth, kWidth(90.));
         }else if (indexPath.item == JYNewDynamicItemDetailTitle ){
          return CGSizeMake(kScreenWidth, kWidth(55.));
-        }else if (indexPath.item == JYNewDynamicItemTime + kDynamicImageCount){
+        }else if (indexPath.item == JYNewDynamicItemTime){
         return CGSizeMake(kScreenWidth, kWidth(45.));
-        }else {
+        }else if(indexPath.item == JYNewDynamicItemImage){
             return CGSizeMake(kScreenWidth, kWidth(140));
         }
         

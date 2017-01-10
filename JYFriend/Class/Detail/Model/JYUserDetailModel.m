@@ -1,0 +1,64 @@
+//
+//  JYUserDetailModel.m
+//  JYFriend
+//
+//  Created by ylz on 2017/1/10.
+//  Copyright © 2017年 Liang. All rights reserved.
+//
+
+#import "JYUserDetailModel.h"
+
+@implementation JYUserVideo
+
+@end
+
+@implementation JYUserPhoto
+
+@end
+
+@implementation JYUserDetail
+
+-(Class)userPhotoElementClass {
+    return [JYUserPhoto class];
+}
+
+-(Class)userVideoClass {
+    return [JYUserVideo class];
+}
+
+-(Class)userClass {
+    return [JYUserInfoModel class];
+}
+
+- (Class)moodClass {
+    return [JYUserDetailMoodModel class];
+}
+
+@end
+
+@implementation JYUserDetailModel
+
++ (Class)responseClass {
+    return [JYUserDetail class];
+}
+
+- (BOOL)fetchUserDetailModelWithCompleteHandler:(JYUserDetailCompleteHandler)handler {
+    @weakify(self);
+    NSDictionary *params = @{@"viewUserId" : @(1000),@"userId" : @(1)};//@{@"userId" : [JYUser currentUser].userId ? : @""}
+    BOOL result = [self requestURLPath:JY_USER_DETAIL_URL standbyURLPath:nil withParams:params responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
+        @strongify(self);
+        if (respStatus == QBURLResponseSuccess) {
+            JYUserDetail *detail = self.response;
+            self.userDetail.userPhoto = detail.userPhoto;
+            self.userDetail.user = detail.user;
+            self.userDetail.userVideo = detail.userVideo;
+            self.userDetail.mood = detail.mood;
+        }
+        if (handler) {
+            handler(respStatus == QBURLResponseSuccess , self.response);
+        }
+    }];
+    return result;
+}
+
+@end

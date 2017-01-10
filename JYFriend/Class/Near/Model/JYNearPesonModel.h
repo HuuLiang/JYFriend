@@ -7,25 +7,14 @@
 //
 
 #import <QBEncryptedURLRequest.h>
+#import "JYUserInfoModel.h"
 @class JYNearPerson;
 
 typedef void(^JYNearPersonCompleteHander)(BOOL success , JYNearPerson * nearPersons);
 
-@interface JYNearPersonList : NSObject
-@property (nonatomic) NSNumber *age;
-@property (nonatomic) NSNumber *height;
-@property (nonatomic) NSNumber *isVip;
-@property (nonatomic) NSString *logoUrl;
-@property (nonatomic) NSString *nickName;
-@property (nonatomic) NSString *note;
-@property (nonatomic) NSString *sex;
-@property (nonatomic) NSString *userId;
-
-@end
-
 @interface JYNearPerson : QBURLResponse
 
-@property (nonatomic,retain) NSArray <JYNearPersonList *>*programList;
+@property (nonatomic,retain) NSArray <JYUserInfoModel *>*programList;
 @property (nonatomic) NSNumber *items;
 
 @end

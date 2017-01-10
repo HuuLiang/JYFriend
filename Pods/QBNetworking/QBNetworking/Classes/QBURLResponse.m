@@ -19,7 +19,7 @@ const NSUInteger kSuccessResponseCode = 100;
 
 @interface QBURLResponse ()
 
-@property (nonatomic,retain) QBURLResponseCode *code;
+@property (nonatomic,retain) QBURLResponseCode * code;
 
 @end
 

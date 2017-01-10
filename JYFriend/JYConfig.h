@@ -26,6 +26,7 @@
 #define JY_ACCESS_URL                  @"/iosvideo/userAccess.htm"
 #define JY_SYSTEM_CONFIG_URL           @"/iosvideo/systemConfig.htm"
 #define JY_NEAR_PERSON_URL             @"/mfwcps/peopleNearby.htm"
+#define JY_USER_DETAIL_URL             @"/mfwcps/userDetails.htm"
 
 
 //#define JY_TRAIL_URL                   @"/iosvideo/homePage.htm"
