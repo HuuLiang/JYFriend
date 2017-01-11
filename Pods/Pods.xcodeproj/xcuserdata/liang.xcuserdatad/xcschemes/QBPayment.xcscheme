@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '0520B2CF953DC32A892FFFB6FBE37E3B'
+               BlueprintIdentifier = 'DFB79624696BF7515B707BA34ABEAA3A'
                BlueprintName = 'QBPayment'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libQBPayment.a'>

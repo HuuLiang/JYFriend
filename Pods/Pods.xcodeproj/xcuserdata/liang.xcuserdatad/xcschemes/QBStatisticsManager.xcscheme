@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '9B544A93D25A022A038D34D1C7FD89B2'
+               BlueprintIdentifier = '3E7691DDCA103DA12FD49DC944CCBB22'
                BlueprintName = 'QBStatisticsManager'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libQBStatisticsManager.a'>
