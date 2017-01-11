@@ -11,6 +11,7 @@
 #import "JYChangeSignatureCell.h"
 #import "ActionSheetPicker.h"
 #import "JYChangeInfoTableView.h"
+#import "JYRegexUtil.h"
 
 static NSString *const kUserInfosCellIdentifier = @"kuserinfo_cell_indetifier";
 static NSString *const kCangeSignatureCellIndetifier = @"kchangesignature_cell_indetifier";
@@ -76,9 +77,10 @@ typedef NS_ENUM(NSInteger,JYUserInfoContactRow) {
             if (buttonIndex == 0) {
                 [self.navigationController popViewControllerAnimated:YES];
             }else {
-                [self saveAllUserInfo];
+                if ([self saveAllUserInfo]){
                 [[JYHudManager manager] showHudWithText:@"修改成功"];
                 [self.navigationController popViewControllerAnimated:YES];
+                }
             }
         }];
         
@@ -91,7 +93,55 @@ typedef NS_ENUM(NSInteger,JYUserInfoContactRow) {
 /**
  保存用户信息
  */
-- (void)saveAllUserInfo {
+- (BOOL)saveAllUserInfo {
+   __block BOOL result = YES;
+    [[_layoutTableView visibleCells] enumerateObjectsUsingBlock:^(__kindof UITableViewCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSIndexPath *indexPath = [_layoutTableView indexPathForCell:obj];
+        
+        if (indexPath.section == JYUserInfoSectionData) {
+              JYChangeInfoCell *infoCell = obj;
+            if (indexPath.row == JYUserInfoDataRowName) {
+                if (infoCell.textField.text.length < 2) {
+                    [[JYHudManager manager] showHudWithText:@"昵称太短了"];
+                    result = NO;
+                    *stop = YES;
+                }
+            }
+        } else if (indexPath.section == JYUserInfoSectionContact) {
+            JYChangeInfoCell *contactCell = obj;
+            switch (indexPath.row) {
+                case JYUserInfoContactRowWechat:
+                    if (![JYRegexUtil isWechatWithString:contactCell.textField.text] && contactCell.textField.text.length != 0) {
+                        [[JYHudManager manager] showHudWithText:@"请输入正确的微信号"];
+                        result = NO;
+                        *stop = YES;
+                    }
+                    break;
+                case JYUserInfoContactRowQQ:
+                    if (![JYRegexUtil isQQWithString:contactCell.textField.text] && contactCell.textField.text.length != 0) {
+                          [[JYHudManager manager] showHudWithText:@"请输入正确的QQ号"];
+                         result = NO;
+                        *stop = YES;
+                    }
+                    break;
+                case JYUserInfoContactRowPhone:
+                    if (![JYRegexUtil isPhoneNumberWithString:contactCell.textField.text] && contactCell.textField.text.length != 0) {
+                        [[JYHudManager manager] showHudWithText:@"请输入正确的手机号"];
+                         result = NO;
+                        *stop = YES;
+                    }
+                    
+                    break;
+                default:
+                    break;
+            }
+        }
+    }];
+    
+    if (result == NO) {
+        return result;
+    }
+    
     [[_layoutTableView visibleCells] enumerateObjectsUsingBlock:^(__kindof UITableViewCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSIndexPath *indexPath = [_layoutTableView indexPathForCell:obj];
         if (indexPath.section == JYUserInfoSectionData) {
@@ -133,7 +183,7 @@ typedef NS_ENUM(NSInteger,JYUserInfoContactRow) {
             [JYUser currentUser].signature = cell.signatureView.text;
         }
     }];
-    [[JYUser currentUser] saveOrUpdate];
+  return  [[JYUser currentUser] saveOrUpdate];
     
 }
 
@@ -240,7 +290,12 @@ typedef NS_ENUM(NSInteger,JYUserInfoContactRow) {
     }else if (indexPath.section == JYUserInfoSectionSignature){
         JYChangeSignatureCell *cell = [tableView dequeueReusableCellWithIdentifier:kCangeSignatureCellIndetifier forIndexPath:indexPath];
         cell.title = @"个人签名";
-        cell.signature = [JYUser currentUser].signature;//@"深情从来都是被辜负 只有薄情才会被反复思念....深情从来都是被辜负 只有薄情才会被反复思念....";
+        cell.signature = [JYUser currentUser].signature;
+        @weakify(self);
+        cell.action = ^(id sender){
+            @strongify(self);
+            self->_currentIndexPath = indexPath;
+        };
         return cell;
     }
     

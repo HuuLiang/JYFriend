@@ -11,6 +11,7 @@
 		B3195E611E16258500193D4F /* UIScrollView+Refresh.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E601E16258500193D4F /* UIScrollView+Refresh.m */; };
 		B3195E641E16398B00193D4F /* JYVisitMeController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E631E16398B00193D4F /* JYVisitMeController.m */; };
 		B3195E671E16432E00193D4F /* JYDetailVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */; };
+		B319CBEC1E2625EB00C88EAC /* JYRegexUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B319CBEB1E2625EB00C88EAC /* JYRegexUtil.m */; };
 		B32317101E1E3A0A00932531 /* JYDetailBottotmView.m in Sources */ = {isa = PBXBuildFile; fileRef = B323170F1E1E3A0A00932531 /* JYDetailBottotmView.m */; };
 		B32317131E1E3D3100932531 /* JYDetailBottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B32317121E1E3D3100932531 /* JYDetailBottomButton.m */; };
 		B33E74C31E111CD70095F0DB /* JYHomeTownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */; };
@@ -297,6 +298,8 @@
 		B3195E631E16398B00193D4F /* JYVisitMeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYVisitMeController.m; sourceTree = "<group>"; };
 		B3195E651E16432E00193D4F /* JYDetailVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailVideoViewController.h; sourceTree = "<group>"; };
 		B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailVideoViewController.m; sourceTree = "<group>"; };
+		B319CBEA1E2625EB00C88EAC /* JYRegexUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRegexUtil.h; sourceTree = "<group>"; };
+		B319CBEB1E2625EB00C88EAC /* JYRegexUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRegexUtil.m; sourceTree = "<group>"; };
 		B323170E1E1E3A0A00932531 /* JYDetailBottotmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailBottotmView.h; sourceTree = "<group>"; };
 		B323170F1E1E3A0A00932531 /* JYDetailBottotmView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailBottotmView.m; sourceTree = "<group>"; };
 		B32317111E1E3D3100932531 /* JYDetailBottomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailBottomButton.h; sourceTree = "<group>"; };
@@ -1685,6 +1688,8 @@
 				ECCFA07F1DEC0697000F4E7A /* JYHudManager.m */,
 				EC5707A91E153BB300EAFC6E /* JYVoicePlayer.h */,
 				EC5707AA1E153BB300EAFC6E /* JYVoicePlayer.m */,
+				B319CBEA1E2625EB00C88EAC /* JYRegexUtil.h */,
+				B319CBEB1E2625EB00C88EAC /* JYRegexUtil.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2094,6 +2099,7 @@
 				ECCFA0801DEC0697000F4E7A /* JYHudManager.m in Sources */,
 				B347A52A1E24B37000A4208F /* JYUserDetailModel.m in Sources */,
 				ECCFA0971DEC0CC9000F4E7A /* JYApplication.m in Sources */,
+				B319CBEC1E2625EB00C88EAC /* JYRegexUtil.m in Sources */,
 				ECCFA0AC1DEC182B000F4E7A /* JKDBHelper.m in Sources */,
 				EC804A9A1E0D54FA00191387 /* ActionSheetCustomPicker.m in Sources */,
 				B3195E641E16398B00193D4F /* JYVisitMeController.m in Sources */,
