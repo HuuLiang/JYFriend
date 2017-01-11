@@ -19,6 +19,14 @@
     return [JYRegisterUserResponse class];
 }
 
+- (QBURLRequestMethod)requestMethod {
+    return QBURLPostRequest;
+}
+
+- (NSTimeInterval)requestTimeInterval {
+    return 10;
+}
+
 - (BOOL)registerUserWithUserInfo:(JYUser *)user completionHandler:(QBCompletionHandler)handler {
     NSDictionary *sexStr = @{@(JYUserSexMale)   : @"M",
                              @(JYUserSexFemale) : @"F"};
@@ -34,7 +42,7 @@
                              @"birthday":[JYUtil timeStringFromDate:[JYUtil dateFromString:user.birthday WithDateFormat:kDateFormatChina] WithDateFormat:kDateFormatShort]};
     
     BOOL success = [self requestURLPath:JY_USERCREATE_URL
-                         standbyURLPath:nil//[JYUtil getStandByUrlPathWithOriginalUrl:JY_USERCREATE_URL params:nil]
+                         standbyURLPath:[JYUtil getStandByUrlPathWithOriginalUrl:JY_USERCREATE_URL params:nil]
                              withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {

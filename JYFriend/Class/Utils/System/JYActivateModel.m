@@ -63,16 +63,9 @@ static NSString *const kSuccessResponse = @"SUCCESS";
                          standbyURLPath:[JYUtil getStandByUrlPathWithOriginalUrl:JY_ACTIVATION_URL params:nil]
                              withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
-//                            NSString *uuid;
                             JYActivate *resp;
                             if (respStatus == QBURLResponseSuccess) {
                                 resp = self.response;
-//                                NSArray *resps = [resp componentsSeparatedByString:@";"];
-//                                
-//                                NSString *success = resps.firstObject;
-//                                if ([success isEqualToString:kSuccessResponse]) {
-//                                    uuid = resps.count == 2 ? resps[1] : nil;
-//                                }
                             }
                             
                             if (handler) {

@@ -70,7 +70,7 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
 }
 
 - (QBURLRequestMethod)requestMethod {
-    return QBURLGetRequest;
+    return QBURLPostRequest;
 }
 
 - (AFHTTPSessionManager *)requestSessionManager {
@@ -131,7 +131,7 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
     
     void (^failure)(NSURLSessionDataTask *, NSError *) = ^(NSURLSessionDataTask *task, NSError *error) {
         QBLog(@"Error for %@ : %@\n", urlPath, error.localizedDescription);
-        
+       
         if (shouldNotifyError) {
             if ([self shouldPostErrorNotification]) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kQBNetworkingErrorNotification
