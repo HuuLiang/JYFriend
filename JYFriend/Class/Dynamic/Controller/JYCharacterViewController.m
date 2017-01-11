@@ -9,6 +9,7 @@
 #import "JYCharacterViewController.h"
 #import "JYCharacterCell.h"
 #import "JYDetailViewController.h"
+#import "JYCharacterModel.h"
 
 static NSString *const kCharacterCellReusableIdentifier = @"CharacterCellReusableIdentifier";
 
@@ -16,9 +17,13 @@ static NSString *const kCharacterCellReusableIdentifier = @"CharacterCellReusabl
 {
     UICollectionView *_layoutCollectionView;
 }
+@property (nonatomic) JYCharacterModel *characterModel;
+@property (nonatomic) NSMutableArray *dataSource;
 @end
 
 @implementation JYCharacterViewController
+QBDefineLazyPropertyInitialization(JYCharacterModel, characterModel)
+QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,12 +44,39 @@ static NSString *const kCharacterCellReusableIdentifier = @"CharacterCellReusabl
             make.edges.equalTo(self.view);
         }];
     }
-    [_layoutCollectionView reloadData];
+    
+    @weakify(self);
+    [_layoutCollectionView JY_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        [self loadDataWithRefresh:YES];
+    }];
+    
+    [_layoutCollectionView JY_addPagingRefreshWithHandler:^{
+        @strongify(self);
+        [self loadDataWithRefresh:NO];
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+- (void)loadDataWithRefresh:(BOOL)isRefresh {
+    @weakify(self);
+    [self.characterModel fetchChararctersInfoWithRobotsCount:33 CompletionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            if (isRefresh) {
+                [self.dataSource removeAllObjects];
+                [self.dataSource addObjectsFromArray:obj];
+            } else {
+                [self.dataSource addObjectsFromArray:obj];
+            }
+            [self->_layoutCollectionView reloadData];
+        }
+        [self->_layoutCollectionView JY_endPullToRefresh];
+    }];
 }
 
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
@@ -54,15 +86,16 @@ static NSString *const kCharacterCellReusableIdentifier = @"CharacterCellReusabl
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 102;
+    return self.dataSource.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JYCharacterCell *characterCell = [collectionView dequeueReusableCellWithReuseIdentifier:kCharacterCellReusableIdentifier forIndexPath:indexPath];
-    if (indexPath.item < 102) {
-        characterCell.userImgStr = @"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg";
-        characterCell.nickNameStr = @"渣渣";
-        characterCell.ageStr = @"24岁";
+    if (indexPath.item < self.dataSource.count) {
+        JYCharacter *character = self.dataSource[indexPath.item];
+        characterCell.userImgStr = character.logoUrl;
+        characterCell.nickNameStr = character.nickName;
+        characterCell.ageStr = character.age;
     }
     return characterCell;
 }
@@ -93,6 +126,5 @@ static NSString *const kCharacterCellReusableIdentifier = @"CharacterCellReusabl
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [[QBStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
 }
-
 
 @end

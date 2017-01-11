@@ -256,6 +256,7 @@
 		EC9843EB1E07E26E00754471 /* JYLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9843EA1E07E26E00754471 /* JYLoginViewController.m */; };
 		ECAF89091E095BD0005A6C62 /* AppDelegate+login.m in Sources */ = {isa = PBXBuildFile; fileRef = ECAF89081E095BD0005A6C62 /* AppDelegate+login.m */; };
 		ECC094131E25C7C800A1DCCD /* NSArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC094121E25C7C800A1DCCD /* NSArray+Log.m */; };
+		ECC094161E25D5F700A1DCCD /* JYCharacterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECC094151E25D5F700A1DCCD /* JYCharacterModel.m */; };
 		ECCFA0441DEBF0D4000F4E7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0431DEBF0D4000F4E7A /* main.m */; };
 		ECCFA0471DEBF0D4000F4E7A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCFA0461DEBF0D4000F4E7A /* AppDelegate.m */; };
 		ECCFA04F1DEBF0D4000F4E7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECCFA04E1DEBF0D4000F4E7A /* Assets.xcassets */; };
@@ -697,6 +698,8 @@
 		ECAF89081E095BD0005A6C62 /* AppDelegate+login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+login.m"; sourceTree = "<group>"; };
 		ECC094111E25C7C800A1DCCD /* NSArray+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Log.h"; sourceTree = "<group>"; };
 		ECC094121E25C7C800A1DCCD /* NSArray+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Log.m"; sourceTree = "<group>"; };
+		ECC094141E25D5F700A1DCCD /* JYCharacterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYCharacterModel.h; sourceTree = "<group>"; };
+		ECC094151E25D5F700A1DCCD /* JYCharacterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCharacterModel.m; sourceTree = "<group>"; };
 		ECCFA03F1DEBF0D4000F4E7A /* JYFriend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JYFriend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECCFA0431DEBF0D4000F4E7A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		ECCFA0451DEBF0D4000F4E7A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1059,6 +1062,8 @@
 		EC55CE671E077A780030C8F5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ECC094141E25D5F700A1DCCD /* JYCharacterModel.h */,
+				ECC094151E25D5F700A1DCCD /* JYCharacterModel.m */,
 				EC4C47C61E12807A00AA47DC /* JYDynamicModel.h */,
 				EC4C47C71E12807A00AA47DC /* JYDynamicModel.m */,
 			);
@@ -2147,6 +2152,7 @@
 				EC88F8131E10B7B4009AAEED /* SECompatibility.m in Sources */,
 				EC88F8161E10B7B4009AAEED /* SELinkText.m in Sources */,
 				B32317101E1E3A0A00932531 /* JYDetailBottotmView.m in Sources */,
+				ECC094161E25D5F700A1DCCD /* JYCharacterModel.m in Sources */,
 				EC88F7F01E10B7B4009AAEED /* UIImage+RoundedCorner.m in Sources */,
 				EC88F8291E10B7B5009AAEED /* XHVoiceRecordHUD.m in Sources */,
 				EC88F8051E10B7B4009AAEED /* XHOperationNetworkKit.m in Sources */,

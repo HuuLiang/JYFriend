@@ -10,6 +10,7 @@
 #import "JYRecommendCell.h"
 #import "JYRecommendHeaderView.h"
 #import "JYRecommendFooterView.h"
+#import "JYCharacterModel.h"
 
 static NSString *const kRecommendCellReusableIdentifier = @"RecommendCellReusableIdentifier";
 static NSString *const kRecommendHeaderViewReusableIdentifier = @"RecommendHeaderViewReusableIdentifier";
@@ -20,9 +21,11 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
     UICollectionView *_layoutCollectionView;
 }
 @property (nonatomic) NSMutableArray *dataSource;
+@property (nonatomic) JYCharacterModel *characterModel;
 @end
 
 @implementation JYRecommendViewController
+QBDefineLazyPropertyInitialization(JYCharacterModel, characterModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -59,7 +62,16 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
 }
 
 - (void)reloadData {
-    
+    @weakify(self);
+    [self.characterModel fetchChararctersInfoWithRobotsCount:6 CompletionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            [self.dataSource removeAllObjects];
+            [self.dataSource addObjectsFromArray:obj];
+            [self->_layoutCollectionView reloadData];
+        }
+        [self->_layoutCollectionView JY_endPullToRefresh];
+    }];
 }
 
 
@@ -112,14 +124,15 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 6;
+    return self.dataSource.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JYRecommendCell *recommendCell = [collectionView dequeueReusableCellWithReuseIdentifier:kRecommendCellReusableIdentifier forIndexPath:indexPath];
-    if (indexPath.item < 6) {
+    if (indexPath.item < self.dataSource.count) {
+        JYCharacter *character = self.dataSource[indexPath.item];
         recommendCell.selected = YES;
-        recommendCell.userImgStr = @"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg";
+        recommendCell.userImgStr = character.logoUrl;
         recommendCell.isSelected = YES;
     }
     return recommendCell;
@@ -173,7 +186,7 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.item < 6) {
+    if (indexPath.item < self.dataSource.count) {
         JYRecommendCell *recommendCell = (JYRecommendCell *)[collectionView cellForItemAtIndexPath:indexPath];
         recommendCell.isSelected = !recommendCell.isSelected;
     }

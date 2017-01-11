@@ -23,9 +23,10 @@
 
 
 #define JY_ACTIVATION_URL              @"/mfwcps/jihuo.htm"
-#define JY_ACCESS_URL                  @"/iosvideo/userAccess.htm"
-#define JY_SYSTEM_CONFIG_URL           @"/iosvideo/systemConfig.htm"
+#define JY_ACCESS_URL                  @"/mfwcps/userAccess.htm"
+#define JY_SYSTEM_CONFIG_URL           @"/mfwcps/systemConfig.htm"
 #define JY_USERCREATE_URL              @"/mfwcps/userCreate.htm"
+#define JY_CHARACTER_URL               @"/mfwcps/recommend.htm"
 #define JY_NEAR_PERSON_URL             @"/mfwcps/peopleNearby.htm"
 #define JY_USER_DETAIL_URL             @"/mfwcps/userDetails.htm"
 
