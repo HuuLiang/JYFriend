@@ -14,7 +14,7 @@ static NSString *const kPPVideoSystemConfigPayhjAmountKeyName     = @"PP_SystemC
 
 @implementation JYSystemConfigResponse
 
-- (Class)confisElementClass {
+- (Class)configsElementClass {
     return [JYSystemConfig class];
 }
 
@@ -69,7 +69,7 @@ static NSString *const kPPVideoSystemConfigPayhjAmountKeyName     = @"PP_SystemC
                         if (respStatus == QBURLResponseSuccess) {
                             JYSystemConfigResponse *resp = self.response;
                             
-                            [resp.confis enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                            [resp.configs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                                 JYSystemConfig *config = obj;
                                 
                                 if ([config.name isEqualToString:JY_SYSTEM_PAY_AMOUNT]) {

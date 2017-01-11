@@ -10,7 +10,7 @@
 #import "JYSystemConfig.h"
 
 @interface JYSystemConfigResponse : QBURLResponse
-@property (nonatomic,retain) NSArray<JYSystemConfig *> *confis;
+@property (nonatomic,retain) NSArray<JYSystemConfig *> *configs;
 @end
 
 typedef void (^JYFetchSystemConfigCompletionHandler)(BOOL success);
