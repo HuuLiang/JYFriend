@@ -13,6 +13,7 @@
 #import "JYDetailUserInfoCell.h"
 #import "JYDetailBottotmView.h"
 #import "JYUserDetailModel.h"
+#import "JYMyPhotoBigImageView.h"
 
 static NSString *const kPhotoCollectionViewCellIdentifier = @"PhotoCollectionViewCell_Identifier";
 static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
@@ -224,7 +225,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
             JYNewDynamicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kNewDynamicCellIdentifier forIndexPath:indexPath];
             cell.detaiMoods = self.detailModel.mood.moodUrl;
             cell.action = ^(NSInteger index){
-                QBLog(@"imageIndex:%ld",index);
+                [self photoBrowseWithImageGroup:[self dynamicImageGroupWithDyImageModels:self.detailModel.mood.moodUrl] currentIndex:index];
             
             };
             return cell;
@@ -372,6 +373,72 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
     return nil;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == JYSectionTypePhoto) {
 
+        [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item];
+    }else if (indexPath.section == JYSectionTypeVideo) {
+    //播放视频
+    
+    }
+    
+
+
+}
+/**
+ 用户相册的图片数组
+ */
+- (NSArray *)photoImageGroupWithUserPhotosModel:(NSArray <JYUserPhoto *>*)photoModels {
+    NSMutableArray *arrM = [NSMutableArray array];
+   [photoModels enumerateObjectsUsingBlock:^(JYUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+       [arrM addObject:obj.bigPhoto];
+   }];
+    return arrM.copy;
+}
+
+/**
+ 用户动态的图片数组
+ */
+
+- (NSArray *)dynamicImageGroupWithDyImageModels:(NSArray <JYUserDetailMood *>*)imageModels {
+    NSMutableArray *arrM = [NSMutableArray array];
+    [imageModels enumerateObjectsUsingBlock:^(JYUserDetailMood * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [arrM addObject:obj.url];
+    }];
+    return arrM.copy;
+}
+
+/**
+ 图片浏览器
+ */
+- (void)photoBrowseWithImageGroup:(NSArray *)imageGroup currentIndex:(NSInteger)currentIndex{
+    JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:imageGroup frame:self.view.window.frame isLocalImage:NO];
+    bigImageView.backgroundColor = [UIColor whiteColor];
+    bigImageView.shouldAutoScroll = NO;
+    bigImageView.shouldInfiniteScroll = NO;
+    bigImageView.pageControlYAspect = 0.8;
+    bigImageView.currentIndex = currentIndex;
+    
+    @weakify(bigImageView);
+    bigImageView.action = ^(id sender){
+        @strongify(bigImageView);
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            bigImageView.alpha = 0;
+            
+        } completion:^(BOOL finished) {
+            
+            [bigImageView removeFromSuperview];
+        }];
+        
+    };
+    [self.view.window addSubview:bigImageView];
+    bigImageView.alpha = 0;
+    [UIView animateWithDuration:0.5 animations:^{
+        bigImageView.alpha = 1;
+    }];
+
+
+}
 
 @end

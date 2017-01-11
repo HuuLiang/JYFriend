@@ -17,14 +17,17 @@
 
 @implementation JYMyPhotoBigImageView
 
-- (instancetype)initWithImageGroup:(NSArray *)imageGroup frame:(CGRect)frame
+- (instancetype)initWithImageGroup:(NSArray *)imageGroup frame:(CGRect)frame isLocalImage:(BOOL)isLocalImage
 {
     self = [super initWithFrame:frame];
     if (self) {
         _shouldAutoScroll = YES;
         _shouldInfiniteScroll = YES;
-        
-        _bannerView = [SDCycleScrollView cycleScrollViewWithFrame:self.bounds shouldInfiniteLoop:NO imageNamesGroup:imageGroup];
+        if (isLocalImage) {
+            _bannerView = [SDCycleScrollView cycleScrollViewWithFrame:self.bounds shouldInfiniteLoop:NO imageNamesGroup:imageGroup];
+        }else {
+            _bannerView = [SDCycleScrollView cycleScrollViewWithFrame:self.bounds imageURLStringsGroup:imageGroup];
+        }
         _bannerView.backgroundColor = self.backgroundColor;
 //        _bannerView.infiniteLoop = NO;
         _bannerView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;

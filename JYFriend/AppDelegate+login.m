@@ -129,8 +129,8 @@
                 [[SDWebImageManager sharedManager].imageDownloader setValue:fetchedToken forHTTPHeaderField:@"Referer"];
             }
         }
-        NSUInteger statsTimeInterval = 180;
-        [[QBStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
+//        NSUInteger statsTimeInterval = 180;
+//        [[QBStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
         
         QBSafelyCallBlock(completionHandler, success);
     }];

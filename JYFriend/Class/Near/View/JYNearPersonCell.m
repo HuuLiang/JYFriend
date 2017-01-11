@@ -139,33 +139,44 @@
     _nameLabel.text = name;
 }
 
-- (void)setGender:(NSInteger)gender {
-    _gender = gender;
-    if (gender == 0) {
+//- (void)setGender:(NSInteger)gender {
+//    _gender = gender;
+//    if (gender == 0) {
+//        [_genderBtn setImage:[UIImage imageNamed:@"near_gender_boy_icon"] forState:UIControlStateNormal];
+//        [_genderBtn setBackgroundColor:[UIColor colorWithHexString:@"#7b96ff"]];
+//    }else {
+//        [_genderBtn setImage:[UIImage imageNamed:@"near_gender_girl_icon"] forState:UIControlStateNormal];
+//        [_genderBtn setBackgroundColor:[UIColor colorWithHexString:@"#e147a5"]];
+//    }
+//}
+- (void)setSex:(JYUserSex)sex {
+    _sex = sex;
+    if (sex == JYUserSexMale) {
         [_genderBtn setImage:[UIImage imageNamed:@"near_gender_boy_icon"] forState:UIControlStateNormal];
         [_genderBtn setBackgroundColor:[UIColor colorWithHexString:@"#7b96ff"]];
-    }else {
+    }else if (sex == JYUserSexFemale ){
         [_genderBtn setImage:[UIImage imageNamed:@"near_gender_girl_icon"] forState:UIControlStateNormal];
         [_genderBtn setBackgroundColor:[UIColor colorWithHexString:@"#e147a5"]];
     }
 }
+
 
 - (void)setAge:(NSString *)age {
     _age = age;
     [_genderBtn setTitle:age forState:UIControlStateNormal];
 }
 
-- (void)setDistance:(NSInteger)distance {
-    _distance = distance;
-    if (distance < 1000) {
-        distance = (distance /100 +1)*100;
-        _distanceLabel.text = [NSString stringWithFormat:@"<%ldm",distance];
-    }else {
-        CGFloat distan = distance /1000. + 0.1;
-        _distanceLabel.text = [NSString stringWithFormat:@"<%.1fkm",distan];
-    }
-
-}
+//- (void)setDistance:(NSInteger)distance {
+//    _distance = distance;
+//    if (distance < 1000) {
+//        distance = (distance /100 +1)*100;
+//        _distanceLabel.text = [NSString stringWithFormat:@"<%ldm",distance];
+//    }else {
+//        CGFloat distan = distance /1000. + 0.1;
+//        _distanceLabel.text = [NSString stringWithFormat:@"<%.1fkm",distan];
+//    }
+//
+//}
 
 - (void)setHeight:(NSInteger)height {
     _height = height;
@@ -188,6 +199,9 @@
 
 }
 
-
+- (void)setDistance:(NSString *)distance {
+    _distance = distance;
+    _distanceLabel.text = distance;
+}
 
 @end

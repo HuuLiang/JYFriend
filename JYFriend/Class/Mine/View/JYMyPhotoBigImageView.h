@@ -19,7 +19,7 @@
 @property (nonatomic) CGFloat pageControlYAspect;
 @property (nonatomic,retain) NSArray <UIImage *>*images;
 
-- (instancetype)initWithImageGroup:(NSArray *)imageGroup frame:(CGRect)frame;
+- (instancetype)initWithImageGroup:(NSArray *)imageGroup frame:(CGRect)frame isLocalImage:(BOOL)isLocalImage;
 @property (nonatomic,copy) QBAction action;
 
 @end

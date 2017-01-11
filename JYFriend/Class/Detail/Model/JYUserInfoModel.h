@@ -24,5 +24,6 @@
 @property (nonatomic) NSString *weixinNum;
 @property (nonatomic) NSString *starSign;
 @property (nonatomic) NSString *phone;
+@property (nonatomic) NSString *km;
 
 @end

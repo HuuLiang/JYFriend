@@ -18,5 +18,5 @@
 + (BOOL)writeToFileWithVideoUrl:(NSURL *)videoUrl;
 + (NSData *)getUserLocalVideoData;
 + (NSString *)getUserLocalVideoPath;
-+ (void)getVideo;
+//+ (void)getVideo;
 @end
