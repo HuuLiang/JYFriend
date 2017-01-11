@@ -41,9 +41,11 @@
 
 + (NSDate *)dateFromString:(NSString *)dateString WithDateFormat:(NSString *)dateFormat;
 + (NSString *)timeStringFromDate:(NSDate *)date WithDateFormat:(NSString *)dateFormat;
++ (BOOL)shouldRefreshContentWithKey:(NSString *)refreshKey timeInterval:(NSUInteger)timeInterval;
 
++ (id)getValueWithKeyName:(NSString *)keyName;
++ (void)setValue:(id)object withKeyName:(NSString *)keyName;
 + (NSString *)getStandByUrlPathWithOriginalUrl:(NSString *)url params:(NSDictionary *)params;
-
 
 
 @end
