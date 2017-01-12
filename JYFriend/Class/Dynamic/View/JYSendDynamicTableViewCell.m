@@ -8,7 +8,6 @@
 
 #import "JYSendDynamicTableViewCell.h"
 #import "JYSendDynamicCell.h"
-#import "JYTextView.h"
 #import "JYLocalPhotoUtils.h"
 #import "JYUsrImageCache.h"
 
@@ -20,7 +19,6 @@ static CGFloat const kSpce = 5;
 
 {
     UICollectionView *_layoutCollectionView;
-    JYTextView *_textView;
 }
 
 @property (nonatomic,retain) NSMutableArray *dataSource;
@@ -28,6 +26,7 @@ static CGFloat const kSpce = 5;
 @end
 
 @implementation JYSendDynamicTableViewCell
+QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (UIActionSheet *)actionSheet {
     if (_actionSheet) {
@@ -95,6 +94,8 @@ static CGFloat const kSpce = 5;
 
     if ( indexPath.item <self.dataSource.count){
             JYSendDynamicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSendDynamicCellIdentifier forIndexPath:indexPath];
+        UIImage *image = self.dataSource[indexPath.item];
+        cell.image = image;
             return cell;
             
         }else if (indexPath.item == self.dataSource.count){
@@ -122,8 +123,11 @@ static CGFloat const kSpce = 5;
     if (indexPath.item <self.dataSource.count) {
 
     }else if (indexPath.item == self.dataSource.count){
-        
+        if (self.dataSource.count == 3) {
+            [[JYHudManager manager] showHudWithText:@"最多只能上传三张图片"];
+        }else {
         [self.actionSheet showFromTabBar:self.tabBar];
+        }
     }
 }
 
@@ -148,18 +152,15 @@ static CGFloat const kSpce = 5;
 #pragma mark JYLocalPhotoUtilsDelegate 相机相册访问
 
 - (void)JYLocalPhotoUtilsWithPicker:(UIImagePickerController *)picker DidFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    [JYUsrImageCache writeToFileWithImage:info[UIImagePickerControllerOriginalImage]];
+//    [JYUsrImageCache writeToFileWithImage:info[UIImagePickerControllerOriginalImage]];
     
-//    @weakify(self);
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        @strongify(self);
-//        if (self.dataSource.count != [JYUsrImageCache fetchAllImages].count) {
-//            
-//            [self.dataSource addObject:[JYUsrImageCache fetchAllImages].lastObject];
-//            [self->_layoutCollectionView reloadData];
-//            [self->_layoutCollectionView JY_triggerPullToRefresh];
-//        }
-//    });
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    [self.dataSource addObject:image];
+    [_layoutCollectionView reloadData];
+    if (self.collectAction) {
+        self.collectAction(info[UIImagePickerControllerOriginalImage]);
+    }
+    
     
 }
 

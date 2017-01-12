@@ -9,13 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "JYDynamicModel.h"
 
-@interface JYDynamicCacheModel :JYDynamicModel
+@interface JYDynamicCacheModel :JYDynamic
 
-
+@property (nonatomic,retain) NSArray <NSString *> *images;
 
 @end
 
 
 @interface JYDynamicCacheUtil : NSObject
+
++ (BOOL)saveUserDynamicWithUserState:(NSString *)userState imageUrls:(NSArray <UIImage *>*)imageUrls;
++ (JYDynamicCacheModel *)fetchCurrentUserDynamic;
 
 @end

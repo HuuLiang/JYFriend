@@ -50,6 +50,7 @@ typedef NS_ENUM(NSUInteger, JYDynamicType) {
 #define kWidth(width)                     kScreenWidth  * width  / 750
 #define kHeight(height)                   kScreenHeight * height / 1334.
 #define kColor(hexString)                 [UIColor colorWithHexString:[NSString stringWithFormat:@"%@",hexString]]
+#define kCurrentUser                      [JYUser currentUser]
 
 #define JY_SYSTEM_CONTACT_NAME_1          @"CONTACT_NAME_1"
 #define JY_SYSTEM_CONTACT_NAME_2          @"CONTACT_NAME_2"

@@ -45,7 +45,7 @@ static NSString *const kJYImageCacheImageName = @"jiaoyou_imagemodel_imagechche_
 }
 
 
-+ (void)writeToFileWithImage:(UIImage *)image {
++ (NSString *)writeToFileWithImage:(UIImage *)image {
     
         UIGraphicsBeginImageContext(CGSizeMake(image.size.width*0.9, image.size.height*0.9));
         [image drawInRect:CGRectMake(0,0,image.size.width*0.9,image.size.height*0.9)];
@@ -77,6 +77,7 @@ static NSString *const kJYImageCacheImageName = @"jiaoyou_imagemodel_imagechche_
     
     [[SDImageCache sharedImageCache] storeImage:newImage forKey:imageDataMd5 toDisk:YES];
     
+    return imageDataMd5;
 }
 
 
