@@ -376,6 +376,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     }else {
     
     JYDetailViewController *detailVC = [[JYDetailViewController alloc] init];
+    detailVC.dynamicTiem = @"2017年1月12日 10:12:01";
+        JYUserInfoModel *person = self.dataSource[indexPath.row];
+        detailVC.distance = person.km;
     [self.navigationController pushViewController:detailVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }

@@ -192,15 +192,14 @@
     }
 }
 
-- (void)setDistance:(NSInteger)distance {
+- (void)setDistance:(NSString *)distance {
     _distance = distance;
-    self.distanceLabel.hidden = NO;
-    if (distance < 900) {
-        distance = (distance /100 +1)*100;
-        self.distanceLabel.text = [NSString stringWithFormat:@"<%ldm",distance];
+    if (distance) {
+        self.distanceLabel.text = distance;
     }else {
-        CGFloat distan = distance /1000. + 0.1;
-        self.distanceLabel.text = [NSString stringWithFormat:@"<%.1fkm",distan];
+        if (_distanceLabel) {
+            _distanceLabel.hidden = YES;
+        }
     }
     
 }

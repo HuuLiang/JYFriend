@@ -10,20 +10,21 @@
 
  static NSString *const kUserLocalVideoFiles = @"JYUserVideo.";
  static NSString *const kUserLocalVideoType = @"uer_localvideo_type_key";
+ static NSString *const kTimeFormat = @"yyyy-MM-dd HH:mm:ss";
 
 @implementation JYLocalVideoUtils
 
 + (NSString *)currentTime {
     NSDate *currentDate = [NSDate date];//获取当前时间，日期
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setDateFormat:kTimeFormat];
     return  [dateFormatter stringFromDate:currentDate];
     
 }
 
 + (NSInteger)dateTimeDifferenceWithStartTime:(NSString *)startTime endTime:(NSString *)endTime{
     NSDateFormatter *date = [[NSDateFormatter alloc]init];
-    [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [date setDateFormat:kTimeFormat];
     NSDate *startD =[date dateFromString:startTime];
     NSDate *endD = [date dateFromString:endTime];
     NSTimeInterval start = [startD timeIntervalSince1970]*1;
@@ -44,6 +45,31 @@
         str = [NSString stringWithFormat:@"%d",second];
     }
     return str.integerValue;
+}
+
++ (NSString *)fetchTimeIntervalToCurrentTimeWithStartTime:(NSString *)startTime{
+                      
+   NSInteger timeInterVal = [self dateTimeDifferenceWithStartTime:[JYUtil timeStringFromDate:[JYUtil dateFromString:startTime WithDateFormat:@"yyyy年MM月dd日 HH:mm:ss"] WithDateFormat:kTimeFormat] endTime:[self currentTime]];
+    NSInteger month = timeInterVal / (D_DAY*30);
+    NSInteger week = timeInterVal / D_WEEK;
+    NSInteger day = timeInterVal / D_DAY;
+    NSInteger hour = timeInterVal / D_HOUR;
+    NSInteger minute = timeInterVal / D_MINUTE;
+    
+    if (month > 0) {
+        return [NSString stringWithFormat:@"%zd月前",month];
+    }else if (week > 0) {
+        return [NSString stringWithFormat:@"%zd周前",week];
+    }else if (day > 0) {
+        return [NSString stringWithFormat:@"%zd天前",day];
+    }else if (hour > 0) {
+        return [NSString stringWithFormat:@"%zd小时前",hour];
+    }else if (minute > 0) {
+        return [NSString stringWithFormat:@"%zd分前",minute];
+    }else if (timeInterVal > 0){
+        return [NSString stringWithFormat:@"%zd秒前",timeInterVal];
+    }
+    return nil;
 }
 
 + (UIImage *)getImage:(NSURL*)videoURL
