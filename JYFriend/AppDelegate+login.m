@@ -87,7 +87,6 @@
             [self.window endProgressing];
             [self checkUserIsLogin];
         }];
-        
     }
     
     if (!requestedSystemConfig) {
@@ -136,10 +135,12 @@
 }
 
 - (void)userloginSuccess:(NSNotification *)notification {
-    [self.window.rootViewController presentViewController:self.rootViewController animated:YES completion:^{
+    if (self.window.rootViewController.presentedViewController == nil) {
+     [self.window.rootViewController presentViewController:self.rootViewController animated:YES completion:^{
         self.window.rootViewController = self.rootViewController;
         [self.window makeKeyAndVisible];
     }];
+        }
 }
 
 - (void)responseErrorInfo:(NSNotification *)notification {
