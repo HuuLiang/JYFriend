@@ -27,6 +27,7 @@
 #define JY_SYSTEM_CONFIG_URL           @"/mfwcps/systemConfig.htm"
 #define JY_USERCREATE_URL              @"/mfwcps/userCreate.htm"
 #define JY_CHARACTER_URL               @"/mfwcps/recommend.htm"
+#define JY_DYNAMIC_URL                 @"/mfwcps/moodSection.htm"
 #define JY_NEAR_PERSON_URL             @"/mfwcps/peopleNearby.htm"
 #define JY_USER_DETAIL_URL             @"/mfwcps/userDetails.htm"
 

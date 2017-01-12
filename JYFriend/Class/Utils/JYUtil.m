@@ -23,6 +23,7 @@ static NSString *const kLaunchSeqKeyName        = @"JY_launchseq_keyname";
 static NSString *const kImageTokenKeyName       = @"safiajfoaiefr$^%^$E&&$*&$*";
 static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
 
+
 @implementation JYUtil
 
 #pragma mark -- 注册激活
@@ -221,7 +222,39 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
     return [dateFormatter stringFromDate:date];
 }
 
++ (BOOL)shouldRefreshContentWithKey:(NSString *)refreshKey timeInterval:(NSUInteger)timeInterval {
+    NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:refreshKey];
+    if (!lastDate) {
+        [[NSUserDefaults standardUserDefaults] setObject:[self currentDate] forKey:refreshKey];
+        return YES;
+    } else {
+        NSDate *newDate = [self currentDate];
+        NSTimeInterval time = [newDate timeIntervalSinceDate:lastDate];
+        if (time > timeInterval) {
+            [[NSUserDefaults standardUserDefaults] setObject:newDate forKey:refreshKey];
+            return YES;
+        } else {
+            return NO;
+        }
+    }
+}
+
++ (NSDate *)currentDate {
+    NSDate *systemDate = [NSDate date];
+    NSDate *currentDate = [systemDate dateByAddingTimeInterval:[[NSTimeZone localTimeZone] secondsFromGMTForDate:systemDate]];
+    return currentDate;
+}
+
 #pragma mark -- 其他
+
++ (id)getValueWithKeyName:(NSString *)keyName {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:keyName];
+}
+
++ (void)setValue:(id)object withKeyName:(NSString *)keyName {
+    [[NSUserDefaults standardUserDefaults] setObject:object forKey:keyName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 + (NSString *)getStandByUrlPathWithOriginalUrl:(NSString *)url params:(NSDictionary *)params {
     NSMutableString *standbyUrl = [NSMutableString stringWithString:JY_STANDBY_BASE_URL];

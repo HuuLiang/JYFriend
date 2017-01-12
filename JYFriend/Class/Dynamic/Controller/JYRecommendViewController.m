@@ -26,6 +26,7 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
 
 @implementation JYRecommendViewController
 QBDefineLazyPropertyInitialization(JYCharacterModel, characterModel)
+QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -124,7 +125,7 @@ QBDefineLazyPropertyInitialization(JYCharacterModel, characterModel)
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.dataSource.count;
+    return 6;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

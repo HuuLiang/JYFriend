@@ -22,6 +22,7 @@
 @property (nonatomic) BOOL isGreet;
 @property (nonatomic) BOOL isFocus;
 @property (nonatomic) JYDynamicType dynamicType;
++ (NSArray <JYDynamic *>*)allDynamics;
 @end
 
 @interface JYDynamicResponse : QBURLResponse
@@ -29,5 +30,7 @@
 @end
 
 @interface JYDynamicModel : QBEncryptedURLRequest
+
+- (BOOL)fetchDynamicInfoWithOffset:(NSUInteger)offset limit:(NSUInteger)limit completionHandler:(QBCompletionHandler)handler;
 
 @end
