@@ -28,15 +28,12 @@
 }
 
 - (BOOL)registerUserWithUserInfo:(JYUser *)user completionHandler:(QBCompletionHandler)handler {
-    NSDictionary *sexStr = @{@(JYUserSexMale)   : @"M",
-                             @(JYUserSexFemale) : @"F"};
-    
     NSDictionary *params = @{@"uuid":[JYUtil UUID],
                              @"nickName":user.nickName,
                              @"clientId":@"123123123",
                              @"province":user.homeTown,
                              @"city":user.homeTown,
-                             @"sex":sexStr[@(user.userSex)],
+                             @"sex":[JYUserSexStringGet objectAtIndex:user.userSex],
                              @"userType":@(2),
                              @"height":user.height,
                              @"birthday":[JYUtil timeStringFromDate:[JYUtil dateFromString:user.birthday WithDateFormat:kDateFormatChina] WithDateFormat:kDateFormatShort]};

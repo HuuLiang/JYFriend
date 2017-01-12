@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class JYDynamic;
+@class JYDynamicModel;
 
 
 @interface JYDynamicCell : UICollectionViewCell
@@ -21,9 +21,10 @@
 @property (nonatomic) NSString * age;
 @property (nonatomic) BOOL isFocus;
 @property (nonatomic) BOOL isGreet;
-@property (nonatomic) NSString *time;
+@property (nonatomic) NSInteger timeInterval;
 @property (nonatomic) NSString *content; 
 
 @property (nonatomic) JYDynamicType dynamicType;
+@property (nonatomic) NSArray *moodUrl;
 
 @end
