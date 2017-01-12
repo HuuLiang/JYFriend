@@ -21,4 +21,5 @@
 + (NSArray <UIImage *>*)fetchAllImages;
 
 + (BOOL)deleteCurrentImageWithIndexPath:(NSIndexPath *)indexPath;
+
 @end

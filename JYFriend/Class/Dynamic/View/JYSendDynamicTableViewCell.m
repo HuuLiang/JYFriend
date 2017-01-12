@@ -16,7 +16,7 @@ static NSString *const kSendDynamicCellIdentifier = @"ksend_dynamic_cell_identif
 static NSString *const kSendDynamicTextCellIdentifier = @"ksend_dynamic_text_cell_identifier";
 static CGFloat const kSpce = 5;
 
-@interface JYSendDynamicTableViewCell ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextViewDelegate,JYLocalPhotoUtilsDelegate>
+@interface JYSendDynamicTableViewCell ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextViewDelegate,JYLocalPhotoUtilsDelegate,UIActionSheetDelegate>
 
 {
     UICollectionView *_layoutCollectionView;
@@ -24,9 +24,20 @@ static CGFloat const kSpce = 5;
 }
 
 @property (nonatomic,retain) NSMutableArray *dataSource;
+@property (nonatomic,retain) UIActionSheet *actionSheet;
 @end
 
 @implementation JYSendDynamicTableViewCell
+
+- (UIActionSheet *)actionSheet {
+    if (_actionSheet) {
+        return _actionSheet;
+    }
+    _actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册",@"视频", nil];
+    
+    return _actionSheet;
+    
+}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
@@ -106,20 +117,39 @@ static CGFloat const kSpce = 5;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+ 
     if (indexPath.item <self.dataSource.count) {
-        
-    }else if (indexPath.item == self.dataSource.count){
-        [JYLocalPhotoUtils shareManager].delegate = self;
-        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary inViewController:self.curentVC popoverPoint:CGPointZero isVideo:NO];
-    }
 
+    }else if (indexPath.item == self.dataSource.count){
+        
+        [self.actionSheet showFromTabBar:self.tabBar];
+    }
+}
+
+
+#pragma mark UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    BOOL isVideo = NO;
+    if (buttonIndex == 0) {
+        //相册
+        isVideo = NO;
+    }else if (buttonIndex == 1){//相机
+        isVideo = YES;
+    }
+    
+    if (buttonIndex == 0 || buttonIndex == 1) {
+        
+    [JYLocalPhotoUtils shareManager].delegate = self;
+    [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary inViewController:self.curentVC popoverPoint:CGPointZero  isVideo:isVideo];
+    }
 }
 
 #pragma mark JYLocalPhotoUtilsDelegate 相机相册访问
 
 - (void)JYLocalPhotoUtilsWithPicker:(UIImagePickerController *)picker DidFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     [JYUsrImageCache writeToFileWithImage:info[UIImagePickerControllerOriginalImage]];
-
+    
 //    @weakify(self);
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        @strongify(self);

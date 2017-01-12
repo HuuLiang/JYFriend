@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		58EBD024B4F3FC6F743B661D /* libPods-JYFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */; };
+		B31641861E27A75F0060ACF3 /* JYDynamicCacheUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B31641851E27A75F0060ACF3 /* JYDynamicCacheUtil.m */; };
 		B3195E611E16258500193D4F /* UIScrollView+Refresh.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E601E16258500193D4F /* UIScrollView+Refresh.m */; };
 		B3195E641E16398B00193D4F /* JYVisitMeController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E631E16398B00193D4F /* JYVisitMeController.m */; };
 		B3195E671E16432E00193D4F /* JYDetailVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */; };
@@ -298,6 +299,8 @@
 
 /* Begin PBXFileReference section */
 		4DE2D66049E36091993382B8 /* Pods-JYFriend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYFriend.release.xcconfig"; path = "Pods/Target Support Files/Pods-JYFriend/Pods-JYFriend.release.xcconfig"; sourceTree = "<group>"; };
+		B31641841E27A75F0060ACF3 /* JYDynamicCacheUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDynamicCacheUtil.h; sourceTree = "<group>"; };
+		B31641851E27A75F0060ACF3 /* JYDynamicCacheUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDynamicCacheUtil.m; sourceTree = "<group>"; };
 		B3195E5F1E16258500193D4F /* UIScrollView+Refresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Refresh.h"; sourceTree = "<group>"; };
 		B3195E601E16258500193D4F /* UIScrollView+Refresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Refresh.m"; sourceTree = "<group>"; };
 		B3195E621E16398B00193D4F /* JYVisitMeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYVisitMeController.h; sourceTree = "<group>"; };
@@ -1083,6 +1086,8 @@
 				ECC094151E25D5F700A1DCCD /* JYCharacterModel.m */,
 				EC4C47C61E12807A00AA47DC /* JYDynamicModel.h */,
 				EC4C47C71E12807A00AA47DC /* JYDynamicModel.m */,
+				B31641841E27A75F0060ACF3 /* JYDynamicCacheUtil.h */,
+				B31641851E27A75F0060ACF3 /* JYDynamicCacheUtil.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2205,6 +2210,7 @@
 				EC4C47C51E1274AD00AA47DC /* JYDynamicCell.m in Sources */,
 				ECCFA07A1DEC060C000F4E7A /* JYConfiguration.m in Sources */,
 				B3195E671E16432E00193D4F /* JYDetailVideoViewController.m in Sources */,
+				B31641861E27A75F0060ACF3 /* JYDynamicCacheUtil.m in Sources */,
 				EC88F7EE1E10B7B4009AAEED /* UIImage+Alpha.m in Sources */,
 				B373354F1E275228009637D1 /* JYSendDynamicViewController.m in Sources */,
 				EC88F7EF1E10B7B4009AAEED /* UIImage+Resize.m in Sources */,

@@ -8,6 +8,8 @@
 
 #import "JYSendDynamicViewController.h"
 #import "JYSendDynamicTableViewCell.h"
+#import "JYLocalPhotoUtils.h"
+#import "JYUsrImageCache.h"
 
 static NSString *const kSendDynamicTableViewCellIdentifier = @"senddynamic_tableviewcell_identifier";
 
@@ -25,6 +27,8 @@ typedef NS_ENUM(NSUInteger , JYDynamicSectionType) {
 @end
 
 @implementation JYSendDynamicViewController
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,6 +75,8 @@ typedef NS_ENUM(NSUInteger , JYDynamicSectionType) {
         
         JYSendDynamicTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kSendDynamicTableViewCellIdentifier forIndexPath:indexPath];
         cell.curentVC = self;
+        cell.tabBar = self.tabBarController.tabBar;
+        
         return cell;
     }
     return nil;
@@ -82,5 +88,24 @@ typedef NS_ENUM(NSUInteger , JYDynamicSectionType) {
     }
     return 0;
 }
+
+
+
+//#pragma mark JYLocalPhotoUtilsDelegate 相机相册访问
+//
+//- (void)JYLocalPhotoUtilsWithPicker:(UIImagePickerController *)picker DidFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+//    [JYUsrImageCache writeToFileWithImage:info[UIImagePickerControllerOriginalImage]];
+//    @weakify(self);
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        @strongify(self);
+//        if (self.dataSource.count != [JYUsrImageCache fetchAllImages].count) {
+//            
+//            [self.dataSource addObject:[JYUsrImageCache fetchAllImages].lastObject];
+//            [self->_layoutCollectionView reloadData];
+//            [self->_layoutCollectionView JY_triggerPullToRefresh];
+//        }
+//    });
+//    
+//}
 
 @end

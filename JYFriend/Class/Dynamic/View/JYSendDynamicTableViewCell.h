@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^JYCollectionAction)(UIImage *image , NSIndexPath *indexPath,BOOL isAddPhoto);
+
 @interface JYSendDynamicTableViewCell : UITableViewCell
 
 @property (nonatomic,retain) UIViewController *curentVC;
+//@property (nonatomic,copy)JYCollectionAction collectAction;
+@property (nonatomic,retain) UITabBar *tabBar;
+
 @end
