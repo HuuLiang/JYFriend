@@ -10,6 +10,7 @@
 #import "JYCharacterViewController.h"
 #import "JYDynamicViewController.h"
 #import "JYRecommendViewController.h"
+#import "JYSendDynamicViewController.h"
 
 @interface JYSegmentViewController () <UIPageViewControllerDelegate,UIPageViewControllerDataSource>
 {
@@ -59,6 +60,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, viewControllers)
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"动态" style:UIBarButtonItemStylePlain handler:^(id sender) {
         @strongify(self);
         //发表动态
+      JYSendDynamicViewController *sendVC = [[JYSendDynamicViewController alloc] init];
+        [self.navigationController pushViewController:sendVC animated:YES];
         
     }];
     

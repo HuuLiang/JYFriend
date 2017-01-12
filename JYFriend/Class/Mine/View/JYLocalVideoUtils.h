@@ -12,6 +12,7 @@
 
 + (NSString *)currentTime;
 + (NSInteger)dateTimeDifferenceWithStartTime:(NSString *)startTime endTime:(NSString *)endTime;
++ (NSString *)fetchTimeIntervalToCurrentTimeWithStartTime:(NSString *)startTime;
 
 + (UIImage *)getImage:(NSURL*)videoURL;
 + (CGFloat)getVideoLengthWithVideoUrl:(NSURL *)videoUrl ;

@@ -22,5 +22,6 @@
 #import "UIScrollView+Refresh.h"
 #import <NSDate+Utilities.h>
 #import "UIView+Loading.h"
+#import "UIView+FrameEx.h"
 
 #endif /* JYExtensions_h */

@@ -14,6 +14,7 @@
 #import "JYDetailBottotmView.h"
 #import "JYUserDetailModel.h"
 #import "JYMyPhotoBigImageView.h"
+#import "JYLocalVideoUtils.h"
 
 static NSString *const kPhotoCollectionViewCellIdentifier = @"PhotoCollectionViewCell_Identifier";
 static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
@@ -191,7 +192,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == JYSectionTypePhoto) {
         JYPhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPhotoCollectionViewCellIdentifier forIndexPath:indexPath];
-        cell.imageUrl = self.detailModel.userPhoto[indexPath.item].smallPhoto;//@"http://f.hiphotos.baidu.com/image/pic/item/b151f8198618367a9f738e022a738bd4b21ce573.jpg";
+        cell.imageUrl = self.detailModel.userPhoto[indexPath.item].smallPhoto;
         cell.isVideoImage = NO;
         return cell;
     }else if (indexPath.section == JYSectionTypeHomeTown){
@@ -199,9 +200,9 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
         cell.gender = [self.detailModel.userInfo.sex isEqualToString:@"F"] ? JYUserSexFemale : JYUserSexMale;
         cell.age = self.detailModel.userInfo.age.integerValue;
         cell.height = self.detailModel.userInfo.height.integerValue;
-        cell.distance = 990;//距离
+        cell.distance = self.distance;//距离
         cell.vip = self.detailModel.userInfo.isVip.integerValue;
-        cell.time = self.activeTiem;
+        cell.time = [JYLocalVideoUtils fetchTimeIntervalToCurrentTimeWithStartTime:self.dynamicTiem];
         cell.homeTown = [NSString stringWithFormat:@"%@%@",self.detailModel.userInfo.province,self.detailModel.userInfo.city];
         return cell;
     

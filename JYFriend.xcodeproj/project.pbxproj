@@ -27,6 +27,11 @@
 		B36F15261E1C89540081500B /* JYChangeInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B36F15251E1C89540081500B /* JYChangeInfoCell.m */; };
 		B36F15291E1CA8E70081500B /* JYChangeSignatureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B36F15281E1CA8E70081500B /* JYChangeSignatureCell.m */; };
 		B36F152C1E1CEFB10081500B /* JYChangeInfoTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B36F152B1E1CEFB10081500B /* JYChangeInfoTableView.m */; };
+		B373354F1E275228009637D1 /* JYSendDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B373354E1E275228009637D1 /* JYSendDynamicViewController.m */; };
+		B37335521E276567009637D1 /* JYSendDynamicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B37335511E276567009637D1 /* JYSendDynamicCell.m */; };
+		B37335581E277810009637D1 /* JYSendDynamicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B37335571E277810009637D1 /* JYSendDynamicTableViewCell.m */; };
+		B373355B1E277ED5009637D1 /* JYTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B373355A1E277ED5009637D1 /* JYTextView.m */; };
+		B373355E1E2780BF009637D1 /* UIView+FrameEx.m in Sources */ = {isa = PBXBuildFile; fileRef = B373355D1E2780BF009637D1 /* UIView+FrameEx.m */; };
 		B39531881E1385C900B5C78E /* JYDredgeVipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B39531871E1385C900B5C78E /* JYDredgeVipViewController.m */; };
 		B395318B1E13993600B5C78E /* JYMyPhotosController.m in Sources */ = {isa = PBXBuildFile; fileRef = B395318A1E13993600B5C78E /* JYMyPhotosController.m */; };
 		B395318E1E13A18400B5C78E /* JYMyPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B395318D1E13A18400B5C78E /* JYMyPhotoCell.m */; };
@@ -331,6 +336,16 @@
 		B36F15281E1CA8E70081500B /* JYChangeSignatureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYChangeSignatureCell.m; sourceTree = "<group>"; };
 		B36F152A1E1CEFB10081500B /* JYChangeInfoTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYChangeInfoTableView.h; sourceTree = "<group>"; };
 		B36F152B1E1CEFB10081500B /* JYChangeInfoTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYChangeInfoTableView.m; sourceTree = "<group>"; };
+		B373354D1E275228009637D1 /* JYSendDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSendDynamicViewController.h; sourceTree = "<group>"; };
+		B373354E1E275228009637D1 /* JYSendDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSendDynamicViewController.m; sourceTree = "<group>"; };
+		B37335501E276567009637D1 /* JYSendDynamicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSendDynamicCell.h; sourceTree = "<group>"; };
+		B37335511E276567009637D1 /* JYSendDynamicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSendDynamicCell.m; sourceTree = "<group>"; };
+		B37335561E277810009637D1 /* JYSendDynamicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSendDynamicTableViewCell.h; sourceTree = "<group>"; };
+		B37335571E277810009637D1 /* JYSendDynamicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSendDynamicTableViewCell.m; sourceTree = "<group>"; };
+		B37335591E277ED5009637D1 /* JYTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYTextView.h; sourceTree = "<group>"; };
+		B373355A1E277ED5009637D1 /* JYTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYTextView.m; sourceTree = "<group>"; };
+		B373355C1E2780BF009637D1 /* UIView+FrameEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FrameEx.h"; sourceTree = "<group>"; };
+		B373355D1E2780BF009637D1 /* UIView+FrameEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FrameEx.m"; sourceTree = "<group>"; };
 		B39531861E1385C900B5C78E /* JYDredgeVipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDredgeVipViewController.h; sourceTree = "<group>"; };
 		B39531871E1385C900B5C78E /* JYDredgeVipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDredgeVipViewController.m; sourceTree = "<group>"; };
 		B39531891E13993500B5C78E /* JYMyPhotosController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMyPhotosController.h; sourceTree = "<group>"; };
@@ -1055,6 +1070,8 @@
 				EC55CE701E077C970030C8F5 /* JYDynamicViewController.m */,
 				EC88F85F1E110C8D009AAEED /* JYRecommendViewController.h */,
 				EC88F8601E110C8D009AAEED /* JYRecommendViewController.m */,
+				B373354D1E275228009637D1 /* JYSendDynamicViewController.h */,
+				B373354E1E275228009637D1 /* JYSendDynamicViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1083,6 +1100,12 @@
 				EC88F8691E111148009AAEED /* JYRecommendHeaderView.m */,
 				EC88F86B1E111161009AAEED /* JYRecommendFooterView.h */,
 				EC88F86C1E111161009AAEED /* JYRecommendFooterView.m */,
+				B37335561E277810009637D1 /* JYSendDynamicTableViewCell.h */,
+				B37335571E277810009637D1 /* JYSendDynamicTableViewCell.m */,
+				B37335501E276567009637D1 /* JYSendDynamicCell.h */,
+				B37335511E276567009637D1 /* JYSendDynamicCell.m */,
+				B37335591E277ED5009637D1 /* JYTextView.h */,
+				B373355A1E277ED5009637D1 /* JYTextView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1813,6 +1836,8 @@
 			isa = PBXGroup;
 			children = (
 				ECCFA0771DEC04D8000F4E7A /* JYExtensions.h */,
+				B373355C1E2780BF009637D1 /* UIView+FrameEx.h */,
+				B373355D1E2780BF009637D1 /* UIView+FrameEx.m */,
 				ECCFA0981DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.h */,
 				ECCFA0991DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.m */,
 				EC9843DF1E07ACC600754471 /* UIView+RoundCorner.h */,
@@ -2139,6 +2164,7 @@
 				EC9843EB1E07E26E00754471 /* JYLoginViewController.m in Sources */,
 				EC88F8021E10B7B4009AAEED /* XHCacheManager.m in Sources */,
 				ECEFE34C1E0A865C002F9A1C /* JYRegisterDetailCell.m in Sources */,
+				B37335521E276567009637D1 /* JYSendDynamicCell.m in Sources */,
 				ECCFA0471DEBF0D4000F4E7A /* AppDelegate.m in Sources */,
 				EC88F80C1E10B7B4009AAEED /* XHEmotion.m in Sources */,
 				EC88F8251E10B7B5009AAEED /* XHMessageTableView.m in Sources */,
@@ -2159,6 +2185,7 @@
 				EC485D101E120F0B00F3F18B /* JYMessageModel.m in Sources */,
 				EC88F7F21E10B7B4009AAEED /* UIImage+XHRounded.m in Sources */,
 				EC88F7F91E10B7B4009AAEED /* XHMessageBubbleHelper.m in Sources */,
+				B37335581E277810009637D1 /* JYSendDynamicTableViewCell.m in Sources */,
 				EC9843DB1E07A96C00754471 /* JYMineAvatarView.m in Sources */,
 				EC88F8151E10B7B4009AAEED /* SELineLayout.m in Sources */,
 				EC804AA11E0D54FA00191387 /* SWActionSheet.m in Sources */,
@@ -2171,6 +2198,7 @@
 				EC88F8001E10B7B4009AAEED /* XHDisplayTextViewController.m in Sources */,
 				EC88F8731E112CE8009AAEED /* JYContactCell.m in Sources */,
 				ECAF89091E095BD0005A6C62 /* AppDelegate+login.m in Sources */,
+				B373355B1E277ED5009637D1 /* JYTextView.m in Sources */,
 				EC88F8641E110D99009AAEED /* JYRecommendCell.m in Sources */,
 				EC88F85B1E10DD33009AAEED /* JYRegisterPhoneNumberViewController.m in Sources */,
 				B347A5301E24D45800A4208F /* JYUserDetailMoodModel.m in Sources */,
@@ -2178,6 +2206,7 @@
 				ECCFA07A1DEC060C000F4E7A /* JYConfiguration.m in Sources */,
 				B3195E671E16432E00193D4F /* JYDetailVideoViewController.m in Sources */,
 				EC88F7EE1E10B7B4009AAEED /* UIImage+Alpha.m in Sources */,
+				B373354F1E275228009637D1 /* JYSendDynamicViewController.m in Sources */,
 				EC88F7EF1E10B7B4009AAEED /* UIImage+Resize.m in Sources */,
 				B3D114D71E0E26E9001DC147 /* JYNotFetchUserlocalView.m in Sources */,
 				EC88F8231E10B7B5009AAEED /* XHBubblePhotoImageView.m in Sources */,
@@ -2245,6 +2274,7 @@
 				B36184831E110CDE00DD55A5 /* UIImage+Blur.m in Sources */,
 				B39531881E1385C900B5C78E /* JYDredgeVipViewController.m in Sources */,
 				EC88F8261E10B7B5009AAEED /* XHMessageTableViewCell.m in Sources */,
+				B373355E1E2780BF009637D1 /* UIView+FrameEx.m in Sources */,
 				EC9843D51E07905F00754471 /* JYTableHeaderFooterView.m in Sources */,
 				EC88F81F1E10B7B5009AAEED /* SETextSelection.m in Sources */,
 				EC88F8101E10B7B4009AAEED /* FLAnimatedImage.m in Sources */,
