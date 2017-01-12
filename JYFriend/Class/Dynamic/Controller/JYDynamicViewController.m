@@ -11,7 +11,7 @@
 #import "JYDynamicModel.h"
 
 #define resetTime   (60*60*6)     //重置缓存时间
-#define refreshTime (60*5)        //刷新数据时间
+#define refreshTime 5//(60*5)        //刷新数据时间
 
 static NSString *const kJYDynamicResetTimeKeyName     = @"kJYDynamicResetTimeKeyName";
 static NSString *const kJYDynamicRefreshTimeKeyName   = @"kJYDynamicRefreshTimeKeyName";
@@ -40,6 +40,10 @@ QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
     
     //预先加载所有缓存数据
     self.dataSource =  [NSMutableArray arrayWithArray:[JYDynamic allDynamics]];
+    //如果缓存无数据 就一次加载较多的数据
+    if (self.dataSource.count == 0) {
+        [self loadDataWithOffset:0 limit:15 isRefresh:YES];
+    }
     
     @weakify(self);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"发飙" style:UIBarButtonItemStylePlain handler:^(id sender) {
@@ -67,8 +71,12 @@ QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
     
     [_layoutCollectionView JY_addPullToRefreshWithHandler:^{
         @strongify(self);
-        //刷新数据 判断是初始化所有数据
-        [self loadDataWithOffset:self.dataSource.count limit:15 isRefresh:YES];
+        //刷新数据 时间未到 就结束刷新动画 否则加载2条数据
+        if ([JYUtil shouldRefreshContentWithKey:kJYDynamicRefreshTimeKeyName timeInterval:refreshTime]) {
+            [self loadDataWithOffset:self.dataSource.count limit:2 isRefresh:YES];
+        } else {
+            [self->_layoutCollectionView JY_endPullToRefresh];
+        }
     }];
     
     [_layoutCollectionView JY_addPagingRefreshWithHandler:^{
@@ -76,43 +84,6 @@ QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
     }];
     
     [_layoutCollectionView JY_triggerPullToRefresh];
-    
-//    for (NSInteger i = 0; i < 50; i++) {
-//        JYDynamic *dynamic = [[JYDynamic alloc] init];
-//        dynamic.logoUrl = @"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg";
-//        dynamic.nickName = @"渣渣";
-//        dynamic.userSex = i % 2+1;
-//        dynamic.userId = [NSString stringWithFormat:@"%ld",i];
-//        dynamic.age = [NSString stringWithFormat:@"%ld",i];
-//        dynamic.time = @"1991年9月9日10:11";
-//        dynamic.content = @"你好，很高兴认识你";
-//        dynamic.isFocus = i % 2;
-//        dynamic.isGreet = i % 2;
-//        dynamic.dynamicType = i % 4;
-//        
-//        CGFloat originHeight = kWidth(30) + kWidth(88) + kWidth(32) + kWidth(30) + kWidth(30);
-//        CGFloat contentHeight = [dynamic.content boundingRectWithSize:CGSizeMake(kScreenWidth - kWidth(62), MAXFLOAT)
-//                                                              options:NSStringDrawingUsesLineFragmentOrigin
-//                                                           attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:kWidth(32)]}
-//                                                              context:nil].size.height;
-//        CGFloat typeHeight = 0;
-//        if (dynamic.dynamicType == JYDynamicTypeOnePhoto) {
-//            typeHeight = kScreenWidth - kWidth(60);
-//        } else if (dynamic.dynamicType == JYDynamicTypeTwoPhotos) {
-//            typeHeight = (kScreenWidth - kWidth(70))/2;
-//        } else if (dynamic.dynamicType == JYDynamicTypeThreePhotos) {
-//            typeHeight = (kScreenWidth - kWidth(72))/3;
-//        } else if (dynamic.dynamicType == JYDynamicTypeVideo) {
-//            typeHeight = (kScreenWidth - kWidth(60))*207/345;
-//        }
-//        
-//        NSNumber *cellHeight = [NSNumber numberWithFloat:originHeight+contentHeight+typeHeight];
-//        [self.cellHeightArray addObject:cellHeight];
-//        
-//        [self.dataSource addObject:dynamic];
-//    }
-
-//    [_layoutCollectionView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,7 +92,7 @@ QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    //页面出现若到了下拉刷新时限 则加载2条数据
     if ([JYUtil shouldRefreshContentWithKey:kJYDynamicRefreshTimeKeyName timeInterval:refreshTime]) {
         [self loadDataWithOffset:self.dataSource.count limit:2 isRefresh:YES];
     }
@@ -140,26 +111,104 @@ QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
                     [JYDynamic clearTable];
                     [self.dataSource removeAllObjects];
                     [self.dataSource addObjectsFromArray:obj];
+                    [self setDynamicInfoWithSource:nil atFront:NO isResetDataSource:YES];
                 } else {
                     //则就是刷新少量最新的动态数据 插入数组前列
-                    [self.dataSource insertObjects:obj atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, obj.count)]];
+                    [self setDynamicInfoWithSource:obj.count > 0 ? obj : nil atFront:YES isResetDataSource:NO];
                 }
             } else {
                 //加载数据 放入数组尾部
-                [self.dataSource addObjectsFromArray:obj];
+                [self setDynamicInfoWithSource:obj.count > 0 ? obj : nil  atFront:NO isResetDataSource:NO];
             }
         }
-        [JYUtil setValue:@(self.dataSource.count+obj.count) withKeyName:kJYDynamicOffsetKeyName];
+        [JYUtil setValue:@(self.dataSource.count) withKeyName:kJYDynamicOffsetKeyName];
         [_layoutCollectionView reloadData];
         [_layoutCollectionView JY_endPullToRefresh];
     }];
 }
 
-- (void)setDynamicTimeWithSource:(NSArray *)array atFront:(BOOL)isFront isResetDataSource:(BOOL)isReset {
+- (void)setDynamicInfoWithSource:(NSArray *)array atFront:(BOOL)isFront isResetDataSource:(BOOL)isReset {
     if (isReset) {
-        
+        //重置的新数据 设置内容类型和高度
+        [self.dataSource enumerateObjectsUsingBlock:^(JYDynamic *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSInteger randomTime = random() % 360 + 60; //随机1到7分钟
+            if (idx == 0) {
+                //初始时间
+                obj.timeInterval = [[JYUtil currentDate] timeIntervalSince1970] - randomTime;
+            } else {
+                JYDynamic *lastObj = self.dataSource[idx-1];
+                obj.timeInterval = lastObj.timeInterval - randomTime;
+            }
+            obj = [self getDynamicContentHeightWithDynamic:obj];
+            [obj saveOneDynamic];
+            [self.dataSource replaceObjectAtIndex:idx withObject:obj];
+        }];
+    } else {
+        //从头或者尾部插入新的数据
+        if (array != nil) {
+            [array enumerateObjectsUsingBlock:^(JYDynamic *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                obj = [self getDynamicContentHeightWithDynamic:obj];
+                NSInteger randomTime = random() % 360 + 60; //随机1到7分钟
+                if (self.dataSource == 0) {
+                    if (idx == 0) {
+                        obj.timeInterval = [[JYUtil currentDate] timeIntervalSince1970] - randomTime;
+                    } else {
+                        JYDynamic *lastObj = array[idx-1];
+                        obj.timeInterval = lastObj.timeInterval - randomTime;
+                    }
+                    [obj saveOneDynamic];
+                    [self.dataSource addObject:obj];
+                } else {
+                    if (isFront) {
+                        JYDynamic *firstObj = [self.dataSource firstObject];
+                        obj.timeInterval = firstObj.timeInterval + randomTime;
+                        [self.dataSource insertObject:obj atIndex:0];
+                    } else {
+                        JYDynamic *lastObj = [self.dataSource lastObject];
+                        obj.timeInterval = lastObj.timeInterval - randomTime;
+                        [self.dataSource addObject:obj];
+                    }
+                }
+                [obj saveOneDynamic];
+            }];
+        }
     }
 }
+
+- (JYDynamic *)getDynamicContentHeightWithDynamic:(JYDynamic *)dynamic {
+    CGFloat originHeight = kWidth(30) + kWidth(88) + kWidth(32) + kWidth(30) + kWidth(30);
+    CGFloat contentHeight = [dynamic.text boundingRectWithSize:CGSizeMake(kScreenWidth - kWidth(62), MAXFLOAT)
+                                                          options:NSStringDrawingUsesLineFragmentOrigin
+                                                       attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:kWidth(32)]}
+                                                          context:nil].size.height;
+    CGFloat typeHeight = 0;
+
+    if ([dynamic.text isEqualToString:@"111111111111"]) {
+        
+    }
+    
+    if (dynamic.moodUrl.count == 1) {
+        JYDynamicUrl *dynamicUrl = [dynamic.moodUrl firstObject];
+        if ([dynamicUrl.type integerValue] == 1) {
+            dynamic.dynamicType = JYDynamicTypeVideo;
+            typeHeight = (kScreenWidth - kWidth(60))*207/345;
+        } else if ([dynamicUrl.type integerValue] == 2) {
+            dynamic.dynamicType = JYDynamicTypeOnePhoto;
+            typeHeight = kScreenWidth - kWidth(60);
+        }
+    } else if (dynamic.moodUrl.count == 2) {
+        dynamic.dynamicType = JYDynamicTypeTwoPhotos;
+        typeHeight = (kScreenWidth - kWidth(70))/2;
+    } else if (dynamic.moodUrl.count == 3) {
+        dynamic.dynamicType = JYDynamicTypeThreePhotos;
+        typeHeight = (kScreenWidth - kWidth(72))/3;
+    }
+    
+    dynamic.contentHeight = originHeight+contentHeight+typeHeight;
+    
+    return dynamic;
+}
+
 
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
@@ -179,12 +228,13 @@ QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
         dynamicCell.logoUrl = dynamic.logoUrl;
         dynamicCell.nickName = dynamic.nickName;
         dynamicCell.age = dynamic.age;
-        dynamicCell.userSex = dynamic.userSex;
-        dynamicCell.time = dynamic.time;
-        dynamicCell.content = dynamic.content;
-        dynamicCell.isFocus = dynamic.isFocus;
-        dynamicCell.isGreet = dynamic.isGreet;
+        dynamicCell.userSex = [JYUserSexStringGet indexOfObject:dynamic.sex];
+        dynamicCell.timeInterval = dynamic.timeInterval;
+        dynamicCell.content = dynamic.text;
+        dynamicCell.isFocus = dynamic.follow;
+        dynamicCell.isGreet = dynamic.greet;
         dynamicCell.dynamicType = dynamic.dynamicType;
+        dynamicCell.moodUrl = dynamic.moodUrl;
     }
     return dynamicCell;
 }
@@ -192,8 +242,9 @@ QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat fullWidth = CGRectGetWidth(collectionView.bounds);
     if (indexPath.item < self.dataSource.count) {
+        JYDynamic *dynamic = self.dataSource[indexPath.item];
         CGFloat width = fullWidth;
-        CGFloat height = [self.cellHeightArray[indexPath.item] floatValue];
+        CGFloat height = dynamic.contentHeight;
         return CGSizeMake((long)width, (long)height);
     }
     return CGSizeZero;

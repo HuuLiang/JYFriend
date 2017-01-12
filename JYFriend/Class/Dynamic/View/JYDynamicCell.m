@@ -147,8 +147,9 @@
     [_genderBtn setTitle:age forState:UIControlStateNormal];
 }
 
-- (void)setTime:(NSString *)time {
-    _timeLabel.text = time;
+- (void)setTimeInterval:(NSInteger)timeInterval {
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+    _timeLabel.text = [JYUtil timeStringFromDate:date WithDateFormat:@"MM月dd日hh:mm"];
 }
 
 - (void)setContent:(NSString *)content {
@@ -172,11 +173,11 @@
     _isGreet = isGreet;
     if (isGreet) {
         [_greetButton setTitleColor:kColor(@"#E6E6E6") forState:UIControlStateNormal];
-        [_greetButton setTitle:@"打招呼" forState:UIControlStateNormal];
+        [_greetButton setTitle:@"已招呼" forState:UIControlStateNormal];
         _greetButton.layer.borderColor = kColor(@"#E6E6E6").CGColor;
     } else {
         [_greetButton setTitleColor:kColor(@"#E147A5") forState:UIControlStateNormal];
-        [_greetButton setTitle:@"已招呼" forState:UIControlStateNormal];
+        [_greetButton setTitle:@"打招呼" forState:UIControlStateNormal];
         _greetButton.layer.borderColor = kColor(@"#E147A5").CGColor;
     }
 }
@@ -200,8 +201,6 @@
         
         _imgVA = [[UIImageView alloc] init];
         [self.contentView addSubview:_imgVA];
-        
-        [_imgVA sd_setImageWithURL:[NSURL URLWithString:@"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg"]];
     } else if (dynamicType == JYDynamicTypeTwoPhotos) {
         
         _imgVA = [[UIImageView alloc] init];
@@ -209,9 +208,6 @@
         
         _imgVB = [[UIImageView alloc] init];
         [self.contentView addSubview:_imgVB];
-        
-        [_imgVA sd_setImageWithURL:[NSURL URLWithString:@"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg"]];
-        [_imgVB sd_setImageWithURL:[NSURL URLWithString:@"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg"]];
     } else if (dynamicType == JYDynamicTypeThreePhotos) {
         
         _imgVA = [[UIImageView alloc] init];
@@ -222,18 +218,12 @@
         
         _imgVC = [[UIImageView alloc] init];
         [self.contentView addSubview:_imgVC];
-        
-        [_imgVA sd_setImageWithURL:[NSURL URLWithString:@"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg"]];
-        [_imgVB sd_setImageWithURL:[NSURL URLWithString:@"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg"]];
-        [_imgVC sd_setImageWithURL:[NSURL URLWithString:@"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg"]];
     } else if (dynamicType == JYDynamicTypeVideo) {
         _imgVA = [[UIImageView alloc] init];
         [self.contentView addSubview:_imgVA];
         
         _playIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dynamic_play"]];
         [_imgVA addSubview:_playIcon];
-        
-        [_imgVA sd_setImageWithURL:[NSURL URLWithString:@"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg"]];
     }
     
     if (dynamicType == JYDynamicTypeOnePhoto) {
@@ -286,7 +276,19 @@
             make.size.mas_equalTo(CGSizeMake(kWidth(100), kWidth(100)));
         }];
     }
-
 }
+
+- (void)setMoodUrl:(NSArray *)moodUrl {
+    [moodUrl enumerateObjectsUsingBlock:^(JYDynamicUrl * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx == 0) {
+            [_imgVA sd_setImageWithURL:[NSURL URLWithString:obj.thumbnail]];
+        } else if (idx == 1) {
+            [_imgVB sd_setImageWithURL:[NSURL URLWithString:obj.thumbnail]];
+        } else if (idx == 2) {
+            [_imgVC sd_setImageWithURL:[NSURL URLWithString:obj.thumbnail]];
+        }
+    }];
+}
+
 
 @end

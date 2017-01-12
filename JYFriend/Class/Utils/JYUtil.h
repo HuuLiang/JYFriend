@@ -42,6 +42,8 @@
 + (NSDate *)dateFromString:(NSString *)dateString WithDateFormat:(NSString *)dateFormat;
 + (NSString *)timeStringFromDate:(NSDate *)date WithDateFormat:(NSString *)dateFormat;
 + (BOOL)shouldRefreshContentWithKey:(NSString *)refreshKey timeInterval:(NSUInteger)timeInterval;
++ (NSDate *)currentDate;
+
 
 + (id)getValueWithKeyName:(NSString *)keyName;
 + (void)setValue:(id)object withKeyName:(NSString *)keyName;

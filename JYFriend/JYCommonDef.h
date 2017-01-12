@@ -34,6 +34,7 @@ typedef NS_ENUM(NSUInteger, JYDynamicType) {
     JYDynamicTypeCount
 };
 
+
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 
 #define kPaidNotificationName             @"JYFriendPaidNotification"

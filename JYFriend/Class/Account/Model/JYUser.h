@@ -15,6 +15,12 @@ typedef NS_ENUM(NSUInteger,JYUserSex) {
     JYUserSexALL//所有人(附近的人)
 };
 
+#define JYUserSexStringGet  @[@"unknow",@"M",@"F",@"All"]
+
+//#define JYUserSexStringGet (__JYUserSexArray == nil ? __JYUserSexArray = [[NSArray alloc] initWithObjects:@"unknow",@"M",@"F",@"All",nil] : __JYUserSexArray)
+//#define JYUserSexToString(userSexType) ([JYUserSexStringGet objectAtIndex:userSexType])
+//#define JYUserStringToSex(userSexString) ([JYUserSexStringGet indexOfObject:userSexString])
+
 @interface JYUser : JKDBModel <NSCoding>
 
 + (instancetype)currentUser;
