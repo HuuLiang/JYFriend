@@ -44,7 +44,22 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
     [self.messageTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
     [self configEmotions];
+    [self setXHShareMenu];
 }
+
+/**
+ 点击加号里面
+ */
+- (void)setXHShareMenu{
+
+   XHShareMenuItem *pictureItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:@"recommend_refresh"] title:@"图片" titleColor:[UIColor redColor] titleFont:[UIFont systemFontOfSize:kWidth(30)]];
+    XHShareMenuItem *videoItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:@"recommend_refresh"] title:@"视频" titleColor:[UIColor redColor] titleFont:[UIFont systemFontOfSize:kWidth(30)]];
+    
+     XHShareMenuItem *photographItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:@"recommend_refresh"] title:@"拍照" titleColor:[UIColor redColor] titleFont:[UIFont systemFontOfSize:kWidth(30)]];
+     XHShareMenuItem *videoChatItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:@"recommend_refresh"] title:@"视频聊天" titleColor:[UIColor redColor] titleFont:[UIFont systemFontOfSize:kWidth(30)]];
+    self.shareMenuItems = @[pictureItem,videoItem,photographItem,videoChatItem];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

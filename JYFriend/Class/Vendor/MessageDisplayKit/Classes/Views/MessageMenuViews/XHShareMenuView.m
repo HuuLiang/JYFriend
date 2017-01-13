@@ -38,7 +38,7 @@
         shareMenuItemButton.frame = CGRectMake(0, 0, kXHShareMenuItemWidth, kXHShareMenuItemWidth);
         shareMenuItemButton.backgroundColor = [UIColor clearColor];
         [self addSubview:shareMenuItemButton];
-        
+       
         self.shareMenuItemButton = shareMenuItemButton;
     }
     
