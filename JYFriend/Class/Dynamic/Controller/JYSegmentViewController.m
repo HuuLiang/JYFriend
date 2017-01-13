@@ -65,13 +65,15 @@ QBDefineLazyPropertyInitialization(NSMutableArray, viewControllers)
         
     }];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"推荐" style:UIBarButtonItemStylePlain handler:^(id sender) {
-        @strongify(self);
-        //推荐
-        JYRecommendViewController *recommendVC = [[JYRecommendViewController alloc] init];
-        [recommendVC showInViewController:self];
-    }];
-    
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"推荐" style:UIBarButtonItemStylePlain handler:^(id sender) {
+//        @strongify(self);
+//        //推荐
+//        JYRecommendViewController *recommendVC = [[JYRecommendViewController alloc] init];
+//        [recommendVC showInViewController:self];
+//    }];
+    JYRecommendViewController *recommendVC = [[JYRecommendViewController alloc] init];
+    [recommendVC showInViewController:self];
+
 }
 
 - (NSUInteger)currentIndex {

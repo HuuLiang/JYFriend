@@ -14,6 +14,7 @@
     UILabel     *_nickNameLabel;
     UILabel     *_timeLabel;
     UILabel     *_messageLabel;
+    UIButton    *_unreadBtn;
 }
 @end
 
@@ -52,6 +53,15 @@
         _messageLabel.font = [UIFont systemFontOfSize:kWidth(28)];
         [self.contentView addSubview:_messageLabel];
         
+        _unreadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_unreadBtn setTitleColor:kColor(@"#ffffff") forState:UIControlStateNormal];
+        [_unreadBtn setBackgroundColor:kColor(@"#E147A5")];
+        _unreadBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(24)];
+        _unreadBtn.layer.cornerRadius = kWidth(14);
+        _unreadBtn.layer.masksToBounds = YES;
+        _unreadBtn.hidden = YES;
+        [self.contentView addSubview:_unreadBtn];
+        
         {
             [_userImgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.contentView).offset(kWidth(30));
@@ -77,6 +87,12 @@
                 make.height.mas_equalTo(kWidth(28));
                 make.right.equalTo(self.contentView).offset(-kWidth(64));
             }];
+            
+            [_unreadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_userImgV.mas_top).offset(-kWidth(10));
+                make.right.equalTo(_userImgV.mas_right).offset(kWidth(8));
+                make.size.mas_equalTo(CGSizeMake(kWidth(28), kWidth(28)));
+            }];
         }
         
     }
@@ -97,6 +113,15 @@
 
 - (void)setRecentMessage:(NSString *)recentMessage {
     _messageLabel.text = recentMessage;
+}
+
+- (void)setUnreadMessage:(NSUInteger)unreadMessage {
+    if (unreadMessage > 0) {
+        [_unreadBtn setTitle:[NSString stringWithFormat:@"%ld",unreadMessage] forState:UIControlStateNormal];
+        _unreadBtn.hidden = NO;
+    } else {
+        _unreadBtn.hidden = YES;
+    }
 }
 
 - (void)setIsStick:(BOOL)isStick {

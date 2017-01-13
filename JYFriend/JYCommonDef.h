@@ -34,11 +34,18 @@ typedef NS_ENUM(NSUInteger, JYDynamicType) {
     JYDynamicTypeCount
 };
 
+typedef NS_ENUM(NSUInteger, JYMineUsersType) {
+    JYMineUsersTypeFollow,//关注
+    JYMineUsersTypeFans, //粉丝
+    JYMineUsersTypeVisitor, //访客
+    JYMineUsersTypeCount
+};
 
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 
 #define kPaidNotificationName             @"JYFriendPaidNotification"
 #define kUserLoginNotificationName        @"JYFriendUserLoginNotification"
+#define KUserChangeInfoNotificationName   @"JYFriendUserChangeInfoNotificationName"
 
 #define kDateFormatShort                  @"yyyy-MM-dd"
 #define kDateFormatChina                  @"yyyy年MM月dd日"

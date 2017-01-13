@@ -56,6 +56,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [self loadDataWithRefresh:NO];
     }];
     
+    [_layoutCollectionView JY_triggerPullToRefresh];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -95,7 +96,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         JYCharacter *character = self.dataSource[indexPath.item];
         characterCell.userImgStr = character.logoUrl;
         characterCell.nickNameStr = character.nickName;
-        characterCell.ageStr = character.age;
+        characterCell.ageStr = [NSString stringWithFormat:@"%@",character.age];
     }
     return characterCell;
 }
