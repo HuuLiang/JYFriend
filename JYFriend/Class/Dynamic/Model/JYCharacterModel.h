@@ -11,7 +11,7 @@
 
 @interface JYCharacter : JKDBModel
 @property (nonatomic) NSString *logoUrl;
-@property (nonatomic) NSString *age;
+@property (nonatomic) NSNumber *age;
 @property (nonatomic) NSString *nickName;
 @property (nonatomic) NSString *userId;
 @end

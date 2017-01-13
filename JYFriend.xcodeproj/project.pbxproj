@@ -10,7 +10,6 @@
 		58EBD024B4F3FC6F743B661D /* libPods-JYFriend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */; };
 		B31641861E27A75F0060ACF3 /* JYDynamicCacheUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B31641851E27A75F0060ACF3 /* JYDynamicCacheUtil.m */; };
 		B3195E611E16258500193D4F /* UIScrollView+Refresh.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E601E16258500193D4F /* UIScrollView+Refresh.m */; };
-		B3195E641E16398B00193D4F /* JYVisitMeController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E631E16398B00193D4F /* JYVisitMeController.m */; };
 		B3195E671E16432E00193D4F /* JYDetailVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */; };
 		B319CBEC1E2625EB00C88EAC /* JYRegexUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B319CBEB1E2625EB00C88EAC /* JYRegexUtil.m */; };
 		B32317101E1E3A0A00932531 /* JYDetailBottotmView.m in Sources */ = {isa = PBXBuildFile; fileRef = B323170F1E1E3A0A00932531 /* JYDetailBottotmView.m */; };
@@ -125,6 +124,9 @@
 		EC55CE711E077C970030C8F5 /* JYDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC55CE701E077C970030C8F5 /* JYDynamicViewController.m */; };
 		EC5707AB1E153BB300EAFC6E /* JYVoicePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5707AA1E153BB300EAFC6E /* JYVoicePlayer.m */; };
 		EC5707AE1E15466600EAFC6E /* JYMessageViewController+XHBMessageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5707AD1E15466600EAFC6E /* JYMessageViewController+XHBMessageDelegate.m */; };
+		EC6F09C11E287194004A0816 /* mine_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC6F09C01E287194004A0816 /* mine_background.jpg */; };
+		EC6F09C41E287B54004A0816 /* JYInteractiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6F09C31E287B54004A0816 /* JYInteractiveViewController.m */; };
+		EC6F09C71E288179004A0816 /* JYInteractiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6F09C61E288179004A0816 /* JYInteractiveModel.m */; };
 		EC804A621E0CC3F600191387 /* JYUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EC804A611E0CC3F600191387 /* JYUser.m */; };
 		EC804A991E0D54FA00191387 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = EC804A861E0D54FA00191387 /* AbstractActionSheetPicker.m */; };
 		EC804A9A1E0D54FA00191387 /* ActionSheetCustomPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = EC804A881E0D54FA00191387 /* ActionSheetCustomPicker.m */; };
@@ -304,8 +306,6 @@
 		B31641851E27A75F0060ACF3 /* JYDynamicCacheUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDynamicCacheUtil.m; sourceTree = "<group>"; };
 		B3195E5F1E16258500193D4F /* UIScrollView+Refresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Refresh.h"; sourceTree = "<group>"; };
 		B3195E601E16258500193D4F /* UIScrollView+Refresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Refresh.m"; sourceTree = "<group>"; };
-		B3195E621E16398B00193D4F /* JYVisitMeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYVisitMeController.h; sourceTree = "<group>"; };
-		B3195E631E16398B00193D4F /* JYVisitMeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYVisitMeController.m; sourceTree = "<group>"; };
 		B3195E651E16432E00193D4F /* JYDetailVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailVideoViewController.h; sourceTree = "<group>"; };
 		B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailVideoViewController.m; sourceTree = "<group>"; };
 		B319CBEA1E2625EB00C88EAC /* JYRegexUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRegexUtil.h; sourceTree = "<group>"; };
@@ -478,6 +478,11 @@
 		EC5707AA1E153BB300EAFC6E /* JYVoicePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYVoicePlayer.m; sourceTree = "<group>"; };
 		EC5707AC1E15466600EAFC6E /* JYMessageViewController+XHBMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JYMessageViewController+XHBMessageDelegate.h"; sourceTree = "<group>"; };
 		EC5707AD1E15466600EAFC6E /* JYMessageViewController+XHBMessageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JYMessageViewController+XHBMessageDelegate.m"; sourceTree = "<group>"; };
+		EC6F09C01E287194004A0816 /* mine_background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mine_background.jpg; sourceTree = "<group>"; };
+		EC6F09C21E287B54004A0816 /* JYInteractiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYInteractiveViewController.h; sourceTree = "<group>"; };
+		EC6F09C31E287B54004A0816 /* JYInteractiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYInteractiveViewController.m; sourceTree = "<group>"; };
+		EC6F09C51E288179004A0816 /* JYInteractiveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYInteractiveModel.h; sourceTree = "<group>"; };
+		EC6F09C61E288179004A0816 /* JYInteractiveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYInteractiveModel.m; sourceTree = "<group>"; };
 		EC804A601E0CC3F600191387 /* JYUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUser.h; sourceTree = "<group>"; };
 		EC804A611E0CC3F600191387 /* JYUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYUser.m; sourceTree = "<group>"; };
 		EC804A851E0D54FA00191387 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
@@ -1697,6 +1702,7 @@
 				EC4F98301E15FB4B005818F1 /* emotions */,
 				EC24A2F31E0E2887000B77A9 /* provinces.plist */,
 				EC4422BC1E09103900F48461 /* login_background.png */,
+				EC6F09C01E287194004A0816 /* mine_background.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1794,8 +1800,8 @@
 				B39531871E1385C900B5C78E /* JYDredgeVipViewController.m */,
 				B39531891E13993500B5C78E /* JYMyPhotosController.h */,
 				B395318A1E13993600B5C78E /* JYMyPhotosController.m */,
-				B3195E621E16398B00193D4F /* JYVisitMeController.h */,
-				B3195E631E16398B00193D4F /* JYVisitMeController.m */,
+				EC6F09C21E287B54004A0816 /* JYInteractiveViewController.h */,
+				EC6F09C31E287B54004A0816 /* JYInteractiveViewController.m */,
 				B3195E651E16432E00193D4F /* JYDetailVideoViewController.h */,
 				B3195E661E16432E00193D4F /* JYDetailVideoViewController.m */,
 				B35DCF071E1BCDDC005C5969 /* JYChangeUserInfoController.h */,
@@ -1815,6 +1821,8 @@
 				B35DCEF91E1B36FB005C5969 /* JYLocalPhotoUtils.m */,
 				B35DCF011E1BA3D4005C5969 /* JYLocalVideoUtils.h */,
 				B35DCF021E1BA3D4005C5969 /* JYLocalVideoUtils.m */,
+				EC6F09C51E288179004A0816 /* JYInteractiveModel.h */,
+				EC6F09C61E288179004A0816 /* JYInteractiveModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1987,6 +1995,7 @@
 				EC4F98881E15FB4C005818F1 /* e132.gif in Resources */,
 				EC88F83A1E10B7B5009AAEED /* msg_chat_voice_unread@2x.png in Resources */,
 				EC4F98721E15FB4C005818F1 /* e110.gif in Resources */,
+				EC6F09C11E287194004A0816 /* mine_background.jpg in Resources */,
 				EC4422BD1E09103900F48461 /* login_background.png in Resources */,
 				EC88F83C1E10B7B5009AAEED /* multiMedia_HL@2x.png in Resources */,
 				EC4F98811E15FB4C005818F1 /* e125.gif in Resources */,
@@ -2142,7 +2151,6 @@
 				B319CBEC1E2625EB00C88EAC /* JYRegexUtil.m in Sources */,
 				ECCFA0AC1DEC182B000F4E7A /* JKDBHelper.m in Sources */,
 				EC804A9A1E0D54FA00191387 /* ActionSheetCustomPicker.m in Sources */,
-				B3195E641E16398B00193D4F /* JYVisitMeController.m in Sources */,
 				ECCFA09A1DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.m in Sources */,
 				ECCFA0A31DEC0F81000F4E7A /* JYAppSpreadBannerModel.m in Sources */,
 				EC804AA01E0D54FA00191387 /* DistancePickerView.m in Sources */,
@@ -2194,6 +2202,7 @@
 				EC88F8051E10B7B4009AAEED /* XHOperationNetworkKit.m in Sources */,
 				EC485D101E120F0B00F3F18B /* JYMessageModel.m in Sources */,
 				EC88F7F21E10B7B4009AAEED /* UIImage+XHRounded.m in Sources */,
+				EC6F09C41E287B54004A0816 /* JYInteractiveViewController.m in Sources */,
 				EC88F7F91E10B7B4009AAEED /* XHMessageBubbleHelper.m in Sources */,
 				B37335581E277810009637D1 /* JYSendDynamicTableViewCell.m in Sources */,
 				EC9843DB1E07A96C00754471 /* JYMineAvatarView.m in Sources */,
@@ -2313,6 +2322,7 @@
 				EC88F82C1E10B7B5009AAEED /* XHEmotionManagerView.m in Sources */,
 				B39531AD1E13E6F000B5C78E /* SDCollectionViewCell.m in Sources */,
 				EC88F86D1E111161009AAEED /* JYRecommendFooterView.m in Sources */,
+				EC6F09C71E288179004A0816 /* JYInteractiveModel.m in Sources */,
 				ECCFA0911DEC0B0B000F4E7A /* JYSystemConfigModel.m in Sources */,
 				EC9843DE1E07AC6A00754471 /* JYMineAvatarButton.m in Sources */,
 				EC88F7FF1E10B7B4009AAEED /* XHDisplayMediaViewController.m in Sources */,

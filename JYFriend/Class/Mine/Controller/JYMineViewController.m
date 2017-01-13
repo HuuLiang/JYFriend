@@ -12,9 +12,9 @@
 #import "JYMineAvatarView.h"
 #import "JYDredgeVipViewController.h"
 #import "JYMyPhotosController.h"
-#import "JYVisitMeController.h"
 #import "JYDetailVideoViewController.h"
 #import "JYChangeUserInfoController.h"
+#import "JYInteractiveViewController.h"
 
 typedef NS_ENUM(NSUInteger, JYMineSection) {
     JYMineFunctinSection,//功能分组
@@ -71,14 +71,25 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
     [self.view addSubview:_tableView];
     {
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+            make.left.right.bottom.equalTo(self.view);
+            make.top.equalTo(self.view).offset(-20);
         }];
     }
     
-    _avtarView = [[JYMineAvatarView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth(150))];
+    _avtarView = [[JYMineAvatarView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenWidth *220/275)];
     _avtarView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.66];
     _tableView.tableHeaderView = _avtarView;
+    @weakify(self);
+    _avtarView.usersTypeAction = ^(NSNumber *mineUsersType) {
+        @strongify(self);
+        if ([mineUsersType unsignedIntegerValue] == JYMineUsersTypeFollow || [mineUsersType unsignedIntegerValue] == JYMineUsersTypeFans) {
+            [self pushIntoInteractiveViewControllerWithType:[mineUsersType unsignedIntegerValue]];
+        }
+    };
+    [self setCurrentContenInfo];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setCurrentContenInfo) name:KUserChangeInfoNotificationName object:nil];
 }
+
 
 - (BOOL)alwaysHideNavigationBar {
     return YES;
@@ -86,7 +97,26 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
+}
+
+- (void)setCurrentContenInfo {
+    if (_avtarView) {
+        if ([JYUser currentUser].userImg != nil) {
+            UIImage *image = [UIImage imageWithData:[JYUser currentUser].userImg];
+            if (image) {
+                _avtarView.userImg = [UIImage imageWithData:[JYUser currentUser].userImg];
+            }
+        }
+        _avtarView.follow = @"20";
+        _avtarView.fans = @"30";
+        _avtarView.nickName = [JYUser currentUser].nickName;
+        _avtarView.signature = [JYUser currentUser].signature;
+    }
+}
+
+- (void)pushIntoInteractiveViewControllerWithType:(JYMineUsersType)usersType {
+    JYInteractiveViewController *interactiveVC = [[JYInteractiveViewController alloc] initWithType:usersType];
+    [self.navigationController pushViewController:interactiveVC animated:YES];
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource
@@ -177,9 +207,7 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
         } else if (indexPath.row == JYMineFunctionRobotRow) {
             
         } else if (indexPath.row == JYMineFunctionGuestRow) {
-            JYVisitMeController *visitVC = [[JYVisitMeController alloc] init];
-            [self.navigationController pushViewController:visitVC animated:YES];
-            
+            [self pushIntoInteractiveViewControllerWithType:JYMineUsersTypeVisitor];
         }
     } else if (indexPath.section == JYMineDetailSection) {
         if (indexPath.row == JYMineDetailAlbumRow)  {

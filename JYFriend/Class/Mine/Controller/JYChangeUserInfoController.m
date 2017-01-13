@@ -78,8 +78,9 @@ typedef NS_ENUM(NSInteger,JYUserInfoContactRow) {
                 [self.navigationController popViewControllerAnimated:YES];
             }else {
                 if ([self saveAllUserInfo]){
-                [[JYHudManager manager] showHudWithText:@"修改成功"];
-                [self.navigationController popViewControllerAnimated:YES];
+                    [[JYHudManager manager] showHudWithText:@"修改成功"];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:KUserChangeInfoNotificationName object:nil];
+                    [self.navigationController popViewControllerAnimated:YES];
                 }
             }
         }];

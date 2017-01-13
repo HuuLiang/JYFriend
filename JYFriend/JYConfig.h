@@ -30,7 +30,7 @@
 #define JY_DYNAMIC_URL                 @"/mfwcps/moodSection.htm"
 #define JY_NEAR_PERSON_URL             @"/mfwcps/peopleNearby.htm"
 #define JY_USER_DETAIL_URL             @"/mfwcps/userDetails.htm"
-
+#define JY_INTERACTIVE_URL             @"/mfwcps/interactive.htm"
 
 //#define JY_TRAIL_URL                   @"/iosvideo/homePage.htm"
 //#define JY_VIPA_URL                    @"/iosvideo/vipVideo.htm"

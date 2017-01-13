@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface JYMineAvatarView : UIView
-
-
-
+@property (nonatomic) UIImage *userImg;
+@property (nonatomic) NSString *follow;
+@property (nonatomic) NSString *fans;
+@property (nonatomic) NSString *nickName;
+@property (nonatomic) NSString *signature;
+@property (nonatomic) QBAction usersTypeAction;
 @end
