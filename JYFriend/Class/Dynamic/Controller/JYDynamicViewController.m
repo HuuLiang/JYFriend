@@ -11,7 +11,7 @@
 #import "JYDynamicModel.h"
 
 #define resetTime   (60*60*6)     //重置缓存时间
-#define refreshTime 5//(60*5)        //刷新数据时间
+#define refreshTime (60*5)        //刷新数据时间
 
 static NSString *const kJYDynamicResetTimeKeyName     = @"kJYDynamicResetTimeKeyName";
 static NSString *const kJYDynamicRefreshTimeKeyName   = @"kJYDynamicRefreshTimeKeyName";

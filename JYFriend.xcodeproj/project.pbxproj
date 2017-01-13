@@ -60,6 +60,7 @@
 		EC2A710C1E0B81F800BED161 /* JYNearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A710B1E0B81F800BED161 /* JYNearViewController.m */; };
 		EC4422BD1E09103900F48461 /* login_background.png in Resources */ = {isa = PBXBuildFile; fileRef = EC4422BC1E09103900F48461 /* login_background.png */; };
 		EC485D101E120F0B00F3F18B /* JYMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC485D0F1E120F0B00F3F18B /* JYMessageModel.m */; };
+		EC4A2EF81E27A1DE00A8C768 /* JYAutoContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4A2EF71E27A1DE00A8C768 /* JYAutoContactManager.m */; };
 		EC4C47C51E1274AD00AA47DC /* JYDynamicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C47C41E1274AD00AA47DC /* JYDynamicCell.m */; };
 		EC4C47C81E12807A00AA47DC /* JYDynamicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC4C47C71E12807A00AA47DC /* JYDynamicModel.m */; };
 		EC4F98681E15FB4C005818F1 /* e100.gif in Resources */ = {isa = PBXBuildFile; fileRef = EC4F98311E15FB4B005818F1 /* e100.gif */; };
@@ -401,6 +402,8 @@
 		EC4422BC1E09103900F48461 /* login_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_background.png; sourceTree = "<group>"; };
 		EC485D0E1E120F0B00F3F18B /* JYMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMessageModel.h; sourceTree = "<group>"; };
 		EC485D0F1E120F0B00F3F18B /* JYMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMessageModel.m; sourceTree = "<group>"; };
+		EC4A2EF61E27A1DE00A8C768 /* JYAutoContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYAutoContactManager.h; sourceTree = "<group>"; };
+		EC4A2EF71E27A1DE00A8C768 /* JYAutoContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYAutoContactManager.m; sourceTree = "<group>"; };
 		EC4C47C31E1274AD00AA47DC /* JYDynamicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDynamicCell.h; sourceTree = "<group>"; };
 		EC4C47C41E1274AD00AA47DC /* JYDynamicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDynamicCell.m; sourceTree = "<group>"; };
 		EC4C47C61E12807A00AA47DC /* JYDynamicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDynamicModel.h; sourceTree = "<group>"; };
@@ -940,6 +943,8 @@
 				EC88F8781E1137DB009AAEED /* JYContactModel.m */,
 				EC485D0E1E120F0B00F3F18B /* JYMessageModel.h */,
 				EC485D0F1E120F0B00F3F18B /* JYMessageModel.m */,
+				EC4A2EF61E27A1DE00A8C768 /* JYAutoContactManager.h */,
+				EC4A2EF71E27A1DE00A8C768 /* JYAutoContactManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2280,6 +2285,7 @@
 				EC88F8101E10B7B4009AAEED /* FLAnimatedImage.m in Sources */,
 				B3E6FC221E12A1CD0076ADE9 /* JYNewDynamicCell.m in Sources */,
 				EC88F85E1E10FBE7009AAEED /* JYCharacterCell.m in Sources */,
+				EC4A2EF81E27A1DE00A8C768 /* JYAutoContactManager.m in Sources */,
 				ECC094131E25C7C800A1DCCD /* NSArray+Log.m in Sources */,
 				B3E6FC1F1E12A1B50076ADE9 /* JYDetailUserInfoCell.m in Sources */,
 				EC88F81C1E10B7B4009AAEED /* SETextLayout.m in Sources */,

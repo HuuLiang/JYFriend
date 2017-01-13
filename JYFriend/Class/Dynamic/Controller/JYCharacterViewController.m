@@ -56,6 +56,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [self loadDataWithRefresh:NO];
     }];
     
+    [_layoutCollectionView JY_triggerPullToRefresh];
 }
 
 - (void)didReceiveMemoryWarning {
