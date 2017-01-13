@@ -11,6 +11,18 @@
 
 typedef void(^JYCollectionAction)(UIImage *image , NSIndexPath *indexPath,BOOL isAddPhoto);
 
+typedef NS_ENUM(NSUInteger, JYSendModelType) {
+    JYSendModelTypeVideo = 1,
+    JYSendModelTypePicture = 2
+    
+};
+
+@interface JYSendDynamaicModel : NSObject //
+@property (nonatomic) UIImage *image;
+@property (nonatomic) JYSendModelType type;
+@property (nonatomic) NSURL *videoUrl;
+@end
+
 @interface JYSendDynamicTableViewCell : UITableViewCell
 
 @property (nonatomic,retain) UIViewController *curentVC;

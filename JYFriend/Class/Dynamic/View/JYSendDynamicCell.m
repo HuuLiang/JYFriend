@@ -12,10 +12,25 @@
 {
     UIImageView *_currentImageView;
 }
-
+@property (nonatomic,retain) UIImageView *playImageView;
 @end
 
 @implementation JYSendDynamicCell
+
+- (UIImageView *)playImageView {
+    if (_playImageView) {
+        return _playImageView;
+    }
+    _playImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"detail_play_icon"]];
+    [self addSubview:_playImageView];
+    {
+        [_playImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.mas_equalTo(self);
+            make.size.mas_equalTo(CGSizeMake(kWidth(80), kWidth(80)));
+        }];
+    }
+    return _playImageView;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -39,6 +54,18 @@
     _currentImageView.image = image;
 }
 
+- (void)setIsVideo:(BOOL)isVideo {
+    _isVideo = isVideo;
+    if (isVideo) {
+        self.playImageView.hidden = NO;
+    }else {
+        if (_playImageView) {
+            _playImageView.hidden = YES;
+            [_playImageView removeFromSuperview];
+        }
+    
+    }
 
+}
 
 @end

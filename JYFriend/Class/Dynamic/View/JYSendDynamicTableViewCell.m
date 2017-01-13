@@ -9,11 +9,19 @@
 #import "JYSendDynamicTableViewCell.h"
 #import "JYSendDynamicCell.h"
 #import "JYLocalPhotoUtils.h"
-#import "JYUsrImageCache.h"
+#import "JYDynamicCacheUtil.h"
+#import "JYLocalVideoUtils.h"
 
 static NSString *const kSendDynamicCellIdentifier = @"ksend_dynamic_cell_identifier";
 static NSString *const kSendDynamicTextCellIdentifier = @"ksend_dynamic_text_cell_identifier";
 static CGFloat const kSpce = 5;
+
+
+
+@implementation JYSendDynamaicModel
+
+
+@end
 
 @interface JYSendDynamicTableViewCell ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextViewDelegate,JYLocalPhotoUtilsDelegate,UIActionSheetDelegate>
 
@@ -21,7 +29,7 @@ static CGFloat const kSpce = 5;
     UICollectionView *_layoutCollectionView;
 }
 
-@property (nonatomic,retain) NSMutableArray *dataSource;
+@property (nonatomic,retain) NSMutableArray <JYSendDynamaicModel *>*dataSource;
 @property (nonatomic,retain) UIActionSheet *actionSheet;
 @end
 
@@ -94,8 +102,13 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
     if ( indexPath.item <self.dataSource.count){
             JYSendDynamicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSendDynamicCellIdentifier forIndexPath:indexPath];
-        UIImage *image = self.dataSource[indexPath.item];
-        cell.image = image;
+        JYSendDynamaicModel *model = self.dataSource[indexPath.item];
+        cell.image = model.image;
+        if (model.type == JYSendModelTypeVideo) {
+            cell.isVideo = YES;
+        }else {
+            cell.isVideo = NO;
+        }
             return cell;
             
         }else if (indexPath.item == self.dataSource.count){
@@ -152,15 +165,57 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 #pragma mark JYLocalPhotoUtilsDelegate 相机相册访问
 
 - (void)JYLocalPhotoUtilsWithPicker:(UIImagePickerController *)picker DidFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-//    [JYUsrImageCache writeToFileWithImage:info[UIImagePickerControllerOriginalImage]];
-    
-    UIImage *image = info[UIImagePickerControllerOriginalImage];
-    [self.dataSource addObject:image];
-    [_layoutCollectionView reloadData];
-    if (self.collectAction) {
-        self.collectAction(info[UIImagePickerControllerOriginalImage]);
+   NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+//   QBLog(@"%@",mediaType)
+    if ([mediaType isEqualToString:@"public.movie"]) {//判断是否是视频
+        NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
+        if (!videoURL) {
+            return;
+        }
+        if (self.dataSource.count == 0) {
+            UIImage *videoImage = [JYLocalVideoUtils getImage:videoURL];
+            JYSendDynamaicModel *model = [[JYSendDynamaicModel alloc] init];
+            model.image = videoImage;
+            model.type = JYSendModelTypeVideo;
+            model.videoUrl = videoURL;
+            [self.dataSource addObject:model];
+        }else {
+            [[JYHudManager manager] showHudWithText:@"视频只能单独上传,并且最多只能上传一个视频"];
+            return;
+        }
+        
+    }else if ([mediaType isEqualToString:@"public.image"]){//判断是否是图片
+          UIImage *image = info[UIImagePickerControllerOriginalImage];
+        if (self.dataSource.count >= 3) {
+           [[JYHudManager manager] showHudWithText:@"最多只能上传三张图片"];
+            return;
+        }else {
+            if (self.dataSource.count > 0) {
+                JYSendDynamaicModel *model = [self.dataSource firstObject];
+                if (model.type == JYSendModelTypePicture) {
+                    JYSendDynamaicModel *PichModel = [[JYSendDynamaicModel alloc] init];
+                    PichModel.image = image;
+                    PichModel.type = JYSendModelTypePicture;
+                    [self.dataSource addObject:PichModel];
+                }else {
+                    [[JYHudManager manager] showHudWithText:@"视频和图片不能同时上传"];
+                    return;
+                }
+            }else if (self.dataSource.count == 0){
+                JYSendDynamaicModel *PichModel = [[JYSendDynamaicModel alloc] init];
+                PichModel.image = image;
+                PichModel.type = JYSendModelTypePicture;
+                [self.dataSource addObject:PichModel];
+            
+            }
+        }
+
     }
     
+    if (self.collectAction) {
+        self.collectAction(self.dataSource);
+    }
+        [_layoutCollectionView reloadData];
     
 }
 

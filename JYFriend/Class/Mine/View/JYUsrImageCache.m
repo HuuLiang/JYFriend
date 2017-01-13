@@ -45,7 +45,7 @@ static NSString *const kJYImageCacheImageName = @"jiaoyou_imagemodel_imagechche_
 }
 
 
-+ (NSString *)writeToFileWithImage:(UIImage *)image {
++ (NSString *)writeToFileWithImage:(UIImage *)image needSaveImageName:(BOOL)needSaveName{
     
         UIGraphicsBeginImageContext(CGSizeMake(image.size.width*0.9, image.size.height*0.9));
         [image drawInRect:CGRectMake(0,0,image.size.width*0.9,image.size.height*0.9)];
@@ -73,7 +73,9 @@ static NSString *const kJYImageCacheImageName = @"jiaoyou_imagemodel_imagechche_
     
     NSString *imageDataMd5 = [JYMD5Utils md5Data:imageData];
 //    QBLog(@"---md5 %@",imageDataMd5)
-    [self saveImageWithImageName:imageDataMd5];
+    if (needSaveName) {
+        [self saveImageWithImageName:imageDataMd5];
+    }
     
     [[SDImageCache sharedImageCache] storeImage:newImage forKey:imageDataMd5 toDisk:YES];
     

@@ -216,7 +216,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 #pragma mark JYLocalPhotoUtilsDelegate 相机相册访问
 
 - (void)JYLocalPhotoUtilsWithPicker:(UIImagePickerController *)picker DidFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-     [JYUsrImageCache writeToFileWithImage:info[UIImagePickerControllerOriginalImage]];
+     [JYUsrImageCache writeToFileWithImage:info[UIImagePickerControllerOriginalImage] needSaveImageName:YES];
      [_layoutCollectionView JY_triggerPullToRefresh];
         @weakify(self);
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

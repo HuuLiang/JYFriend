@@ -9,6 +9,7 @@
 #import "JYMessageViewController+XHBMessageDelegate.h"
 #import "JYMessageModel.h"
 #import "XHAudioPlayerHelper.h"
+#import "JYLocalPhotoUtils.h"
 
 
 @implementation JYMessageViewController (XHBMessageDelegate)
@@ -203,6 +204,14 @@
  *  @param index         被点击的位置
  */
 - (void)didSelecteShareMenuItem:(XHShareMenuItem *)shareMenuItem atIndex:(NSInteger)index {
+    if (index == 0) {
+        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary inViewController:self popoverPoint:CGPointZero isVideo:NO];
+    }else if(index == 1){
+        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum inViewController:self popoverPoint:CGPointZero isVideo:YES];
+    }else if (index == 2){
+      [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeCamera inViewController:self popoverPoint:CGPointZero isVideo:NO];
+    }
+    
     
 }
 

@@ -11,5 +11,6 @@
 @interface JYSendDynamicCell : UICollectionViewCell
 
 @property (nonatomic) UIImage *image;
+@property (nonatomic) BOOL isVideo;
 
 @end

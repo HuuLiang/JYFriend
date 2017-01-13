@@ -26,11 +26,11 @@ typedef NS_ENUM(NSUInteger , JYDynamicSectionType) {
     JYSendDynamicTableViewCell *_sendDynamicCell;
 }
 
-@property (nonatomic,retain) NSMutableArray *dataSource;//图片或者视频
+@property (nonatomic,retain) NSArray <JYSendDynamaicModel *>*userDynamic;//图片或者视频
 @end
 
 @implementation JYSendDynamicViewController
-QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
+QBDefineLazyPropertyInitialization(NSArray, userDynamic)
 
 
 - (void)viewDidLoad {
@@ -45,9 +45,18 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"发布" style:UIBarButtonItemStylePlain handler:^(id sender) {
         @strongify(self);
-        [JYDynamicCacheUtil saveUserDynamicWithUserState:self->_sendDynamicCell.textView.text imageUrls:self.dataSource];
+        //保存用户动态
+        if (self.userDynamic.count > 0){
+            
+            [self saveUserDynamic];
+        }else {
+            if (self->_sendDynamicCell.textView.text.length > 0) {
+                [JYDynamicCacheUtil saveUserDynamicWithUserState:self->_sendDynamicCell.textView.text imageUrls:nil];
+            }
+        }
         
     }];
+    
 
     _layoutTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _layoutTableView.backgroundColor = [UIColor colorWithHexString:@"#cbcbcb"];
@@ -62,6 +71,35 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         make.edges.mas_equalTo(self.view);
     }];
     }
+}
+
+//保存用户动态
+- (void)saveUserDynamic {
+    if (self.userDynamic.count == 0 && self->_sendDynamicCell.textView.text.length == 0){
+        return;
+    }
+    if (self.userDynamic.count == 0 && self->_sendDynamicCell.textView.text.length > 0) {
+    [JYDynamicCacheUtil saveUserDynamicWithUserState:self->_sendDynamicCell.textView.text imageUrls:nil];
+        [[JYHudManager manager] showHudWithText:@"发布状态成功"];
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+ 
+    NSMutableArray *images = [NSMutableArray array];
+    @weakify(self);
+  [self.userDynamic enumerateObjectsUsingBlock:^(JYSendDynamaicModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+      @strongify(self);
+    if (obj.type == JYSendModelTypePicture) {
+        [images addObject:obj.image];
+    }else if(obj.type == JYSendModelTypeVideo){
+        [JYDynamicCacheUtil saveUserVideoDyanmicWithUserState:self->_sendDynamicCell.textView.text videoUrl:obj.videoUrl];
+    }
+}];
+    if (images.count > 0) {
+        [JYDynamicCacheUtil saveUserDynamicWithUserState:self->_sendDynamicCell.textView.text imageUrls:images];
+    }
+    [[JYHudManager manager] showHudWithText:@"发布状态成功"];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,8 +119,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         _sendDynamicCell = cell;
         cell.curentVC = self;
         cell.tabBar = self.tabBarController.tabBar;
-        cell.collectAction = ^(UIImage *image){
-            [self.dataSource addObject:image];
+        @weakify(self);
+        cell.collectAction = ^(NSArray<JYSendDynamaicModel *> *models){
+            @strongify(self);
+        self.userDynamic = models;
         
         };
         return cell;

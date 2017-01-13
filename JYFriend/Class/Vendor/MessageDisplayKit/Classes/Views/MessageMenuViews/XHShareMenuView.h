@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "XHShareMenuItem.h"
 
-#define kXHShareMenuPageControlHeight 30
+#define kXHShareMenuPageControlHeight 40
 
 @protocol XHShareMenuViewDelegate <NSObject>
 

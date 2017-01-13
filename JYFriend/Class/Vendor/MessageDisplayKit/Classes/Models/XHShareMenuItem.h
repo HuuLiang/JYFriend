@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#define kXHShareMenuItemWidth 60
-#define KXHShareMenuItemHeight 80
+#define kXHShareMenuItemWidth  kWidth(150)
+#define KXHShareMenuItemHeight 90
 
 @interface XHShareMenuItem : NSObject
 
