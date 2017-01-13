@@ -16,7 +16,7 @@
 
 @interface JYUsrImageCache : NSObject
 
-+ (NSString *)writeToFileWithImage:(UIImage *)image;
++ (NSString *)writeToFileWithImage:(UIImage *)image needSaveImageName:(BOOL)needSaveName;
 
 + (NSArray <UIImage *>*)fetchAllImages;
 

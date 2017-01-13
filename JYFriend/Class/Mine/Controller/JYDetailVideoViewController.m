@@ -12,7 +12,7 @@
 
 static NSString *const kVideoImageCacheKey = @"kvideoimage_cache_key";
 static NSString *const kLastUpdateVideoTiem = @"klastupdate_video_time";//上传时间
-static NSInteger const kUploadTiem = 1;
+static NSInteger const kUploadTiem = 0.2;
 
 @interface JYDetailVideoViewController ()<JYLocalPhotoUtilsDelegate>
 
@@ -102,7 +102,7 @@ static NSInteger const kUploadTiem = 1;
     @weakify(self);
     [imageView bk_whenTapped:^{
         @strongify(self);
-       [self presentViewController:[self playerVCWithVideo:[JYLocalVideoUtils getUserLocalVideoPath]] animated:YES completion:nil];
+       [self presentViewController:[self playerVCWithVideo:[JYLocalVideoUtils getJYLocalVideoPathModelUserLocalVideoPath]] animated:YES completion:nil];
     }];
 
     return _successVideoView;
@@ -240,7 +240,7 @@ static NSInteger const kUploadTiem = 1;
         if (!videoURL) {
             return;
         }
-        [JYLocalVideoUtils writeToFileWithVideoUrl:videoURL];//视频保存到本地沙盒
+        [JYLocalVideoUtils writeToFileWithVideoUrl:videoURL needSaveVideoName:YES];//视频保存到本地沙盒
         
         //获取视频的thumbnail
         UIImage  *thumbnail = [JYLocalVideoUtils getImage:videoURL];

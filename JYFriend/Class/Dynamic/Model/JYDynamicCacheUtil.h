@@ -7,18 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JYDynamicModel.h"
 
-@interface JYDynamicCacheModel :JYDynamic
+@interface JYDynamicCacheModel :JKDBModel
 
 @property (nonatomic,retain) NSArray <NSString *> *images;
-
+@property (nonatomic) NSString *videoImage;
+@property (nonatomic) NSString *videoPath;
+@property (nonatomic) NSString *text;
+@property (nonatomic) NSInteger timeInterval;
+@property (nonatomic) NSString *nickName;
+@property (nonatomic) NSString *userId;
 @end
 
 
 @interface JYDynamicCacheUtil : NSObject
 
 + (BOOL)saveUserDynamicWithUserState:(NSString *)userState imageUrls:(NSArray <UIImage *>*)imageUrls;
++ (BOOL)saveUserVideoDyanmicWithUserState:(NSString *)userState videoUrl:(NSURL *)videoUrl;
 + (JYDynamicCacheModel *)fetchCurrentUserDynamic;
+
 
 @end

@@ -7,10 +7,18 @@
 //
 
 #import "JYLocalVideoUtils.h"
+#import "JYUsrImageCache.h"
 
- static NSString *const kUserLocalVideoFiles = @"JYUserVideo.";
+
+// static NSString *const kUserLocalVideoFiles = @"JYUserVideo.";
  static NSString *const kUserLocalVideoType = @"uer_localvideo_type_key";
  static NSString *const kTimeFormat = @"yyyy-MM-dd HH:mm:ss";
+
+@implementation JYLocalVideoUrlPathModel
+
+
+@end
+
 
 @implementation JYLocalVideoUtils
 
@@ -98,6 +106,7 @@
     
 }
 
+
 + (CGFloat)getVideoLengthWithVideoUrl:(NSURL *)videoUrl {
     AVURLAsset* audioAsset =[AVURLAsset URLAssetWithURL:videoUrl options:nil];
     
@@ -113,34 +122,47 @@
     return [[NSData alloc] initWithContentsOfURL:videoUrl];
 }
 
-+ (BOOL)writeToFileWithVideoUrl:(NSURL *)videoUrl {
++ (NSString *)writeToFileWithVideoUrl:(NSURL *)videoUrl needSaveVideoName:(BOOL)needSaveVideoName{
     
     NSData *data = [self videoDataWithVideo:videoUrl];
     
     NSString *boxFile = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
     NSString *type = [videoUrl.absoluteString componentsSeparatedByString:@"."].lastObject;
-    NSString *videoPath = [boxFile stringByAppendingPathComponent:kUserLocalVideoFiles];
-    NSString *newVideoPath =  [videoPath stringByAppendingString:type];
-    [[NSUserDefaults standardUserDefaults] setObject:type forKey:kUserLocalVideoType];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-//    return [[NSFileManager defaultManager] copyItemAtPath:videoUrl.absoluteString toPath:newVideoPath error:nil];
-    return [data writeToFile:newVideoPath atomically:YES];
+    NSString *videoPath = [boxFile stringByAppendingPathComponent:[JYUsrImageCache writeToFileWithImage:[self getImage:videoUrl] needSaveImageName:NO]];
+    NSString *newVideoPath =  [videoPath stringByAppendingFormat:@".%@",type];
+//    [[NSUserDefaults standardUserDefaults] setObject:type forKey:kUserLocalVideoType];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+    if (needSaveVideoName) {
+       JYLocalVideoUrlPathModel *model = [JYLocalVideoUrlPathModel findAll].firstObject;
+        if (!model) {
+      
+            model = [[JYLocalVideoUrlPathModel alloc] init];
+        }
+            model.videoPath = newVideoPath;
+            [model saveOrUpdate];
+    }
     
-}
-
-+ (NSData *)getUserLocalVideoData {
-    NSString *boxFile = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-    NSString *videoPath = [boxFile stringByAppendingPathComponent:kUserLocalVideoFiles];
-    NSData *videoData = [NSData dataWithContentsOfFile:videoPath];
-    return videoData;
-}
-
-+ (NSString *)getUserLocalVideoPath{
-    NSString *boxFile = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-    NSString *type = [[NSUserDefaults standardUserDefaults] objectForKey:kUserLocalVideoType];
-    NSString *videoPath = [boxFile stringByAppendingPathComponent:kUserLocalVideoFiles];
-    NSString *newVideoPath =  [videoPath stringByAppendingString:type];
+    [data writeToFile:newVideoPath atomically:YES];
     return newVideoPath;
+}
+
+//+ (NSData *)getUserLocalVideoData {
+//    NSString *boxFile = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+//    NSString *videoPath = [boxFile stringByAppendingPathComponent:kUserLocalVideoFiles];
+//    NSData *videoData = [NSData dataWithContentsOfFile:videoPath];
+//    return videoData;
+//}
+
++ (NSString *)getJYLocalVideoPathModelUserLocalVideoPath{
+//    NSString *boxFile = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+//    NSString *type = [[NSUserDefaults standardUserDefaults] objectForKey:kUserLocalVideoType];
+//    NSString *videoPath = [boxFile stringByAppendingPathComponent:kUserLocalVideoFiles];
+//    NSString *newVideoPath =  [videoPath stringByAppendingString:type];
+//    
+//    return currentVideoPath;
+    JYLocalVideoUrlPathModel *model = [JYLocalVideoUrlPathModel findAll].firstObject;
+    return model.videoPath;
+    
 }
 
 

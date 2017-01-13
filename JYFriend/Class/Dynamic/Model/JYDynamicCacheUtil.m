@@ -7,8 +7,10 @@
 //
 
 #import "JYDynamicCacheUtil.h"
+
 #import "JYUsrImageCache.h"
-#import "JYMD5Utils.h"
+#import "JYLocalVideoUtils.h"
+
 
 @implementation JYDynamicCacheModel
 
@@ -23,7 +25,7 @@
     NSMutableArray *imageMd5s = [NSMutableArray arrayWithCapacity:imageUrls.count];
     if (imageUrls.count >0) {
         [imageUrls enumerateObjectsUsingBlock:^(UIImage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [imageMd5s addObject:[JYUsrImageCache writeToFileWithImage:obj]];
+            [imageMd5s addObject:[JYUsrImageCache writeToFileWithImage:obj needSaveImageName:NO]];
         }];
     }
     
@@ -31,21 +33,41 @@
     if (!model) {
         model = [[JYDynamicCacheModel alloc] init];
     }
-     if ([model deleteObject]) {
         model.userId = kCurrentUser.userId;
         model.nickName = kCurrentUser.nickName;
         model.text = userState;
         model.timeInterval = [[JYUtil currentDate] timeIntervalSince1970];
         model.images = imageMd5s.copy;
+        model.videoImage = nil;
+        model.videoPath = nil;
         return [model saveOrUpdate];
-    }
-
-    return NO;
 }
 
 + (JYDynamicCacheModel *)fetchCurrentUserDynamic {
 
     return [JYDynamicCacheModel findAll].firstObject;
 }
+
++ (BOOL)saveUserVideoDyanmicWithUserState:(NSString *)userState videoUrl:(NSURL *)videoUrl {
+    UIImage *videoImage = [JYLocalVideoUtils getImage:videoUrl];
+   NSString *videoImageMd5 = [JYUsrImageCache writeToFileWithImage:videoImage needSaveImageName:NO];//先保存图片
+    NSString *videoPath = [JYLocalVideoUtils writeToFileWithVideoUrl:videoUrl needSaveVideoName:NO];//保存视频,返回视频路径
+    
+    JYDynamicCacheModel *model = [JYDynamicCacheModel findAll].firstObject;
+    if (!model) {
+        model = [[JYDynamicCacheModel alloc] init];
+    }
+        model.userId = kCurrentUser.userId;
+        model.nickName = kCurrentUser.nickName;
+        model.text = userState;
+        model.timeInterval = [[JYUtil currentDate] timeIntervalSince1970];
+        model.videoImage = videoImageMd5;
+        model.videoPath = videoPath;
+        model.images = nil;
+        return [model saveOrUpdate];
+
+}
+
+
 
 @end
