@@ -8,6 +8,8 @@
 
 #import <QBEncryptedURLRequest.h>
 
+
+
 @interface JYDynamicUrl : JKDBModel
 @property (nonatomic) NSNumber *type;
 @property (nonatomic) NSString *url;

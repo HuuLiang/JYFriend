@@ -11,6 +11,9 @@
 #import "JYRecommendHeaderView.h"
 #import "JYRecommendFooterView.h"
 #import "JYCharacterModel.h"
+#import "JYUserCreateMessageModel.h"
+#import "JYContactModel.h"
+#import "JYAutoContactManager.h"
 
 static NSString *const kRecommendCellReusableIdentifier = @"RecommendCellReusableIdentifier";
 static NSString *const kRecommendHeaderViewReusableIdentifier = @"RecommendHeaderViewReusableIdentifier";
@@ -22,11 +25,13 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
 }
 @property (nonatomic) NSMutableArray *dataSource;
 @property (nonatomic) JYCharacterModel *characterModel;
+@property (nonatomic) JYUserGreetModel *userGreetModel;
 @end
 
 @implementation JYRecommendViewController
 QBDefineLazyPropertyInitialization(JYCharacterModel, characterModel)
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
+QBDefineLazyPropertyInitialization(JYUserGreetModel, userGreetModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -154,7 +159,34 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         footerView.recommendAction = ^(id obj) {
             @strongify(self);
             //批量打招呼 完成之后关闭弹窗
-            [self hide];
+            NSMutableArray *userIdList = [[NSMutableArray alloc] init];
+            NSMutableArray *selectedUsers = [[NSMutableArray alloc] init];
+            [self.dataSource enumerateObjectsUsingBlock:^(JYCharacter *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if (idx < 6) {
+                    if (obj.isSelected) {
+                        [userIdList addObject:obj.userId];
+                        [selectedUsers addObject:obj];
+                    }
+                }
+            }];
+            
+            //如果用户没有选择任何招呼机器人 那么立即关闭推荐
+            if (userIdList.count == 0) {
+                [self hide];
+                return ;
+            }
+            //先向消息列表中加入选中的机器人的打招呼语言
+            [JYContactModel insertGreetContact:selectedUsers];
+            //向服务器请求打招呼机器人的回复信息
+            [self.userGreetModel fetchRobotsReplyMessagesWithBatchRobotId:userIdList CompletionHandler:^(BOOL success, id obj) {
+                @strongify(self);
+                if (success) {
+                    //把返回的机器人及其回复信息放入缓存 定时取出并且推送给用户
+                    [[JYAutoContactManager manager] saveReplyRobots:obj];
+                }
+                //关闭推荐
+                [self hide];
+            }];
         };
         return footerView;
     }
@@ -190,6 +222,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     if (indexPath.item < self.dataSource.count) {
         JYRecommendCell *recommendCell = (JYRecommendCell *)[collectionView cellForItemAtIndexPath:indexPath];
         recommendCell.isSelected = !recommendCell.isSelected;
+        
+        JYCharacter *character = self.dataSource[indexPath.item];
+        character.isSelected = recommendCell.isSelected;
+        [self.dataSource replaceObjectAtIndex:indexPath.item withObject:character];
     }
 }
 

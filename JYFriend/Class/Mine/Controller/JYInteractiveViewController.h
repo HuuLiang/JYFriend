@@ -8,8 +8,10 @@
 
 #import "JYBaseViewController.h"
 
+
+
 @interface JYInteractiveViewController : JYBaseViewController
 
-- (instancetype)initWithType:(JYMineUsersType)mineUsersType;
+- (instancetype)initWithType:(JYMineUsersType)type;
 
 @end

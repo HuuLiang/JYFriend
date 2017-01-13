@@ -127,6 +127,7 @@
 		EC6F09C11E287194004A0816 /* mine_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC6F09C01E287194004A0816 /* mine_background.jpg */; };
 		EC6F09C41E287B54004A0816 /* JYInteractiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6F09C31E287B54004A0816 /* JYInteractiveViewController.m */; };
 		EC6F09C71E288179004A0816 /* JYInteractiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6F09C61E288179004A0816 /* JYInteractiveModel.m */; };
+		EC6F09CA1E289C4E004A0816 /* JYUserCreateMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6F09C91E289C4E004A0816 /* JYUserCreateMessageModel.m */; };
 		EC804A621E0CC3F600191387 /* JYUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EC804A611E0CC3F600191387 /* JYUser.m */; };
 		EC804A991E0D54FA00191387 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = EC804A861E0D54FA00191387 /* AbstractActionSheetPicker.m */; };
 		EC804A9A1E0D54FA00191387 /* ActionSheetCustomPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = EC804A881E0D54FA00191387 /* ActionSheetCustomPicker.m */; };
@@ -483,6 +484,8 @@
 		EC6F09C31E287B54004A0816 /* JYInteractiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYInteractiveViewController.m; sourceTree = "<group>"; };
 		EC6F09C51E288179004A0816 /* JYInteractiveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYInteractiveModel.h; sourceTree = "<group>"; };
 		EC6F09C61E288179004A0816 /* JYInteractiveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYInteractiveModel.m; sourceTree = "<group>"; };
+		EC6F09C81E289C4E004A0816 /* JYUserCreateMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUserCreateMessageModel.h; sourceTree = "<group>"; };
+		EC6F09C91E289C4E004A0816 /* JYUserCreateMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYUserCreateMessageModel.m; sourceTree = "<group>"; };
 		EC804A601E0CC3F600191387 /* JYUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUser.h; sourceTree = "<group>"; };
 		EC804A611E0CC3F600191387 /* JYUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYUser.m; sourceTree = "<group>"; };
 		EC804A851E0D54FA00191387 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
@@ -953,6 +956,8 @@
 				EC485D0F1E120F0B00F3F18B /* JYMessageModel.m */,
 				EC4A2EF61E27A1DE00A8C768 /* JYAutoContactManager.h */,
 				EC4A2EF71E27A1DE00A8C768 /* JYAutoContactManager.m */,
+				EC6F09C81E289C4E004A0816 /* JYUserCreateMessageModel.h */,
+				EC6F09C91E289C4E004A0816 /* JYUserCreateMessageModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2308,6 +2313,7 @@
 				EC88F7FC1E10B7B4009AAEED /* XHVoiceRecordHelper.m in Sources */,
 				B39531AE1E13E6F000B5C78E /* SDCycleScrollView.m in Sources */,
 				EC804A9F1E0D54FA00191387 /* ActionSheetStringPicker.m in Sources */,
+				EC6F09CA1E289C4E004A0816 /* JYUserCreateMessageModel.m in Sources */,
 				B33E74C31E111CD70095F0DB /* JYHomeTownCell.m in Sources */,
 				ECF118BB1E20CB0F0077BB5F /* UIView+Loading.m in Sources */,
 				EC55CE6E1E077C730030C8F5 /* JYCharacterViewController.m in Sources */,

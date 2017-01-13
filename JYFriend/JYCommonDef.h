@@ -41,6 +41,13 @@ typedef NS_ENUM(NSUInteger, JYMineUsersType) {
     JYMineUsersTypeCount
 };
 
+typedef NS_ENUM(NSUInteger, JYUserCreateMessageType) {
+    JYUserCreateMessageTypeGreet,//打招呼
+    JYUserCreateMessageTypeFollow, //关注
+    JYUserCreateMessageTypeChat, //聊天
+    JYUserCreateMessageTypeCount
+};
+
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 
 #define kPaidNotificationName             @"JYFriendPaidNotification"

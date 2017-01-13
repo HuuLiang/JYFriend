@@ -66,7 +66,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark UITableViewDelegate,UITableViewDataSource

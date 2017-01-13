@@ -9,6 +9,10 @@
 #import "JYDynamicViewController.h"
 #import "JYDynamicCell.h"
 #import "JYDynamicModel.h"
+#import "JYUserCreateMessageModel.h"
+#import "JYAutoContactManager.h"
+#import "JYContactModel.h"
+
 
 #define resetTime   (60*60*6)     //重置缓存时间
 #define refreshTime (60*5)        //刷新数据时间
@@ -25,15 +29,17 @@ static NSString *const kDynamicCellReusableIdentifier = @"DynamicCellReusableIde
     NSUInteger _offset;
     NSUInteger _limit;
 }
-@property (nonatomic) NSMutableArray *dataSource;
-@property (nonatomic) NSMutableArray *cellHeightArray;
-@property (nonatomic) JYDynamicModel *dynamicModel;
+@property (nonatomic) NSMutableArray    *dataSource;
+@property (nonatomic) NSMutableArray    *cellHeightArray;
+@property (nonatomic) JYDynamicModel    *dynamicModel;
+@property (nonatomic) JYUserFollowModel *followModel;
 @end
 
 @implementation JYDynamicViewController
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 QBDefineLazyPropertyInitialization(NSMutableArray, cellHeightArray)
 QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
+QBDefineLazyPropertyInitialization(JYUserFollowModel, followModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,12 +50,6 @@ QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
     if (self.dataSource.count == 0) {
         [self loadDataWithOffset:0 limit:15 isRefresh:YES];
     }
-    
-    @weakify(self);
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"发飙" style:UIBarButtonItemStylePlain handler:^(id sender) {
-        @strongify(self);
-        //发表动态
-    }];
     
     _offset = [[JYUtil getValueWithKeyName:kJYDynamicOffsetKeyName] unsignedIntegerValue];
     
@@ -69,6 +69,7 @@ QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
         }];
     }
     
+    @weakify(self);
     [_layoutCollectionView JY_addPullToRefreshWithHandler:^{
         @strongify(self);
         //刷新数据 时间未到 就结束刷新动画 否则加载2条数据
@@ -223,6 +224,7 @@ QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JYDynamicCell *dynamicCell = [collectionView dequeueReusableCellWithReuseIdentifier:kDynamicCellReusableIdentifier forIndexPath:indexPath];
     
+    @weakify(self);
     if (indexPath.item < self.dataSource.count) {
         JYDynamic *dynamic = self.dataSource[indexPath.item];
         dynamicCell.logoUrl = dynamic.logoUrl;
@@ -235,6 +237,18 @@ QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
         dynamicCell.isGreet = dynamic.greet;
         dynamicCell.dynamicType = dynamic.dynamicType;
         dynamicCell.moodUrl = dynamic.moodUrl;
+        dynamicCell.buttonAction = ^(NSNumber *type) {
+            @strongify(self);
+            [self.followModel fetchRebotReplyMessagesWithRobotId:dynamic.userId Type:[type integerValue] CompletionHandler:^(BOOL success, id obj) {
+                if (success) {
+                    if ([type integerValue] == JYUserCreateMessageTypeGreet) {
+                        [JYContactModel insertGreetContact:obj];
+                    }
+                    //打招呼或者关注成功
+                    [[JYAutoContactManager manager] saveReplyRobots:obj];
+                }
+            }];
+        };
     }
     return dynamicCell;
 }

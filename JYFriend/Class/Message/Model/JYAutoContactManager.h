@@ -10,6 +10,17 @@
 
 @class JYContactModel;
 @class JYMessageModel;
+@class JYReplyRobot;
+
+@interface JYAutoReplyMessageModel : JKDBModel
+@property (nonatomic) NSString *userId;
+@property (nonatomic) NSString *logoUrl;
+@property (nonatomic) NSString *nickName;
+@property (nonatomic) NSString *msgId;
+@property (nonatomic) NSString *msg;
+@property (nonatomic) NSNumber *msgType;
+@end
+
 
 @interface JYAutoContactManager : NSObject
 
@@ -18,5 +29,7 @@
 - (void)autoAddContactInfo:(NSArray <JYContactModel *> *)contacts;
 
 - (void)autoAddMessageInfo:(NSArray <JYMessageModel *> *)messages;
+
+- (void)saveReplyRobots:(NSArray <JYReplyRobot *> *)replyRobots;
 
 @end

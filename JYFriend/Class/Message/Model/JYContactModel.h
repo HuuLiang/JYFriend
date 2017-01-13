@@ -8,6 +8,10 @@
 
 #import "JKDBModel.h"
 
+//@class JYUserGreetModel;
+//@class JYReplyRobot;
+@class JYCharacter;
+
 typedef NS_ENUM(NSUInteger, JYContactUserType) {
     JYContactUserTypeNormal,//普通用户
     JYContactUserTypeSystem, //系统消息
@@ -36,6 +40,9 @@ typedef NS_ENUM(NSUInteger, JYContactUserType) {
 + (NSArray<JYContactModel *> *)allContacts;
 //清空所有数据
 + (void)deleteAllContacts;
+//插入一组用户主动打招呼的数据
++ (void)insertGreetContact:(NSArray <JYCharacter *>*)usersList;
+
 //删除某一条数据
 //+ (void)deleteOneContactWith:(JYContactModel *)contact;
 

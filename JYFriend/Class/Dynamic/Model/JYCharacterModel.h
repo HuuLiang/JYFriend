@@ -14,6 +14,7 @@
 @property (nonatomic) NSNumber *age;
 @property (nonatomic) NSString *nickName;
 @property (nonatomic) NSString *userId;
+@property (nonatomic) BOOL isSelected;
 @end
 
 @interface JYCharacterResponse : QBURLResponse

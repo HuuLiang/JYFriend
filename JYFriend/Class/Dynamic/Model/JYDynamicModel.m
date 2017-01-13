@@ -46,12 +46,11 @@
         [responseArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             JYDynamicUrl *dynamicUrl = [[JYDynamicUrl alloc] init];
             dynamicUrl.type = obj[@"type"];
-            dynamicUrl.url = obj[@"url"];
+            dynamicUrl.url =  obj[@"url"];
             dynamicUrl.thumbnail = obj[@"thumbnail"];
             [array addObject:dynamicUrl];
         }];
         obj.moodUrl = [NSArray arrayWithArray:array];
-//        NSLog(@"%f",obj.contentHeight);
     }];
     return allDynamics;
 }

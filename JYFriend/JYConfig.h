@@ -22,15 +22,17 @@
 #define JY_STANDBY_BASE_URL            @"http://sfs.dswtg.com/"
 
 
-#define JY_ACTIVATION_URL              @"/mfwcps/jihuo.htm"
-#define JY_ACCESS_URL                  @"/mfwcps/userAccess.htm"
-#define JY_SYSTEM_CONFIG_URL           @"/mfwcps/systemConfig.htm"
-#define JY_USERCREATE_URL              @"/mfwcps/userCreate.htm"
-#define JY_CHARACTER_URL               @"/mfwcps/recommend.htm"
-#define JY_DYNAMIC_URL                 @"/mfwcps/moodSection.htm"
-#define JY_NEAR_PERSON_URL             @"/mfwcps/peopleNearby.htm"
-#define JY_USER_DETAIL_URL             @"/mfwcps/userDetails.htm"
-#define JY_INTERACTIVE_URL             @"/mfwcps/interactive.htm"
+#define JY_ACTIVATION_URL              @"/mfwcps/jihuo.htm"                     //激活
+#define JY_ACCESS_URL                  @"/mfwcps/userAccess.htm"                //登录次数
+#define JY_SYSTEM_CONFIG_URL           @"/mfwcps/systemConfig.htm"              //系统配置
+#define JY_USERCREATE_URL              @"/mfwcps/userCreate.htm"                //注册
+#define JY_CHARACTER_URL               @"/mfwcps/recommend.htm"                 //人物  推荐
+#define JY_DYNAMIC_URL                 @"/mfwcps/moodSection.htm"               //动态
+#define JY_NEAR_PERSON_URL             @"/mfwcps/peopleNearby.htm"              //附近
+#define JY_USER_DETAIL_URL             @"/mfwcps/userDetails.htm"               //详情
+#define JY_INTERACTIVE_URL             @"/mfwcps/interactive.htm"               //交互  关注  粉丝  访问我的
+#define JY_BATCHGREET_URL              @"/mfwcps/batchGreetCreate.htm"          //批量打招呼
+
 
 //#define JY_TRAIL_URL                   @"/iosvideo/homePage.htm"
 //#define JY_VIPA_URL                    @"/iosvideo/vipVideo.htm"

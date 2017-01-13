@@ -9,6 +9,11 @@
 #import "JYCharacterModel.h"
 
 @implementation JYCharacter
+
+- (BOOL)isSelected {
+    return YES;
+}
+
 @end
 
 

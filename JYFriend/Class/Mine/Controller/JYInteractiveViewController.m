@@ -28,10 +28,10 @@ static NSString *kVisitePhotoCellIdentifier = @"kvisite_photo_cell_identifier";
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 QBDefineLazyPropertyInitialization(JYInteractiveModel, interactiveModel)
 
-- (instancetype)initWithType:(JYMineUsersType)mineUsersType {
+- (instancetype)initWithType:(JYMineUsersType)type {
     self = [super init];
     if (self) {
-        usersType = mineUsersType;
+        usersType = type;
     }
     return self;
 }

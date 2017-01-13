@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, JYMessageType) {
 
 @property (nonatomic) UIImage  *photo;
 @property (nonatomic) NSString *standbyContent;
-@property (nonatomic) BOOL     isRead;
+//@property (nonatomic) BOOL     isRead;
 
 
 //@property (nonatomic) NSString *options;

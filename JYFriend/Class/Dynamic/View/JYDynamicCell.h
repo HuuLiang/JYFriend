@@ -8,9 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class JYDynamicModel;
-
-
 @interface JYDynamicCell : UICollectionViewCell
 
 //- (void)updateCellContentWithInfo:(JYDynamic *)dynamic;
@@ -26,5 +23,7 @@
 
 @property (nonatomic) JYDynamicType dynamicType;
 @property (nonatomic) NSArray *moodUrl;
+
+@property (nonatomic) QBAction buttonAction;
 
 @end

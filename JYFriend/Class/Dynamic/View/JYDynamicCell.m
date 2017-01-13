@@ -9,6 +9,7 @@
 #import "JYDynamicCell.h"
 #import "JYNearPersonBtn.h"
 #import "JYDynamicModel.h"
+#import "JYUserCreateMessageModel.h"
 
 @interface JYDynamicCell ()
 {
@@ -65,6 +66,15 @@
         _focusButton.layer.masksToBounds = YES;
         [self.contentView addSubview:_focusButton];
         
+        @weakify(self);
+        [_focusButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            if (self.buttonAction) {
+                self.buttonAction(@(JYUserCreateMessageTypeFollow));
+            }
+        } forControlEvents:UIControlEventTouchUpInside];
+        
+        
         _greetButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_greetButton setTitleColor:kColor(@"#E147A5") forState:UIControlStateNormal];
         [_greetButton setTitleColor:kColor(@"#E6E6E6") forState:UIControlStateSelected];
@@ -74,6 +84,13 @@
         _greetButton.layer.cornerRadius = kWidth(4);
         _greetButton.layer.masksToBounds = YES;
         [self.contentView addSubview:_greetButton];
+        
+        [_greetButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            if (self.buttonAction) {
+                self.buttonAction(@(JYUserCreateMessageTypeGreet));
+            }
+        } forControlEvents:UIControlEventTouchUpInside];
         
         _contentLabel = [[UILabel alloc] init];
         _contentLabel.textColor = kColor(@"#333333");

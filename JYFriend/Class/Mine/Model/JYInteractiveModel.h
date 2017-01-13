@@ -8,6 +8,8 @@
 
 #import <QBEncryptedURLRequest.h>
 
+
+
 @interface JYInteractiveUser : NSObject
 @property (nonatomic) NSString *userId;
 @property (nonatomic) NSString *logoUrl;
