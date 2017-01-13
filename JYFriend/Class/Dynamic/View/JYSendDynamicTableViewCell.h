@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JYTextView.h"
+
+typedef void(^JYCollectionAction)(UIImage *image , NSIndexPath *indexPath,BOOL isAddPhoto);
 
 @interface JYSendDynamicTableViewCell : UITableViewCell
 
 @property (nonatomic,retain) UIViewController *curentVC;
+@property (nonatomic,copy)QBAction collectAction;
+@property (nonatomic,retain) UITabBar *tabBar;
+@property (nonatomic,retain) JYTextView *textView;
 @end

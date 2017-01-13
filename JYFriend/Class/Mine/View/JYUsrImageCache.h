@@ -16,9 +16,10 @@
 
 @interface JYUsrImageCache : NSObject
 
-+ (void)writeToFileWithImage:(UIImage *)image;
++ (NSString *)writeToFileWithImage:(UIImage *)image;
 
 + (NSArray <UIImage *>*)fetchAllImages;
 
 + (BOOL)deleteCurrentImageWithIndexPath:(NSIndexPath *)indexPath;
+
 @end
