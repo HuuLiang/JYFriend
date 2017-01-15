@@ -54,17 +54,15 @@ static NSString *const kPPVideoSystemConfigPayhjAmountKeyName     = @"PP_SystemC
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(JYFetchSystemConfigCompletionHandler)handler {
     
-    NSDictionary *params = @{@"type":@([JYUtil deviceType])};
+//    NSDictionary *params = @{@"type":@([JYUtil deviceType])};
     
     @weakify(self);
     BOOL success = [self requestURLPath:JY_SYSTEM_CONFIG_URL
-                         standbyURLPath:[JYUtil getStandByUrlPathWithOriginalUrl:JY_SYSTEM_CONFIG_URL params:params]
-                             withParams:params
+                         standbyURLPath:[JYUtil getStandByUrlPathWithOriginalUrl:JY_SYSTEM_CONFIG_URL params:nil]
+                             withParams:nil
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {
                         @strongify(self);
-                        
-                        QBLog(@"%ld %@",respStatus,errorMessage);
                         
                         if (respStatus == QBURLResponseSuccess) {
                             JYSystemConfigResponse *resp = self.response;

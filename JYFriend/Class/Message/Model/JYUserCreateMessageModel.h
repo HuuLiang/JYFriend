@@ -20,7 +20,7 @@ typedef NS_ENUM(NSUInteger, JYUserMessageContentType) {
 
 @interface JYRobotReplyMsgs : NSObject
 @property (nonatomic) NSString   *msg;
-@property (nonatomic) NSNumber   *msgType;
+@property (nonatomic) NSString   *msgType;
 @property (nonatomic) NSString   *msgId;
 @end
 
@@ -43,8 +43,10 @@ typedef NS_ENUM(NSUInteger, JYUserMessageContentType) {
 @end
 
 
-@interface JYUserFollowModel : QBEncryptedURLRequest
+@interface JYSendMessageModel : QBEncryptedURLRequest
 - (BOOL)fetchRebotReplyMessagesWithRobotId:(NSString *)receiverId
-                                      Type:(JYUserCreateMessageType)type
+                                       msg:(NSString *)message
+                               ContentType:(NSString *)contentType
+                                   msgType:(JYUserCreateMessageType)type
                          CompletionHandler:(QBCompletionHandler)handler;
 @end

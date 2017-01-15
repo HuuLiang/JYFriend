@@ -14,6 +14,8 @@
 
 - (void)checkNetworkInfoState;
 
+- (void)setupMobStatistics;
+
 - (void)checkUserIsLogin;
 
 @end

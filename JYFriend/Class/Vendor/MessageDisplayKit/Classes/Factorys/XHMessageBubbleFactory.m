@@ -77,7 +77,7 @@
     switch (style) {
         case XHBubbleImageViewStyleWeChat:
             // 类似微信的
-            edgeInsets = UIEdgeInsetsMake(30, 5, 10, 10);
+            edgeInsets = UIEdgeInsetsMake(30, 30, 10, 30);
             break;
         default:
             break;

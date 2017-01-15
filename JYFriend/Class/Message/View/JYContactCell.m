@@ -117,7 +117,13 @@
 
 - (void)setUnreadMessage:(NSUInteger)unreadMessage {
     if (unreadMessage > 0) {
-        [_unreadBtn setTitle:[NSString stringWithFormat:@"%ld",unreadMessage] forState:UIControlStateNormal];
+        NSString *title = nil;
+        if (unreadMessage > 99) {
+            title = [NSString stringWithFormat:@"99+"];
+        } else {
+            title = [NSString stringWithFormat:@"%ld",unreadMessage];
+        }
+        [_unreadBtn setTitle:title forState:UIControlStateNormal];
         _unreadBtn.hidden = NO;
     } else {
         _unreadBtn.hidden = YES;

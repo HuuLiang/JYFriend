@@ -40,6 +40,16 @@ static NSString *const kDetailHeaderViewReusableIdentifier = @"DetailHeaderViewR
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    //加载默认用户图片数据
+    UIImage *userImg = [UIImage imageNamed:@"mine_default_avatar"];
+    NSData *userImgData;
+    if (UIImagePNGRepresentation(userImg) == nil) {
+        userImgData = UIImageJPEGRepresentation(userImg, 1);
+    } else {
+        userImgData = UIImagePNGRepresentation(userImg);
+    }
+    [JYUser currentUser].userImg = userImgData;
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _tableView.backgroundColor = self.view.backgroundColor;
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];

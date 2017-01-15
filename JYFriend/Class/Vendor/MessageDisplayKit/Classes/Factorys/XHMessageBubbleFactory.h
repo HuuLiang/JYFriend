@@ -25,6 +25,8 @@ typedef NS_ENUM(NSInteger, XHBubbleMessageMediaType) {
     XHBubbleMessageMediaTypeEmotion = 4,
     XHBubbleMessageMediaTypeLocalPosition = 5,
     XHBubbleMessageMediaTypeCustom = 6,
+    XHBubbleMessageMediaTypeCustomNormal = 7,
+    XHBubbleMessageMediaTypeCustomVIP = 8,
 };
 
 typedef NS_ENUM(NSInteger, XHBubbleMessageMenuSelecteType) {

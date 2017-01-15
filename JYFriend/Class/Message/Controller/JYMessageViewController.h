@@ -24,7 +24,7 @@
               receiver:(NSString *)receiver
               dateTime:(NSString *)dateTime;
 
-- (void)addPhotoMessage:(UIImage *)image
+- (void)addPhotoMessage:(NSString *)imagekey
            thumbnailUrl:(NSString *)thumbnailUrl
          originPhotoUrl:(NSString *)originPhotoUrl
              withSender:(NSString *)sender

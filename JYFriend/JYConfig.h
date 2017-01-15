@@ -32,6 +32,7 @@
 #define JY_USER_DETAIL_URL             @"/mfwcps/userDetails.htm"               //详情
 #define JY_INTERACTIVE_URL             @"/mfwcps/interactive.htm"               //交互  关注  粉丝  访问我的
 #define JY_BATCHGREET_URL              @"/mfwcps/batchGreetCreate.htm"          //批量打招呼
+#define JY_MESSAGECREATE_URL           @"/mfwcps/messageCreate.htm"             //消息新增
 
 
 //#define JY_TRAIL_URL                   @"/iosvideo/homePage.htm"
@@ -46,6 +47,6 @@
 #define PP_APP_URL                     @"/iosvideo/appSpreadList.htm"
 #define JY_APP_SPREAD_BANNER_URL       @"/iosvideo/appSpreadBanner.htm"
 
-#define JY_UMENG_APP_ID                @"580de5dbae1bf85293000504"
+#define JY_UMENG_APP_ID                @"587ad129ae1bf845be000294"
 
 #endif /* JYConfig_h */

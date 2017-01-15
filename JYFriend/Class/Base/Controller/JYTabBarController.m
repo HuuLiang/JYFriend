@@ -15,6 +15,8 @@
 
 #import "JYNavigationController.h"
 
+#import "JYAutoContactManager.h"
+#import "JYContactModel.h"
 
 @interface JYTabBarController () <UITabBarControllerDelegate>
 
@@ -27,6 +29,43 @@
     self.tabBar.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:1].CGColor;
     self.tabBar.layer.borderWidth = 0.5;
     [self setChildViewControlers];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadge:) name:KUpdateContactUnReadMessageNotification object:nil];
+
+}
+
+- (void)updateBadge:(NSNotification *)notification {
+//    NSUInteger unreadMessages = [[self.viewControllers objectAtIndex:1].tabBarItem.badgeValue integerValue];
+//    unreadMessages -= 1;
+//    if (unreadMessages > 0) {
+//        if (unreadMessages < 100) {
+//            [self.viewControllers objectAtIndex:1].tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];
+//        } else {
+//            [self.viewControllers objectAtIndex:1].tabBarItem.badgeValue = @"99+";
+//        }
+//    } else {
+//        [self.viewControllers objectAtIndex:1].tabBarItem.badgeValue = nil;
+//    }
+//
+    
+    JYNavigationController *contactNav = (JYNavigationController *)[self.viewControllers objectAtIndex:1];
+    
+    NSArray *allContacts = [JYContactModel allContacts];
+    __block NSUInteger unreadMessages = 0;
+    [allContacts enumerateObjectsUsingBlock:^(JYContactModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        unreadMessages += obj.unreadMessages;
+    }];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (unreadMessages > 0) {
+            if (unreadMessages < 100) {
+                contactNav.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];
+            } else {
+                contactNav.tabBarItem.badgeValue = @"99+";
+            }
+        } else {
+            contactNav.tabBarItem.badgeValue = nil;
+        }
+    });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,6 +103,8 @@
     self.tabBar.translucent = NO;
     self.delegate = self;
     self.viewControllers = @[dynamicNav,contactNav,nearNav,mineNav];
+    
+    [[JYAutoContactManager manager] startAutoReplayMessages];
 }
 
 #pragma mark -- UITabBarControllerDelegate

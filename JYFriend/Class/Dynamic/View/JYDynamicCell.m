@@ -69,6 +69,9 @@
         @weakify(self);
         [_focusButton bk_addEventHandler:^(id sender) {
             @strongify(self);
+            if (_isFocus) {
+                return ;
+            }
             if (self.buttonAction) {
                 self.buttonAction(@(JYUserCreateMessageTypeFollow));
             }
@@ -87,6 +90,9 @@
         
         [_greetButton bk_addEventHandler:^(id sender) {
             @strongify(self);
+            if (_isGreet) {
+                return ;
+            }
             if (self.buttonAction) {
                 self.buttonAction(@(JYUserCreateMessageTypeGreet));
             }

@@ -12,6 +12,7 @@
 #import "JYContactModel.h"
 #import "JYDetailViewController.h"
 #import "JYMessageModel.h"
+#import "JYAutoContactManager.h"
 
 typedef NS_ENUM(NSUInteger, JYUserState) {
     JYUserStick = 0,//置顶用户
@@ -50,26 +51,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
     }
     [_tableVC reloadData];
     
-    @weakify(self);
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"增加数据" style:UIBarButtonItemStylePlain handler:^(id sender) {
-        @strongify(self);
-        for (NSInteger i = 0; i < 20; i++) {
-            JYContactModel *model = [[JYContactModel alloc] init];
-            model.userId = [NSString stringWithFormat:@"%ld",i];
-            model.logoUrl = @"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg";
-            model.nickName = [NSString stringWithFormat:@"渣渣%ld",i];
-            model.userType = JYContactUserTypeNormal;
-            model.recentTime = [NSString stringWithFormat:@"%0ld",i];
-            model.recentMessage = @"你好，很高兴认识你";
-            [model saveOrUpdate];
-        }
-        [_tableVC reloadData];
-    }];
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"清空数据" style:UIBarButtonItemStylePlain handler:^(id sender) {
-        @strongify(self);
-        [JYContactModel deleteAllContacts];
-    }];
+    [self reloadContactsWithUIReload:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -78,9 +60,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     if (!self.isMovingToParentViewController) {
-        //需要重新刷新UI
         [self reloadContactsWithUIReload:YES];
     }
 }
@@ -161,6 +141,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
             contactCell.recentTimeStr = contact.recentTime;
             contactCell.recentMessage = contact.recentMessage;
             contactCell.isStick = contact.isStick;
+            contactCell.unreadMessage = contact.unreadMessages;
         }
     }
     return contactCell;
@@ -236,37 +217,28 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [JYUser currentUser].userId = @"93867";
-    [JYUser currentUser].nickName = @"我";
-    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:@"http://imgsrc.baidu.com/forum/pic/item/d1160924ab18972baba3547fe6cd7b899f510aed.jpg"]
-                                                    options:SDWebImageAvoidAutoSetImage
-                                                   progress:nil
-                                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                                                      NSData *data;
-                                                      if (UIImagePNGRepresentation(image) == nil) {
-                                                          data = UIImageJPEGRepresentation(image, 1);
-                                                      } else {
-                                                          data = UIImagePNGRepresentation(image);
-                                                      }
-                                                      [JYUser currentUser].userImg = data;
-    }];
-    [[JYUser currentUser] saveOrUpdate];
-    
-    JYUser *user = [[JYUser alloc] init];
-    user.userId = @"93866";
-    user.nickName = @"渣渣";
-    user.userImg = [JYUser currentUser].userImg;
-    [user saveOrUpdate];
-    
-    JYMessageModel *message = [[JYMessageModel alloc] init];
-    message.messageType = JYMessageTypeText;
-    message.messageContent = @"你好，很高兴认识你";
-    message.sendUserId = [JYUser currentUser].userId;
-    message.receiveUserId = user.userId;
-    message.messageTime = @"19930218122211";
-    [message saveOrUpdate];
-    
-    [JYMessageViewController showMessageWithUser:user inViewController:self];
+    JYContactModel *contact = nil;
+    if (indexPath.section == JYUserStick) {
+        if (indexPath.row < self.stickContacts.count) {
+            contact = self.stickContacts[indexPath.row];
+        }
+    } else if (indexPath.section == JYUserNormal) {
+        if (indexPath.row < self.normalContacts.count) {
+            contact = self.normalContacts[indexPath.row];
+        }
+    }
+    if (contact) {
+        JYUser *user = [[JYUser alloc] init];
+        user.userId = contact.userId;
+        user.nickName = contact.nickName;
+        user.userImgUrl = contact.logoUrl;
+        
+        //置空未读消息数量
+        contact.unreadMessages = 0;
+        [contact saveOrUpdate];
+        
+        [JYMessageViewController showMessageWithUser:user inViewController:self];
+    }
 }
 
 @end

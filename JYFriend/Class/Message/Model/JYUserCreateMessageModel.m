@@ -65,7 +65,7 @@
 @end
 
 
-@implementation JYUserFollowModel
+@implementation JYSendMessageModel
 + (Class)responseClass {
     return [JYUserCreateMessageResponse class];
 }
@@ -78,9 +78,29 @@
     return 10;
 }
 
-- (BOOL)fetchRebotReplyMessagesWithRobotId:(NSString *)receiverId Type:(JYUserCreateMessageType)type CompletionHandler:(QBCompletionHandler)handler {
-    NSDictionary *params = @{};
-    BOOL success = [self requestURLPath:nil
+- (BOOL)fetchRebotReplyMessagesWithRobotId:(NSString *)receiverId
+                                       msg:(NSString *)message
+                               ContentType:(NSString *)contentType
+                                   msgType:(JYUserCreateMessageType)type
+                         CompletionHandler:(QBCompletionHandler)handler {
+    NSString *msgType = nil;
+    if (type == JYUserCreateMessageTypeGreet) {
+        msgType = @"GREET";
+        message = @"用户主动向机器人打了个招呼";;
+    } else if (type == JYUserCreateMessageTypeFollow) {
+        msgType = @"FOLLOW";
+        message = @"";
+    } else if (type == JYUserCreateMessageTypeChat) {
+        msgType = @"CHAT";
+    }
+    
+    NSDictionary *params = @{@"msg":message,
+                             @"sendUerId":[JYUser currentUser].userId,
+                             @"receiveUserId":receiverId,
+                             @"msgType":msgType,
+                             @"contentType":contentType};
+    
+    BOOL success = [self requestURLPath:JY_MESSAGECREATE_URL
                          standbyURLPath:nil
                              withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)

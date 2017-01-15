@@ -18,7 +18,8 @@
 @property (nonatomic) NSString *nickName;
 @property (nonatomic) NSString *msgId;
 @property (nonatomic) NSString *msg;
-@property (nonatomic) NSNumber *msgType;
+@property (nonatomic) NSString *msgType;
+@property (nonatomic) NSInteger replyTime;
 @end
 
 
@@ -26,10 +27,10 @@
 
 + (instancetype)manager;
 
-- (void)autoAddContactInfo:(NSArray <JYContactModel *> *)contacts;
-
-- (void)autoAddMessageInfo:(NSArray <JYMessageModel *> *)messages;
-
 - (void)saveReplyRobots:(NSArray <JYReplyRobot *> *)replyRobots;
+
+- (NSArray <JYAutoReplyMessageModel *>*)findAllAutoReplyMessages;
+
+- (void)startAutoReplayMessages;
 
 @end

@@ -13,6 +13,7 @@
 #import "JYSystemConfigModel.h"
 #import "JYActivateModel.h"
 #import "JYUserAccessModel.h"
+#import <UMMobClick/MobClick.h>
 
 @interface AppDelegate ()
 //{
@@ -100,6 +101,18 @@
             [[QBStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
         }];
     }
+}
+
+- (void)setupMobStatistics {
+#ifdef DEBUG
+    [MobClick setLogEnabled:YES];
+#endif
+    if (XcodeAppVersion) {
+        [MobClick setAppVersion:XcodeAppVersion];
+    }
+    UMConfigInstance.appKey = JY_UMENG_APP_ID;
+    UMConfigInstance.channelId = JY_CHANNEL_NO;
+    [MobClick startWithConfigure:UMConfigInstance];
 }
 
 - (void)checkUserIsLogin {

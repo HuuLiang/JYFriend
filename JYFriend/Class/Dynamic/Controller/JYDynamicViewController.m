@@ -29,17 +29,17 @@ static NSString *const kDynamicCellReusableIdentifier = @"DynamicCellReusableIde
     NSUInteger _offset;
     NSUInteger _limit;
 }
-@property (nonatomic) NSMutableArray    *dataSource;
-@property (nonatomic) NSMutableArray    *cellHeightArray;
-@property (nonatomic) JYDynamicModel    *dynamicModel;
-@property (nonatomic) JYUserFollowModel *followModel;
+@property (nonatomic) NSMutableArray        *dataSource;
+@property (nonatomic) NSMutableArray        *cellHeightArray;
+@property (nonatomic) JYDynamicModel        *dynamicModel;
+@property (nonatomic) JYSendMessageModel    *sendMsgModel;
 @end
 
 @implementation JYDynamicViewController
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 QBDefineLazyPropertyInitialization(NSMutableArray, cellHeightArray)
 QBDefineLazyPropertyInitialization(JYDynamicModel, dynamicModel)
-QBDefineLazyPropertyInitialization(JYUserFollowModel, followModel)
+QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMsgModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -239,12 +239,21 @@ QBDefineLazyPropertyInitialization(JYUserFollowModel, followModel)
         dynamicCell.moodUrl = dynamic.moodUrl;
         dynamicCell.buttonAction = ^(NSNumber *type) {
             @strongify(self);
-            [self.followModel fetchRebotReplyMessagesWithRobotId:dynamic.userId Type:[type integerValue] CompletionHandler:^(BOOL success, id obj) {
+            [self.sendMsgModel fetchRebotReplyMessagesWithRobotId:dynamic.userId msg:nil ContentType:@"Text" msgType:[type integerValue] CompletionHandler:^(BOOL success, id obj) {
                 if (success) {
+                    
+                    JYDynamicCell *cell = (JYDynamicCell *)[self->_layoutCollectionView cellForItemAtIndexPath:indexPath];
+                    
                     if ([type integerValue] == JYUserCreateMessageTypeGreet) {
                         [JYContactModel insertGreetContact:obj];
+                        cell.isGreet = YES;
+                        dynamic.greet = YES;
+                    } else if ([type integerValue] == JYUserCreateMessageTypeFollow) {
+                        cell.isFocus = YES;
+                        dynamic.follow = YES;
                     }
-                    //打招呼或者关注成功
+                    [dynamic saveOneDynamic];
+                    //打招呼或者关注成功 //把返回的机器人及其回复信息放入缓存 定时取出并且推送给用户
                     [[JYAutoContactManager manager] saveReplyRobots:obj];
                 }
             }];
