@@ -14,6 +14,7 @@
 		B319CBEC1E2625EB00C88EAC /* JYRegexUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B319CBEB1E2625EB00C88EAC /* JYRegexUtil.m */; };
 		B32317101E1E3A0A00932531 /* JYDetailBottotmView.m in Sources */ = {isa = PBXBuildFile; fileRef = B323170F1E1E3A0A00932531 /* JYDetailBottotmView.m */; };
 		B32317131E1E3D3100932531 /* JYDetailBottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B32317121E1E3D3100932531 /* JYDetailBottomButton.m */; };
+		B324B7EF1E2B227C0058E3FC /* JYVideoChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = B324B7EE1E2B227C0058E3FC /* JYVideoChatView.m */; };
 		B33E74C31E111CD70095F0DB /* JYHomeTownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */; };
 		B347A52A1E24B37000A4208F /* JYUserDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B347A5291E24B37000A4208F /* JYUserDetailModel.m */; };
 		B347A52D1E24B55300A4208F /* JYUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B347A52C1E24B55300A4208F /* JYUserInfoModel.m */; };
@@ -353,6 +354,8 @@
 		B323170F1E1E3A0A00932531 /* JYDetailBottotmView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailBottotmView.m; sourceTree = "<group>"; };
 		B32317111E1E3D3100932531 /* JYDetailBottomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDetailBottomButton.h; sourceTree = "<group>"; };
 		B32317121E1E3D3100932531 /* JYDetailBottomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailBottomButton.m; sourceTree = "<group>"; };
+		B324B7ED1E2B227C0058E3FC /* JYVideoChatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYVideoChatView.h; sourceTree = "<group>"; };
+		B324B7EE1E2B227C0058E3FC /* JYVideoChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYVideoChatView.m; sourceTree = "<group>"; };
 		B33E74C11E111CD70095F0DB /* JYHomeTownCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYHomeTownCell.h; sourceTree = "<group>"; };
 		B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYHomeTownCell.m; sourceTree = "<group>"; };
 		B347A5281E24B37000A4208F /* JYUserDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUserDetailModel.h; sourceTree = "<group>"; };
@@ -1091,6 +1094,8 @@
 			children = (
 				EC88F8711E112CE8009AAEED /* JYContactCell.h */,
 				EC88F8721E112CE8009AAEED /* JYContactCell.m */,
+				B324B7ED1E2B227C0058E3FC /* JYVideoChatView.h */,
+				B324B7EE1E2B227C0058E3FC /* JYVideoChatView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2349,6 +2354,7 @@
 				EC9843EB1E07E26E00754471 /* JYLoginViewController.m in Sources */,
 				EC88F8021E10B7B4009AAEED /* XHCacheManager.m in Sources */,
 				ECEFE34C1E0A865C002F9A1C /* JYRegisterDetailCell.m in Sources */,
+				B324B7EF1E2B227C0058E3FC /* JYVideoChatView.m in Sources */,
 				B37335521E276567009637D1 /* JYSendDynamicCell.m in Sources */,
 				ECCFA0471DEBF0D4000F4E7A /* AppDelegate.m in Sources */,
 				EC88F80C1E10B7B4009AAEED /* XHEmotion.m in Sources */,

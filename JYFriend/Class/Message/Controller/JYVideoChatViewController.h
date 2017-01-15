@@ -10,4 +10,8 @@
 
 @interface JYVideoChatViewController : JYBaseViewController
 
+@property (nonatomic) NSString *nickName;
+@property (nonatomic) NSString *headImageUrl;
+@property (nonatomic,copy)QBAction closeAction;
+
 @end

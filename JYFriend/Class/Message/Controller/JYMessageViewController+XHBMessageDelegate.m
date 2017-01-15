@@ -10,7 +10,7 @@
 #import "JYMessageModel.h"
 #import "XHAudioPlayerHelper.h"
 #import "JYLocalPhotoUtils.h"
-
+#import "JYVideoChatViewController.h"
 
 @implementation JYMessageViewController (XHBMessageDelegate)
 
@@ -210,6 +210,10 @@
         [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum inViewController:self popoverPoint:CGPointZero isVideo:YES];
     }else if (index == 2){
       [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeCamera inViewController:self popoverPoint:CGPointZero isVideo:NO];
+    }else if (index == 3){
+    
+        JYVideoChatViewController *chatvVC = [[JYVideoChatViewController alloc] init];
+        [self presentViewController:chatvVC animated:YES completion:nil];
     }
     
     
