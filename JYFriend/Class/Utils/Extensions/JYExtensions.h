@@ -16,12 +16,10 @@
 
 #import "NSObject+PropertyAccessInspecting.h"
 #import "UIView+RoundCorner.h"
-#import "UIImage+Blur.h"
 #import "UIImage+JYResource.h"
 #import "NSDate+timeStamp.h"
 #import "UIScrollView+Refresh.h"
 #import <NSDate+Utilities.h>
 #import "UIView+Loading.h"
 #import "UIView+FrameEx.h"
-
 #endif /* JYExtensions_h */

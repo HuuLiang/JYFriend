@@ -25,9 +25,8 @@
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.7];
-        _headerView = [[UIImageView alloc] init];
-        _headerView.layer.cornerRadius = kWidth(90);
-        _headerView.clipsToBounds = YES;
+        _headerView = [[UIImageView alloc] init];;
+        _headerView.forceRoundCorner = YES;
         [self addSubview:_headerView];
         {
         [_headerView mas_makeConstraints:^(MASConstraintMaker *make) {

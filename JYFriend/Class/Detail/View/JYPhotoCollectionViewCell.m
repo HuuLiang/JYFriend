@@ -7,6 +7,7 @@
 //
 
 #import "JYPhotoCollectionViewCell.h"
+#import "UIImageView+Blur.h"
 
 @interface JYPhotoCollectionViewCell ()
 {
@@ -39,7 +40,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         _currentImageView = [[UIImageView alloc] init];
-//        _currentImageView.contentMode =
         _currentImageView.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:_currentImageView];
         {
@@ -66,6 +66,20 @@
             [_playImageView removeFromSuperview];
     }
     }
+}
+
+- (void)setIsFirstPhoto:(BOOL)isFirstPhoto {
+    _isFirstPhoto = isFirstPhoto;
+    if (kCurrentUser.isVip.integerValue == 0 ) {
+        
+        if (isFirstPhoto) {
+            [_currentImageView JY_RemoveBlur];
+        }else {
+            
+            [_currentImageView JY_AddBlurWithAlpha:0.75];
+        }
+    }
+
 }
 
 

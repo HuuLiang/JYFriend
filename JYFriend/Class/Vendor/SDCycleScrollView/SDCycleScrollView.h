@@ -168,8 +168,11 @@ typedef enum {
 /** 轮播文字label高度 */
 @property (nonatomic, assign) CGFloat titleLabelHeight;
 
-
+//当前是第几张
 @property (nonatomic) NSInteger currentPage;
+
+//是否需要加滤镜
+@property (nonatomic) BOOL isNeedBlur;
 
 //////////////////////  清除缓存接口  //////////////////////
 

@@ -17,7 +17,7 @@
 
 @implementation JYMyPhotoBigImageView
 
-- (instancetype)initWithImageGroup:(NSArray *)imageGroup frame:(CGRect)frame isLocalImage:(BOOL)isLocalImage
+- (instancetype)initWithImageGroup:(NSArray *)imageGroup frame:(CGRect)frame isLocalImage:(BOOL)isLocalImage isNeedBlur:(BOOL)isNeedBlur;
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -28,6 +28,7 @@
         }else {
             _bannerView = [SDCycleScrollView cycleScrollViewWithFrame:self.bounds imageURLStringsGroup:imageGroup];
         }
+        _bannerView.isNeedBlur = isNeedBlur;
         _bannerView.backgroundColor = self.backgroundColor;
 //        _bannerView.infiniteLoop = NO;
         _bannerView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;

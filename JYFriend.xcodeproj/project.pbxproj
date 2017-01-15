@@ -15,6 +15,7 @@
 		B32317101E1E3A0A00932531 /* JYDetailBottotmView.m in Sources */ = {isa = PBXBuildFile; fileRef = B323170F1E1E3A0A00932531 /* JYDetailBottotmView.m */; };
 		B32317131E1E3D3100932531 /* JYDetailBottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B32317121E1E3D3100932531 /* JYDetailBottomButton.m */; };
 		B324B7EF1E2B227C0058E3FC /* JYVideoChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = B324B7EE1E2B227C0058E3FC /* JYVideoChatView.m */; };
+		B33B181E1E2B56F7003803C4 /* UIImageView+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B181D1E2B56F7003803C4 /* UIImageView+Blur.m */; };
 		B33E74C31E111CD70095F0DB /* JYHomeTownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */; };
 		B347A52A1E24B37000A4208F /* JYUserDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B347A5291E24B37000A4208F /* JYUserDetailModel.m */; };
 		B347A52D1E24B55300A4208F /* JYUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B347A52C1E24B55300A4208F /* JYUserInfoModel.m */; };
@@ -24,7 +25,6 @@
 		B35DCF091E1BCDDC005C5969 /* JYChangeUserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = B35DCF081E1BCDDC005C5969 /* JYChangeUserInfoController.m */; };
 		B361847A1E10FB5500DD55A5 /* JYDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36184791E10FB5500DD55A5 /* JYDetailViewController.m */; };
 		B36184801E11098100DD55A5 /* JYPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B361847F1E11098100DD55A5 /* JYPhotoCollectionViewCell.m */; };
-		B36184831E110CDE00DD55A5 /* UIImage+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = B36184821E110CDE00DD55A5 /* UIImage+Blur.m */; };
 		B36F15261E1C89540081500B /* JYChangeInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B36F15251E1C89540081500B /* JYChangeInfoCell.m */; };
 		B36F15291E1CA8E70081500B /* JYChangeSignatureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B36F15281E1CA8E70081500B /* JYChangeSignatureCell.m */; };
 		B36F152C1E1CEFB10081500B /* JYChangeInfoTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B36F152B1E1CEFB10081500B /* JYChangeInfoTableView.m */; };
@@ -356,6 +356,8 @@
 		B32317121E1E3D3100932531 /* JYDetailBottomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailBottomButton.m; sourceTree = "<group>"; };
 		B324B7ED1E2B227C0058E3FC /* JYVideoChatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYVideoChatView.h; sourceTree = "<group>"; };
 		B324B7EE1E2B227C0058E3FC /* JYVideoChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYVideoChatView.m; sourceTree = "<group>"; };
+		B33B181C1E2B56F7003803C4 /* UIImageView+Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Blur.h"; sourceTree = "<group>"; };
+		B33B181D1E2B56F7003803C4 /* UIImageView+Blur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Blur.m"; sourceTree = "<group>"; };
 		B33E74C11E111CD70095F0DB /* JYHomeTownCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYHomeTownCell.h; sourceTree = "<group>"; };
 		B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYHomeTownCell.m; sourceTree = "<group>"; };
 		B347A5281E24B37000A4208F /* JYUserDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUserDetailModel.h; sourceTree = "<group>"; };
@@ -374,8 +376,6 @@
 		B36184791E10FB5500DD55A5 /* JYDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailViewController.m; sourceTree = "<group>"; };
 		B361847E1E11098100DD55A5 /* JYPhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPhotoCollectionViewCell.h; sourceTree = "<group>"; };
 		B361847F1E11098100DD55A5 /* JYPhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPhotoCollectionViewCell.m; sourceTree = "<group>"; };
-		B36184811E110CDE00DD55A5 /* UIImage+Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blur.h"; sourceTree = "<group>"; };
-		B36184821E110CDE00DD55A5 /* UIImage+Blur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Blur.m"; sourceTree = "<group>"; };
 		B36F15241E1C89540081500B /* JYChangeInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYChangeInfoCell.h; sourceTree = "<group>"; };
 		B36F15251E1C89540081500B /* JYChangeInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYChangeInfoCell.m; sourceTree = "<group>"; };
 		B36F15271E1CA8E70081500B /* JYChangeSignatureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYChangeSignatureCell.h; sourceTree = "<group>"; };
@@ -1995,10 +1995,10 @@
 				ECCFA0991DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.m */,
 				EC9843DF1E07ACC600754471 /* UIView+RoundCorner.h */,
 				EC9843E01E07ACC600754471 /* UIView+RoundCorner.m */,
+				B33B181C1E2B56F7003803C4 /* UIImageView+Blur.h */,
+				B33B181D1E2B56F7003803C4 /* UIImageView+Blur.m */,
 				ECF118B91E20CB0F0077BB5F /* UIView+Loading.h */,
 				ECF118BA1E20CB0F0077BB5F /* UIView+Loading.m */,
-				B36184811E110CDE00DD55A5 /* UIImage+Blur.h */,
-				B36184821E110CDE00DD55A5 /* UIImage+Blur.m */,
 				B39531911E13A63C00B5C78E /* UIImage+JYResource.h */,
 				B39531921E13A63C00B5C78E /* UIImage+JYResource.m */,
 				EC4F989F1E164212005818F1 /* NSDate+timeStamp.h */,
@@ -2464,7 +2464,6 @@
 				EC88F8281E10B7B5009AAEED /* XHMessageTextView.m in Sources */,
 				EC88F82D1E10B7B5009AAEED /* XHEmotionSectionBar.m in Sources */,
 				ECCFA0A61DEC11C1000F4E7A /* JYSpreadBannerViewController.m in Sources */,
-				B36184831E110CDE00DD55A5 /* UIImage+Blur.m in Sources */,
 				B39531881E1385C900B5C78E /* JYDredgeVipViewController.m in Sources */,
 				EC88F8261E10B7B5009AAEED /* XHMessageTableViewCell.m in Sources */,
 				B373355E1E2780BF009637D1 /* UIView+FrameEx.m in Sources */,
@@ -2472,6 +2471,7 @@
 				EC88F81F1E10B7B5009AAEED /* SETextSelection.m in Sources */,
 				EC88F8101E10B7B4009AAEED /* FLAnimatedImage.m in Sources */,
 				B3E6FC221E12A1CD0076ADE9 /* JYNewDynamicCell.m in Sources */,
+				B33B181E1E2B56F7003803C4 /* UIImageView+Blur.m in Sources */,
 				EC88F85E1E10FBE7009AAEED /* JYCharacterCell.m in Sources */,
 				EC4A2EF81E27A1DE00A8C768 /* JYAutoContactManager.m in Sources */,
 				ECC094131E25C7C800A1DCCD /* NSArray+Log.m in Sources */,

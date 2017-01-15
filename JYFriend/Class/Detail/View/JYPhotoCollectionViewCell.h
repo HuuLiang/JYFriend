@@ -12,5 +12,6 @@
 
 @property (nonatomic) NSString *imageUrl;
 @property (nonatomic,assign)BOOL isVideoImage;
+@property (nonatomic) BOOL isFirstPhoto;
 
 @end
