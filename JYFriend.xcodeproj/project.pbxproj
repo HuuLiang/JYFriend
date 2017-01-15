@@ -16,6 +16,8 @@
 		B32317131E1E3D3100932531 /* JYDetailBottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B32317121E1E3D3100932531 /* JYDetailBottomButton.m */; };
 		B324B7EF1E2B227C0058E3FC /* JYVideoChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = B324B7EE1E2B227C0058E3FC /* JYVideoChatView.m */; };
 		B33B181E1E2B56F7003803C4 /* UIImageView+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B181D1E2B56F7003803C4 /* UIImageView+Blur.m */; };
+		B33B18211E2B67FF003803C4 /* JYRedPacketView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B18201E2B67FF003803C4 /* JYRedPacketView.m */; };
+		B33B18271E2B6FF1003803C4 /* JYRedPackPopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B18261E2B6FF1003803C4 /* JYRedPackPopViewController.m */; };
 		B33E74C31E111CD70095F0DB /* JYHomeTownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */; };
 		B347A52A1E24B37000A4208F /* JYUserDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B347A5291E24B37000A4208F /* JYUserDetailModel.m */; };
 		B347A52D1E24B55300A4208F /* JYUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B347A52C1E24B55300A4208F /* JYUserInfoModel.m */; };
@@ -358,6 +360,10 @@
 		B324B7EE1E2B227C0058E3FC /* JYVideoChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYVideoChatView.m; sourceTree = "<group>"; };
 		B33B181C1E2B56F7003803C4 /* UIImageView+Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Blur.h"; sourceTree = "<group>"; };
 		B33B181D1E2B56F7003803C4 /* UIImageView+Blur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Blur.m"; sourceTree = "<group>"; };
+		B33B181F1E2B67FF003803C4 /* JYRedPacketView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRedPacketView.h; sourceTree = "<group>"; };
+		B33B18201E2B67FF003803C4 /* JYRedPacketView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRedPacketView.m; sourceTree = "<group>"; };
+		B33B18251E2B6FF1003803C4 /* JYRedPackPopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRedPackPopViewController.h; sourceTree = "<group>"; };
+		B33B18261E2B6FF1003803C4 /* JYRedPackPopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRedPackPopViewController.m; sourceTree = "<group>"; };
 		B33E74C11E111CD70095F0DB /* JYHomeTownCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYHomeTownCell.h; sourceTree = "<group>"; };
 		B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYHomeTownCell.m; sourceTree = "<group>"; };
 		B347A5281E24B37000A4208F /* JYUserDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUserDetailModel.h; sourceTree = "<group>"; };
@@ -914,6 +920,8 @@
 			children = (
 				B36184781E10FB5500DD55A5 /* JYDetailViewController.h */,
 				B36184791E10FB5500DD55A5 /* JYDetailViewController.m */,
+				B33B18251E2B6FF1003803C4 /* JYRedPackPopViewController.h */,
+				B33B18261E2B6FF1003803C4 /* JYRedPackPopViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -944,6 +952,8 @@
 				B323170F1E1E3A0A00932531 /* JYDetailBottotmView.m */,
 				B32317111E1E3D3100932531 /* JYDetailBottomButton.h */,
 				B32317121E1E3D3100932531 /* JYDetailBottomButton.m */,
+				B33B181F1E2B67FF003803C4 /* JYRedPacketView.h */,
+				B33B18201E2B67FF003803C4 /* JYRedPacketView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2416,6 +2426,7 @@
 				EC88F8041E10B7B4009AAEED /* XHHTTPClient.m in Sources */,
 				ECCFA0941DEC0C9D000F4E7A /* JYVideoTokenManager.m in Sources */,
 				EC88F8241E10B7B5009AAEED /* XHMessageBubbleView.m in Sources */,
+				B33B18211E2B67FF003803C4 /* JYRedPacketView.m in Sources */,
 				EC9843E11E07ACC600754471 /* UIView+RoundCorner.m in Sources */,
 				EC88F8071E10B7B4009AAEED /* XHMessageBubbleFactory.m in Sources */,
 				EC2A710C1E0B81F800BED161 /* JYNearViewController.m in Sources */,
@@ -2494,6 +2505,7 @@
 				ECCFA0631DEBF60A000F4E7A /* JYTabBarController.m in Sources */,
 				EC88F8791E1137DB009AAEED /* JYContactModel.m in Sources */,
 				EC88F82C1E10B7B5009AAEED /* XHEmotionManagerView.m in Sources */,
+				B33B18271E2B6FF1003803C4 /* JYRedPackPopViewController.m in Sources */,
 				B39531AD1E13E6F000B5C78E /* SDCollectionViewCell.m in Sources */,
 				EC88F86D1E111161009AAEED /* JYRecommendFooterView.m in Sources */,
 				B3F521081E28D8F400EFC665 /* JYVideoChatViewController.m in Sources */,

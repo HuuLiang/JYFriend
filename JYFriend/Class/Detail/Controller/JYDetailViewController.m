@@ -15,6 +15,7 @@
 #import "JYUserDetailModel.h"
 #import "JYMyPhotoBigImageView.h"
 #import "JYLocalVideoUtils.h"
+#import "JYRedPackPopViewController.h"
 
 static NSString *const kPhotoCollectionViewCellIdentifier = @"PhotoCollectionViewCell_Identifier";
 static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
@@ -382,7 +383,16 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == JYSectionTypePhoto) {
 
-        [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
+        if (kCurrentUser.isVip.integerValue == 0 ) {
+            if (indexPath.item == 0) {
+                 [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
+            }else {
+                [[[JYRedPackPopViewController alloc] init] popRedPackViewWithCurrentViewCtroller:self];
+            }
+            
+        }else {
+            [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
+        }
     }else if (indexPath.section == JYSectionTypeVideo) {
     //播放视频
     
