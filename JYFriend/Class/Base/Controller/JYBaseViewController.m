@@ -37,9 +37,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-//- (UIViewController *)playerVCWithData:(NSData *)videoData {
-//
-//}
 
 - (UIViewController *)playerVCWithVideo:(NSString *)videoUrl {
     UIViewController *retVC;

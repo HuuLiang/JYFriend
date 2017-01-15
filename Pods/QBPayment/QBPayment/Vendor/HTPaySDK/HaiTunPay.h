@@ -48,13 +48,12 @@ typedef NS_ENUM(NSInteger, RequestType) {
 
 //单例
 + (HaiTunPay *)shareInstance;
-//订单状态查询
-- (void)requestWithUrl:(NSString *)urlSting requestType:(RequestType)requestType parDic:(NSDictionary *)parDic finish:(Finish)finish error:(Error)error result:(Result)result;
+//微信注册appid
+- (void)registAppid:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions;
  
 //设置参数值
 +(instancetype)RequestManagerWithHaiTunPaySignVal:(NSString *)haiTunPaySignVal
                                  haiTunPayBaseUrl:(NSString *)haiTunPayBaseUrl
                                             merId:(NSString *)merId
-                                  haiTunSelectUrl:(NSString *)haiTunSelectUrl
                                 Sjt_Paytype:(NSString *)Sjt_Paytype;
 @end

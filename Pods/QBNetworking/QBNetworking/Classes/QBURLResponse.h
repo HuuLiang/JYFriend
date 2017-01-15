@@ -26,7 +26,7 @@
 
 @property (nonatomic) NSNumber *success;
 @property (nonatomic) NSString *resultCode;
-@property (nonatomic) QBURLResponseCode *responseCode;
+@property (nonatomic) BOOL resultSuccess;//交友
 
 - (void)parseResponseWithDictionary:(NSDictionary *)dic;
 

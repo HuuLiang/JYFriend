@@ -18,6 +18,10 @@
 		B33B181E1E2B56F7003803C4 /* UIImageView+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B181D1E2B56F7003803C4 /* UIImageView+Blur.m */; };
 		B33B18211E2B67FF003803C4 /* JYRedPacketView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B18201E2B67FF003803C4 /* JYRedPacketView.m */; };
 		B33B18271E2B6FF1003803C4 /* JYRedPackPopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B18261E2B6FF1003803C4 /* JYRedPackPopViewController.m */; };
+		B33B182A1E2B9083003803C4 /* JYPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B18291E2B9083003803C4 /* JYPaymentViewController.m */; };
+		B33B182E1E2B9224003803C4 /* JYPayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B182D1E2B9224003803C4 /* JYPayTypeCell.m */; };
+		B33B18311E2B94BA003803C4 /* JYPayPointCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B18301E2B94BA003803C4 /* JYPayPointCell.m */; };
+		B33B18341E2BA7BF003803C4 /* JYPayHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B18331E2BA7BF003803C4 /* JYPayHeaderCell.m */; };
 		B33E74C31E111CD70095F0DB /* JYHomeTownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */; };
 		B347A52A1E24B37000A4208F /* JYUserDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B347A5291E24B37000A4208F /* JYUserDetailModel.m */; };
 		B347A52D1E24B55300A4208F /* JYUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B347A52C1E24B55300A4208F /* JYUserInfoModel.m */; };
@@ -364,6 +368,14 @@
 		B33B18201E2B67FF003803C4 /* JYRedPacketView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRedPacketView.m; sourceTree = "<group>"; };
 		B33B18251E2B6FF1003803C4 /* JYRedPackPopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRedPackPopViewController.h; sourceTree = "<group>"; };
 		B33B18261E2B6FF1003803C4 /* JYRedPackPopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRedPackPopViewController.m; sourceTree = "<group>"; };
+		B33B18281E2B9083003803C4 /* JYPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPaymentViewController.h; sourceTree = "<group>"; };
+		B33B18291E2B9083003803C4 /* JYPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPaymentViewController.m; sourceTree = "<group>"; };
+		B33B182C1E2B9224003803C4 /* JYPayTypeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPayTypeCell.h; sourceTree = "<group>"; };
+		B33B182D1E2B9224003803C4 /* JYPayTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPayTypeCell.m; sourceTree = "<group>"; };
+		B33B182F1E2B94BA003803C4 /* JYPayPointCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPayPointCell.h; sourceTree = "<group>"; };
+		B33B18301E2B94BA003803C4 /* JYPayPointCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPayPointCell.m; sourceTree = "<group>"; };
+		B33B18321E2BA7BF003803C4 /* JYPayHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPayHeaderCell.h; sourceTree = "<group>"; };
+		B33B18331E2BA7BF003803C4 /* JYPayHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPayHeaderCell.m; sourceTree = "<group>"; };
 		B33E74C11E111CD70095F0DB /* JYHomeTownCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYHomeTownCell.h; sourceTree = "<group>"; };
 		B33E74C21E111CD70095F0DB /* JYHomeTownCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYHomeTownCell.m; sourceTree = "<group>"; };
 		B347A5281E24B37000A4208F /* JYUserDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUserDetailModel.h; sourceTree = "<group>"; };
@@ -903,6 +915,19 @@
 				DA912917CEE2A071A00F6B7F /* libPods-JYFriend.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B33B182B1E2B90A5003803C4 /* PayView */ = {
+			isa = PBXGroup;
+			children = (
+				B33B182C1E2B9224003803C4 /* JYPayTypeCell.h */,
+				B33B182D1E2B9224003803C4 /* JYPayTypeCell.m */,
+				B33B182F1E2B94BA003803C4 /* JYPayPointCell.h */,
+				B33B18301E2B94BA003803C4 /* JYPayPointCell.m */,
+				B33B18321E2BA7BF003803C4 /* JYPayHeaderCell.h */,
+				B33B18331E2BA7BF003803C4 /* JYPayHeaderCell.m */,
+			);
+			name = PayView;
 			sourceTree = "<group>";
 		};
 		B36184741E10FABE00DD55A5 /* Detail */ = {
@@ -1904,6 +1929,8 @@
 				EC9843E31E07CA7900754471 /* JYNavigationController.m */,
 				ECCFA0611DEBF60A000F4E7A /* JYTabBarController.h */,
 				ECCFA0621DEBF60A000F4E7A /* JYTabBarController.m */,
+				B33B18281E2B9083003803C4 /* JYPaymentViewController.h */,
+				B33B18291E2B9083003803C4 /* JYPaymentViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1920,6 +1947,7 @@
 		ECCFA0601DEBF5E3000F4E7A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B33B182B1E2B90A5003803C4 /* PayView */,
 				EC9843D31E07905F00754471 /* JYTableHeaderFooterView.h */,
 				EC9843D41E07905F00754471 /* JYTableHeaderFooterView.m */,
 			);
@@ -2355,6 +2383,7 @@
 				EC88F8611E110C8D009AAEED /* JYRecommendViewController.m in Sources */,
 				B3C0DFD91E1502F500621FC5 /* JYUsrImageCache.m in Sources */,
 				EC88F8221E10B7B5009AAEED /* XHBaseTableViewCell.m in Sources */,
+				B33B18341E2BA7BF003803C4 /* JYPayHeaderCell.m in Sources */,
 				ECEFE3431E0A7271002F9A1C /* AppDelegate+configuration.m in Sources */,
 				B36184801E11098100DD55A5 /* JYPhotoCollectionViewCell.m in Sources */,
 				ECCFA08B1DEC0A8F000F4E7A /* JYUserAccessModel.m in Sources */,
@@ -2391,6 +2420,7 @@
 				EC9843DB1E07A96C00754471 /* JYMineAvatarView.m in Sources */,
 				EC88F8151E10B7B4009AAEED /* SELineLayout.m in Sources */,
 				EC804AA11E0D54FA00191387 /* SWActionSheet.m in Sources */,
+				B33B18311E2B94BA003803C4 /* JYPayPointCell.m in Sources */,
 				EC88F8211E10B7B5009AAEED /* SETextView.m in Sources */,
 				B3F551741E234136007CE12B /* JYNearPesonModel.m in Sources */,
 				EC88F7ED1E10B7B4009AAEED /* NSString+XHMD5.m in Sources */,
@@ -2467,6 +2497,7 @@
 				EC88F81B1E10B7B4009AAEED /* SETextInput.m in Sources */,
 				EC8596DD1E24AF9600137F6B /* JYRegisterUserModel.m in Sources */,
 				B32317131E1E3D3100932531 /* JYDetailBottomButton.m in Sources */,
+				B33B182E1E2B9224003803C4 /* JYPayTypeCell.m in Sources */,
 				B395318E1E13A18400B5C78E /* JYMyPhotoCell.m in Sources */,
 				B39531931E13A63C00B5C78E /* UIImage+JYResource.m in Sources */,
 				B361847A1E10FB5500DD55A5 /* JYDetailViewController.m in Sources */,
@@ -2505,6 +2536,7 @@
 				ECCFA0631DEBF60A000F4E7A /* JYTabBarController.m in Sources */,
 				EC88F8791E1137DB009AAEED /* JYContactModel.m in Sources */,
 				EC88F82C1E10B7B5009AAEED /* XHEmotionManagerView.m in Sources */,
+				B33B182A1E2B9083003803C4 /* JYPaymentViewController.m in Sources */,
 				B33B18271E2B6FF1003803C4 /* JYRedPackPopViewController.m in Sources */,
 				B39531AD1E13E6F000B5C78E /* SDCollectionViewCell.m in Sources */,
 				EC88F86D1E111161009AAEED /* JYRecommendFooterView.m in Sources */,

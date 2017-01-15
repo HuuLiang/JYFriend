@@ -12,15 +12,15 @@
 #import "SPayClient.h"
 #import "SPayClientWechatConfigModel.h"
 #import "QBPaymentInfo.h"
-#import "QBDefines.h"
 #import "RACEXTScope.h"
 #import "MBProgressHUD.h"
 
 static NSString *const kPayUrl = @"http://p.ylsdk.com/";
 static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
 
-@interface HTPayManager () <UIAlertViewDelegate>
-    @property (nonatomic,copy) void (^payCompletionBlock)(void);
+@interface HTPayManager ()
+@property (nonatomic,copy) QBCompletionHandler completionHandler;
+@property (nonatomic,retain) QBPaymentInfo *paymentInfo;
 @end
 
 @implementation HTPayManager
@@ -40,12 +40,7 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
     [HaiTunPay shareInstance].haiTunSelectUrl = kQueryOrderUrl;
     [HaiTunPay shareInstance].Sjt_Paytype = self.payType;
     
-    SPayClientWechatConfigModel *wechatConfigModel = [[SPayClientWechatConfigModel alloc] init];
-    wechatConfigModel.appScheme = self.appid;
-    wechatConfigModel.wechatAppid = self.appid;
-    [[SPayClient sharedInstance] wechatpPayConfig:wechatConfigModel];
-    
-    [[SPayClient sharedInstance] application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:nil];
+    [[HaiTunPay shareInstance] registAppid:[UIApplication sharedApplication] launchOptions:nil];
 }
 
 - (void)handleOpenURL:(NSURL *)url {
@@ -54,6 +49,7 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     //[[SPayClient sharedInstance] applicationWillEnterForeground:application];
+    QBSafelyCallBlock(self.completionHandler, YES, self.paymentInfo);
 }
 
 - (void)setMchId:(NSString *)mchId {
@@ -67,7 +63,7 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
 }
 
 - (void)payWithPaymentInfo:(QBPaymentInfo *)paymentInfo
-         completionHandler:(QBPaymentCompletionHandler)completionHandler
+         completionHandler:(QBCompletionHandler)completionHandler
 {
     NSDictionary *postInfo = @{@"p2_Order": paymentInfo.orderId,//商户订单号
                                @"p3_Amt": [NSString stringWithFormat:@"%.2f",paymentInfo.orderPrice/100.],//支付金额
@@ -77,8 +73,6 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
                                };
     
     @weakify(self);
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    
     [[HaiTunPay shareInstance] requestWithUrl:kPayUrl
                                viewcontroller:[UIApplication sharedApplication].keyWindow.rootViewController
                                   requestType:RequestTypePOST
@@ -91,26 +85,18 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
         QBLog(@"HaiTun Pay Response: %@", response);
         
         if ([response[@"error"] integerValue] != 9999) {
-            [hud hide:YES];
-            QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
+            QBSafelyCallBlock(completionHandler, NO, paymentInfo);
             return ;
         }
         
-        self.payCompletionBlock = ^{
+        self.completionHandler = ^(BOOL success, id obj) {
             @strongify(self);
-            
-            [self checkPayment:paymentInfo retryTimes:3 withCompletionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
-                
-                [hud hide:YES];
-                QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
-            }];
+            QBSafelyCallBlock(completionHandler, success, paymentInfo);
+            self.completionHandler = nil;
+            self.paymentInfo = nil;
         };
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"完成支付后，按[确定]继续。"
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
+        self.paymentInfo = paymentInfo;
     } error:^(NSError *error) {
         QBLog(@"HaiTun Pay Error: %@", error.localizedDescription);
         QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
@@ -120,60 +106,55 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
     }];
 }
 
-- (void)checkPayment:(QBPaymentInfo *)paymentInfo retryTimes:(NSUInteger)retryTimes withCompletionHandler:(QBPaymentCompletionHandler)completionHandler
-{
-    @weakify(self);
-    [self checkPayment:paymentInfo withCompletionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
-        @strongify(self);
-        if (retryTimes == 0 || payResult == QBPayResultSuccess) {
-            QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
-        } else {
-            dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                [NSThread sleepForTimeInterval:2];
-                [self checkPayment:paymentInfo retryTimes:retryTimes-1 withCompletionHandler:completionHandler];
-            });
-        }
-    }];
-}
-
-- (void)checkPayment:(QBPaymentInfo *)paymentInfo withCompletionHandler:(QBPaymentCompletionHandler)completionHandler {
-    NSDictionary *transDic = @{@"Sjt_TransID": paymentInfo.orderId};
-    
-//    paymentInfo.orderId = @"IOS_B_00000001_25ef3c0829913bb6";
-    
-//    [[HaiTunPay shareInstance] requestWithUrl:kQueryOrderUrl requestType:RequestTypePOST parDic:transDic finish:^(NSData *data) {
-//        
-//    } error:^(NSError *error) {
-//        DLog(@"HaiTun Pay Error: %@", error.localizedDescription);
-//        SafelyCallBlock(completionHandler, PAYRESULT_FAIL, paymentInfo);
-//    } result:^(NSString *state) {
-//        DLog(@"HaiTun Pay Order state: %@", state);
-//        SafelyCallBlock(completionHandler, [state isEqualToString:@"1"] ? PAYRESULT_SUCCESS : PAYRESULT_FAIL, paymentInfo);
+//- (void)checkPayment:(QBPaymentInfo *)paymentInfo retryTimes:(NSUInteger)retryTimes withCompletionHandler:(QBPaymentCompletionHandler)completionHandler
+//{
+//    @weakify(self);
+//    [self checkPayment:paymentInfo withCompletionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+//        @strongify(self);
+//        if (retryTimes == 0 || payResult == QBPayResultSuccess) {
+//            QBSafelyCallBlock(completionHandler, payResult, paymentInfo);
+//        } else {
+//            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//                [NSThread sleepForTimeInterval:2];
+//                [self checkPayment:paymentInfo retryTimes:retryTimes-1 withCompletionHandler:completionHandler];
+//            });
+//        }
 //    }];
+//}
+
+//- (void)checkPayment:(QBPaymentInfo *)paymentInfo withCompletionHandler:(QBPaymentCompletionHandler)completionHandler {
+//    NSDictionary *transDic = @{@"Sjt_TransID": paymentInfo.orderId};
 //    
-    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-    sessionManager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
-    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json",@"text/json", nil];
-    
-    [sessionManager POST:kQueryOrderUrl
-              parameters:transDic
-                progress:nil
-                 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject)
-     {
-         NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-         QBLog(@"海豚支付-查询订单： %@", response);
-         
-         BOOL success = [response[@"status"] isEqual:@"1"];
-         QBSafelyCallBlock(completionHandler, success ? QBPayResultSuccess : QBPayResultFailure, paymentInfo);
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-         QBLog(@"海豚支付-查询订单错误：%@", error.localizedDescription);
-         QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
-     }];
-}
-    
-#pragma mark - UIAlertViewDelegate
-    
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    QBSafelyCallBlock(self.payCompletionBlock);
-}
+////    paymentInfo.orderId = @"IOS_B_00000001_25ef3c0829913bb6";
+//    
+////    [[HaiTunPay shareInstance] requestWithUrl:kQueryOrderUrl requestType:RequestTypePOST parDic:transDic finish:^(NSData *data) {
+////        
+////    } error:^(NSError *error) {
+////        DLog(@"HaiTun Pay Error: %@", error.localizedDescription);
+////        SafelyCallBlock(completionHandler, PAYRESULT_FAIL, paymentInfo);
+////    } result:^(NSString *state) {
+////        DLog(@"HaiTun Pay Order state: %@", state);
+////        SafelyCallBlock(completionHandler, [state isEqualToString:@"1"] ? PAYRESULT_SUCCESS : PAYRESULT_FAIL, paymentInfo);
+////    }];
+////
+//    
+//    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+//    sessionManager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
+//    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json",@"text/json", nil];
+//    
+//    [sessionManager POST:kQueryOrderUrl
+//              parameters:transDic
+//                progress:nil
+//                 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject)
+//     {
+//         NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+//         QBLog(@"海豚支付-查询订单： %@", response);
+//         
+//         BOOL success = [response[@"status"] isEqual:@"1"];
+//         QBSafelyCallBlock(completionHandler, success ? QBPayResultSuccess : QBPayResultFailure, paymentInfo);
+//     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//         QBLog(@"海豚支付-查询订单错误：%@", error.localizedDescription);
+//         QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
+//     }];
+//}
 @end

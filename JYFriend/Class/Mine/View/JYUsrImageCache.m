@@ -16,20 +16,6 @@ static NSString *const kJYImageCacheImageName = @"jiaoyou_imagemodel_imagechche_
 
 @implementation JYImageCacheModel
 
-//- (void)encodeWithCoder:(NSCoder *)aCoder {
-//    [aCoder encodeObject:self.imageName forKey:kJYImageCacheImageName];
-//
-//}
-//
-//- (instancetype)initWithCoder:(NSCoder *)coder
-//{
-//    self = [super init];
-//    if (self) {
-//        self.imageName = [coder decodeObjectForKey:kJYImageCacheImageName];
-//    }
-//    return self;
-//}
-
 
 @end
 

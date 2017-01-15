@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <QBPaymentDefines.h>
+#import "QBDefines.h"
 
 @class QBPaymentInfo;
 
@@ -15,7 +15,7 @@
 
 @property (nonatomic) NSString *mchId;
 @property (nonatomic) NSString *key;
-@property (nonatomic) NSString *appid;
+//@property (nonatomic) NSString *appid;
 @property (nonatomic) NSString *payType;
 @property (nonatomic) NSString *notifyUrl;
 
@@ -25,5 +25,5 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application;
 
 - (void)payWithPaymentInfo:(QBPaymentInfo *)paymentInfo
-         completionHandler:(QBPaymentCompletionHandler)completionHandler;
+         completionHandler:(QBCompletionHandler)completionHandler;
 @end

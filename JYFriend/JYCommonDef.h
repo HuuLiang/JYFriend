@@ -47,6 +47,13 @@ typedef NS_ENUM(NSUInteger, JYUserCreateMessageType) {
     JYUserCreateMessageTypeChat, //聊天
     JYUserCreateMessageTypeCount
 };
+//会员等级
+typedef NS_ENUM(NSUInteger,JYVipType) {
+    JYVipTypeUnKnow,
+    JYVipTypeMonth,
+    JYVipTypeQuarter,
+    JYVipTypeYear
+};
 
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 
