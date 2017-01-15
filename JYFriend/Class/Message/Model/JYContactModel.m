@@ -32,7 +32,7 @@
             contact.nickName = obj.nickName;
         }
         contact.recentMessage = @"用户主动向机器人打了个招呼";
-        contact.recentTime = [JYUtil timeStringFromDate:[JYUtil currentDate] WithDateFormat:@"yyyyMMdd HH:mm:ss"];
+        contact.recentTime = [JYUtil timeStringFromDate:[JYUtil currentDate] WithDateFormat:KDateFormatLong];
         [contact saveOrUpdate];
         
         //向聊天信息缓存中加入信息
@@ -43,7 +43,6 @@
         message.messageType = JYMessageTypeText;
         message.messageContent = contact.recentMessage;
         [message saveOrUpdate];
-        
     }];
 }
 

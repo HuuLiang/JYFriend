@@ -10,7 +10,11 @@
 #import "JYMessageModel.h"
 #import "XHAudioPlayerHelper.h"
 #import "JYLocalPhotoUtils.h"
+#import "JYUsrImageCache.h"
 
+@interface JYMessageViewController () <JYLocalPhotoUtilsDelegate>
+
+@end
 
 @implementation JYMessageViewController (XHBMessageDelegate)
 
@@ -49,8 +53,12 @@
 
 //发送图片
 - (void)didSendPhoto:(UIImage *)photo fromSender:(NSString *)sender onDate:(NSDate *)date {
-    [self addPhotoMessage:photo thumbnailUrl:nil originPhotoUrl:nil withSender:sender receiver:self.user.userId dateTime:[JYUtil timeStringFromDate:date WithDateFormat:KDateFormatLong]];
-    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypePhoto];
+    NSString *imagekey = nil;
+    if (photo) {
+        imagekey = [JYUsrImageCache writeToFileWithImage:photo needSaveImageName:NO];
+    }
+    [self addPhotoMessage:imagekey thumbnailUrl:nil originPhotoUrl:nil withSender:sender receiver:self.user.userId dateTime:[JYUtil timeStringFromDate:date WithDateFormat:KDateFormatLong]];
+//    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypePhoto];
 }
 
 //发送语音
@@ -60,11 +68,13 @@
         return;
     }
     [self addVoiceMessage:voicePath voiceDuration:voiceDuration withSender:sender receiver:self.user.userId dateTime:[JYUtil timeStringFromDate:date WithDateFormat:KDateFormatLong]];
+    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeVoice];
 }
 
 //发送表情
 - (void)didSendEmotion:(NSString *)emotionPath fromSender:(NSString *)sender onDate:(NSDate *)date {
     [self addEmotionMessage:emotionPath WithSender:sender receiver:self.user.userId dateTime:[JYUtil timeStringFromDate:date WithDateFormat:KDateFormatLong]];
+    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeEmotion];
 }
 
 //是否显示时间轴
@@ -87,7 +97,7 @@
     if (isCurrentUser) {
         [cell.avatarButton setImage:[UIImage imageWithData:[JYUser currentUser].userImg] forState:UIControlStateNormal];
     } else {
-        [cell.avatarButton setImage:[UIImage imageWithData:[JYUser currentUser].userImg] forState:UIControlStateNormal];
+        [cell.avatarButton sd_setImageWithURL:[NSURL URLWithString:self.user.userImgUrl] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"mine_default_avatar"]];;
     }
 }
 
@@ -117,16 +127,7 @@
 - (void)multiMediaMessageDidSelectedOnMessage:(id <XHMessageModel>)message atIndexPath:(NSIndexPath *)indexPath onMessageTableViewCell:(XHMessageTableViewCell *)messageTableViewCell {
     if (message.messageMediaType == XHBubbleMessageMediaTypePhoto) {
         //放大
-    } else if (message.messageMediaType == XHBubbleMessageMediaTypeVoice) {
-//        [message setIsRead:YES];
-//        message.isRead = YES;
-//        messageTableViewCell.messageBubbleView.voiceUnreadDotImageView.hidden = YES;
-//        [messageTableViewCell.messageBubbleView.animationVoiceImageView startAnimating];
-//        AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:message.voicePath] error:nil];
-//        [player play];
-//        [messageTableViewCell.messageBubbleView.animationVoiceImageView performSelector:@selector(stopAnimating) withObject:self afterDelay:[message.voiceDuration floatValue]];
-        
-        
+    } else if (message.messageMediaType == XHBubbleMessageMediaTypeVoice) {        
         message.isRead = YES;
         messageTableViewCell.messageBubbleView.voiceUnreadDotImageView.hidden = YES;
         
@@ -204,6 +205,8 @@
  *  @param index         被点击的位置
  */
 - (void)didSelecteShareMenuItem:(XHShareMenuItem *)shareMenuItem atIndex:(NSInteger)index {
+
+    [JYLocalPhotoUtils shareManager].delegate = self;
     if (index == 0) {
         [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary inViewController:self popoverPoint:CGPointZero isVideo:NO];
     }else if(index == 1){
@@ -238,5 +241,14 @@
 - (NSInteger)numberOfEmotionManagers {
     return self.emotionManagers.count;
 }
+
+#pragma mark - JYLocalPhotoUtilsDelegate
+
+- (void)JYLocalPhotoUtilsWithPicker:(UIImagePickerController *)picker DidFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    [self didSendPhoto:image fromSender:[JYUser currentUser].userId onDate:[NSDate date]];
+}
+
 
 @end

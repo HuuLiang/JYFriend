@@ -40,7 +40,6 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
     self.title = self.user.nickName;
     self.messageSender = [JYUser currentUser].userId;
     
-    
     [self.messageTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
     [self configEmotions];
@@ -72,12 +71,18 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
     [self scrollToBottomAnimated:YES];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.messages removeAllObjects];
+}
+
 - (void)reloadChatMessages {
     self.chatMessages = [JYMessageModel allMessagesForUser:self.user.userId].mutableCopy;
     
     [self.chatMessages enumerateObjectsUsingBlock:^(JYMessageModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         XHMessage *message;
-        NSDate *date = [JYUtil dateFromString:@"19910901111111" WithDateFormat:KDateFormatLong];
+        NSDate *date = [JYUtil dateFromString:obj.messageTime WithDateFormat:KDateFormatLong];
         if (obj.messageType == JYMessageTypeText) {
             message = [[XHMessage alloc] initWithText:obj.messageContent
                                                               sender:obj.sendUserId
@@ -85,8 +90,8 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
             message.messageMediaType = XHBubbleMessageMediaTypeText;
         } else if (obj.messageType == JYMessageTypePhoto) {
             message = [[XHMessage alloc] initWithPhoto:nil
-                                          thumbnailUrl:nil
-                                        originPhotoUrl:nil
+                                          thumbnailUrl:obj.messageContent
+                                        originPhotoUrl:obj.messageContent
                                                 sender:obj.sendUserId
                                              timestamp:date];
         } else if (obj.messageType == JYMessageTypeVioce) {
@@ -95,16 +100,17 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
                                              voiceDuration:obj.standbyContent
                                                     sender:obj.sendUserId
                                                  timestamp:date];
-        } else if (obj.messageType == JYMessageTypeSystem) {
-            message = [[XHMessage alloc] initWithText:obj.messageContent
-                                               sender:obj.sendUserId
-                                            timestamp:date];
-            message.messageMediaType = XHBubbleMessageMediaTypeCustom;
         } else if (obj.messageType == JYMessageTypeEmotion) {
             message = [[XHMessage alloc] initWithEmotionPath:obj.messageContent
                                                       sender:obj.sendUserId
                                                    timestamp:date];
+        } else if (obj.messageType >= JYMessageTypeNormal) {
+            message = [[XHMessage alloc] initWithText:obj.messageContent
+                                               sender:obj.sendUserId
+                                            timestamp:date];
+            message.messageMediaType = XHBubbleMessageMediaTypeCustom;
         }
+        
         if ([obj.sendUserId isEqualToString:[JYUser currentUser].userId]) {
             message.bubbleMessageType = XHBubbleMessageTypeSending;
         } else {
@@ -125,14 +131,14 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
     chatMessage.sendUserId = sender;
     chatMessage.receiveUserId = receiver;
     chatMessage.messageTime = dateTime;
-    chatMessage.messageType = JYMessageTypeSystem;
+    chatMessage.messageType = JYMessageTypeText;
     chatMessage.messageContent = message;
     
     [self addChatMessage:chatMessage];
 }
 
 //增加一条图片信息
-- (void)addPhotoMessage:(UIImage *)image
+- (void)addPhotoMessage:(NSString *)imagekey
            thumbnailUrl:(NSString *)thumbnailUrl
          originPhotoUrl:(NSString *)originPhotoUrl
              withSender:(NSString *)sender
@@ -143,7 +149,7 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
     chatMessage.receiveUserId = receiver;
     chatMessage.messageTime = dateTime;
     chatMessage.messageType = JYMessageTypePhoto;
-    chatMessage.photo = image;
+    chatMessage.photokey = imagekey;
     chatMessage.messageContent = thumbnailUrl;
     chatMessage.standbyContent = originPhotoUrl;
     
@@ -195,7 +201,7 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
                                              sender:chatMessage.sendUserId
                                           timestamp:date];
         } else if (chatMessage.messageType == JYMessageTypePhoto) {
-            xhMsg = [[XHMessage alloc] initWithPhoto:chatMessage.photo
+            xhMsg = [[XHMessage alloc] initWithPhoto:[[SDImageCache sharedImageCache] imageFromDiskCacheForKey:chatMessage.photokey]
                                         thumbnailUrl:chatMessage.messageContent
                                       originPhotoUrl:chatMessage.standbyContent
                                               sender:chatMessage.sendUserId
@@ -210,11 +216,12 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
             xhMsg = [[XHMessage alloc] initWithEmotionPath:chatMessage.messageContent
                                                     sender:chatMessage.sendUserId
                                                  timestamp:date];
-        } else if (chatMessage.messageType == JYMessageTypeSystem) {
+        } else if (chatMessage.messageType >= JYMessageTypeNormal) {
             xhMsg = [[XHMessage alloc] initWithText:chatMessage.messageContent
                                              sender:chatMessage.sendUserId
                                           timestamp:date];
-            xhMsg.messageMediaType = XHBubbleMessageMediaTypeCustom;
+            //2种数据模型枚举匹配
+            xhMsg.messageMediaType = JYMessageTypeNormal + 2;
         }
         
         if ([chatMessage.sendUserId isEqualToString:[JYUser currentUser].userId]) {

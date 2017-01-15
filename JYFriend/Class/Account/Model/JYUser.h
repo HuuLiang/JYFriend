@@ -21,7 +21,7 @@ typedef NS_ENUM(NSUInteger,JYUserSex) {
 //#define JYUserSexToString(userSexType) ([JYUserSexStringGet objectAtIndex:userSexType])
 //#define JYUserStringToSex(userSexString) ([JYUserSexStringGet indexOfObject:userSexString])
 
-@interface JYUser : JKDBModel <NSCoding>
+@interface JYUser : JKDBModel
 
 + (instancetype)currentUser;
 
@@ -31,6 +31,7 @@ typedef NS_ENUM(NSUInteger,JYUserSex) {
 @property (nonatomic) NSString      *userId;
 //头像
 @property (nonatomic) NSData        *userImg;
+@property (nonatomic) NSString      *userImgUrl;
 //性别
 @property (nonatomic) JYUserSex     userSex;
 //昵称

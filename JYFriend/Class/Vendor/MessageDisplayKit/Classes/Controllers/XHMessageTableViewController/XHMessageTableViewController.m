@@ -228,13 +228,14 @@
     [self exChangeMessageDataSourceQueue:^{
         NSMutableArray *messages = [NSMutableArray arrayWithArray:weakSelf.messages];
         [messages addObject:addedMessage];
-        
-        NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:1];
-        [indexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
+
+        __block NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];
         
         [weakSelf exMainQueue:^{
             weakSelf.messages = messages;
-            [weakSelf.messageTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+//            [weakSelf.messageTableView beginUpdates];
+            [weakSelf.messageTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            [weakSelf.messageTableView endUpdates];
             [weakSelf scrollToBottomAnimated:YES];
         }];
     }];
@@ -1222,7 +1223,7 @@ static CGPoint  delayOffset = {0.0};
     id <XHMessageModel> message = [self.dataSource messageForRowAtIndexPath:indexPath];
     
     // 如果需要定制复杂的业务UI，那么就实现该DataSource方法
-    if ([self.dataSource respondsToSelector:@selector(tableView:cellForRowAtIndexPath:targetMessage:)] && message.messageMediaType == XHBubbleMessageMediaTypeCustom) {
+    if ([self.dataSource respondsToSelector:@selector(tableView:cellForRowAtIndexPath:targetMessage:)] && message.messageMediaType >= XHBubbleMessageMediaTypeCustom) {
         UITableViewCell *tableViewCell = [self.dataSource tableView:tableView cellForRowAtIndexPath:indexPath targetMessage:message];
         return tableViewCell;
     }
@@ -1259,7 +1260,7 @@ static CGPoint  delayOffset = {0.0};
     
     CGFloat calculateCellHeight = 0;
     
-    if ([self.delegate respondsToSelector:@selector(tableView:heightForRowAtIndexPath:targetMessage:)] && message.messageMediaType == XHBubbleMessageMediaTypeCustom) {
+    if ([self.delegate respondsToSelector:@selector(tableView:heightForRowAtIndexPath:targetMessage:)] && message.messageMediaType >= XHBubbleMessageMediaTypeCustom) {
         calculateCellHeight = [self.delegate tableView:tableView heightForRowAtIndexPath:indexPath targetMessage:message];
         return calculateCellHeight;
     } else {

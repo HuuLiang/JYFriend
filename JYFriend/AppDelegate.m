@@ -44,6 +44,8 @@
     [self setCommonStyle];
     //检查网络状态 基本信息获取
     [self checkNetworkInfoState];
+    //友盟统计
+    [self setupMobStatistics];
     //检查用户注册
     [self checkUserIsLogin];
     

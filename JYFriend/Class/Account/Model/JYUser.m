@@ -53,4 +53,8 @@ static JYUser *_currentUser;
     return allCities;
 }
 
++ (NSArray *)transients {
+    return @[@"userImgUrl"];
+}
+
 @end

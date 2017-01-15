@@ -59,7 +59,6 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
 }
 
 + (BOOL)isRegisteredUserId {
-    return YES;
     return [self userId] != nil;
 }
 
@@ -241,8 +240,8 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
 
 + (NSDate *)currentDate {
     NSDate *systemDate = [NSDate date];
-    NSDate *currentDate = [systemDate dateByAddingTimeInterval:[[NSTimeZone localTimeZone] secondsFromGMTForDate:systemDate]];
-    return currentDate;
+//    NSDate *currentDate = [systemDate dateByAddingTimeInterval:[[NSTimeZone localTimeZone] secondsFromGMTForDate:systemDate]];
+    return systemDate;
 }
 
 #pragma mark -- 其他
