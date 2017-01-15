@@ -42,9 +42,9 @@
     return [JYUserDetail class];
 }
 
-- (BOOL)fetchUserDetailModelWithCompleteHandler:(JYUserDetailCompleteHandler)handler {
+- (BOOL)fetchUserDetailModelWithViewUserId:(NSString *)viewUserId CompleteHandler:(JYUserDetailCompleteHandler)handler {
     @weakify(self);
-    NSDictionary *params = @{@"viewUserId" : @(1000),@"userId" : @(1)};//@{@"userId" : [JYUser currentUser].userId ? : @""}
+    NSDictionary *params = @{@"viewUserId" : viewUserId ? : @"",@"userId" : kCurrentUser.userId ? : @""};
     BOOL result = [self requestURLPath:JY_USER_DETAIL_URL standbyURLPath:nil withParams:params responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
         @strongify(self);
         if (respStatus == QBURLResponseSuccess) {

@@ -15,6 +15,7 @@
 #import "JYUserDetailModel.h"
 #import "JYMyPhotoBigImageView.h"
 #import "JYLocalVideoUtils.h"
+#import "JYRedPackPopViewController.h"
 
 static NSString *const kPhotoCollectionViewCellIdentifier = @"PhotoCollectionViewCell_Identifier";
 static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
@@ -149,7 +150,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 
 - (void)loadModels {
     @weakify(self);
-[self.detailModel fetchUserDetailModelWithCompleteHandler:^(BOOL success, JYUserDetail *useDetai) {
+    [self.detailModel fetchUserDetailModelWithViewUserId:self.viewUserId CompleteHandler:^(BOOL success, JYUserDetail *useDetai) {
     if (success) {
         @strongify(self);
         [self->_layoutCollectionView reloadData];
@@ -192,6 +193,11 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == JYSectionTypePhoto) {
         JYPhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPhotoCollectionViewCellIdentifier forIndexPath:indexPath];
+        if (indexPath.item == 0) {
+            cell.isFirstPhoto = YES;
+        }else {
+            cell.isFirstPhoto = NO;
+        }
         cell.imageUrl = self.detailModel.userPhoto[indexPath.item].smallPhoto;
         cell.isVideoImage = NO;
         return cell;
@@ -226,7 +232,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
             JYNewDynamicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kNewDynamicCellIdentifier forIndexPath:indexPath];
             cell.detaiMoods = self.detailModel.mood.moodUrl;
             cell.action = ^(NSInteger index){
-                [self photoBrowseWithImageGroup:[self dynamicImageGroupWithDyImageModels:self.detailModel.mood.moodUrl] currentIndex:index];
+                [self photoBrowseWithImageGroup:[self dynamicImageGroupWithDyImageModels:self.detailModel.mood.moodUrl] currentIndex:index isNeedBlur:NO];
             
             };
             return cell;
@@ -377,7 +383,16 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == JYSectionTypePhoto) {
 
-        [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item];
+        if (kCurrentUser.isVip.integerValue == 0 ) {
+            if (indexPath.item == 0) {
+                 [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
+            }else {
+                [[[JYRedPackPopViewController alloc] init] popRedPackViewWithCurrentViewCtroller:self];
+            }
+            
+        }else {
+            [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
+        }
     }else if (indexPath.section == JYSectionTypeVideo) {
     //播放视频
     
@@ -412,8 +427,8 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 /**
  图片浏览器
  */
-- (void)photoBrowseWithImageGroup:(NSArray *)imageGroup currentIndex:(NSInteger)currentIndex{
-    JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:imageGroup frame:self.view.window.frame isLocalImage:NO];
+- (void)photoBrowseWithImageGroup:(NSArray *)imageGroup currentIndex:(NSInteger)currentIndex isNeedBlur:(BOOL)isNeedBlur{
+    JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:imageGroup frame:self.view.window.frame isLocalImage:NO isNeedBlur:isNeedBlur];
     bigImageView.backgroundColor = [UIColor whiteColor];
     bigImageView.shouldAutoScroll = NO;
     bigImageView.shouldInfiniteScroll = NO;

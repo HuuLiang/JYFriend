@@ -42,6 +42,6 @@ typedef void(^JYUserDetailCompleteHandler)(BOOL success , JYUserDetail *useDetai
 @property (nonatomic,retain) JYUserInfoModel *userInfo;
 @property (nonatomic,retain) JYUserDetailMoodModel *mood;
 
-- (BOOL)fetchUserDetailModelWithCompleteHandler:(JYUserDetailCompleteHandler)handler;
+- (BOOL)fetchUserDetailModelWithViewUserId:(NSString *)viewUserId CompleteHandler:(JYUserDetailCompleteHandler)handler;
 
 @end
