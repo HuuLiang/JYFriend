@@ -104,6 +104,7 @@
 		EC24A2F41E0E2887000B77A9 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC24A2F31E0E2887000B77A9 /* provinces.plist */; };
 		EC24A2F81E0E463E000B77A9 /* VPImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC24A2F71E0E463E000B77A9 /* VPImageCropperViewController.m */; };
 		EC2A62B61E2CE56E0070C6AC /* login_background.png in Resources */ = {isa = PBXBuildFile; fileRef = EC2A62B51E2CE56E0070C6AC /* login_background.png */; };
+		EC2A62B91E2CF9390070C6AC /* JYUpdateUserVipModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A62B81E2CF9390070C6AC /* JYUpdateUserVipModel.m */; };
 		EC2A71091E0B81E600BED161 /* JYContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A71081E0B81E600BED161 /* JYContactViewController.m */; };
 		EC2A710C1E0B81F800BED161 /* JYNearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A710B1E0B81F800BED161 /* JYNearViewController.m */; };
 		EC485D101E120F0B00F3F18B /* JYMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC485D0F1E120F0B00F3F18B /* JYMessageModel.m */; };
@@ -504,6 +505,8 @@
 		EC24A2F61E0E463E000B77A9 /* VPImageCropperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPImageCropperViewController.h; sourceTree = "<group>"; };
 		EC24A2F71E0E463E000B77A9 /* VPImageCropperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VPImageCropperViewController.m; sourceTree = "<group>"; };
 		EC2A62B51E2CE56E0070C6AC /* login_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_background.png; sourceTree = "<group>"; };
+		EC2A62B71E2CF9390070C6AC /* JYUpdateUserVipModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUpdateUserVipModel.h; sourceTree = "<group>"; };
+		EC2A62B81E2CF9390070C6AC /* JYUpdateUserVipModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYUpdateUserVipModel.m; sourceTree = "<group>"; };
 		EC2A71071E0B81E600BED161 /* JYContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYContactViewController.h; sourceTree = "<group>"; };
 		EC2A71081E0B81E600BED161 /* JYContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYContactViewController.m; sourceTree = "<group>"; };
 		EC2A710A1E0B81F800BED161 /* JYNearViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNearViewController.h; sourceTree = "<group>"; };
@@ -2087,6 +2090,8 @@
 				ECCFA0961DEC0CC9000F4E7A /* JYApplication.m */,
 				ECCFA09B1DEC0EC0000F4E7A /* JYApplicationManager.h */,
 				ECCFA09C1DEC0EC0000F4E7A /* JYApplicationManager.m */,
+				EC2A62B71E2CF9390070C6AC /* JYUpdateUserVipModel.h */,
+				EC2A62B81E2CF9390070C6AC /* JYUpdateUserVipModel.m */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -2377,6 +2382,7 @@
 				EC804AA01E0D54FA00191387 /* DistancePickerView.m in Sources */,
 				EC55CE6B1E077AEB0030C8F5 /* JYSegmentViewController.m in Sources */,
 				EC88F81A1E10B7B4009AAEED /* SETextGeometry.m in Sources */,
+				EC2A62B91E2CF9390070C6AC /* JYUpdateUserVipModel.m in Sources */,
 				ECEFE33D1E0A5C3E002F9A1C /* JYRegisterNickNameViewController.m in Sources */,
 				B35DCEFA1E1B36FB005C5969 /* JYLocalPhotoUtils.m in Sources */,
 				EC804A621E0CC3F600191387 /* JYUser.m in Sources */,

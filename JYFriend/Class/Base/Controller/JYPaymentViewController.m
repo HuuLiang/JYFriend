@@ -11,6 +11,8 @@
 #import "JYPayNewDynamicCell.h"
 #import "JYPayPointCell.h"
 #import "JYPayTypeCell.h"
+#import <QBPaymentManager.h>
+#import "JYSystemConfigModel.h"
 
 static NSString *const kPayNewDynamicCellIdentifier = @"jy_new_dynamic_cell_identifier";
 static NSString *const kPayHeaderCellIdentifier = @"jy_pay_header_cell_indetifier";
@@ -41,6 +43,7 @@ typedef NS_ENUM(NSUInteger , JYPayTypeRow) {
 @interface JYPaymentViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_layoutTableView;
+    NSIndexPath *_defaultIndexPath;
 }
 @property (nonatomic) QBBaseModel *baseModel;
 @property (nonatomic,copy) dispatch_block_t completionHandler;
@@ -51,104 +54,102 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
 
 #pragma mark - PayFunctions
 
-//- (void)payForPaymentType:(QBOrderPayType)orderPayType vipLevel:(PPVipLevel)vipLevel {
-//    
-//    [[QBPaymentManager sharedManager] startPaymentWithOrderInfo:[self createOrderInfoWithPaymentType:orderPayType vipLevel:vipLevel]
-//                                                    contentInfo:[self createContentInfo]
-//                                                    beginAction:^(QBPaymentInfo * paymentInfo) {
-//                                                        if (paymentInfo) {
-//                                                            [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionGoToPay andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
-//                                                        }
-//                                                    } completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
-//                                                        [self notifyPaymentResult:payResult withPaymentInfo:paymentInfo];
-//                                                    }];
-//}
-//
-//- (QBOrderInfo *)createOrderInfoWithPaymentType:(QBOrderPayType)payType vipLevel:(PPVipLevel)vipLevel {
-//    QBOrderInfo *orderInfo = [[QBOrderInfo alloc] init];
-//    
-//    NSString *channelNo = PP_CHANNEL_NO;
-//    if (channelNo.length > 14) {
-//        channelNo = [channelNo substringFromIndex:channelNo.length-14];
-//    }
-//    
-//    channelNo = [channelNo stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
-//    
-//    NSString *uuid = [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)];
-//    NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
-//    orderInfo.orderId = orderNo;
-//    
-//    NSUInteger price = 0;
-//    if (vipLevel == PPVipLevelVipA) {
-//        price = [PPSystemConfigModel sharedModel].payAmount;
-//    } else if (vipLevel == PPVipLevelVipB) {
-//        if ([PPUtil currentVipLevel] == PPVipLevelNone) {
-//            price = [PPSystemConfigModel sharedModel].payAmount + [PPSystemConfigModel sharedModel].payzsAmount;
-//        } else {
-//            price = [PPSystemConfigModel sharedModel].payzsAmount;
-//        }
-//    } else if (vipLevel == PPVipLevelVipC) {
-//        price = [PPSystemConfigModel sharedModel].payhjAmount;
-//    }
-//    
-//    orderInfo.orderPrice = price;
-//    
-//    NSString *orderDescription = [[PPSystemConfigModel sharedModel] currentContactName] ?: @"VIP";
-//    
-//    orderInfo.orderDescription = orderDescription;
-//    orderInfo.payType = payType;
-//    orderInfo.reservedData = [PPUtil paymentReservedData];
-//    orderInfo.createTime = [PPUtil currentTimeStringWithFormat:KTimeFormatLong];
-//    orderInfo.payPointType = vipLevel;
-//    orderInfo.userId = [PPUtil userId];
-//    
-//    return orderInfo;
-//}
-//
-//- (QBContentInfo *)createContentInfo {
-//    QBContentInfo *contenInfo = [[QBContentInfo alloc] init];
-//    contenInfo.contentId = self.baseModel.programId;
-//    contenInfo.contentType = self.baseModel.programType;
-//    contenInfo.contentLocation = self.baseModel.programLocation;
-//    contenInfo.columnId = self.baseModel.realColumnId;
-//    contenInfo.columnType = self.baseModel.channelType;
-//    return contenInfo;
-//}
-//
-//- (void)hidePayment {
-//    [[QBStatsManager sharedManager] statsPayWithOrderNo:nil payAction:QBStatsPayActionClose payResult:QBPayResultUnknown forBaseModel:self.baseModel andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
-//    
-//    CATransition *animation = [CATransition animation];
-//    animation.duration = 1.0;
-//    animation.timingFunction = UIViewAnimationCurveEaseInOut;
-//    animation.type = @"rippleEffect";
-//    animation.subtype = kCATransitionFromBottom;
-//    [self.view.window.layer addAnimation:animation forKey:nil];
-//    
-//    [self dismissViewControllerAnimated:YES completion:nil];
-//}
-//
-//- (void)notifyPaymentResult:(QBPayResult)result withPaymentInfo:(QBPaymentInfo *)paymentInfo {
-//    if (result == QBPayResultSuccess) {
-//        [PPUtil registerVip:paymentInfo.payPointType];
-//        [self hidePayment];
-//        [[PPHudManager manager] showHudWithText:@"支付成功"];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];
-//        
-//        if ([PPUtil currentVipLevel] == PPVipLevelVipA && ![PP_CHANNEL_NO isEqualToString:@"IOS_XIUXIU_0001"]) {
+- (void)payForPaymentType:(QBOrderPayType)orderPayType vipLevel:(JYVipType)vipType {
+    
+    [[QBPaymentManager sharedManager] startPaymentWithOrderInfo:[self createOrderInfoWithPaymentType:orderPayType vipLevel:vipType]
+                                                    contentInfo:[self createContentInfo]
+                                                    beginAction:^(QBPaymentInfo * paymentInfo) {
+                                                        if (paymentInfo) {
+//                                                            [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionGoToPay andTabIndex:[JYUtil currentTabPageIndex] subTabIndex:[JYUtil currentSubTabPageIndex]];
+                                                        }
+                                                    } completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+                                                        [self notifyPaymentResult:payResult withPaymentInfo:paymentInfo];
+                                                    }];
+}
+
+- (QBOrderInfo *)createOrderInfoWithPaymentType:(QBOrderPayType)payType vipLevel:(JYVipType)vipType {
+    QBOrderInfo *orderInfo = [[QBOrderInfo alloc] init];
+    
+    NSString *channelNo = JY_CHANNEL_NO;
+    if (channelNo.length > 14) {
+        channelNo = [channelNo substringFromIndex:channelNo.length-14];
+    }
+    
+    channelNo = [channelNo stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
+    
+    NSString *uuid = [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)];
+    NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
+    orderInfo.orderId = orderNo;
+    
+    NSUInteger price = 0;
+    if (vipType == JYVipTypeMonth) {
+        price = [JYSystemConfigModel sharedModel].payAmount;
+    } else if (vipType == JYVipTypeQuarter) {
+        price = [JYSystemConfigModel sharedModel].payzsAmount;
+    } else if (vipType == JYVipTypeYear) {
+        price = [JYSystemConfigModel sharedModel].payhjAmount;
+    }
+    
+    orderInfo.orderPrice = price;
+    
+    NSString *orderDescription = @"VIP";
+    
+    orderInfo.orderDescription = orderDescription;
+    orderInfo.payType = payType;
+    orderInfo.reservedData = [NSString stringWithFormat:@"%@$%@", JY_REST_APPID, JY_CHANNEL_NO];
+    orderInfo.createTime = [JYUtil timeStringFromDate:[NSDate date] WithDateFormat:KDateFormatLong];
+    orderInfo.payPointType = vipType;
+    orderInfo.userId = [JYUtil UUID];
+    
+    return orderInfo;
+}
+
+- (QBContentInfo *)createContentInfo {
+    QBContentInfo *contenInfo = [[QBContentInfo alloc] init];
+    contenInfo.contentId = self.baseModel.programId;
+    contenInfo.contentType = self.baseModel.programType;
+    contenInfo.contentLocation = self.baseModel.programLocation;
+    contenInfo.columnId = self.baseModel.realColumnId;
+    contenInfo.columnType = self.baseModel.channelType;
+    return contenInfo;
+}
+
+- (void)hidePayment {
+//    [[QBStatsManager sharedManager] statsPayWithOrderNo:nil payAction:QBStatsPayActionClose payResult:QBPayResultUnknown forBaseModel:self.baseModel andTabIndex:[JYUtil currentTabPageIndex] subTabIndex:[JYUtil currentSubTabPageIndex]];
+    
+    CATransition *animation = [CATransition animation];
+    animation.duration = 1.0;
+    animation.timingFunction = UIViewAnimationCurveEaseInOut;
+    animation.type = @"rippleEffect";
+    animation.subtype = kCATransitionFromBottom;
+    [self.view.window.layer addAnimation:animation forKey:nil];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)notifyPaymentResult:(QBPayResult)result withPaymentInfo:(QBPaymentInfo *)paymentInfo {
+    if (result == QBPayResultSuccess) {
+//        [JYUtil registerVip:paymentInfo.payPointType];
+//        [JYUtil ]
+        [self hidePayment];
+        [[JYHudManager manager] showHudWithText:@"支付成功"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];
+        
+        
+//        if ([JYUtil currentVipLevel] == PPVipLevelVipA && ![PP_CHANNEL_NO isEqualToString:@"IOS_XIUXIU_0001"]) {
 //            [PPUtil showSpreadBanner];
 //        }
-//        
-//    } else if (result == QBPayResultCancelled) {
-//        [[PPHudManager manager] showHudWithText:@"支付取消"];
-//    } else {
-//        [[PPHudManager manager] showHudWithText:@"支付失败"];
-//    }
-//    
+        
+    } else if (result == QBPayResultCancelled) {
+        [[JYHudManager manager] showHudWithText:@"支付取消"];
+    } else {
+        [[JYHudManager manager] showHudWithText:@"支付失败"];
+    }
+    
 //    if (paymentInfo.orderId != nil) {
 //        [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionPayBack andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
 //    }
-//}
+}
 
 
 #pragma mark - UIFunctions
@@ -193,6 +194,8 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
             make.edges.mas_equalTo(self.view);
         }];
     }
+    _defaultIndexPath = [NSIndexPath indexPathForRow:JYPayPointRowYear inSection:JYPayCellSectionPayPointCell];
+    [_layoutTableView selectRowAtIndexPath:_defaultIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -261,7 +264,6 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     } else if (indexPath.section == JYPayCellSectionTitleCell){
         return kWidth(170);
     } else if (indexPath.section == JYPayCellSectionPayPointCell){
-        
         return kWidth(200);
     } else if (indexPath.section == JYPayCellSectionPayTypeCell){
         return kWidth(130);
@@ -271,7 +273,6 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if (indexPath.section == JYPayCellSectionPayPointCell) {
         for (int i = 0; i < [_layoutTableView numberOfRowsInSection:JYPayCellSectionPayPointCell]; i++) {
            JYPayPointCell *cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:JYPayCellSectionPayPointCell]];
@@ -279,8 +280,14 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
         }
         JYPayPointCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.isSelected = YES;
+        _defaultIndexPath = indexPath;
     } else if (indexPath.section == JYPayCellSectionPayTypeCell) {
-        
+        JYVipType vipType = (JYVipType)_defaultIndexPath.row;
+        if (indexPath.row == JYPayTypeRowWechat) {
+            [self payForPaymentType:QBOrderPayTypeWeChatPay vipLevel:vipType];
+        } else if (indexPath.row == JYPayTypeRowAlipay) {
+            [self payForPaymentType:QBOrderPayTypeAlipay vipLevel:vipType];
+        }
     }
 }
 

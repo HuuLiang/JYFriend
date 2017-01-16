@@ -28,6 +28,9 @@
 + (NSString *)imageToken;
 + (void)setImageToken:(NSString *)imageToken;
 
++ (BOOL)isVip;
++ (void)setVipExpireTime:(NSString *)expireTime;
+
 + (BOOL)isIpad;
 + (NSString *)appVersion;
 + (NSString *)deviceName;
