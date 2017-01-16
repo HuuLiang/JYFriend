@@ -45,10 +45,6 @@
     
     [self userFindPassWord];
     [self userRegister];
-//    [self]
-//    [self.view bk_whenTapped:^{
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginNotificationName object:nil];
-//    }];
 }
 
 - (BOOL)alwaysHideNavigationBar {

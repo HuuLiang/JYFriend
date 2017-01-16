@@ -103,7 +103,7 @@
 		B3F551741E234136007CE12B /* JYNearPesonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F551731E234136007CE12B /* JYNearPesonModel.m */; };
 		EC24A2F41E0E2887000B77A9 /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC24A2F31E0E2887000B77A9 /* provinces.plist */; };
 		EC24A2F81E0E463E000B77A9 /* VPImageCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC24A2F71E0E463E000B77A9 /* VPImageCropperViewController.m */; };
-		EC2A62B41E2CDBCB0070C6AC /* login_background.png in Resources */ = {isa = PBXBuildFile; fileRef = EC2A62B31E2CDBCB0070C6AC /* login_background.png */; };
+		EC2A62B61E2CE56E0070C6AC /* login_background.png in Resources */ = {isa = PBXBuildFile; fileRef = EC2A62B51E2CE56E0070C6AC /* login_background.png */; };
 		EC2A71091E0B81E600BED161 /* JYContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A71081E0B81E600BED161 /* JYContactViewController.m */; };
 		EC2A710C1E0B81F800BED161 /* JYNearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2A710B1E0B81F800BED161 /* JYNearViewController.m */; };
 		EC485D101E120F0B00F3F18B /* JYMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC485D0F1E120F0B00F3F18B /* JYMessageModel.m */; };
@@ -503,7 +503,7 @@
 		EC24A2F31E0E2887000B77A9 /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
 		EC24A2F61E0E463E000B77A9 /* VPImageCropperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPImageCropperViewController.h; sourceTree = "<group>"; };
 		EC24A2F71E0E463E000B77A9 /* VPImageCropperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VPImageCropperViewController.m; sourceTree = "<group>"; };
-		EC2A62B31E2CDBCB0070C6AC /* login_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_background.png; sourceTree = "<group>"; };
+		EC2A62B51E2CE56E0070C6AC /* login_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_background.png; sourceTree = "<group>"; };
 		EC2A71071E0B81E600BED161 /* JYContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYContactViewController.h; sourceTree = "<group>"; };
 		EC2A71081E0B81E600BED161 /* JYContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYContactViewController.m; sourceTree = "<group>"; };
 		EC2A710A1E0B81F800BED161 /* JYNearViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNearViewController.h; sourceTree = "<group>"; };
@@ -1879,7 +1879,7 @@
 				B3F520BB1E28B77400EFC665 /* emotion */,
 				EC4F98301E15FB4B005818F1 /* emotions */,
 				EC24A2F31E0E2887000B77A9 /* provinces.plist */,
-				EC2A62B31E2CDBCB0070C6AC /* login_background.png */,
+				EC2A62B51E2CE56E0070C6AC /* login_background.png */,
 				EC6F09C01E287194004A0816 /* mine_background.jpg */,
 			);
 			path = Resources;
@@ -2241,7 +2241,6 @@
 				B3F521001E28B77400EFC665 /* emoji_4.png in Resources */,
 				EC88F8331E10B7B5009AAEED /* Fav_Cell_Loc@2x.png in Resources */,
 				EC4F98861E15FB4C005818F1 /* e130.gif in Resources */,
-				EC2A62B41E2CDBCB0070C6AC /* login_background.png in Resources */,
 				EC88F8451E10B7B5009AAEED /* RecordingSignal001@2x.png in Resources */,
 				B3F520E11E28B77400EFC665 /* emoji.txt in Resources */,
 				B3F520F41E28B77400EFC665 /* emoji_26.png in Resources */,
@@ -2301,6 +2300,7 @@
 				B3F520EB1E28B77400EFC665 /* emoji_18.png in Resources */,
 				EC4F98821E15FB4C005818F1 /* e126.gif in Resources */,
 				EC4F989E1E15FB4C005818F1 /* e154.gif in Resources */,
+				EC2A62B61E2CE56E0070C6AC /* login_background.png in Resources */,
 				EC88F8421E10B7B5009AAEED /* ReceiverVoiceNodePlaying@2x.png in Resources */,
 				EC88F8311E10B7B5009AAEED /* face@2x.png in Resources */,
 				EC4F98941E15FB4C005818F1 /* e144.gif in Resources */,

@@ -57,6 +57,7 @@ typedef NS_ENUM(NSUInteger,JYVipType) {
 
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 
+#define kUserVipExpireTimeKeyName               @"kUserVipExpireTimeKeyName"
 #define kPaidNotificationName                   @"JYFriendPaidNotification"
 #define kUserLoginNotificationName              @"JYFriendUserLoginNotification"
 #define KUserChangeInfoNotificationName         @"JYFriendUserChangeInfoNotificationName"

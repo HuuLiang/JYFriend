@@ -236,6 +236,9 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         } else if (chatMessage.messageType == JYMessageTypeVioce) {
             msg = chatMessage.messageContent;
             contentType = @"VOICE";
+        } else if (chatMessage.messageType == JYMessageTypeEmotion) {
+            msg = chatMessage.messageContent;
+            contentType = @"IMG";
         }
         
 //        @weakify(self);
