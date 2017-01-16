@@ -42,10 +42,125 @@ typedef NS_ENUM(NSUInteger , JYPayTypeRow) {
 {
     UITableView *_layoutTableView;
 }
-
+@property (nonatomic) QBBaseModel *baseModel;
+@property (nonatomic,copy) dispatch_block_t completionHandler;
 @end
 
 @implementation JYPaymentViewController
+QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
+
+#pragma mark - PayFunctions
+
+//- (void)payForPaymentType:(QBOrderPayType)orderPayType vipLevel:(PPVipLevel)vipLevel {
+//    
+//    [[QBPaymentManager sharedManager] startPaymentWithOrderInfo:[self createOrderInfoWithPaymentType:orderPayType vipLevel:vipLevel]
+//                                                    contentInfo:[self createContentInfo]
+//                                                    beginAction:^(QBPaymentInfo * paymentInfo) {
+//                                                        if (paymentInfo) {
+//                                                            [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionGoToPay andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
+//                                                        }
+//                                                    } completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+//                                                        [self notifyPaymentResult:payResult withPaymentInfo:paymentInfo];
+//                                                    }];
+//}
+//
+//- (QBOrderInfo *)createOrderInfoWithPaymentType:(QBOrderPayType)payType vipLevel:(PPVipLevel)vipLevel {
+//    QBOrderInfo *orderInfo = [[QBOrderInfo alloc] init];
+//    
+//    NSString *channelNo = PP_CHANNEL_NO;
+//    if (channelNo.length > 14) {
+//        channelNo = [channelNo substringFromIndex:channelNo.length-14];
+//    }
+//    
+//    channelNo = [channelNo stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
+//    
+//    NSString *uuid = [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)];
+//    NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
+//    orderInfo.orderId = orderNo;
+//    
+//    NSUInteger price = 0;
+//    if (vipLevel == PPVipLevelVipA) {
+//        price = [PPSystemConfigModel sharedModel].payAmount;
+//    } else if (vipLevel == PPVipLevelVipB) {
+//        if ([PPUtil currentVipLevel] == PPVipLevelNone) {
+//            price = [PPSystemConfigModel sharedModel].payAmount + [PPSystemConfigModel sharedModel].payzsAmount;
+//        } else {
+//            price = [PPSystemConfigModel sharedModel].payzsAmount;
+//        }
+//    } else if (vipLevel == PPVipLevelVipC) {
+//        price = [PPSystemConfigModel sharedModel].payhjAmount;
+//    }
+//    
+//    orderInfo.orderPrice = price;
+//    
+//    NSString *orderDescription = [[PPSystemConfigModel sharedModel] currentContactName] ?: @"VIP";
+//    
+//    orderInfo.orderDescription = orderDescription;
+//    orderInfo.payType = payType;
+//    orderInfo.reservedData = [PPUtil paymentReservedData];
+//    orderInfo.createTime = [PPUtil currentTimeStringWithFormat:KTimeFormatLong];
+//    orderInfo.payPointType = vipLevel;
+//    orderInfo.userId = [PPUtil userId];
+//    
+//    return orderInfo;
+//}
+//
+//- (QBContentInfo *)createContentInfo {
+//    QBContentInfo *contenInfo = [[QBContentInfo alloc] init];
+//    contenInfo.contentId = self.baseModel.programId;
+//    contenInfo.contentType = self.baseModel.programType;
+//    contenInfo.contentLocation = self.baseModel.programLocation;
+//    contenInfo.columnId = self.baseModel.realColumnId;
+//    contenInfo.columnType = self.baseModel.channelType;
+//    return contenInfo;
+//}
+//
+//- (void)hidePayment {
+//    [[QBStatsManager sharedManager] statsPayWithOrderNo:nil payAction:QBStatsPayActionClose payResult:QBPayResultUnknown forBaseModel:self.baseModel andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
+//    
+//    CATransition *animation = [CATransition animation];
+//    animation.duration = 1.0;
+//    animation.timingFunction = UIViewAnimationCurveEaseInOut;
+//    animation.type = @"rippleEffect";
+//    animation.subtype = kCATransitionFromBottom;
+//    [self.view.window.layer addAnimation:animation forKey:nil];
+//    
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
+//
+//- (void)notifyPaymentResult:(QBPayResult)result withPaymentInfo:(QBPaymentInfo *)paymentInfo {
+//    if (result == QBPayResultSuccess) {
+//        [PPUtil registerVip:paymentInfo.payPointType];
+//        [self hidePayment];
+//        [[PPHudManager manager] showHudWithText:@"支付成功"];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];
+//        
+//        if ([PPUtil currentVipLevel] == PPVipLevelVipA && ![PP_CHANNEL_NO isEqualToString:@"IOS_XIUXIU_0001"]) {
+//            [PPUtil showSpreadBanner];
+//        }
+//        
+//    } else if (result == QBPayResultCancelled) {
+//        [[PPHudManager manager] showHudWithText:@"支付取消"];
+//    } else {
+//        [[PPHudManager manager] showHudWithText:@"支付失败"];
+//    }
+//    
+//    if (paymentInfo.orderId != nil) {
+//        [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionPayBack andTabIndex:[PPUtil currentTabPageIndex] subTabIndex:[PPUtil currentSubTabPageIndex]];
+//    }
+//}
+
+
+#pragma mark - UIFunctions
+
+- (instancetype)initWithBaseModel:(QBBaseModel *)baseModel
+{
+    self = [super init];
+    if (self) {
+        self.baseModel = baseModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,8 +168,15 @@ typedef NS_ENUM(NSUInteger , JYPayTypeRow) {
     @weakify(self);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"取消" style:UIBarButtonItemStylePlain handler:^(id sender) {
         @strongify(self);
-        [self.navigationController popViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"充值称为会员"
+                                                                                style:UIBarButtonItemStylePlain
+                                                                              handler:nil];
+    [self.navigationItem.leftBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kWidth(36)],
+                                                                    NSForegroundColorAttributeName:kColor(@"#333333")} forState:UIControlStateNormal];
+    
     _layoutTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _layoutTableView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
     _layoutTableView.delegate = self;
@@ -67,9 +189,9 @@ typedef NS_ENUM(NSUInteger , JYPayTypeRow) {
     [_layoutTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:_layoutTableView];
     {
-    [_layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view);
-    }];
+        [_layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(self.view);
+        }];
     }
 }
 
@@ -96,6 +218,7 @@ typedef NS_ENUM(NSUInteger , JYPayTypeRow) {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == JYPayCellSectionNewDynamicCell) {
         JYPayNewDynamicCell *newDynamicCell = [tableView dequeueReusableCellWithIdentifier:kPayNewDynamicCellIdentifier forIndexPath:indexPath];
+        newDynamicCell.scrollContents = @[@"111",@"222",@"333",@"444",@"555",@"666",@"777"];
         return newDynamicCell;
     } else if (indexPath.section == JYPayCellSectionTitleCell) {
         JYPayHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:kPayHeaderCellIdentifier forIndexPath:indexPath];
@@ -134,30 +257,30 @@ typedef NS_ENUM(NSUInteger , JYPayTypeRow) {
 
 - (CGFloat )tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == JYPayCellSectionNewDynamicCell) {
-        return kWidth(110);
-    }else if (indexPath.section == JYPayCellSectionTitleCell){
+        return kWidth(64);
+    } else if (indexPath.section == JYPayCellSectionTitleCell){
         return kWidth(170);
-    }else if (indexPath.section == JYPayCellSectionPayPointCell){
-    
+    } else if (indexPath.section == JYPayCellSectionPayPointCell){
+        
         return kWidth(200);
-    }else if (indexPath.section == JYPayCellSectionPayTypeCell){
+    } else if (indexPath.section == JYPayCellSectionPayTypeCell){
         return kWidth(130);
     }
-
+    
     return 0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == JYPayCellSectionPayPointCell) {
-
         for (int i = 0; i < [_layoutTableView numberOfRowsInSection:JYPayCellSectionPayPointCell]; i++) {
            JYPayPointCell *cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:JYPayCellSectionPayPointCell]];
             cell.isSelected = NO;
         }
         JYPayPointCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.isSelected = YES;
-
+    } else if (indexPath.section == JYPayCellSectionPayTypeCell) {
+        
     }
 }
 

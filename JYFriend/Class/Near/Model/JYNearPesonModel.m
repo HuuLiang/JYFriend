@@ -39,11 +39,9 @@
             persons = self.response;
         }
         
-            if (handler) {
-                handler(respStatus == QBURLResponseSuccess , persons);
-            }
-        
-        
+        if (handler) {
+            handler(respStatus == QBURLResponseSuccess , persons);
+        }
     }];
     
     return result;

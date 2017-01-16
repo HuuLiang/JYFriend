@@ -9,10 +9,9 @@
 #import "JYBaseViewController.h"
 #import <AVKit/AVKit.h>
 #import <MediaPlayer/MediaPlayer.h>
-
 #import "JYDetailViewController.h"
-
 #import "JYPaymentViewController.h"
+#import "JYNavigationController.h"
 
 
 @interface JYBaseViewController ()
@@ -49,11 +48,12 @@
     }
     JYDetailViewController *detailVC = [[JYDetailViewController alloc] initWithUserId:userId time:timeStr distance:distance];
     [self.navigationController pushViewController:detailVC animated:YES];
+}
 
-- (void)pay{
+- (void)presentPayViewController {
     JYPaymentViewController *payVC = [[JYPaymentViewController alloc] init];
-    [self.navigationController pushViewController:payVC animated:YES];
-
+    JYNavigationController *payNav = [[JYNavigationController alloc] initWithRootViewController:payVC];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:payNav animated:YES completion:nil];
 }
 
 

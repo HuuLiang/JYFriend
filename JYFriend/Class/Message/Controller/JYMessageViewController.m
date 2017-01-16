@@ -12,6 +12,7 @@
 #import "JYMessageViewController+XHBMessageDelegate.h"
 #import "JYUserCreateMessageModel.h"
 #import "JYAutoContactManager.h"
+#import "JYContactModel.h"
 
 
 @interface JYMessageViewController ()
@@ -84,6 +85,25 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    JYMessageModel *lastMessage = [self.chatMessages lastObject];
+    JYContactModel *contactModel = [JYContactModel findContactInfoWithUserId:self.user.userId];
+    if (contactModel && lastMessage) {
+        if (![contactModel.recentTime isEqualToString:lastMessage.messageTime]) {
+            //时间
+            contactModel.recentTime = lastMessage.messageTime;
+            //内容
+            if (lastMessage.messageType == JYMessageTypeText) {
+                contactModel.recentMessage = lastMessage.messageContent;
+            } else if (lastMessage.messageType == JYMessageTypePhoto || lastMessage.messageType == JYMessageTypeEmotion) {
+                contactModel.recentMessage = @"[图片表情]";
+            } else if (lastMessage.messageType == JYMessageTypeVioce) {
+                contactModel.recentMessage = @"[语音消息]";
+            }
+            contactModel.unreadMessages = 0;
+        }
+    }
+    [contactModel saveOrUpdate];
 }
 
 - (void)reloadChatMessages {
