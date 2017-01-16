@@ -56,7 +56,9 @@
 }
 
 + (NSString *)fetchTimeIntervalToCurrentTimeWithStartTime:(NSString *)startTime{
-                      
+    if (!startTime) {
+        return nil;
+    }
    NSInteger timeInterVal = [self dateTimeDifferenceWithStartTime:[JYUtil timeStringFromDate:[JYUtil dateFromString:startTime WithDateFormat:@"yyyy年MM月dd日 HH:mm:ss"] WithDateFormat:kTimeFormat] endTime:[self currentTime]];
     NSInteger month = timeInterVal / (D_DAY*30);
     NSInteger week = timeInterVal / D_WEEK;

@@ -32,6 +32,7 @@
 		B361847A1E10FB5500DD55A5 /* JYDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36184791E10FB5500DD55A5 /* JYDetailViewController.m */; };
 		B36184801E11098100DD55A5 /* JYPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B361847F1E11098100DD55A5 /* JYPhotoCollectionViewCell.m */; };
 		B36E6E7F1E2C70A500FF0CCC /* JYPayNewDynamicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B36E6E7E1E2C70A500FF0CCC /* JYPayNewDynamicCell.m */; };
+		B36E6E821E2CCB9200FF0CCC /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = B36E6E811E2CCB9200FF0CCC /* NSString+Size.m */; };
 		B36F15261E1C89540081500B /* JYChangeInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B36F15251E1C89540081500B /* JYChangeInfoCell.m */; };
 		B36F15291E1CA8E70081500B /* JYChangeSignatureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B36F15281E1CA8E70081500B /* JYChangeSignatureCell.m */; };
 		B36F152C1E1CEFB10081500B /* JYChangeInfoTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B36F152B1E1CEFB10081500B /* JYChangeInfoTableView.m */; };
@@ -397,6 +398,8 @@
 		B361847F1E11098100DD55A5 /* JYPhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		B36E6E7D1E2C70A500FF0CCC /* JYPayNewDynamicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPayNewDynamicCell.h; sourceTree = "<group>"; };
 		B36E6E7E1E2C70A500FF0CCC /* JYPayNewDynamicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPayNewDynamicCell.m; sourceTree = "<group>"; };
+		B36E6E801E2CCB9200FF0CCC /* NSString+Size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Size.h"; sourceTree = "<group>"; };
+		B36E6E811E2CCB9200FF0CCC /* NSString+Size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Size.m"; sourceTree = "<group>"; };
 		B36F15241E1C89540081500B /* JYChangeInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYChangeInfoCell.h; sourceTree = "<group>"; };
 		B36F15251E1C89540081500B /* JYChangeInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYChangeInfoCell.m; sourceTree = "<group>"; };
 		B36F15271E1CA8E70081500B /* JYChangeSignatureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYChangeSignatureCell.h; sourceTree = "<group>"; };
@@ -2048,6 +2051,8 @@
 				EC4F98A01E164212005818F1 /* NSDate+timeStamp.m */,
 				B3195E5F1E16258500193D4F /* UIScrollView+Refresh.h */,
 				B3195E601E16258500193D4F /* UIScrollView+Refresh.m */,
+				B36E6E801E2CCB9200FF0CCC /* NSString+Size.h */,
+				B36E6E811E2CCB9200FF0CCC /* NSString+Size.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2358,6 +2363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B36E6E821E2CCB9200FF0CCC /* NSString+Size.m in Sources */,
 				EC88F7F31E10B7B4009AAEED /* UIScrollView+XHkeyboardControl.m in Sources */,
 				EC88F81E1E10B7B5009AAEED /* SETextMagnifierRanged.m in Sources */,
 				ECCFA0801DEC0697000F4E7A /* JYHudManager.m in Sources */,

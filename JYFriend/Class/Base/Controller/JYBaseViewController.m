@@ -56,7 +56,6 @@
     [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:payNav animated:YES completion:nil];
 }
 
-
 - (UIViewController *)playerVCWithVideo:(NSString *)videoUrl {
     UIViewController *retVC;
     if (NSClassFromString(@"AVPlayerViewController")) {
