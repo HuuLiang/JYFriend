@@ -16,9 +16,9 @@
 
 @implementation JYPayTypeCell
 
-- (instancetype)init
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super init];
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor clearColor];
@@ -33,7 +33,7 @@
         {
             [_payButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.center.equalTo(self.contentView);
-                make.size.mas_equalTo(CGSizeMake(kWidth(480), kWidth(98)));
+                make.size.mas_equalTo(CGSizeMake(kWidth(360), kWidth(88)));
             }];
         }
         

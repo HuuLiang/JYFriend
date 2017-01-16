@@ -15,4 +15,5 @@
 //- (instancetype)init __attribute__ ((unavailable("Use initWithTitle: instead")));
 - (instancetype)initWithTitle:(NSString *)title;
 - (UIViewController *)playerVCWithVideo:(NSString *)videoUrl;
+- (void)pay;
 @end

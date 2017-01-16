@@ -23,9 +23,9 @@
 
 @implementation JYPayPointCell
 
-- (instancetype)init
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super init];
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor clearColor];
@@ -62,6 +62,7 @@
         {
             [_frameView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.edges.mas_equalTo(self.contentView).insets(UIEdgeInsetsMake(0, kWidth(40), 0, kWidth(40)));
+                make.bottom.mas_equalTo(self.contentView).mas_offset(kWidth(-20));
             }];
             
             [_title mas_makeConstraints:^(MASConstraintMaker *make) {

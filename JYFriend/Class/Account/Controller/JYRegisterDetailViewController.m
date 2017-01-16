@@ -49,7 +49,7 @@ static NSString *const kDetailHeaderViewReusableIdentifier = @"DetailHeaderViewR
         userImgData = UIImagePNGRepresentation(userImg);
     }
     [JYUser currentUser].userImg = userImgData;
-    
+    [kCurrentUser saveOrUpdate];
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _tableView.backgroundColor = self.view.backgroundColor;
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];

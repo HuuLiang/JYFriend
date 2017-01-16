@@ -31,6 +31,7 @@
 		B35DCF091E1BCDDC005C5969 /* JYChangeUserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = B35DCF081E1BCDDC005C5969 /* JYChangeUserInfoController.m */; };
 		B361847A1E10FB5500DD55A5 /* JYDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36184791E10FB5500DD55A5 /* JYDetailViewController.m */; };
 		B36184801E11098100DD55A5 /* JYPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B361847F1E11098100DD55A5 /* JYPhotoCollectionViewCell.m */; };
+		B36E6E7F1E2C70A500FF0CCC /* JYPayNewDynamicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B36E6E7E1E2C70A500FF0CCC /* JYPayNewDynamicCell.m */; };
 		B36F15261E1C89540081500B /* JYChangeInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B36F15251E1C89540081500B /* JYChangeInfoCell.m */; };
 		B36F15291E1CA8E70081500B /* JYChangeSignatureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B36F15281E1CA8E70081500B /* JYChangeSignatureCell.m */; };
 		B36F152C1E1CEFB10081500B /* JYChangeInfoTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B36F152B1E1CEFB10081500B /* JYChangeInfoTableView.m */; };
@@ -394,6 +395,8 @@
 		B36184791E10FB5500DD55A5 /* JYDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailViewController.m; sourceTree = "<group>"; };
 		B361847E1E11098100DD55A5 /* JYPhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPhotoCollectionViewCell.h; sourceTree = "<group>"; };
 		B361847F1E11098100DD55A5 /* JYPhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPhotoCollectionViewCell.m; sourceTree = "<group>"; };
+		B36E6E7D1E2C70A500FF0CCC /* JYPayNewDynamicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPayNewDynamicCell.h; sourceTree = "<group>"; };
+		B36E6E7E1E2C70A500FF0CCC /* JYPayNewDynamicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPayNewDynamicCell.m; sourceTree = "<group>"; };
 		B36F15241E1C89540081500B /* JYChangeInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYChangeInfoCell.h; sourceTree = "<group>"; };
 		B36F15251E1C89540081500B /* JYChangeInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYChangeInfoCell.m; sourceTree = "<group>"; };
 		B36F15271E1CA8E70081500B /* JYChangeSignatureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYChangeSignatureCell.h; sourceTree = "<group>"; };
@@ -926,6 +929,8 @@
 				B33B18301E2B94BA003803C4 /* JYPayPointCell.m */,
 				B33B18321E2BA7BF003803C4 /* JYPayHeaderCell.h */,
 				B33B18331E2BA7BF003803C4 /* JYPayHeaderCell.m */,
+				B36E6E7D1E2C70A500FF0CCC /* JYPayNewDynamicCell.h */,
+				B36E6E7E1E2C70A500FF0CCC /* JYPayNewDynamicCell.m */,
 			);
 			name = PayView;
 			sourceTree = "<group>";
@@ -2372,6 +2377,7 @@
 				EC88F8081E10B7B4009AAEED /* XHMessageVideoConverPhotoFactory.m in Sources */,
 				EC88F7F51E10B7B4009AAEED /* XHAudioPlayerHelper.m in Sources */,
 				ECCFA09D1DEC0EC0000F4E7A /* JYApplicationManager.m in Sources */,
+				B36E6E7F1E2C70A500FF0CCC /* JYPayNewDynamicCell.m in Sources */,
 				EC88F80A1E10B7B4009AAEED /* XHVideoOutputSampleBufferFactory.m in Sources */,
 				EC88F8141E10B7B4009AAEED /* SEConstants.m in Sources */,
 				EC9843E41E07CA7900754471 /* JYNavigationController.m in Sources */,

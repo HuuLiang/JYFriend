@@ -9,6 +9,7 @@
 #import "JYBaseViewController.h"
 #import <AVKit/AVKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "JYPaymentViewController.h"
 
 @interface JYBaseViewController ()
 
@@ -35,6 +36,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)pay{
+    JYPaymentViewController *payVC = [[JYPaymentViewController alloc] init];
+    [self.navigationController pushViewController:payVC animated:YES];
 }
 
 
