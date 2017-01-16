@@ -48,7 +48,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, detailButtons)
             JYDetailBottomButton *button = [[JYDetailBottomButton alloc] init];
             [button setTitle:obj.title forState:UIControlStateNormal];
             [button setImage:[UIImage imageNamed:obj.image] forState:UIControlStateNormal];
-            if ([obj.title isEqualToString:@"关注TA"])  [button setImage:[UIImage imageNamed:@"detail_greet_icon"] forState:UIControlStateSelected];
+            if ([obj.title isEqualToString:@"关注TA"])  [button setImage:[UIImage imageNamed:@"detail_attention_selection_icon"] forState:UIControlStateSelected];
             [button addTarget:self action:@selector(currentBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             if (idx < buttonModels.count - 1) {
                 button.hasLine = YES;

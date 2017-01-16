@@ -16,6 +16,7 @@
 #import "JYMyPhotoBigImageView.h"
 #import "JYLocalVideoUtils.h"
 #import "JYRedPackPopViewController.h"
+#import "JYMessageViewController.h"
 
 static NSString *const kPhotoCollectionViewCellIdentifier = @"PhotoCollectionViewCell_Identifier";
 static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
@@ -109,6 +110,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
     _bottomView.buttonModels = @[[JYDetailBottomModel creatBottomModelWith:@"关注TA" withImage:@"detail_attention_icon"],
                                  [JYDetailBottomModel creatBottomModelWith:@"发消息" withImage:@"detail_message_icon"],
                                  [JYDetailBottomModel creatBottomModelWith:@"打招呼" withImage:@"detail_greet_icon"]];
+    @weakify(self);
     _bottomView.action = ^(UIButton *btn){
         if ([btn.titleLabel.text isEqualToString:@"关注TA"]) {
             btn.selected = !btn.selected;
@@ -117,6 +119,16 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
             animation.keyTimes = @[@(0.0),@(0.3),@(0.7),@(1.0)];
             animation.calculationMode = kCAAnimationLinear;
             [btn.imageView.layer addAnimation:animation forKey:@"SHOW"];
+        }else if ([btn.titleLabel.text isEqualToString:@"发消息"]){
+            @strongify(self);
+           JYUser *user = [[JYUser alloc] init];
+            JYUserInfoModel *userInfo =  self.detailModel.userInfo;
+            user.userId = userInfo.userId;
+            userInfo.nickName = userInfo.nickName;
+            userInfo.logoUrl = userInfo.logoUrl;
+            [JYMessageViewController showMessageWithUser:user inViewController:self];
+        }else if ([btn.titleLabel.text isEqualToString:@"打招呼"]){
+        
         }
     };
     
