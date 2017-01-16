@@ -32,9 +32,9 @@
         
         
         _frameView = [[UIView alloc] init];
-        _frameView.layer.cornerRadius = [JYUtil isIpad] ? 10 : kWidth(10);
-        _frameView.layer.borderColor = [UIColor colorWithHexString:@"#B854B4"].CGColor;
-        _frameView.layer.borderWidth = 2.f;
+        _frameView.layer.cornerRadius = [JYUtil isIpad] ? 20 : kWidth(20);
+        _frameView.layer.borderColor = [UIColor colorWithHexString:@"#E147A5"].CGColor;
+        _frameView.layer.borderWidth = kWidth(2);
         _frameView.layer.masksToBounds = YES;
         [self.contentView addSubview:_frameView];
         
@@ -61,32 +61,32 @@
         
         {
             [_frameView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.mas_equalTo(self.contentView).insets(UIEdgeInsetsMake(0, kWidth(40), 0, kWidth(40)));
+                make.edges.mas_equalTo(self.contentView).insets(UIEdgeInsetsMake(0, kWidth(30), kWidth(20), kWidth(30)));
                 make.bottom.mas_equalTo(self.contentView).mas_offset(kWidth(-20));
             }];
             
             [_title mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_frameView).offset(kWidth(20));
-                make.top.equalTo(_frameView).offset(kWidth(16));
-                make.height.mas_equalTo(kWidth(52));
+                make.left.equalTo(_frameView).offset(kWidth(30));
+                make.top.equalTo(_frameView).offset(kWidth(42));
+                make.height.mas_equalTo(kWidth(40));
             }];
             
             [_subTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_frameView).offset(kWidth(20));
-                make.bottom.equalTo(_frameView.mas_bottom).offset(-kWidth(16));
-                make.height.mas_equalTo(kWidth(40));
+                make.left.equalTo(_frameView).offset(kWidth(30));
+                make.bottom.equalTo(_frameView.mas_bottom).offset(-kWidth(42));
+                make.height.mas_equalTo(kWidth(30));
             }];
             
             [_moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(_frameView);
                 make.right.equalTo(_frameView.mas_right).offset(-kWidth(106));
-                make.height.mas_equalTo(kWidth(50));
+                make.height.mas_equalTo(kWidth(30));
             }];
             
             [_seletedImgV mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(_frameView);
-                make.right.equalTo(_frameView.mas_right).offset(-kWidth(46));
-                make.size.mas_equalTo(CGSizeMake(kWidth(36), kWidth(36)));
+                make.right.equalTo(_frameView.mas_right).offset(-kWidth(30));
+                make.size.mas_equalTo(CGSizeMake(kWidth(40), kWidth(40)));
             }];
         }
         
@@ -116,17 +116,17 @@
     _isSelected = isSelected;
     
     if (_isSelected) {
-        _title.textColor = [UIColor colorWithHexString:@"#B854B4"];
-        _subTitle.textColor = [UIColor colorWithHexString:@"#B854B4"];
-        _moneyLabel.textColor = [UIColor colorWithHexString:@"#FF5722"];
+        _title.textColor = [UIColor colorWithHexString:@"#E147A5"];
+        _subTitle.textColor = [UIColor colorWithHexString:@"#E147A5"];
+        _moneyLabel.textColor = [UIColor colorWithHexString:@"#E147A5"];
         _seletedImgV.image = [UIImage imageNamed:@"pay_selected"];
-        _frameView.layer.borderColor = [UIColor colorWithHexString:@"#B854B4"].CGColor;
+        _frameView.layer.borderColor = [UIColor colorWithHexString:@"#E147A5"].CGColor;
     } else {
-        _title.textColor = [UIColor colorWithHexString:@"#999999"];
-        _subTitle.textColor = [UIColor colorWithHexString:@"#999999"];
-        _moneyLabel.textColor = [UIColor colorWithHexString:@"#999999"];
+        _title.textColor = [UIColor colorWithHexString:@"#333333"];
+        _subTitle.textColor = [UIColor colorWithHexString:@"#666666"];
+        _moneyLabel.textColor = [UIColor colorWithHexString:@"#FF680D"];
         _seletedImgV.image = [UIImage imageNamed:@"pay_normal"];
-        _frameView.layer.borderColor = [UIColor colorWithHexString:@"#999999"].CGColor;
+        _frameView.layer.borderColor = [UIColor colorWithHexString:@"#D4D4D4"].CGColor;
     }
 }
 

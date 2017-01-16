@@ -233,10 +233,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
         user.nickName = contact.nickName;
         user.userImgKey = contact.logoUrl;
         
-        //置空未读消息数量
-        contact.unreadMessages = 0;
-        [contact saveOrUpdate];
-        
         [JYMessageViewController showMessageWithUser:user inViewController:self];
     }
 }

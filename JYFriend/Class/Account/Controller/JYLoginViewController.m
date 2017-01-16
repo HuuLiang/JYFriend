@@ -29,7 +29,7 @@
     [super viewDidLoad];
     
     _bgImgV = [[UIImageView alloc] init];
-    _bgImgV.image = [UIImage imageNamed:@"login_background.png"];
+    _bgImgV.image = [UIImage imageNamed:@"login_background"];
     _bgImgV.contentMode = UIViewContentModeScaleToFill;
     _bgImgV.userInteractionEnabled = YES;
     [self.view addSubview:_bgImgV];
@@ -45,10 +45,6 @@
     
     [self userFindPassWord];
     [self userRegister];
-//    [self]
-//    [self.view bk_whenTapped:^{
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginNotificationName object:nil];
-//    }];
 }
 
 - (BOOL)alwaysHideNavigationBar {

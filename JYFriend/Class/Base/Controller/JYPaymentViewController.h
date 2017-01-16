@@ -10,4 +10,11 @@
 
 @interface JYPaymentViewController : JYBaseViewController
 
+- (instancetype)initWithBaseModel:(QBBaseModel *)baseModel;
+
+- (void)hidePayment;
+
+- (void)notifyPaymentResult:(QBPayResult)result withPaymentInfo:(QBPaymentInfo *)paymentInfo;
+
+
 @end

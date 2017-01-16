@@ -32,7 +32,8 @@
         
         {
             [_payButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(self.contentView);
+                make.centerX.equalTo(self.contentView);
+                make.centerY.equalTo(self.contentView.mas_centerY).offset(kWidth(20));
                 make.size.mas_equalTo(CGSizeMake(kWidth(360), kWidth(88)));
             }];
         }

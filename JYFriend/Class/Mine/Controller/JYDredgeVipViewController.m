@@ -61,7 +61,7 @@
     @weakify(self);
     [vipBtn bk_addEventHandler:^(id sender) {
         @strongify(self);
-        [self pay];
+        [self presentPayViewController];
     } forControlEvents:UIControlEventTouchUpInside];
 
 }

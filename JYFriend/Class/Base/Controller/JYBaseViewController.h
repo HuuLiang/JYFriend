@@ -19,6 +19,7 @@
 //跳转到详情页
 - (void)pushDetailViewControllerWithUserId:(NSString *)userId time:(NSString *)timeStr distance:(NSString *)distance;
 
-- (void)pay;
+//支付弹窗
+- (void)presentPayViewController;
 
 @end

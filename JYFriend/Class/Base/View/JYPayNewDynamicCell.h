@@ -10,4 +10,6 @@
 
 @interface JYPayNewDynamicCell : UITableViewCell
 
+@property (nonatomic) NSArray *scrollContents;
+
 @end

@@ -24,14 +24,18 @@
     [usersList enumerateObjectsUsingBlock:^(JYCharacter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         //向消息缓存中加入打招呼的信息
         JYContactModel *contact =  [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=%@",obj.userId]];
+        if (contact.alreadyGreet) {
+            return ;
+        }
         if (!contact) {
             contact = [[JYContactModel alloc] init];
             contact.userType = JYContactUserTypeNormal;
             contact.userId = obj.userId;
             contact.logoUrl = obj.logoUrl;
             contact.nickName = obj.nickName;
+            contact.alreadyGreet = YES;
         }
-        contact.recentMessage = @"用户主动向机器人打了个招呼";
+        contact.recentMessage = @"你好啊，可以聊聊么。";
         contact.recentTime = [JYUtil timeStringFromDate:[JYUtil currentDate] WithDateFormat:KDateFormatLong];
         [contact saveOrUpdate];
         
@@ -46,5 +50,13 @@
     }];
 }
 
++ (JYContactModel *)findContactInfoWithUserId:(NSString *)userId {
+    JYContactModel *contact = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=%@",userId]];
+    if (contact) {
+        return contact;
+    } else {
+        return nil;
+    }
+}
 
 @end
