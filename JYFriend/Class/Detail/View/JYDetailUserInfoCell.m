@@ -45,13 +45,14 @@
     _detailLabel = [[UILabel alloc] init];
     _detailLabel.font = [UIFont systemFontOfSize:kWidth(28.)];
     _detailLabel.textColor = [UIColor colorWithHexString:@"#999999"];
+    _detailLabel.numberOfLines = 0;
     [self addSubview:_detailLabel];
     {
         [_detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.mas_equalTo(self);
             make.left.mas_equalTo(self).mas_offset(kWidth(30));
             make.right.mas_equalTo(self).mas_offset(kWidth(-30.));
-            make.height.mas_equalTo(kWidth(32.));
+//            make.height.mas_equalTo(kWidth(32.));
         }];
     }
     

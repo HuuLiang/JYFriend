@@ -49,13 +49,13 @@
     }
     JYDetailViewController *detailVC = [[JYDetailViewController alloc] initWithUserId:userId time:timeStr distance:distance];
     [self.navigationController pushViewController:detailVC animated:YES];
-
-- (void)pay{
-    JYPaymentViewController *payVC = [[JYPaymentViewController alloc] init];
-    [self.navigationController pushViewController:payVC animated:YES];
-
 }
 
+- (void)pay{
+        JYPaymentViewController *payVC = [[JYPaymentViewController alloc] init];
+        [self.navigationController pushViewController:payVC animated:YES];
+        
+    }
 
 - (UIViewController *)playerVCWithVideo:(NSString *)videoUrl {
     UIViewController *retVC;

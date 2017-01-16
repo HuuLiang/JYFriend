@@ -27,13 +27,13 @@ static CGFloat const kPhotoItemSpce = 6.;
 static CGFloat const kPhotoLineSpace = 10.;
 
 
-typedef NS_ENUM(NSInteger,JYSectionType) {
-    JYSectionTypePhoto,
+typedef NS_ENUM(NSInteger,JYSectionType) { //动态的根据后台返回的字段来控制显示的内容 ,控制方法在没个代理方法里有写
+//    JYSectionTypePhoto,
     JYSectionTypeHomeTown,
-    JYSectionTypeDynamic,
+//    JYSectionTypeDynamic,
     JYSectionTypeInfo,
     JYSectionTypeSectetInfo,
-    JYSectionTypeVideo,
+//    JYSectionTypeVideo,
     JYSectionCount
 };
 
@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger,JYSectionType) {
 typedef NS_ENUM(NSInteger , JYNewDynamicItem){
     JYNewDynamicItemTitle,
     JYNewDynamicItemDetailTitle,
-    JYNewDynamicItemImage,
+//    JYNewDynamicItemImage,
     JYNewDynamicItemTime,
     JYNewDynamicItemCount
 } ;
@@ -107,7 +107,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
     _bottomView = [[JYDetailBottotmView alloc] init];
 //    _bottomView.backgroundColor = [UIColor colorWithHexString:@"#E147a5"];
     _bottomView.buttonModels = @[[JYDetailBottomModel creatBottomModelWith:@"关注TA" withImage:@"detail_attention_icon"],
-                                 [JYDetailBottomModel creatBottomModelWith:@"发短信" withImage:@"detail_message_icon"],
+                                 [JYDetailBottomModel creatBottomModelWith:@"发消息" withImage:@"detail_message_icon"],
                                  [JYDetailBottomModel creatBottomModelWith:@"打招呼" withImage:@"detail_greet_icon"]];
     _bottomView.action = ^(UIButton *btn){
         if ([btn.titleLabel.text isEqualToString:@"关注TA"]) {
@@ -183,29 +183,76 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 #pragma mark UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return JYSectionCount;
+    NSInteger count = JYSectionCount;
+    if (self.detailModel.userPhoto.count >0) {
+        count += 1;
+    }
+    if (self.detailModel.userVideo.videoUrl) {
+        count += 1;
+    }
+    return count ;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (section == JYSectionTypePhoto) {
+    NSUInteger hasPhoto = 0; //默认没有图片,如果self.detailModel.userPhoto.count > 0 hasPhoto = 1
+    NSUInteger hasVideo = 0; //同上视频
+    NSUInteger hasDynamic = 0;//最新动态同上
+    NSInteger photoSection = NSNotFound; //如果self.detailModel.userPhoto.count > 0 就是有图片这时候图片的photoSection 会赋值为0
+    NSInteger dynamicHasImage = 0;//如果最新动态里面配有图片,则会对dynamicHasImage 赋值为1;
+    if (self.detailModel.userPhoto.count > 0) {
+        hasPhoto = 1;
+        photoSection = 0;
+    }
+    if (self.detailModel.userVideo.videoUrl) {
+        hasVideo = 1;
+    }
+    if (self.detailModel.mood) {
+        hasDynamic = 1;
+        if (self.detailModel.mood.moodUrl.count > 0) {
+            dynamicHasImage = 1;
+        }
+    }
+    
+    if (section == photoSection) {
         return self.detailModel.userPhoto.count;
-    }else if (section == JYSectionTypeDynamic){
-        return JYNewDynamicItemCount ;
-    }else if (section == JYSectionTypeInfo){
-        return JYUserInfoItemCount;
-    }else if (section == JYSectionTypeSectetInfo){
-        return JYSectetInfoItemCount;
-    }else if (section == JYSectionTypeVideo){
-        return JYVideoItemCount;
-    }else if (section == JYSectionTypeHomeTown){
+    }else if (section == JYSectionTypeHomeTown + hasPhoto){
         return 1;
+    }else if (section == JYSectionTypeHomeTown + + hasPhoto + hasDynamic){
+        return JYNewDynamicItemCount + dynamicHasImage;
+    }else if (section == JYSectionTypeInfo + hasPhoto + hasDynamic){
+        return JYUserInfoItemCount;
+    }else if (section == JYSectionTypeSectetInfo + hasPhoto + hasDynamic){
+        return JYSectetInfoItemCount;
+    }else if (section == JYSectionTypeSectetInfo + hasPhoto + hasDynamic + hasVideo){
+        return JYVideoItemCount;
     }
     
     return 0;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == JYSectionTypePhoto) {
+    NSUInteger hasPhoto = 0; //默认没有图片,如果self.detailModel.userPhoto.count > 0 hasPhoto = 1
+    NSUInteger hasVideo = 0; //同上视频
+    NSUInteger hasDynamic = 0;//最新动态同上
+    NSInteger photoSection = NSNotFound; //如果self.detailModel.userPhoto.count > 0 就是有图片这时候图片的photoSection 会赋值为0
+    NSInteger dynamicHasImage = 0;//如果最新动态里面配有图片,则会对dynamicHasImage 赋值为1;
+    if (self.detailModel.userPhoto.count > 0) {
+        hasPhoto = 1;
+        photoSection = 0;
+    }
+    if (self.detailModel.userVideo.videoUrl) {
+        hasVideo = 1;
+    }
+    if (self.detailModel.mood) {
+        hasDynamic = 1;
+        if (self.detailModel.mood.moodUrl.count > 0) {
+            dynamicHasImage = 1;
+        }
+    }
+    
+    
+    
+    if (indexPath.section == photoSection) {
         JYPhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPhotoCollectionViewCellIdentifier forIndexPath:indexPath];
         if (indexPath.item == 0) {
             cell.isFirstPhoto = YES;
@@ -215,7 +262,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
         cell.imageUrl = self.detailModel.userPhoto[indexPath.item].smallPhoto;
         cell.isVideoImage = NO;
         return cell;
-    }else if (indexPath.section == JYSectionTypeHomeTown){
+    }else if (indexPath.section == JYSectionTypeHomeTown + hasPhoto){
         JYHomeTownCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kHomeTownCellIdetifier forIndexPath:indexPath];
         cell.gender = [self.detailModel.userInfo.sex isEqualToString:@"F"] ? JYUserSexFemale : JYUserSexMale;
         cell.age = self.detailModel.userInfo.age.integerValue;
@@ -226,7 +273,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
         cell.homeTown = [NSString stringWithFormat:@"%@%@",self.detailModel.userInfo.province,self.detailModel.userInfo.city];
         return cell;
     
-    } else if (indexPath.section == JYSectionTypeDynamic){
+    } else if (indexPath.section == JYSectionTypeHomeTown + hasPhoto + hasDynamic){
         JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
         cell.title = nil;
         cell.detailTitle = nil;
@@ -237,11 +284,11 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
         }else if (indexPath.item == JYNewDynamicItemDetailTitle){
         cell.detailTitle = self.detailModel.mood.text;
             return cell;
-        }else if (indexPath.item == JYNewDynamicItemTime ){
+        }else if (indexPath.item == JYNewDynamicItemTime + dynamicHasImage){
 
             cell.detailTitle = self->_time ;
             return cell;
-        }else if(indexPath.item == JYNewDynamicItemImage){
+        }else if(indexPath.item == JYNewDynamicItemDetailTitle +dynamicHasImage ){
 
             JYNewDynamicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kNewDynamicCellIdentifier forIndexPath:indexPath];
             cell.detaiMoods = self.detailModel.mood.moodUrl;
@@ -252,7 +299,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
             return cell;
         }
         
-    }else if (indexPath.section == JYSectionTypeInfo){
+    }else if (indexPath.section == JYSectionTypeInfo + hasPhoto + hasDynamic){
         JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
           cell.title = nil;
           cell.detailTitle = nil;
@@ -278,7 +325,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
             return cell;
         }
     
-    } else if (indexPath.section == JYSectionTypeSectetInfo){
+    } else if (indexPath.section == JYSectionTypeSectetInfo + hasPhoto + hasDynamic){
        JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
          cell.title = nil;
         cell.detailTitle = nil;
@@ -304,7 +351,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
             return cell;
         }
     
-    }else if (indexPath.section == JYSectionTypeVideo){
+    }else if (indexPath.section == JYSectionTypeSectetInfo + hasPhoto + hasDynamic + hasVideo){
         if (indexPath.item == JYVideoItemTitle) {
              JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
             cell.title = @"TA的视频认证";
@@ -323,29 +370,53 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == JYSectionTypePhoto) {
+    
+    NSUInteger hasPhoto = 0;
+    NSUInteger hasVideo = 0;
+    NSUInteger hasDynamic = 0;
+    NSInteger photoSection = NSNotFound;
+     NSInteger dynamicHasImage = 0;
+    if (self.detailModel.userPhoto.count > 0) {
+        hasPhoto = 1;
+        photoSection = 0;
+    }
+    if (self.detailModel.userVideo.videoUrl) {
+        hasVideo = 1;
+    }
+    if (self.detailModel.mood) {
+        hasDynamic = 1;
+        if (self.detailModel.mood.moodUrl.count > 0) {
+            dynamicHasImage = 1;
+        }
+    }
+    
+    if (indexPath.section == photoSection) {
         CGFloat width = (kScreenWidth - kWidth(kPhotoItemSpce*2) *2 - kWidth(30.)*2 )/3.;
         return CGSizeMake(width, width);
-    }else if (indexPath.section == JYSectionTypeHomeTown){
+    }else if (indexPath.section == JYSectionTypeHomeTown + hasPhoto){
         return CGSizeMake(kScreenWidth, kWidth(150));
         
-    } else if (indexPath.section == JYSectionTypeDynamic){
+    } else if (indexPath.section == JYSectionTypeHomeTown + hasPhoto + hasDynamic){
         if (indexPath.item == JYNewDynamicItemTitle) {
            return CGSizeMake(kScreenWidth, kWidth(90.));
         }else if (indexPath.item == JYNewDynamicItemDetailTitle ){
-         return CGSizeMake(kScreenWidth, kWidth(55.));
-        }else if (indexPath.item == JYNewDynamicItemTime){
+            CGSize size = [self.detailModel.mood.text sizeWithFont:[UIFont systemFontOfSize:kWidth(28.)] maxWidth:(kScreenWidth - kWidth(60))];
+         return CGSizeMake(kScreenWidth, size.height +kWidth(20));
+        }else if (indexPath.item == JYNewDynamicItemTime + dynamicHasImage){
         return CGSizeMake(kScreenWidth, kWidth(45.));
-        }else if(indexPath.item == JYNewDynamicItemImage){
+        }else if(indexPath.item == JYNewDynamicItemDetailTitle + dynamicHasImage){
             return CGSizeMake(kScreenWidth, kWidth(140));
         }
         
-    }else if (indexPath.section == JYSectionTypeInfo || indexPath.section == JYSectionTypeSectetInfo){
+    }else if (indexPath.section == JYSectionTypeInfo + hasPhoto + hasDynamic|| indexPath.section == JYSectionTypeSectetInfo + hasPhoto + hasDynamic){
         if (indexPath.item == JYUserInfoItemTitle || indexPath.item == JYSectetInfoItemTitle) {
             return CGSizeMake(kScreenWidth, kWidth(90.));
+        }else if (indexPath.item == JYUserInfoItemSignature){
+            CGSize size = [[NSString stringWithFormat:@"个性签名: %@",self.detailModel.userInfo.note] sizeWithFont:[UIFont systemFontOfSize:kWidth(28)] maxWidth:(kScreenWidth - kWidth(60))];//根据签名长短来确定行数
+            return CGSizeMake(kScreenWidth, size.height +kWidth(20));
         }
         return CGSizeMake(kScreenWidth, kWidth(55.));
-    } else if (indexPath.section == JYSectionTypeVideo){
+    } else if (indexPath.section == JYSectionTypeSectetInfo + hasPhoto + hasDynamic +hasVideo){
         if (indexPath.item == JYVideoItemTitle) {
              return CGSizeMake(kScreenWidth, kWidth(90.));
         }else if (indexPath.item == JYVideoItemVideo){
@@ -356,27 +427,72 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    if (section == JYSectionTypePhoto) {
+    
+    NSUInteger hasPhoto = 0;
+    NSUInteger hasVideo = 0;
+    NSUInteger hasDynamic = 0;
+    NSInteger photoSection = NSNotFound;
+    if (self.detailModel.userPhoto.count > 0) {
+        hasPhoto = 1;
+        photoSection = 0;
+    }
+    if (self.detailModel.userVideo.videoUrl) {
+        hasVideo = 1;
+    }
+    if (self.detailModel.mood) {
+        hasDynamic = 1;
+    }
+    
+    if (section == photoSection) {
         return kWidth(kPhotoLineSpace *2);
-    }else if (section == JYSectionTypeDynamic){
+    }else if (section == JYSectionTypeHomeTown + hasPhoto + hasDynamic){
       return kWidth(kPhotoLineSpace );
     }
     return 0;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    if (section == JYSectionTypePhoto) {
+    NSUInteger hasPhoto = 0;
+    NSUInteger hasVideo = 0;
+    NSUInteger hasDynamic = 0;
+    NSInteger photoSection = NSNotFound;
+    if (self.detailModel.userPhoto.count > 0) {
+        hasPhoto = 1;
+        photoSection = 0;
+    }
+    if (self.detailModel.userVideo.videoUrl) {
+        hasVideo = 1;
+    }
+    if (self.detailModel.mood) {
+        hasDynamic = 1;
+    }
+    
+    if (section == photoSection) {
         return kWidth(kPhotoItemSpce *2);
-    }else if (section == JYSectionTypeDynamic){
+    }else if (section == JYSectionTypeHomeTown + hasPhoto + hasDynamic){
         return kWidth(kPhotoItemSpce);
     }
     return 0;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    if (section == JYSectionTypePhoto) {
+    NSUInteger hasPhoto = 0;
+    NSUInteger hasVideo = 0;
+    NSUInteger hasDynamic = 0;
+    NSInteger photoSection = NSNotFound;
+    if (self.detailModel.userPhoto.count > 0) {
+        hasPhoto = 1;
+        photoSection = 0;
+    }
+    if (self.detailModel.userVideo.videoUrl) {
+        hasVideo = 1;
+    }
+    if (self.detailModel.mood) {
+        hasDynamic = 1;
+    }
+    if (section == photoSection) {
         return  UIEdgeInsetsMake(kWidth(20.), kWidth(30.), kWidth(10.), kWidth(30.));
-    }else if (section == JYSectionTypeVideo){
+    }else if (section == JYSectionTypeSectetInfo + hasPhoto + hasVideo){
         return UIEdgeInsetsMake(0, 0, kWidth(20), 0);
     }
     return UIEdgeInsetsZero; }
@@ -395,7 +511,27 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == JYSectionTypePhoto) {
+    
+    NSUInteger hasPhoto = 0;
+    NSUInteger hasVideo = 0;
+    NSUInteger hasDynamic = 0;
+    NSInteger photoSection = NSNotFound;
+     NSInteger dynamicHasImage = 0;
+    if (self.detailModel.userPhoto.count > 0) {
+        hasPhoto = 1;
+        photoSection = 0;
+    }
+    if (self.detailModel.userVideo.videoUrl) {
+        hasVideo = 1;
+    }
+    if (self.detailModel.mood) {
+        hasDynamic = 1;
+        if (self.detailModel.mood.moodUrl.count > 0) {
+            dynamicHasImage = 1;
+        }
+    }
+    
+    if (indexPath.section == photoSection) {
 
         if (kCurrentUser.isVip.integerValue == 0 ) {
             if (indexPath.item == 0) {
@@ -407,7 +543,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
         }else {
             [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
         }
-    }else if (indexPath.section == JYSectionTypeVideo) {
+    }else if (indexPath.section == JYSectionTypeSectetInfo + hasPhoto + hasVideo) {
     //播放视频
     
     }

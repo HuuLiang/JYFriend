@@ -22,4 +22,5 @@
 #import <NSDate+Utilities.h>
 #import "UIView+Loading.h"
 #import "UIView+FrameEx.h"
+#import "NSString+Size.h"
 #endif /* JYExtensions_h */
