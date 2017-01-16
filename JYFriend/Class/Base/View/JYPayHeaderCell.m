@@ -17,9 +17,9 @@
 
 @implementation JYPayHeaderCell
 
-- (instancetype)init
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super init];
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor clearColor];
@@ -40,7 +40,7 @@
         
         {
             [_subTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.equalTo(self.contentView.mas_bottom).offset([JYUtil isIpad] ? -kWidth(40) : -kWidth(80));
+                make.bottom.equalTo(self.contentView.mas_bottom).offset([JYUtil isIpad] ? -kWidth(30) : -kWidth(30));
                 make.left.right.equalTo(self.contentView);
                 make.height.mas_equalTo(kWidth(44));
             }];

@@ -58,9 +58,10 @@
         make.centerY.mas_equalTo(self.view).mas_offset(kWidth(-200));
     }];
     }
-    
+    @weakify(self);
     [vipBtn bk_addEventHandler:^(id sender) {
-        
+        @strongify(self);
+        [self pay];
     } forControlEvents:UIControlEventTouchUpInside];
 
 }
