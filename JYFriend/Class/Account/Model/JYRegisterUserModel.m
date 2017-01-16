@@ -30,13 +30,13 @@
 - (BOOL)registerUserWithUserInfo:(JYUser *)user completionHandler:(QBCompletionHandler)handler {
     NSDictionary *params = @{@"uuid":[JYUtil UUID],
                              @"nickName":user.nickName,
-                             @"clientId":@"123123123",
-                             @"province":user.homeTown,
-                             @"city":user.homeTown,
+                             @"clientId":@"defaultClientId",
+                             @"province":user.homeTown ? user.homeTown : @"",
+                             @"city":user.homeTown ? user.homeTown :@"",
                              @"sex":[JYUserSexStringGet objectAtIndex:user.userSex],
                              @"userType":@(2),
                              @"height":user.height,
-                             @"birthday":[JYUtil timeStringFromDate:[JYUtil dateFromString:user.birthday WithDateFormat:kDateFormatChina] WithDateFormat:kDateFormatShort]};
+                             @"birthday":user.birthday ? [JYUtil timeStringFromDate:[JYUtil dateFromString:user.birthday WithDateFormat:kDateFormatChina] WithDateFormat:kDateFormatShort] : @""};
     
     BOOL success = [self requestURLPath:JY_USERCREATE_URL
                          standbyURLPath:[JYUtil getStandByUrlPathWithOriginalUrl:JY_USERCREATE_URL params:nil]

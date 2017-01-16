@@ -89,13 +89,13 @@
         message = @"用户主动向机器人打了个招呼";;
     } else if (type == JYUserCreateMessageTypeFollow) {
         msgType = @"FOLLOW";
-        message = @"";
+        message = @"我关注了你哦";
     } else if (type == JYUserCreateMessageTypeChat) {
         msgType = @"CHAT";
     }
     
     NSDictionary *params = @{@"msg":message,
-                             @"sendUerId":[JYUser currentUser].userId,
+                             @"sendUserId":[JYUser currentUser].userId,
                              @"receiveUserId":receiverId,
                              @"msgType":msgType,
                              @"contentType":contentType};

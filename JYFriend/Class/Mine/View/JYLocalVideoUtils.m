@@ -7,7 +7,7 @@
 //
 
 #import "JYLocalVideoUtils.h"
-#import "JYUsrImageCache.h"
+#import "JYUserImageCache.h"
 
 
 // static NSString *const kUserLocalVideoFiles = @"JYUserVideo.";
@@ -128,7 +128,7 @@
     
     NSString *boxFile = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
     NSString *type = [videoUrl.absoluteString componentsSeparatedByString:@"."].lastObject;
-    NSString *videoPath = [boxFile stringByAppendingPathComponent:[JYUsrImageCache writeToFileWithImage:[self getImage:videoUrl] needSaveImageName:NO]];
+    NSString *videoPath = [boxFile stringByAppendingPathComponent:[JYUserImageCache writeToFileWithImage:[self getImage:videoUrl] needSaveImageName:NO]];
     NSString *newVideoPath =  [videoPath stringByAppendingFormat:@".%@",type];
 //    [[NSUserDefaults standardUserDefaults] setObject:type forKey:kUserLocalVideoType];
 //    [[NSUserDefaults standardUserDefaults] synchronize];

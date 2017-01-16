@@ -45,4 +45,7 @@
 - (void)addChatMessage:(JYMessageModel *)chatMessage;
 
 
+//extern NSString *const kJYFriendMessageNormalCellKeyName;
+//extern NSString *const kJYFriendMessageVipCellKeyName;
+
 @end

@@ -15,4 +15,8 @@
 //- (instancetype)init __attribute__ ((unavailable("Use initWithTitle: instead")));
 - (instancetype)initWithTitle:(NSString *)title;
 - (UIViewController *)playerVCWithVideo:(NSString *)videoUrl;
+
+//跳转到详情页
+- (void)pushDetailViewControllerWithUserId:(NSString *)userId time:(NSString *)timeStr distance:(NSString *)distance;
+
 @end

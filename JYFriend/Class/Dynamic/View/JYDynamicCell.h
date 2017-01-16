@@ -26,4 +26,6 @@
 
 @property (nonatomic) QBAction buttonAction;
 
+@property (nonatomic) QBAction userImgAction;
+
 @end

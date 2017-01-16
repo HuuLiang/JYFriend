@@ -52,9 +52,4 @@ static JYUser *_currentUser;
     NSArray *allCities = [self allProvincesAndCities][province][@"city"];
     return allCities;
 }
-
-+ (NSArray *)transients {
-    return @[@"userImgUrl"];
-}
-
 @end

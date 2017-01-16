@@ -30,8 +30,7 @@ typedef NS_ENUM(NSUInteger,JYUserSex) {
 //用户id
 @property (nonatomic) NSString      *userId;
 //头像
-@property (nonatomic) NSData        *userImg;
-@property (nonatomic) NSString      *userImgUrl;
+@property (nonatomic) NSString      *userImgKey;
 //性别
 @property (nonatomic) JYUserSex     userSex;
 //昵称

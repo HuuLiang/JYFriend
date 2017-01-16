@@ -14,6 +14,7 @@
 #import "ActionSheetPicker.h"
 #import "VPImageCropperViewController.h"
 #import "JYRegisterPhoneNumberViewController.h"
+#import "JYUserImageCache.h"
 
 typedef NS_ENUM(NSUInteger, JYRegisterDetailRow) {
     JYRegisterDetailSexRow, //开通VIP
@@ -41,14 +42,14 @@ static NSString *const kDetailHeaderViewReusableIdentifier = @"DetailHeaderViewR
     self.view.backgroundColor = [UIColor whiteColor];
     
     //加载默认用户图片数据
-    UIImage *userImg = [UIImage imageNamed:@"mine_default_avatar"];
-    NSData *userImgData;
-    if (UIImagePNGRepresentation(userImg) == nil) {
-        userImgData = UIImageJPEGRepresentation(userImg, 1);
-    } else {
-        userImgData = UIImagePNGRepresentation(userImg);
-    }
-    [JYUser currentUser].userImg = userImgData;
+//    UIImage *userImg = [UIImage imageNamed:@"mine_default_avatar"];
+//    NSData *userImgData;
+//    if (UIImagePNGRepresentation(userImg) == nil) {
+//        userImgData = UIImageJPEGRepresentation(userImg, 1);
+//    } else {
+//        userImgData = UIImagePNGRepresentation(userImg);
+//    }
+//    [JYUser currentUser].userImg = userImgData;
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _tableView.backgroundColor = self.view.backgroundColor;
@@ -98,6 +99,21 @@ static NSString *const kDetailHeaderViewReusableIdentifier = @"DetailHeaderViewR
     _nextButton = [[JYNextButton alloc] initWithTitle:@"下一步" action:^{
         @strongify(self);
         NSLog(@"下一步");
+        if (![JYUser currentUser].userImgKey) {
+            [JYUser currentUser].userImgKey = @"";
+        }
+        if (![JYUser currentUser].height) {
+            [JYUser currentUser].height = @"未填写";
+        }
+        
+        if (![JYUser currentUser].homeTown) {
+            [JYUser currentUser].homeTown = @"未填写";
+        }
+        
+//        if (![JYUser currentUser].birthday) {
+//            [JYUser currentUser].birthday = @"未填写";
+//        }
+        
         [[JYUser currentUser] saveOrUpdate];
         JYRegisterPhoneNumberViewController *phoneNumVC = [[JYRegisterPhoneNumberViewController alloc] initWithTitle:@"注册"];
         [self.navigationController pushViewController:phoneNumVC animated:YES];
@@ -265,14 +281,9 @@ static NSString *const kDetailHeaderViewReusableIdentifier = @"DetailHeaderViewR
 #pragma mark VPImageCropperDelegate
 - (void)imageCropper:(VPImageCropperViewController *)cropperViewController didFinished:(UIImage *)editedImage {
     self->_setAvatarView.userImg = editedImage;
-    NSData *data;
-    if (UIImagePNGRepresentation(editedImage) == nil) {
-        data = UIImageJPEGRepresentation(editedImage, 1);
-    } else {
-        data = UIImagePNGRepresentation(editedImage);
-    }
-    [JYUser currentUser].userImg = data;
     
+    NSString *userPhotoKey = [JYUserImageCache writeToFileWithImage:editedImage needSaveImageName:NO];
+    [JYUser currentUser].userImgKey = userPhotoKey;
     [cropperViewController dismissViewControllerAnimated:YES completion:nil];
 }
 

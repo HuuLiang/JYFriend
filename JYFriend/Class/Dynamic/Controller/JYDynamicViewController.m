@@ -12,6 +12,7 @@
 #import "JYUserCreateMessageModel.h"
 #import "JYAutoContactManager.h"
 #import "JYContactModel.h"
+#import "JYCharacterModel.h"
 
 
 #define resetTime   (60*60*6)     //重置缓存时间
@@ -248,15 +249,29 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMsgModel)
                         [JYContactModel insertGreetContact:obj];
                         cell.isGreet = YES;
                         dynamic.greet = YES;
+                        [[JYHudManager manager] showHudWithText:@"招呼成功"];
+                        
+                        JYCharacter *character = [[JYCharacter alloc] init];
+                        character.nickName = dynamic.nickName;
+                        character.logoUrl = dynamic.logoUrl;
+                        character.userId = dynamic.userId;
+                        [JYContactModel insertGreetContact:@[character]];
+                        
                     } else if ([type integerValue] == JYUserCreateMessageTypeFollow) {
                         cell.isFocus = YES;
                         dynamic.follow = YES;
+                        [[JYHudManager manager] showHudWithText:@"关注成功"];
                     }
                     [dynamic saveOneDynamic];
                     //打招呼或者关注成功 //把返回的机器人及其回复信息放入缓存 定时取出并且推送给用户
                     [[JYAutoContactManager manager] saveReplyRobots:obj];
                 }
             }];
+        };
+        dynamicCell.userImgAction = ^(id obj) {
+            @strongify(self);
+            JYDynamic *dynamic = self.dataSource[indexPath.item];
+            [self pushDetailViewControllerWithUserId:dynamic.userId time:[JYUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:dynamic.timeInterval] WithDateFormat:KDateFormatLong] distance:nil];
         };
     }
     return dynamicCell;

@@ -10,8 +10,11 @@
 #import "JYMessageModel.h"
 #import "XHAudioPlayerHelper.h"
 #import "JYLocalPhotoUtils.h"
-#import "JYUsrImageCache.h"
+#import "JYUserImageCache.h"
 #import "JYVideoChatViewController.h"
+
+static NSString *const kJYFriendMessageNormalCellKeyName    = @"kJYFriendMessageNormalCellKeyName";
+static NSString *const kJYFriendMessageVipCellKeyName       = @"kJYFriendMessageVipCellKeyName";
 
 
 @interface JYMessageViewController () <JYLocalPhotoUtilsDelegate>
@@ -44,6 +47,11 @@
     [self.emotionManagerView reloadData];
 }
 
+- (void)registerCustomCell {
+    [self.messageTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kJYFriendMessageNormalCellKeyName];
+    [self.messageTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kJYFriendMessageVipCellKeyName];
+}
+
 #pragma mark - XHMessageTableViewControllerDelegate
 
 //发送文本
@@ -57,10 +65,10 @@
 - (void)didSendPhoto:(UIImage *)photo fromSender:(NSString *)sender onDate:(NSDate *)date {
     NSString *imagekey = nil;
     if (photo) {
-        imagekey = [JYUsrImageCache writeToFileWithImage:photo needSaveImageName:NO];
+        imagekey = [JYUserImageCache writeToFileWithImage:photo needSaveImageName:NO];
     }
     [self addPhotoMessage:imagekey thumbnailUrl:nil originPhotoUrl:nil withSender:sender receiver:self.user.userId dateTime:[JYUtil timeStringFromDate:date WithDateFormat:KDateFormatLong]];
-//    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypePhoto];
+    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypePhoto];
 }
 
 //发送语音
@@ -97,9 +105,9 @@
     
     BOOL isCurrentUser = [message.sender isEqualToString:[JYUser currentUser].userId];
     if (isCurrentUser) {
-        [cell.avatarButton setImage:[UIImage imageWithData:[JYUser currentUser].userImg] forState:UIControlStateNormal];
+        [cell.avatarButton setImage:[[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[JYUser currentUser].userImgKey] forState:UIControlStateNormal];
     } else {
-        [cell.avatarButton sd_setImageWithURL:[NSURL URLWithString:self.user.userImgUrl] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"mine_default_avatar"]];;
+        [cell.avatarButton sd_setImageWithURL:[NSURL URLWithString:self.user.userImgKey] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"mine_default_avatar"]];;
     }
 }
 
@@ -110,10 +118,13 @@
 
 //配置自定义cell样式
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath targetMessage:(id<XHMessageModel>)message {
-    //    message = (XHMessage *)message;
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    cell.textLabel.text = message.text;
-    cell.backgroundColor = [UIColor redColor];
+    message = (XHMessage *)message;
+    UITableViewCell *cell;
+    if (message.messageMediaType == XHBubbleMessageMediaTypeCustomNormal) {
+        cell = [tableView dequeueReusableCellWithIdentifier:kJYFriendMessageNormalCellKeyName forIndexPath:indexPath];
+    } else if (message.messageMediaType == XHBubbleMessageMediaTypeCustomVIP) {
+        cell = [tableView dequeueReusableCellWithIdentifier:kJYFriendMessageVipCellKeyName forIndexPath:indexPath];
+    }
     return cell;
 }
 

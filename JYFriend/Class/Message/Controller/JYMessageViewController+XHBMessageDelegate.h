@@ -12,4 +12,6 @@
 
 - (void)configEmotions;
 
+- (void)registerCustomCell;
+
 @end

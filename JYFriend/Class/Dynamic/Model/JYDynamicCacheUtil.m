@@ -8,7 +8,7 @@
 
 #import "JYDynamicCacheUtil.h"
 
-#import "JYUsrImageCache.h"
+#import "JYUserImageCache.h"
 #import "JYLocalVideoUtils.h"
 
 
@@ -25,7 +25,7 @@
     NSMutableArray *imageMd5s = [NSMutableArray arrayWithCapacity:imageUrls.count];
     if (imageUrls.count >0) {
         [imageUrls enumerateObjectsUsingBlock:^(UIImage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [imageMd5s addObject:[JYUsrImageCache writeToFileWithImage:obj needSaveImageName:NO]];
+            [imageMd5s addObject:[JYUserImageCache writeToFileWithImage:obj needSaveImageName:NO]];
         }];
     }
     
@@ -50,7 +50,7 @@
 
 + (BOOL)saveUserVideoDyanmicWithUserState:(NSString *)userState videoUrl:(NSURL *)videoUrl {
     UIImage *videoImage = [JYLocalVideoUtils getImage:videoUrl];
-   NSString *videoImageMd5 = [JYUsrImageCache writeToFileWithImage:videoImage needSaveImageName:NO];//先保存图片
+   NSString *videoImageMd5 = [JYUserImageCache writeToFileWithImage:videoImage needSaveImageName:NO];//先保存图片
     NSString *videoPath = [JYLocalVideoUtils writeToFileWithVideoUrl:videoUrl needSaveVideoName:NO];//保存视频,返回视频路径
     
     JYDynamicCacheModel *model = [JYDynamicCacheModel findAll].firstObject;

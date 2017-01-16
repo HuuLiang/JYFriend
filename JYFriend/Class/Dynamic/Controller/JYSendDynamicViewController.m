@@ -9,7 +9,7 @@
 #import "JYSendDynamicViewController.h"
 #import "JYSendDynamicTableViewCell.h"
 #import "JYLocalPhotoUtils.h"
-#import "JYUsrImageCache.h"
+#import "JYUserImageCache.h"
 #import "JYDynamicCacheUtil.h"
 
 static NSString *const kSendDynamicTableViewCellIdentifier = @"senddynamic_tableviewcell_identifier";

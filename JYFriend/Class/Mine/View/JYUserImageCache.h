@@ -1,5 +1,5 @@
 //
-//  JYUsrImageCache.h
+//  JYUserImageCache.h
 //  JYFriend
 //
 //  Created by ylz on 2016/12/29.
@@ -14,7 +14,7 @@
 
 @end
 
-@interface JYUsrImageCache : NSObject
+@interface JYUserImageCache : NSObject
 
 + (NSString *)writeToFileWithImage:(UIImage *)image needSaveImageName:(BOOL)needSaveName;
 

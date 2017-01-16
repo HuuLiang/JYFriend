@@ -54,7 +54,7 @@
 		B3A079761E0CCBA100395817 /* JYNearPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A079751E0CCBA100395817 /* JYNearPersonCell.m */; };
 		B3A079791E0CFE5300395817 /* JYNearPersonBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A079781E0CFE5300395817 /* JYNearPersonBtn.m */; };
 		B3A0797C1E0D1D8300395817 /* JYNearBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A0797B1E0D1D8300395817 /* JYNearBottomView.m */; };
-		B3C0DFD91E1502F500621FC5 /* JYUsrImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C0DFD81E1502F500621FC5 /* JYUsrImageCache.m */; };
+		B3C0DFD91E1502F500621FC5 /* JYUserImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C0DFD81E1502F500621FC5 /* JYUserImageCache.m */; };
 		B3C0DFDC1E152C7B00621FC5 /* JYMD5Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C0DFDB1E152C7B00621FC5 /* JYMD5Utils.m */; };
 		B3D114D41E0E185C001DC147 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D114D31E0E185C001DC147 /* CoreLocation.framework */; };
 		B3D114D71E0E26E9001DC147 /* JYNotFetchUserlocalView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D114D61E0E26E9001DC147 /* JYNotFetchUserlocalView.m */; };
@@ -440,8 +440,8 @@
 		B3A079781E0CFE5300395817 /* JYNearPersonBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNearPersonBtn.m; sourceTree = "<group>"; };
 		B3A0797A1E0D1D8300395817 /* JYNearBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNearBottomView.h; sourceTree = "<group>"; };
 		B3A0797B1E0D1D8300395817 /* JYNearBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNearBottomView.m; sourceTree = "<group>"; };
-		B3C0DFD71E1502F500621FC5 /* JYUsrImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JYUsrImageCache.h; path = JYFriend/Class/Mine/View/JYUsrImageCache.h; sourceTree = SOURCE_ROOT; };
-		B3C0DFD81E1502F500621FC5 /* JYUsrImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JYUsrImageCache.m; path = JYFriend/Class/Mine/View/JYUsrImageCache.m; sourceTree = SOURCE_ROOT; };
+		B3C0DFD71E1502F500621FC5 /* JYUserImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JYUserImageCache.h; path = JYFriend/Class/Mine/View/JYUserImageCache.h; sourceTree = SOURCE_ROOT; };
+		B3C0DFD81E1502F500621FC5 /* JYUserImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JYUserImageCache.m; path = JYFriend/Class/Mine/View/JYUserImageCache.m; sourceTree = SOURCE_ROOT; };
 		B3C0DFDA1E152C7B00621FC5 /* JYMD5Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JYMD5Utils.h; path = JYFriend/Class/Mine/View/JYMD5Utils.h; sourceTree = SOURCE_ROOT; };
 		B3C0DFDB1E152C7B00621FC5 /* JYMD5Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JYMD5Utils.m; path = JYFriend/Class/Mine/View/JYMD5Utils.m; sourceTree = SOURCE_ROOT; };
 		B3D114D31E0E185C001DC147 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -1986,8 +1986,8 @@
 		ECCFA0661DEBF821000F4E7A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B3C0DFD71E1502F500621FC5 /* JYUsrImageCache.h */,
-				B3C0DFD81E1502F500621FC5 /* JYUsrImageCache.m */,
+				B3C0DFD71E1502F500621FC5 /* JYUserImageCache.h */,
+				B3C0DFD81E1502F500621FC5 /* JYUserImageCache.m */,
 				B3C0DFDA1E152C7B00621FC5 /* JYMD5Utils.h */,
 				B3C0DFDB1E152C7B00621FC5 /* JYMD5Utils.m */,
 				B35DCEF81E1B36FB005C5969 /* JYLocalPhotoUtils.h */,
@@ -2381,7 +2381,7 @@
 				B36F152C1E1CEFB10081500B /* JYChangeInfoTableView.m in Sources */,
 				EC804A9D1E0D54FA00191387 /* ActionSheetLocalePicker.m in Sources */,
 				EC88F8611E110C8D009AAEED /* JYRecommendViewController.m in Sources */,
-				B3C0DFD91E1502F500621FC5 /* JYUsrImageCache.m in Sources */,
+				B3C0DFD91E1502F500621FC5 /* JYUserImageCache.m in Sources */,
 				EC88F8221E10B7B5009AAEED /* XHBaseTableViewCell.m in Sources */,
 				B33B18341E2BA7BF003803C4 /* JYPayHeaderCell.m in Sources */,
 				ECEFE3431E0A7271002F9A1C /* AppDelegate+configuration.m in Sources */,

@@ -74,7 +74,10 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
 
 @interface JYDetailViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
-    UICollectionView *_layoutCollectionView;
+    NSString            *_userId;
+    NSString            *_time;
+    NSString            *_distance;
+    UICollectionView    *_layoutCollectionView;
 }
 
 @property (nonatomic,retain) JYDetailBottotmView *bottomView;//底部视图
@@ -85,6 +88,17 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
 @implementation JYDetailViewController
 QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 
+
+- (instancetype)initWithUserId:(NSString *)userId time:(NSString *)time distance:(NSString *)distance
+{
+    self = [super init];
+    if (self) {
+        _userId = userId;
+        _time   = time;
+        _distance = distance;
+    }
+    return self;
+}
 
 - (JYDetailBottotmView *)bottomView {
     if (_bottomView) {
@@ -150,7 +164,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 
 - (void)loadModels {
     @weakify(self);
-    [self.detailModel fetchUserDetailModelWithViewUserId:self.viewUserId CompleteHandler:^(BOOL success, JYUserDetail *useDetai) {
+    [self.detailModel fetchUserDetailModelWithViewUserId:self->_userId CompleteHandler:^(BOOL success, JYUserDetail *useDetai) {
     if (success) {
         @strongify(self);
         [self->_layoutCollectionView reloadData];
@@ -206,9 +220,9 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
         cell.gender = [self.detailModel.userInfo.sex isEqualToString:@"F"] ? JYUserSexFemale : JYUserSexMale;
         cell.age = self.detailModel.userInfo.age.integerValue;
         cell.height = self.detailModel.userInfo.height.integerValue;
-        cell.distance = self.distance;//距离
+        cell.distance = self->_distance;//距离
         cell.vip = self.detailModel.userInfo.isVip.integerValue;
-        cell.time = [JYLocalVideoUtils fetchTimeIntervalToCurrentTimeWithStartTime:self.dynamicTiem];
+        cell.time = [JYLocalVideoUtils fetchTimeIntervalToCurrentTimeWithStartTime:self->_time];
         cell.homeTown = [NSString stringWithFormat:@"%@%@",self.detailModel.userInfo.province,self.detailModel.userInfo.city];
         return cell;
     
@@ -225,7 +239,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
             return cell;
         }else if (indexPath.item == JYNewDynamicItemTime ){
 
-            cell.detailTitle = self.dynamicTiem ;
+            cell.detailTitle = self->_time ;
             return cell;
         }else if(indexPath.item == JYNewDynamicItemImage){
 

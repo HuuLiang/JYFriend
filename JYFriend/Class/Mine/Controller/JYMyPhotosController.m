@@ -9,7 +9,7 @@
 #import "JYMyPhotosController.h"
 #import "JYMyPhotoCell.h"
 #import "JYMyPhotoBigImageView.h"
-#import "JYUsrImageCache.h"
+#import "JYUserImageCache.h"
 #import "JYLocalPhotoUtils.h"
 
 static CGFloat klineSpace = 0;
@@ -94,7 +94,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     @weakify(self);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         @strongify(self);
-        self.dataSource = [JYUsrImageCache fetchAllImages].mutableCopy;
+        self.dataSource = [JYUserImageCache fetchAllImages].mutableCopy;
         if (self.dataSource.count == 0) {
             [self quitDeletePattern];
         }
@@ -155,7 +155,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         if (indexPath.item == self.dataSource.count) {
             return;
         }
-        [JYUsrImageCache deleteCurrentImageWithIndexPath:indexPath];
+        [JYUserImageCache deleteCurrentImageWithIndexPath:indexPath];
         [collectionView JY_triggerPullToRefresh];
     }else{
         
@@ -216,14 +216,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 #pragma mark JYLocalPhotoUtilsDelegate 相机相册访问
 
 - (void)JYLocalPhotoUtilsWithPicker:(UIImagePickerController *)picker DidFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-     [JYUsrImageCache writeToFileWithImage:info[UIImagePickerControllerOriginalImage] needSaveImageName:YES];
+     [JYUserImageCache writeToFileWithImage:info[UIImagePickerControllerOriginalImage] needSaveImageName:YES];
      [_layoutCollectionView JY_triggerPullToRefresh];
         @weakify(self);
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             @strongify(self);
-            if (self.dataSource.count != [JYUsrImageCache fetchAllImages].count) {
+            if (self.dataSource.count != [JYUserImageCache fetchAllImages].count) {
     
-                [self.dataSource addObject:[JYUsrImageCache fetchAllImages].lastObject];
+                [self.dataSource addObject:[JYUserImageCache fetchAllImages].lastObject];
                 [self->_layoutCollectionView reloadData];
                 [self->_layoutCollectionView JY_triggerPullToRefresh];
             }

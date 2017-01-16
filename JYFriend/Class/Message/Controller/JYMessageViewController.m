@@ -10,14 +10,22 @@
 #import "JYMessageModel.h"
 #import <AVFoundation/AVFoundation.h>
 #import "JYMessageViewController+XHBMessageDelegate.h"
+#import "JYUserCreateMessageModel.h"
+#import "JYAutoContactManager.h"
+
 
 @interface JYMessageViewController ()
+{
+    BOOL currentUserSendingPhoto;
+}
 @property (nonatomic,retain) NSMutableArray<JYMessageModel *> *chatMessages;
+@property (nonatomic) JYSendMessageModel *sendMessageModel;
 @end
 
 @implementation JYMessageViewController
 QBDefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
+QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 
 + (instancetype)showMessageWithUser:(JYUser *)user inViewController:(UIViewController *)viewController {
     JYMessageViewController *messageVC = [[self alloc] initWithUser:user];
@@ -40,7 +48,6 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
     self.title = self.user.nickName;
     self.messageSender = [JYUser currentUser].userId;
     
-    [self.messageTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
     [self configEmotions];
     [self setXHShareMenu];
@@ -66,20 +73,23 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self reloadChatMessages];
-    [self.messageTableView reloadData];
+    if (!currentUserSendingPhoto) {
+        [self reloadChatMessages];
+        [self.messageTableView reloadData];
+    } else {
+        currentUserSendingPhoto = NO;
+    }
     [self scrollToBottomAnimated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [self.messages removeAllObjects];
 }
 
 - (void)reloadChatMessages {
     self.chatMessages = [JYMessageModel allMessagesForUser:self.user.userId].mutableCopy;
     
+    [self.messages removeAllObjects];
     [self.chatMessages enumerateObjectsUsingBlock:^(JYMessageModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         XHMessage *message;
         NSDate *date = [JYUtil dateFromString:obj.messageTime WithDateFormat:KDateFormatLong];
@@ -89,9 +99,9 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
                                                            timestamp:date];
             message.messageMediaType = XHBubbleMessageMediaTypeText;
         } else if (obj.messageType == JYMessageTypePhoto) {
-            message = [[XHMessage alloc] initWithPhoto:nil
-                                          thumbnailUrl:obj.messageContent
-                                        originPhotoUrl:obj.messageContent
+            message = [[XHMessage alloc] initWithPhoto:obj.photokey ? [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:obj.photokey] : nil
+                                          thumbnailUrl:obj.photokey ? nil : obj.messageContent
+                                        originPhotoUrl:obj.photokey ? nil : obj.messageContent
                                                 sender:obj.sendUserId
                                              timestamp:date];
         } else if (obj.messageType == JYMessageTypeVioce) {
@@ -153,6 +163,8 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
     chatMessage.messageContent = thumbnailUrl;
     chatMessage.standbyContent = originPhotoUrl;
     
+    currentUserSendingPhoto = YES;
+    
     [self addChatMessage:chatMessage];
 }
 
@@ -190,6 +202,37 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
 
 //加入信息到数据源
 - (void)addChatMessage:(JYMessageModel *)chatMessage {
+    {
+        //向服务器发送消息
+        
+        NSString *msg = nil;
+        NSString *contentType = nil;
+        if (chatMessage.messageType == JYMessageTypeText) {
+            msg = chatMessage.messageContent;
+            contentType = @"TEXT";
+        } else if (chatMessage.messageType == JYMessageTypePhoto) {
+            msg = [[SDImageCache sharedImageCache] defaultCachePathForKey:chatMessage.photokey];
+            contentType = @"IMG";
+        } else if (chatMessage.messageType == JYMessageTypeVioce) {
+            msg = chatMessage.messageContent;
+            contentType = @"VOICE";
+        }
+        
+//        @weakify(self);
+        [self.sendMessageModel fetchRebotReplyMessagesWithRobotId:self.user.userId
+                                                              msg:msg
+                                                      ContentType:contentType
+                                                          msgType:JYUserCreateMessageTypeChat
+                                                CompletionHandler:^(BOOL success, id obj)
+         {
+//            @strongify(self);
+            if (success) {
+                [[JYAutoContactManager manager] saveReplyRobots:obj];
+            }
+        }];
+    }
+
+    
     [self.chatMessages addObject:chatMessage];
     [chatMessage saveOrUpdate];
     
@@ -201,7 +244,9 @@ QBDefineLazyPropertyInitialization(NSArray, emotionManagers)
                                              sender:chatMessage.sendUserId
                                           timestamp:date];
         } else if (chatMessage.messageType == JYMessageTypePhoto) {
-            xhMsg = [[XHMessage alloc] initWithPhoto:[[SDImageCache sharedImageCache] imageFromDiskCacheForKey:chatMessage.photokey]
+            UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:chatMessage.photokey];
+            
+            xhMsg = [[XHMessage alloc] initWithPhoto:image
                                         thumbnailUrl:chatMessage.messageContent
                                       originPhotoUrl:chatMessage.standbyContent
                                               sender:chatMessage.sendUserId

@@ -118,9 +118,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.item < 100) {
-        JYDetailViewController *detailVC = [[JYDetailViewController alloc] init];
-        [self.navigationController pushViewController:detailVC animated:YES];
+    if (indexPath.item < self.dataSource.count) {
+        JYCharacter *character = self.dataSource[indexPath.item];
+        [self pushDetailViewControllerWithUserId:character.userId time:nil distance:nil];
     }
 }
 

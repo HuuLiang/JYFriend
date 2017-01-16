@@ -7,7 +7,7 @@
 //
 
 #import "JYLocalPhotoUtils.h"
-#import "JYUsrImageCache.h"
+#import "JYUserImageCache.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 
 @interface JYLocalPhotoUtils ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>

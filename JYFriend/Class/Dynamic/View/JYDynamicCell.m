@@ -42,7 +42,15 @@
         _userImgV = [[UIImageView alloc] init];
         _userImgV.layer.cornerRadius = kWidth(44);
         _userImgV.layer.masksToBounds = YES;
+        _userImgV.userInteractionEnabled = YES;
         [self.contentView addSubview:_userImgV];
+        @weakify(self);
+        [_userImgV bk_whenTapped:^{
+            @strongify(self);
+            if (self.userImgAction) {
+                self.userImgAction(self);
+            }
+        }];
         
         _nickNameLabel = [[UILabel alloc] init];
         _nickNameLabel.textColor = kColor(@"#333333");
@@ -66,7 +74,6 @@
         _focusButton.layer.masksToBounds = YES;
         [self.contentView addSubview:_focusButton];
         
-        @weakify(self);
         [_focusButton bk_addEventHandler:^(id sender) {
             @strongify(self);
             if (_isFocus) {

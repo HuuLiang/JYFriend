@@ -9,6 +9,7 @@
 #import "JYBaseViewController.h"
 #import <AVKit/AVKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "JYDetailViewController.h"
 
 @interface JYBaseViewController ()
 
@@ -35,6 +36,14 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)pushDetailViewControllerWithUserId:(NSString *)userId time:(NSString *)timeStr distance:(NSString *)distance {
+    if (timeStr) {
+        timeStr = [JYUtil timeStringFromDate:[JYUtil dateFromString:timeStr WithDateFormat:KDateFormatLong] WithDateFormat:@"yyyy年MM月dd日 hh:mm:ss"];
+    }
+    JYDetailViewController *detailVC = [[JYDetailViewController alloc] initWithUserId:userId time:timeStr distance:distance];
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 

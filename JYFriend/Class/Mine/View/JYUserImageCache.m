@@ -1,11 +1,11 @@
 //
-//  JYUsrImageCache.m
+//  JYUserImageCache.m
 //  JYFriend
 //
 //  Created by ylz on 2016/12/29.
 //  Copyright © 2016年 Liang. All rights reserved.
 //
-#import "JYUsrImageCache.h"
+#import "JYUserImageCache.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "JYMD5Utils.h"
 #import <SDImageCache.h>
@@ -19,13 +19,13 @@ static NSString *const kJYImageCacheImageName = @"jiaoyou_imagemodel_imagechche_
 
 @end
 
-@implementation JYUsrImageCache
+@implementation JYUserImageCache
 
 + (instancetype)shareInstance{
-    static JYUsrImageCache *_instance;
+    static JYUserImageCache *_instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _instance = [[JYUsrImageCache alloc] init];
+        _instance = [[JYUserImageCache alloc] init];
     });
     return _instance;
 }

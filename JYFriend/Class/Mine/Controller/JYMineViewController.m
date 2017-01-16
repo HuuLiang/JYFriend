@@ -101,10 +101,10 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
 
 - (void)setCurrentContenInfo {
     if (_avtarView) {
-        if ([JYUser currentUser].userImg != nil) {
-            UIImage *image = [UIImage imageWithData:[JYUser currentUser].userImg];
+        if ([JYUser currentUser].userImgKey != nil) {
+            UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[JYUser currentUser].userImgKey];
             if (image) {
-                _avtarView.userImg = [UIImage imageWithData:[JYUser currentUser].userImg];
+                _avtarView.userImg = image;
             }
         }
         _avtarView.follow = @"20";
