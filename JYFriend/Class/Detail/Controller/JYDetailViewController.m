@@ -17,6 +17,7 @@
 #import "JYLocalVideoUtils.h"
 #import "JYRedPackPopViewController.h"
 #import "JYMessageViewController.h"
+#import "JYUserCreateMessageModel.h"
 
 static NSString *const kPhotoCollectionViewCellIdentifier = @"PhotoCollectionViewCell_Identifier";
 static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
@@ -83,12 +84,13 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
 
 @property (nonatomic,retain) JYDetailBottotmView *bottomView;//底部视图
 @property (nonatomic,retain) JYUserDetailModel *detailModel;
+@property (nonatomic,retain) JYSendMessageModel *sendMessageModel;
 
 @end
 
 @implementation JYDetailViewController
 QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
-
+QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 
 - (instancetype)initWithUserId:(NSString *)userId time:(NSString *)time distance:(NSString *)distance
 {
@@ -111,16 +113,25 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
                                  [JYDetailBottomModel creatBottomModelWith:@"发消息" withImage:@"detail_message_icon"],
                                  [JYDetailBottomModel creatBottomModelWith:@"打招呼" withImage:@"detail_greet_icon"]];
     @weakify(self);
+   __block JYUserCreateMessageType messageType;
     _bottomView.action = ^(UIButton *btn){
+                @strongify(self);
         if ([btn.titleLabel.text isEqualToString:@"关注TA"]) {
-            btn.selected = !btn.selected;
+            if (btn.selected) {
+                return ;
+            }else {
+                btn.selected = !btn.selected;
+            }
             CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
             animation.values = @[@(0.4),@(0.7),@(1.0),@(1.5)];
             animation.keyTimes = @[@(0.0),@(0.3),@(0.7),@(1.0)];
             animation.calculationMode = kCAAnimationLinear;
             [btn.imageView.layer addAnimation:animation forKey:@"SHOW"];
+            
+            messageType = JYUserCreateMessageTypeFollow;
+            
         }else if ([btn.titleLabel.text isEqualToString:@"发消息"]){
-            @strongify(self);
+    
            JYUser *user = [[JYUser alloc] init];
             JYUserInfoModel *userInfo =  self.detailModel.userInfo;
             user.userId = userInfo.userId;
@@ -128,8 +139,22 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
             userInfo.logoUrl = userInfo.logoUrl;
             [JYMessageViewController showMessageWithUser:user inViewController:self];
         }else if ([btn.titleLabel.text isEqualToString:@"打招呼"]){
-        
+            messageType = JYUserCreateMessageTypeGreet;
+            if (self.detailModel.userInfo.greetSb.integerValue == 1) {
+                return;
+            }
+            
         }
+           [self.sendMessageModel fetchRebotReplyMessagesWithRobotId:self.detailModel.userInfo.userId msg:nil ContentType:@"Text" msgType:messageType CompletionHandler:^(BOOL success, id obj) {
+               if (success) {
+                   if (messageType == JYUserCreateMessageTypeFollow) {
+                       [[JYHudManager manager] showHudWithText:@"关注成功"];
+                   }else if (messageType == JYUserCreateMessageTypeGreet){
+                   
+                       [[JYHudManager manager] showHudWithText:@"打招呼成功"];
+                   }
+               }
+           }];
     };
     
     [self.view addSubview:_bottomView];
@@ -181,6 +206,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
         @strongify(self);
         [self->_layoutCollectionView reloadData];
         [self->_layoutCollectionView JY_endPullToRefresh];
+        _bottomView.attentionBtnSelect = useDetai.user.attention.integerValue == 0 ? NO : YES;
     }
 }];
 

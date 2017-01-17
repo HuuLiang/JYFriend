@@ -20,5 +20,5 @@
 
 @property (nonatomic,retain) NSArray <JYDetailBottomModel *> *buttonModels;
 @property (nonatomic,copy)QBAction action;
-
+@property (nonatomic) BOOL attentionBtnSelect;
 @end
