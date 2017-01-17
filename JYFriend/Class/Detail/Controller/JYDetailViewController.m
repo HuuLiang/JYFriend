@@ -255,6 +255,9 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 #pragma mark UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    if (!self.detailModel.userInfo) {
+        return 0;
+    }
     NSInteger count = JYSectionCount;
     if (self.detailModel.userPhoto.count >0) {
         count += 1;
