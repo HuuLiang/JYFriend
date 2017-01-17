@@ -257,7 +257,7 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
         [self addChatMessage:messageModel];
     }
 }
-}
+
 #pragma mark - XHEmotionManagerViewDelegate,XHEmotionManagerViewDataSource
 
 /**

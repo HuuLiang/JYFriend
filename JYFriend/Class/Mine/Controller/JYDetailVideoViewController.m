@@ -98,12 +98,12 @@ static NSInteger const kUploadTiem = 0.2;
         make.size.mas_equalTo(CGSizeMake(kWidth(80), kWidth(80)));
     }];
     }
-    imageView.userInteractionEnabled = YES;
-    @weakify(self);
-    [imageView bk_whenTapped:^{
-        @strongify(self);
-       [self presentViewController:[self playerVCWithVideo:[JYLocalVideoUtils getJYLocalVideoPathModelUserLocalVideoPath]] animated:YES completion:nil];
-    }];
+//    imageView.userInteractionEnabled = YES;
+//    @weakify(self);
+//    [imageView bk_whenTapped:^{
+//        @strongify(self);
+//       [self presentViewController:[self playerVCWithVideo:[JYLocalVideoUtils getJYLocalVideoPathModelUserLocalVideoPath]] animated:YES completion:nil];
+//    }];
 
     return _successVideoView;
 }

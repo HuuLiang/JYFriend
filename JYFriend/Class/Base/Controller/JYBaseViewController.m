@@ -60,8 +60,7 @@
     UIViewController *retVC;
     if (NSClassFromString(@"AVPlayerViewController")) {
         AVPlayerViewController *playerVC = [[AVPlayerViewController alloc] init];
-
-        playerVC.player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:videoUrl]];//[[AVPlayer alloc] initWithURL:[NSURL URLWithString:videoPath]];
+        playerVC.player = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:videoUrl]];
         [playerVC aspect_hookSelector:@selector(viewDidAppear:)
                           withOptions:AspectPositionAfter
                            usingBlock:^(id<AspectInfo> aspectInfo){
@@ -71,7 +70,7 @@
         
         retVC = playerVC;
     } else {
-        retVC = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:videoUrl]];
+        retVC = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:videoUrl]];
     }
     
     [retVC aspect_hookSelector:@selector(supportedInterfaceOrientations) withOptions:AspectPositionInstead usingBlock:^(id<AspectInfo> aspectInfo){
@@ -85,7 +84,6 @@
     } error:nil];
     return retVC;
 }
-
 
 
 @end

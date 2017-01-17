@@ -402,7 +402,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             cell.title = @"私密资料";
 //             cell.detailTitle = nil;
 //            [cell.vipBtn setTitle:@"成为VIP会员" forState:UIControlStateNormal];
-            cell.vipTitle = @"成为VIP会员";
+            cell.vipTitle = [JYUtil isVip] ? @"续费VIP会员" : @"成为VIP会员";
             @weakify(self);
             cell.vipAction = ^(id sender){
                 @strongify(self);
@@ -615,7 +615,11 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         }
     }else if (indexPath.section == JYSectionTypeSectetInfo + hasPhoto + hasVideo) {
     //播放视频
-    
+        if ([JYUtil isVip] || self.isSendPacket) {
+            [self playerVCWithVideo:self.detailModel.userVideo.videoUrl];
+        }else {
+            [self presentPayViewController];
+        }
     }
 }
 /**

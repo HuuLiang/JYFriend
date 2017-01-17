@@ -66,11 +66,11 @@
     }
     _vipBtn = [UIButton buttonWithType: UIButtonTypeCustom];
     _vipBtn.backgroundColor = [UIColor colorWithHexString:@"#e147a5"];
-    if (![JYUtil isVip]) {
-        [_vipBtn setTitle:@"成为VIP" forState:UIControlStateNormal];
-    }else{
-        [_vipBtn setTitle:@"续费VIP" forState:UIControlStateNormal];
-    }
+//    if (![JYUtil isVip]) {
+//        [_vipBtn setTitle:@"成为VIP" forState:UIControlStateNormal];
+//    }else{
+//        [_vipBtn setTitle:@"续费VIP" forState:UIControlStateNormal];
+//    }
     [_vipBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _vipBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(24.)];
     _vipBtn.layer.cornerRadius = 3.;
@@ -108,6 +108,7 @@
     _vipTitle = vipTitle;
     if (vipTitle) {
         [self.vipBtn setTitle:vipTitle forState:UIControlStateNormal];
+        _vipBtn.hidden = NO;
     }else {
         if (_vipBtn) {
             _vipBtn.hidden = YES;
