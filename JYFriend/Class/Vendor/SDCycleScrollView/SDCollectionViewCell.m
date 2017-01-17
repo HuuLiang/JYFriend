@@ -95,7 +95,7 @@
 - (void)setIsFisrtPicture:(BOOL)isFisrtPicture {
     _isFisrtPicture = isFisrtPicture;
     
-    if (kCurrentUser.isVip.integerValue == 0 ) {
+    if (![JYUtil isVip]) {
         if (isFisrtPicture) {
             [_imageView JY_RemoveBlur];
         }else {

@@ -70,8 +70,7 @@
 
 - (void)setIsFirstPhoto:(BOOL)isFirstPhoto {
     _isFirstPhoto = isFirstPhoto;
-    if (kCurrentUser.isVip.integerValue == 0 ) {
-        
+    if (![JYUtil isVip]) {
         if (isFirstPhoto) {
             [_currentImageView JY_RemoveBlur];
         }else {

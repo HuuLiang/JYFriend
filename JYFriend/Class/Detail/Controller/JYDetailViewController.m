@@ -603,7 +603,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     
     if (indexPath.section == photoSection) {
 
-        if (kCurrentUser.isVip.integerValue == 0 || !self.isSendPacket) {
+        if (![JYUtil isVip] || !self.isSendPacket) {
             if (indexPath.item == 0) {
                  [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
             }else {
