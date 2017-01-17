@@ -64,8 +64,8 @@
     
     CGSize size = [_photoBtn.titleLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, _photoBtn.titleLabel.frame.size.height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : _photoBtn.titleLabel.font} context:nil].size;
     
-    _photoBtn.imageEdgeInsets =UIEdgeInsetsMake(-0.5*size.height-10, 0.5*size.width, 0.5*size.height, -0.5*size.width);
-    _photoBtn.titleEdgeInsets =UIEdgeInsetsMake(0.5*_photoBtn.imageView.frame.size.height+10, -0.5*_photoBtn.imageView.frame.size.width, -0.5*_photoBtn.imageView.frame.size.height, 0.5*_photoBtn.imageView.frame.size.width);
+    _photoBtn.imageEdgeInsets =UIEdgeInsetsMake(-0.5*size.height-10, 0.4*size.width, 0.5*size.height, -0.4*size.width);
+    _photoBtn.titleEdgeInsets =UIEdgeInsetsMake(0.5*_photoBtn.imageView.frame.size.height+10, -0.8*_photoBtn.imageView.frame.size.width, -0.5*_photoBtn.imageView.frame.size.height, 0.2*_photoBtn.imageView.frame.size.width);
     
     CGRect frame = _userImgV.frame;
     frame.origin.x += 1.5;

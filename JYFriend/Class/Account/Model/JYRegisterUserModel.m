@@ -28,7 +28,7 @@
 }
 
 - (BOOL)registerUserWithUserInfo:(JYUser *)user completionHandler:(QBCompletionHandler)handler {
-    NSDictionary *params = @{@"uuid":[JYUtil UUID],
+    NSDictionary *params = @{@"uuid":[JYUtil UUID] ?: @"",
                              @"nickName":user.nickName,
                              @"clientId":@"defaultClientId",
                              @"province":user.homeTown ? user.homeTown : @"",
