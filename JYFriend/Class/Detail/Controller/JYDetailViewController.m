@@ -32,12 +32,12 @@ static CGFloat const kPhotoLineSpace = 10.;
 
 
 typedef NS_ENUM(NSInteger,JYSectionType) { //动态的根据后台返回的字段来控制显示的内容 ,控制方法在没个代理方法里有写
-//    JYSectionTypePhoto,
+    //    JYSectionTypePhoto,
     JYSectionTypeHomeTown,
-//    JYSectionTypeDynamic,
+    //    JYSectionTypeDynamic,
     JYSectionTypeInfo,
     JYSectionTypeSectetInfo,
-//    JYSectionTypeVideo,
+    //    JYSectionTypeVideo,
     JYSectionCount
 };
 
@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger,JYSectionType) { //动态的根据后台返回的字�
 typedef NS_ENUM(NSInteger , JYNewDynamicItem){
     JYNewDynamicItemTitle,
     JYNewDynamicItemDetailTitle,
-//    JYNewDynamicItemImage,
+    //    JYNewDynamicItemImage,
     JYNewDynamicItemTime,
     JYNewDynamicItemCount
 } ;
@@ -111,14 +111,14 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         return _bottomView;
     }
     _bottomView = [[JYDetailBottotmView alloc] init];
-//    _bottomView.backgroundColor = [UIColor colorWithHexString:@"#E147a5"];
+    //    _bottomView.backgroundColor = [UIColor colorWithHexString:@"#E147a5"];
     _bottomView.buttonModels = @[[JYDetailBottomModel creatBottomModelWith:@"关注TA" withImage:@"detail_attention_icon"],
                                  [JYDetailBottomModel creatBottomModelWith:@"发消息" withImage:@"detail_message_icon"],
                                  [JYDetailBottomModel creatBottomModelWith:@"打招呼" withImage:@"detail_greet_icon"]];
     @weakify(self);
-   __block JYUserCreateMessageType messageType;
+    __block JYUserCreateMessageType messageType;
     _bottomView.action = ^(UIButton *btn){
-                @strongify(self);
+        @strongify(self);
         if ([btn.titleLabel.text isEqualToString:@"关注TA"]) {
             if (btn.selected) {
                 return ;
@@ -134,38 +134,42 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             messageType = JYUserCreateMessageTypeFollow;
             
         }else if ([btn.titleLabel.text isEqualToString:@"发消息"]){
-    
-           JYUser *user = [[JYUser alloc] init];
+            
+            JYUser *user = [[JYUser alloc] init];
             JYUserInfoModel *userInfo =  self.detailModel.userInfo;
             user.userId = userInfo.userId;
             userInfo.nickName = userInfo.nickName;
             userInfo.logoUrl = userInfo.logoUrl;
             [JYMessageViewController showMessageWithUser:user inViewController:self];
+            
         }else if ([btn.titleLabel.text isEqualToString:@"打招呼"]){
             messageType = JYUserCreateMessageTypeGreet;
-            if (self.detailModel.userInfo.greetSb.integerValue == 1) {
+            if (self.detailModel.userInfo.greet) {
                 return;
             }
             
         }
-           [self.sendMessageModel fetchRebotReplyMessagesWithRobotId:self.detailModel.userInfo.userId msg:nil ContentType:@"Text" msgType:messageType CompletionHandler:^(BOOL success, id obj) {
-               if (success) {
-                   if (messageType == JYUserCreateMessageTypeFollow) {
-                       [[JYHudManager manager] showHudWithText:@"关注成功"];
-                   }else if (messageType == JYUserCreateMessageTypeGreet){
-                   
-                       [[JYHudManager manager] showHudWithText:@"打招呼成功"];
-                   }
-               }
-           }];
+        if (![btn.titleLabel.text isEqualToString:@"发消息"]) {
+            [self.sendMessageModel fetchRebotReplyMessagesWithRobotId:self.detailModel.userInfo.userId msg:nil ContentType:@"Text" msgType:messageType CompletionHandler:^(BOOL success, id obj) {
+                if (success) {
+                    if (messageType == JYUserCreateMessageTypeFollow) {
+                        [[JYHudManager manager] showHudWithText:@"关注成功"];
+                    }else if (messageType == JYUserCreateMessageTypeGreet){
+                        
+                        [[JYHudManager manager] showHudWithText:@"打招呼成功"];
+                    }
+                }
+            }];
+        }
+
     };
     
     [self.view addSubview:_bottomView];
     {
-    [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.left.right.mas_equalTo(self.view);
-        make.height.mas_equalTo(kWidth(88));
-    }];
+        [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.left.right.mas_equalTo(self.view);
+            make.height.mas_equalTo(kWidth(88));
+        }];
     }
     return _bottomView;
 }
@@ -188,9 +192,9 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     _layoutCollectionView.contentInset = UIEdgeInsetsMake(0, 0, kWidth(88.), 0);
     [self.view addSubview:_layoutCollectionView];
     {
-    [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
+        [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
     }
     
     self.bottomView.backgroundColor = [UIColor colorWithHexString:@"#E147a5"];
@@ -218,7 +222,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(payResultSuccess) name:kPaidNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(payResultSuccess) name:kPaidNotificationName object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -232,15 +236,15 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 - (void)loadModels {
     @weakify(self);
     [self.detailModel fetchUserDetailModelWithViewUserId:self->_userId CompleteHandler:^(BOOL success, JYUserDetail *useDetai) {
-    if (success) {
-        @strongify(self);
-        self.isSendPacket = [(NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:kSendPacketUserIds] containsObject:useDetai.user.userId];
-        [self->_layoutCollectionView reloadData];
-        [self->_layoutCollectionView JY_endPullToRefresh];
-        _bottomView.attentionBtnSelect = useDetai.user.attention.integerValue == 0 ? NO : YES;
-    }
-}];
-
+        if (success) {
+            @strongify(self);
+            self.isSendPacket = [(NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:kSendPacketUserIds] containsObject:useDetai.user.userId];
+            [self->_layoutCollectionView reloadData];
+            [self->_layoutCollectionView JY_endPullToRefresh];
+            _bottomView.attentionBtnSelect = useDetai.user.follow;
+        }
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -342,7 +346,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         cell.time = [JYLocalVideoUtils fetchTimeIntervalToCurrentTimeWithStartTime:self->_time];
         cell.homeTown = [NSString stringWithFormat:@"%@%@",self.detailModel.userInfo.province,self.detailModel.userInfo.city];
         return cell;
-    
+        
     } else if (indexPath.section == JYSectionTypeHomeTown + hasPhoto + hasDynamic){
         JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
         cell.title = nil;
@@ -352,37 +356,37 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             cell.title = @"最新动态";
             return cell;
         }else if (indexPath.item == JYNewDynamicItemDetailTitle){
-        cell.detailTitle = self.detailModel.mood.text;
+            cell.detailTitle = self.detailModel.mood.text;
             return cell;
         }else if (indexPath.item == JYNewDynamicItemTime + dynamicHasImage){
-
+            
             cell.detailTitle = self->_time ;
             return cell;
         }else if(indexPath.item == JYNewDynamicItemDetailTitle +dynamicHasImage ){
-
+            
             JYNewDynamicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kNewDynamicCellIdentifier forIndexPath:indexPath];
             cell.detaiMoods = self.detailModel.mood.moodUrl;
             cell.action = ^(NSInteger index){
                 [self photoBrowseWithImageGroup:[self dynamicImageGroupWithDyImageModels:self.detailModel.mood.moodUrl] currentIndex:index isNeedBlur:NO];
-            
+                
             };
             return cell;
         }
         
     }else if (indexPath.section == JYSectionTypeInfo + hasPhoto + hasDynamic){
         JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
-          cell.title = nil;
-          cell.detailTitle = nil;
-       cell.vipTitle = nil;
+        cell.title = nil;
+        cell.detailTitle = nil;
+        cell.vipTitle = nil;
         if (indexPath.item == JYUserInfoItemTitle) {
             cell.title = @"个人信息";
-//             cell.detailTitle = nil;
+            //             cell.detailTitle = nil;
             return cell;
         }else if (indexPath.item == JYUserInfoItemName){
             cell.detailTitle = [NSString stringWithFormat:@"昵   称: %@",self.detailModel.userInfo.nickName];//;
             return cell;
         }else if (indexPath.item == JYUserInfoItemAge){
-        cell.detailTitle = [NSString stringWithFormat:@"年   龄: %@",self.detailModel.userInfo.age];
+            cell.detailTitle = [NSString stringWithFormat:@"年   龄: %@",self.detailModel.userInfo.age];
             return cell;
         }else if (indexPath.item == JYUserInfoItemHeigth){
             cell.detailTitle = [NSString stringWithFormat:@"身   高: %@",self.detailModel.userInfo.height];
@@ -394,17 +398,17 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             cell.detailTitle = [NSString stringWithFormat:@"个性签名: %@",self.detailModel.userInfo.note];
             return cell;
         }
-    
+        
     } else if (indexPath.section == JYSectionTypeSectetInfo + hasPhoto + hasDynamic){
-       JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
-         cell.title = nil;
+        JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
+        cell.title = nil;
         cell.detailTitle = nil;
         cell.vipTitle = nil;
         if (indexPath.item == JYSectetInfoItemTitle) {
             JYDetailUserInfoCell *vipCell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellKtVipIdentifier forIndexPath:indexPath];
             vipCell.title = @"私密资料";
-//             cell.detailTitle = nil;
-//            [cell.vipBtn setTitle:@"成为VIP会员" forState:UIControlStateNormal];
+            //             cell.detailTitle = nil;
+            //            [cell.vipBtn setTitle:@"成为VIP会员" forState:UIControlStateNormal];
             vipCell.vipTitle = [JYUtil isVip] ? @"续费VIP会员" : @"成为VIP会员";
             @weakify(self);
             vipCell.vipAction = ^(id sender){
@@ -423,12 +427,12 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             cell.detailTitle = [NSString stringWithFormat:@"手机号: %@",[JYUser currentUser].isVip.integerValue ? self.detailModel.userInfo.phone : @"仅限VIP会员查看"];
             return cell;
         }
-    
+        
     }else if (indexPath.section == JYSectionTypeSectetInfo + hasPhoto + hasDynamic + hasVideo){
         if (indexPath.item == JYVideoItemTitle) {
-             JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
+            JYDetailUserInfoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellIndetifier forIndexPath:indexPath];
             cell.title = @"TA的视频认证";
-             cell.detailTitle = nil;
+            cell.detailTitle = nil;
             cell.vipTitle = nil;
             return cell;
         }else if (indexPath.item == JYVideoItemVideo){
@@ -448,7 +452,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     NSUInteger hasVideo = 0;
     NSUInteger hasDynamic = 0;
     NSInteger photoSection = NSNotFound;
-     NSInteger dynamicHasImage = 0;
+    NSInteger dynamicHasImage = 0;
     if (self.detailModel.userPhoto.count > 0) {
         hasPhoto = 1;
         photoSection = 0;
@@ -471,12 +475,12 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         
     } else if (indexPath.section == JYSectionTypeHomeTown + hasPhoto + hasDynamic){
         if (indexPath.item == JYNewDynamicItemTitle) {
-           return CGSizeMake(kScreenWidth, kWidth(90.));
+            return CGSizeMake(kScreenWidth, kWidth(90.));
         }else if (indexPath.item == JYNewDynamicItemDetailTitle ){
             CGSize size = [self.detailModel.mood.text sizeWithFont:[UIFont systemFontOfSize:kWidth(28.)] maxWidth:(kScreenWidth - kWidth(60))];
-         return CGSizeMake(kScreenWidth, size.height +kWidth(20));
+            return CGSizeMake(kScreenWidth, size.height +kWidth(20));
         }else if (indexPath.item == JYNewDynamicItemTime + dynamicHasImage){
-        return CGSizeMake(kScreenWidth, kWidth(45.));
+            return CGSizeMake(kScreenWidth, kWidth(45.));
         }else if(indexPath.item == JYNewDynamicItemDetailTitle + dynamicHasImage){
             return CGSizeMake(kScreenWidth, kWidth(140));
         }
@@ -491,7 +495,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         return CGSizeMake(kScreenWidth, kWidth(55.));
     } else if (indexPath.section == JYSectionTypeSectetInfo + hasPhoto + hasDynamic +hasVideo){
         if (indexPath.item == JYVideoItemTitle) {
-             return CGSizeMake(kScreenWidth, kWidth(90.));
+            return CGSizeMake(kScreenWidth, kWidth(90.));
         }else if (indexPath.item == JYVideoItemVideo){
             return CGSizeMake(kScreenWidth *0.92, kWidth(0.74 *kScreenWidth));
         }
@@ -519,7 +523,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     if (section == photoSection) {
         return kWidth(kPhotoLineSpace *2);
     }else if (section == JYSectionTypeHomeTown + hasPhoto + hasDynamic){
-      return kWidth(kPhotoLineSpace );
+        return kWidth(kPhotoLineSpace );
     }
     return 0;
 }
@@ -589,7 +593,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     NSUInteger hasVideo = 0;
     NSUInteger hasDynamic = 0;
     NSInteger photoSection = NSNotFound;
-     NSInteger dynamicHasImage = 0;
+    NSInteger dynamicHasImage = 0;
     if (self.detailModel.userPhoto.count > 0) {
         hasPhoto = 1;
         photoSection = 0;
@@ -605,10 +609,10 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     }
     
     if (indexPath.section == photoSection) {
-
+        
         if (![JYUtil isVip] || !self.isSendPacket) {
             if (indexPath.item == 0) {
-                 [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
+                [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
             }else {
                 [[[JYRedPackPopViewController alloc] init] popRedPackViewWithCurrentViewCtroller:self];
             }
@@ -617,7 +621,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:NO];
         }
     }else if (indexPath.section == JYSectionTypeSectetInfo + hasPhoto + hasVideo) {
-    //播放视频
+        //播放视频
         if ([JYUtil isVip] || self.isSendPacket) {
             [self playerVCWithVideo:self.detailModel.userVideo.videoUrl];
         }else {
@@ -630,9 +634,9 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
  */
 - (NSArray *)photoImageGroupWithUserPhotosModel:(NSArray <JYUserPhoto *>*)photoModels {
     NSMutableArray *arrM = [NSMutableArray array];
-   [photoModels enumerateObjectsUsingBlock:^(JYUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-       [arrM addObject:obj.bigPhoto];
-   }];
+    [photoModels enumerateObjectsUsingBlock:^(JYUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [arrM addObject:obj.bigPhoto];
+    }];
     return arrM.copy;
 }
 
@@ -677,8 +681,8 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     [UIView animateWithDuration:0.5 animations:^{
         bigImageView.alpha = 1;
     }];
-
-
+    
+    
 }
 
 @end

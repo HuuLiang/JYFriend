@@ -45,6 +45,7 @@ typedef NS_ENUM(NSUInteger , JYPayTypeRow) {
 {
     UITableView *_layoutTableView;
     NSIndexPath *_defaultIndexPath;
+    NSNumber    *_redPackPrice;
 }
 @property (nonatomic) QBBaseModel *baseModel;
 @property (nonatomic,copy) dispatch_block_t completionHandler;
@@ -57,9 +58,11 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
 
 #pragma mark - PayFunctions
 
-- (void)payForWithBaseModel:(QBBaseModel *)baseModel vipLevel:(JYVipType)vipType;
+- (void)payForWithBaseModel:(QBBaseModel *)baseModel vipLevel:(JYVipType)vipType price:(NSInteger)price;
 {
     self.baseModel = baseModel;
+    
+    _redPackPrice = [NSNumber numberWithInteger:price];
     [self payForPaymentType:QBOrderPayTypeWeChatPay vipLevel:vipType];
 
 }
@@ -102,6 +105,11 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
         price = [JYSystemConfigModel sharedModel].vipPriceC;
     }
 //    price = 200;
+    
+    if (_redPackPrice) {
+        price = [_redPackPrice integerValue];
+    }
+    
     orderInfo.orderPrice = price;
     
     NSString *orderDescription = @"VIP";

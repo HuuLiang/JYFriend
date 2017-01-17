@@ -42,7 +42,7 @@
         baseModel.programType= @(2);
         baseModel.programId = @(234);
         baseModel.programLocation = @(45);
-        [[[JYPaymentViewController alloc] init] payForWithBaseModel:baseModel vipLevel:JYVipTypePacket];
+        [[[JYPaymentViewController alloc] init] payForWithBaseModel:baseModel vipLevel:JYVipTypePacket price:500];
     };
     
     return _packView;

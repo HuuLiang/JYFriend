@@ -15,6 +15,6 @@
 - (void)hidePayment;
 
 - (void)notifyPaymentResult:(QBPayResult)result withPaymentInfo:(QBPaymentInfo *)paymentInfo;
-- (void)payForWithBaseModel:(QBBaseModel *)baseModel vipLevel:(JYVipType)vipType;
+- (void)payForWithBaseModel:(QBBaseModel *)baseModel vipLevel:(JYVipType)vipType price:(NSInteger)price;
 
 @end

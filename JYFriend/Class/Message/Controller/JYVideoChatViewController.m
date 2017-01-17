@@ -51,7 +51,6 @@
 }
 
 - (void)triggerShake {
-    
     AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, systemAudioCallback, NULL);
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 }
@@ -65,12 +64,11 @@
 }
 
 void systemAudioCallback()//连续震动
-
 {
-    
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
