@@ -66,7 +66,7 @@
     }
     _vipBtn = [UIButton buttonWithType: UIButtonTypeCustom];
     _vipBtn.backgroundColor = [UIColor colorWithHexString:@"#e147a5"];
-    if (kCurrentUser.isVip.integerValue == 0) {
+    if (![JYUtil isVip]) {
         [_vipBtn setTitle:@"成为VIP" forState:UIControlStateNormal];
     }else{
         [_vipBtn setTitle:@"续费VIP" forState:UIControlStateNormal];
