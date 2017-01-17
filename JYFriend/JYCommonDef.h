@@ -49,15 +49,13 @@ typedef NS_ENUM(NSUInteger, JYUserCreateMessageType) {
 };
 //会员等级
 typedef NS_ENUM(NSUInteger,JYVipType) {
-    JYVipTypeUnKnow,
-    JYVipTypeMonth,
-    JYVipTypeQuarter,
-    JYVipTypeYear
+    JYVipTypeYear = 0,
+    JYVipTypeQuarter = 1,
+    JYVipTypeMonth = 2
 };
 
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)
 
-#define kUserVipExpireTimeKeyName               @"kUserVipExpireTimeKeyName"
 #define kPaidNotificationName                   @"JYFriendPaidNotification"
 #define kUserLoginNotificationName              @"JYFriendUserLoginNotification"
 #define KUserChangeInfoNotificationName         @"JYFriendUserChangeInfoNotificationName"

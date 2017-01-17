@@ -14,14 +14,14 @@
 #import "JYSpreadBannerViewController.h"
 #import "JYAppSpread.h"
 
-static NSString *const kRegisterKeyName         = @"JY_register_keyname";
-static NSString *const kUserRegisterKeyName     = @"JY_userRegister_keyname";
-static NSString *const kUserAccessUsername      = @"JY_user_access_username";
-static NSString *const kUserAccessServicename   = @"JY_user_access_service";
-static NSString *const kLaunchSeqKeyName        = @"JY_launchseq_keyname";
-
-static NSString *const kImageTokenKeyName       = @"safiajfoaiefr$^%^$E&&$*&$*";
-static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
+static NSString *const kRegisterKeyName           = @"JY_register_keyname";
+static NSString *const kUserRegisterKeyName       = @"JY_userRegister_keyname";
+static NSString *const kUserAccessUsername        = @"JY_user_access_username";
+static NSString *const kUserAccessServicename     = @"JY_user_access_service";
+static NSString *const kLaunchSeqKeyName          = @"JY_launchseq_keyname";
+static NSString *const kImageTokenKeyName         = @"safiajfoaiefr$^%^$E&&$*&$*";
+static NSString *const kImageTokenCryptPassword   = @"wafei@#$%^%$^$wfsssfsf";
+static NSString *const kUserVipExpireTimeKeyName  = @"kUserVipExpireTimeKeyName";
 
 
 @implementation JYUtil
@@ -76,6 +76,22 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
 + (void)accumateLaunchSeq {
     NSUInteger launchSeq = [self launchSeq];
     [[NSUserDefaults standardUserDefaults] setObject:@(launchSeq+1) forKey:kLaunchSeqKeyName];
+}
+
++ (BOOL)isVip {
+    NSDate *expireDate = [[NSUserDefaults standardUserDefaults] objectForKey:kUserVipExpireTimeKeyName];
+    if (expireDate) {
+        return [expireDate isEarlierThanDate:[NSDate date]];
+    } else {
+        return NO;
+    }
+}
+
++ (void)setVipExpireTime:(NSString *)expireTime {
+    NSDate *date = [self dateFromString:expireTime WithDateFormat:@""];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:date forKey:kUserVipExpireTimeKeyName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - 图片加密
@@ -268,5 +284,49 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
     
     return standbyUrl;
 }
+
+//+ (NSUInteger)currentTabPageIndex {
+//    LeftSlideViewController *rootVC = (LeftSlideViewController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+//    if ([rootVC.mainVC isKindOfClass:[UITabBarController class]]) {
+//        UITabBarController *tabVC = (UITabBarController *)rootVC.mainVC;
+//        if (tabVC.selectedIndex == tabVC.childViewControllers.count - 1) {
+//            //论坛
+//            return 6;
+//        } else if (tabVC.selectedIndex == tabVC.childViewControllers.count - 2) {
+//            //直播
+//            return 5;
+//        } else if (tabVC.selectedIndex == tabVC.childViewControllers.count - 3) {
+//            //撸点
+//            return 4;
+//        } else if (tabVC.selectedIndex == tabVC.childViewControllers.count - 4) {
+//            //vipC 3 vipB 3 vipA 2 vipNone 1
+//            if ([PPUtil currentVipLevel] == PPVipLevelVipC) {
+//                return 3;
+//            } else {
+//                return [PPUtil currentVipLevel] + 1;
+//            }
+//        } else if (tabVC.selectedIndex == tabVC.childViewControllers.count - 5) {
+//            //vipC null vipB 2 vipA 1 vipNone 0
+//            return [PPUtil currentVipLevel];
+//        }
+//    } else if ([rootVC.leftVC isKindOfClass:[PPNavigationController class]]) {
+//        return 7;
+//    }
+//    return 0;
+//}
+//
+//+ (NSUInteger)currentSubTabPageIndex {
+//    UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+//    if ([rootVC isKindOfClass:[UITabBarController class]]) {
+//        UITabBarController *tabVC = (UITabBarController *)rootVC;
+//        if ([tabVC.selectedViewController isKindOfClass:[UINavigationController class]]) {
+//            UINavigationController *navVC = (UINavigationController *)tabVC.selectedViewController;
+//            if ([navVC.visibleViewController isKindOfClass:[PPBaseViewController class]]) {
+//                return NSNotFound;
+//            }
+//        }
+//    }
+//    return NSNotFound;
+//}
 
 @end
