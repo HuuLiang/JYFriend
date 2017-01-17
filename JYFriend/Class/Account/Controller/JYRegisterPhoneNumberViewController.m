@@ -69,7 +69,7 @@ QBDefineLazyPropertyInitialization(JYRegisterUserModel, userModel)
     {
         [mainLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
-            make.top.equalTo(self.view).offset(kWidth(128));
+            make.top.equalTo(self.view).offset(kWidth(20)+64);
             make.height.mas_equalTo(kWidth(34));
         }];
         

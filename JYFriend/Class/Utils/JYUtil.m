@@ -299,13 +299,14 @@ static NSString *const kRecommednLastDayKeyName   = @"kRecommednLastDayKeyName";
     return  result;
 }
 
-+ (NSDate *)isLastDate {
++ (BOOL)isYesterDay {
     NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kRecommednLastDayKeyName];
     if (!lastDate) {
         lastDate = [self currentDate];
         [[NSUserDefaults standardUserDefaults] setObject:lastDate forKey:kRecommednLastDayKeyName];
+        return YES;
     }
-    return lastDate;
+    return [lastDate isYesterday];
 }
 
 #pragma mark -- 其他

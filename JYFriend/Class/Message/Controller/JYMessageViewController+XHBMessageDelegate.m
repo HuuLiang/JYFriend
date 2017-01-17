@@ -245,7 +245,7 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
         if (index == 0) {
             [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary inViewController:self popoverPoint:CGPointZero isVideo:NO];
         }else if(index == 1){
-            [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum inViewController:self popoverPoint:CGPointZero isVideo:YES];
+            [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum inViewController:self popoverPoint:CGPointZero isVideo:NO];
         }else if (index == 2){
             [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeCamera inViewController:self popoverPoint:CGPointZero isVideo:NO];
         }else if (index == 3){
@@ -257,7 +257,7 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
         [self addChatMessage:messageModel];
     }
 }
-}
+
 #pragma mark - XHEmotionManagerViewDelegate,XHEmotionManagerViewDataSource
 
 /**

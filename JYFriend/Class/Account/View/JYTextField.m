@@ -38,13 +38,15 @@
     return textRect;
 }
 
-- (CGRect)placeholderRectForBounds:(CGRect)bounds {
-    CGRect placeholderRect = [super placeholderRectForBounds:bounds];
+- (NSAttributedString *)attributedPlaceholder {
     NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:self.placeholder
                                                                               attributes:@{NSForegroundColorAttributeName:[[UIColor colorWithHexString:@"#ffffff"] colorWithAlphaComponent:0.87],
                                                                                            NSFontAttributeName:[UIFont systemFontOfSize:kWidth(28)]}];
-    self.attributedPlaceholder = attri;
-    
+    return attri;
+}
+
+- (CGRect)placeholderRectForBounds:(CGRect)bounds {
+    CGRect placeholderRect = [super placeholderRectForBounds:bounds];
     placeholderRect.origin.x += 10;
     placeholderRect.size.width -= 10;
     return placeholderRect;

@@ -57,7 +57,7 @@
     {
         [mainLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
-            make.top.equalTo(self.view).offset(kWidth(128));
+            make.top.equalTo(self.view).offset(64+kWidth(20));
             make.height.mas_equalTo(kWidth(34));
         }];
         

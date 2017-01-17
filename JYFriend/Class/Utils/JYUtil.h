@@ -48,7 +48,7 @@
 + (BOOL)shouldRefreshContentWithKey:(NSString *)refreshKey timeInterval:(NSUInteger)timeInterval;
 + (NSDate *)currentDate;
 + (NSString *)compareCurrentTime:(NSString *)compareDateString;
-+ (NSDate *)isLastDate;
++ (BOOL)isYesterDay;
 
 + (id)getValueWithKeyName:(NSString *)keyName;
 + (void)setValue:(id)object withKeyName:(NSString *)keyName;
