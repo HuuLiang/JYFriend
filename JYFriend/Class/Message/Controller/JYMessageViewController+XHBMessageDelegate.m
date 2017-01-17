@@ -47,6 +47,18 @@ static NSString *const kJYFriendMessageVipCellKeyName       = @"kJYFriendMessage
     [self.emotionManagerView reloadData];
 }
 
+/**
+ 点击加号里面
+ */
+- (void)setXHShareMenu{
+    
+    XHShareMenuItem *pictureItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:@"message_photo"] title:@"图片" titleColor:[UIColor redColor] titleFont:[UIFont systemFontOfSize:kWidth(30)]];
+    
+    XHShareMenuItem *photographItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:@"message_camera"] title:@"拍照" titleColor:[UIColor redColor] titleFont:[UIFont systemFontOfSize:kWidth(30)]];
+    XHShareMenuItem *videoChatItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:@"message_video_chat"] title:@"视频聊天" titleColor:[UIColor redColor] titleFont:[UIFont systemFontOfSize:kWidth(30)]];
+    self.shareMenuItems = @[pictureItem,photographItem,videoChatItem];
+}
+
 - (void)registerCustomCell {
     [self.messageTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kJYFriendMessageNormalCellKeyName];
     [self.messageTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kJYFriendMessageVipCellKeyName];
@@ -222,11 +234,9 @@ static NSString *const kJYFriendMessageVipCellKeyName       = @"kJYFriendMessage
     [JYLocalPhotoUtils shareManager].delegate = self;
     if (index == 0) {
         [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary inViewController:self popoverPoint:CGPointZero isVideo:NO];
-    }else if(index == 1){
-        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum inViewController:self popoverPoint:CGPointZero isVideo:YES];
-    }else if (index == 2){
+    }else if (index == 1){
       [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeCamera inViewController:self popoverPoint:CGPointZero isVideo:NO];
-    }else if (index == 3){
+    }else if (index == 2){
     
         JYVideoChatViewController *chatvVC = [[JYVideoChatViewController alloc] init];
         [self presentViewController:chatvVC animated:YES completion:nil];

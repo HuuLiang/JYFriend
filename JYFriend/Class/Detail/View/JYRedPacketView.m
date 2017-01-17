@@ -51,6 +51,15 @@
         }];
         }
         
+        [_ktVipBtn bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            if (self.ktVipAction) {
+                self.ktVipAction(sender);
+            }
+            
+        } forControlEvents:UIControlEventTouchUpInside];
+        
+        
         _sendPacketBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_sendPacketBtn setTitle:@"发红包" forState:UIControlStateNormal];
         [_sendPacketBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
@@ -64,6 +73,14 @@
             make.size.mas_equalTo(_ktVipBtn);
         }];
         }
+        [_sendPacketBtn bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            if (self.sendPacketAction) {
+                self.sendPacketAction(sender);
+            }
+            
+        } forControlEvents:UIControlEventTouchUpInside];
+        
         
         _priceLabel = [[UILabel alloc] init];
         _priceLabel.textColor = [UIColor redColor];

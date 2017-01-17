@@ -221,7 +221,7 @@ QBDefineLazyPropertyInitialization(JYUserGreetModel, userGreetModel)
 - (void)loadModels {
     @weakify(self);
     if ([[NSUserDefaults standardUserDefaults] objectForKey:kRefreshTimeInterval] && [JYLocalVideoUtils dateTimeDifferenceWithStartTime:[[NSUserDefaults standardUserDefaults] objectForKey:kRefreshTimeInterval] endTime:[JYLocalVideoUtils currentTime]] <= 180) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             @strongify(self);
             [self->_layoutTableView reloadData];
             [self pageLoadModelWithPersonSex:self.sexType isPullDown:YES];
@@ -323,15 +323,8 @@ QBDefineLazyPropertyInitialization(JYUserGreetModel, userGreetModel)
  */
 - (void)requestLocationAuthority {
     
-//    if (!locationEnable ||  locationStatus == kCLAuthorizationStatusNotDetermined) {
         if ([UIDevice currentDevice].systemVersion.floatValue >=8) {
-//            _locationManager = [[CLLocationManager alloc] init];
-//            _locationManager.delegate = self;
-            //获取授权认证
-//            [locationManager requestAlwaysAuthorization];
             [self.locationManager requestWhenInUseAuthorization];
-            
-//        }
     }
 
 }
@@ -358,7 +351,7 @@ QBDefineLazyPropertyInitialization(JYUserGreetModel, userGreetModel)
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    // Dispose of any resources that can be recreated
 }
 
 

@@ -8,11 +8,10 @@
 
 #import "JYRedPackPopViewController.h"
 #import "JYRedPacketView.h"
-
+#import "JYPaymentViewController.h"
 @interface JYRedPackPopViewController ()
 
 @property (nonatomic,retain) JYRedPacketView *packView;
-
 @end
 
 @implementation JYRedPackPopViewController
@@ -22,15 +21,40 @@
         return _packView;
     }
     _packView = [[JYRedPacketView alloc] init];
+    @weakify(self);
     _packView.closeAction = ^(JYRedPacketView *view){
-        [UIView animateWithDuration:0.5 animations:^{
-            view.frame = CGRectMake(0, -kScreenHeight, kScreenWidth, kScreenHeight);
-        }completion:^(BOOL finished) {
-            view.hidden = YES;
-        }];
+        @strongify(self);
+        [self hiddenPackView];
+    };
+    
+    _packView.ktVipAction = ^(id sender){
+        @strongify(self);
+        [self presentPayViewController];
+         [self hiddenPackView];
+    };
+    
+    _packView.sendPacketAction = ^(id sender){
+        @strongify(self);
+        [self hiddenPackView];
+        QBBaseModel *baseModel = [[QBBaseModel alloc] init];
+        baseModel.realColumnId = @(235345);
+        baseModel.channelType = @(1);
+        baseModel.programType= @(2);
+        baseModel.programId = @(234);
+        baseModel.programLocation = @(45);
+        [[[JYPaymentViewController alloc] init] payForWithBaseModel:baseModel vipLevel:JYVipTypePacket];
     };
     
     return _packView;
+}
+
+- (void)hiddenPackView{
+    [UIView animateWithDuration:0.5 animations:^{
+        _packView.frame = CGRectMake(0, -kScreenHeight, kScreenWidth, kScreenHeight);
+    }completion:^(BOOL finished) {
+        _packView.hidden = YES;
+    }];
+
 }
 
 
@@ -39,15 +63,17 @@
     
 }
 
-- (void)popRedPackViewWithCurrentViewCtroller:(UIViewController *)currentViewCtroller {
-
+- (void)popRedPackViewWithCurrentViewCtroller:(UIViewController *)currentViewCtroller{
     if (self.view.superview) {
         [self.view removeFromSuperview];
     }
-    [currentViewCtroller addChildViewController:self];
-    self.packView.price = 5;
-    self.packView.frame = CGRectMake(0, -kScreenHeight, kScreenWidth, kScreenHeight);
-     [currentViewCtroller.view addSubview:self.packView];
+    if (![currentViewCtroller.childViewControllers containsObject:self]) {
+        [currentViewCtroller addChildViewController:self];
+        self.packView.price = 5;
+        self.packView.hidden = NO;
+        self.packView.frame = CGRectMake(0, -kScreenHeight, kScreenWidth, kScreenHeight);
+        [currentViewCtroller.view addSubview:self.packView];
+    }
     [self.packView willMoveToWindow:currentViewCtroller.view.window];
     [UIView animateWithDuration:0.5 animations:^{
            self.packView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
@@ -62,6 +88,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
 
+}
 
 @end

@@ -197,7 +197,22 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     }];
     
     [_layoutCollectionView JY_triggerPullToRefresh];
+    
 }
+- (void)payResultSuccess {
+    [_layoutCollectionView reloadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(payResultSuccess) name:kPaidNotificationName object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
+}
+
 
 - (void)loadModels {
     @weakify(self);
@@ -211,7 +226,6 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 }];
 
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -585,9 +599,6 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     //播放视频
     
     }
-    
-
-
 }
 /**
  用户相册的图片数组

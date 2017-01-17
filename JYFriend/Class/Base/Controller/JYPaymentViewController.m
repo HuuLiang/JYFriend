@@ -54,8 +54,16 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
 
 #pragma mark - PayFunctions
 
+- (void)payForWithBaseModel:(QBBaseModel *)baseModel vipLevel:(JYVipType)vipType;
+{
+    self.baseModel = baseModel;
+    [self payForPaymentType:QBOrderPayTypeWeChatPay vipLevel:vipType];
+
+}
+
+
 - (void)payForPaymentType:(QBOrderPayType)orderPayType vipLevel:(JYVipType)vipType {
-    
+    @weakify(self);
     [[QBPaymentManager sharedManager] startPaymentWithOrderInfo:[self createOrderInfoWithPaymentType:orderPayType vipLevel:vipType]
                                                     contentInfo:[self createContentInfo]
                                                     beginAction:^(QBPaymentInfo * paymentInfo) {
@@ -63,6 +71,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
 //                                                            [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionGoToPay andTabIndex:[JYUtil currentTabPageIndex] subTabIndex:[JYUtil currentSubTabPageIndex]];
                                                         }
                                                     } completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
+                                                        @strongify(self);
                                                         [self notifyPaymentResult:payResult withPaymentInfo:paymentInfo];
                                                     }];
 }
@@ -89,7 +98,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     } else if (vipType == JYVipTypeYear) {
         price = [JYSystemConfigModel sharedModel].payhjAmount;
     }
-    
+//    price = 200;
     orderInfo.orderPrice = price;
     
     NSString *orderDescription = @"VIP";
