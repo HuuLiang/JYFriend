@@ -7,18 +7,53 @@
 //
 
 #import "JYUpdateUserVipModel.h"
+#import "JYSystemConfigModel.h"
+
+
+@implementation JYUpdateUserVipResponse
+
+
+@end
+
 
 @implementation JYUpdateUserVipModel
 
++ (Class)responseClass {
+    return [JYUpdateUserVipResponse class];
+}
+
+- (QBURLRequestMethod)requestMethod {
+    return QBURLPostRequest;
+}
+
+- (NSTimeInterval)requestTimeInterval {
+    return 30;
+}
+
 - (BOOL)updateUserVipInfo:(JYVipType)vipType CompletionHandler:(QBCompletionHandler)handler {
-    NSDictionary *params = @{};
+    NSInteger months = 0;
+    if (vipType == JYVipTypeYear) {
+        months = [JYSystemConfigModel sharedModel].vipMonthC;
+    } else if (vipType == JYVipTypeQuarter) {
+        months = [JYSystemConfigModel sharedModel].vipMonthB;
+    } else if (vipType == JYVipTypeMonth) {
+        months = [JYSystemConfigModel sharedModel].vipMonthA;
+    }
     
-    BOOL success = [self requestURLPath:nil
+    
+    NSDictionary *params = @{@"userId":[JYUser currentUser].userId,
+                             @"vipMonths":@(months)};
+    
+    BOOL success = [self requestURLPath:JY_VIPUPDATE_URL
                          standbyURLPath:nil
-                             withParams:nil
+                             withParams:params
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
-        
+        JYUpdateUserVipResponse *resp = nil;
+        if (respStatus == QBURLResponseSuccess) {
+            resp = self.response;
+            [JYUtil setVipExpireTime:resp.vipEndDate];
+        }
     }];
     
     return success;

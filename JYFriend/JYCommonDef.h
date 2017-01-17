@@ -73,17 +73,18 @@ typedef NS_ENUM(NSUInteger,JYVipType) {
 #define kColor(hexString)                 [UIColor colorWithHexString:[NSString stringWithFormat:@"%@",hexString]]
 #define kCurrentUser                      [JYUser currentUser]
 
-#define JY_SYSTEM_CONTACT_NAME_1          @"CONTACT_NAME_1"
-#define JY_SYSTEM_CONTACT_NAME_2          @"CONTACT_NAME_2"
-#define JY_SYSTEM_CONTACT_NAME_3          @"CONTACT_NAME_3"
-#define JY_SYSTEM_CONTACT_SCHEME_1        @"CONTACT_SCHEME_1"
-#define JY_SYSTEM_CONTACT_SCHEME_2        @"CONTACT_SCHEME_2"
-#define JY_SYSTEM_CONTACT_SCHEME_3        @"CONTACT_SCHEME_3"
+//#define JY_SYSTEM_CONTACT_NAME_1          @"CONTACT_NAME_1"
+//#define JY_SYSTEM_CONTACT_NAME_2          @"CONTACT_NAME_2"
+//#define JY_SYSTEM_CONTACT_NAME_3          @"CONTACT_NAME_3"
+//#define JY_SYSTEM_CONTACT_SCHEME_1        @"CONTACT_SCHEME_1"
+//#define JY_SYSTEM_CONTACT_SCHEME_2        @"CONTACT_SCHEME_2"
+//#define JY_SYSTEM_CONTACT_SCHEME_3        @"CONTACT_SCHEME_3"
 #define JY_SYSTEM_IMAGE_TOKEN             @"IMG_REFERER"
-#define JY_SYSTEM_PAY_HJ_AMOUNT           @"PAY_HJ_AMOUNT"
-#define JY_SYSTEM_PAY_ZS_AMOUNT           @"PAY_ZS_AMOUNT"
-#define JY_SYSTEM_PAY_AMOUNT              @"PAY_AMOUNT"
-#define JY_SYSTEM_BAIDUYU_CODE            @"BAIDUYU_CODE"
-#define JY_SYSTEM_BAIDUYU_URL             @"BAIDUYU_URL"
+#define JY_SYSTEM_PAYPOINT_INFO           @"VIP_PAY_POINT_INFO_100"
+//#define JY_SYSTEM_PAY_HJ_AMOUNT           @"PAY_MONTH_AMOUNT"
+//#define JY_SYSTEM_PAY_ZS_AMOUNT           @"PAY_ZS_AMOUNT"
+//#define JY_SYSTEM_PAY_AMOUNT              @"PAY_AMOUNT"
+//#define JY_SYSTEM_BAIDUYU_CODE            @"BAIDUYU_CODE"
+//#define JY_SYSTEM_BAIDUYU_URL             @"BAIDUYU_URL"
 
 #endif /* JYCommonDef_h */

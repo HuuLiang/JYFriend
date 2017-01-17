@@ -8,6 +8,10 @@
 
 #import <QBEncryptedURLRequest.h>
 
+@interface JYUpdateUserVipResponse : QBURLResponse
+@property (nonatomic) NSString *vipEndDate;
+@end
+
 @interface JYUpdateUserVipModel : QBEncryptedURLRequest
 
 - (BOOL)updateUserVipInfo:(JYVipType)vipType CompletionHandler:(QBCompletionHandler)handler;

@@ -99,16 +99,16 @@
     if (vipLevel == JYVipTypeYear) {
         _title.text = @"年度会员";
         _subTitle.text = @"充值100送100话费";
-        _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[JYSystemConfigModel sharedModel].payhjAmount/100];
+        _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[JYSystemConfigModel sharedModel].vipPriceC/100];
     } else if (vipLevel == JYVipTypeQuarter) {
         _title.text = @"季度会员";
         _subTitle.text = @"充值50送30元话费";
-        _moneyLabel.text = [NSString stringWithFormat:@"%zd",[JYSystemConfigModel sharedModel].payzsAmount/100];
+        _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[JYSystemConfigModel sharedModel].vipPriceB/100];
        
     } else if (vipLevel == JYVipTypeMonth) {
         _title.text = @"月度会员";
         _subTitle.text = @"充值便可查看用户隐私信息";
-        _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[JYSystemConfigModel sharedModel].payAmount/100];
+        _moneyLabel.text = [NSString stringWithFormat:@"¥%ld",[JYSystemConfigModel sharedModel].vipPriceA/100];
     }
 }
 

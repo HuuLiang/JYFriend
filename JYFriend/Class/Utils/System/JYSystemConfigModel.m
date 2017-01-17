@@ -8,9 +8,9 @@
 
 #import "JYSystemConfigModel.h"
 
-static NSString *const kPPVideoSystemConfigPayAmountKeyName       = @"PP_SystemConfigPayAmount_KeyName";
-static NSString *const kPPVideoSystemConfigPayzsAmountKeyName     = @"PP_SystemConfigPayzsAmount_KeyName";
-static NSString *const kPPVideoSystemConfigPayhjAmountKeyName     = @"PP_SystemConfigPayhjAmount_KeyName";
+static NSString *const kPPVideoSystemConfigPayMonthKeyName       = @"PP_SystemConfigPayAmount_KeyName";
+static NSString *const kPPVideoSystemConfigPayQuarterKeyName     = @"PP_SystemConfigPayzsAmount_KeyName";
+static NSString *const kPPVideoSystemConfigPayYearKeyName     = @"PP_SystemConfigPayhjAmount_KeyName";
 
 @implementation JYSystemConfigResponse
 
@@ -39,17 +39,17 @@ static NSString *const kPPVideoSystemConfigPayhjAmountKeyName     = @"PP_SystemC
 {
     self = [super init];
     if (self) {
-        self.payAmount = [[coder decodeObjectForKey:kPPVideoSystemConfigPayAmountKeyName] integerValue];
-        self.payzsAmount = [[coder decodeObjectForKey:kPPVideoSystemConfigPayzsAmountKeyName] integerValue];
-        self.payhjAmount = [[coder decodeObjectForKey:kPPVideoSystemConfigPayhjAmountKeyName] integerValue];
+        self.vipPriceA = [[coder decodeObjectForKey:kPPVideoSystemConfigPayMonthKeyName] integerValue];
+        self.vipPriceB = [[coder decodeObjectForKey:kPPVideoSystemConfigPayQuarterKeyName] integerValue];
+        self.vipPriceC = [[coder decodeObjectForKey:kPPVideoSystemConfigPayYearKeyName] integerValue];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.payAmount] forKey:kPPVideoSystemConfigPayAmountKeyName];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.payzsAmount] forKey:kPPVideoSystemConfigPayzsAmountKeyName];
-    [aCoder encodeObject:[NSNumber numberWithInteger:self.payhjAmount] forKey:kPPVideoSystemConfigPayhjAmountKeyName];
+    [aCoder encodeObject:[NSNumber numberWithInteger:self.vipPriceA] forKey:kPPVideoSystemConfigPayMonthKeyName];
+    [aCoder encodeObject:[NSNumber numberWithInteger:self.vipPriceB] forKey:kPPVideoSystemConfigPayQuarterKeyName];
+    [aCoder encodeObject:[NSNumber numberWithInteger:self.vipPriceC] forKey:kPPVideoSystemConfigPayYearKeyName];
 }
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(JYFetchSystemConfigCompletionHandler)handler {
@@ -70,31 +70,42 @@ static NSString *const kPPVideoSystemConfigPayhjAmountKeyName     = @"PP_SystemC
                             [resp.configs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                                 JYSystemConfig *config = obj;
                                 
-                                if ([config.name isEqualToString:JY_SYSTEM_PAY_AMOUNT]) {
-                                    [JYSystemConfigModel sharedModel].payAmount = [config.value integerValue];
-                                } else if ([config.name isEqualToString:JY_SYSTEM_PAY_HJ_AMOUNT]) {
-                                    [JYSystemConfigModel sharedModel].payhjAmount = [config.value integerValue];
-                                } else if ([config.name isEqualToString:JY_SYSTEM_PAY_ZS_AMOUNT]) {
-                                    [JYSystemConfigModel sharedModel].payzsAmount = [config.value integerValue];
-                                } else if ([config.name isEqualToString:JY_SYSTEM_IMAGE_TOKEN]) {
+                                if ([config.name isEqualToString:JY_SYSTEM_IMAGE_TOKEN]) {
                                     [JYSystemConfigModel sharedModel].imageToken = config.value;
-                                } else if ([config.name isEqualToString:JY_SYSTEM_CONTACT_NAME_1]) {
-                                    [JYSystemConfigModel sharedModel].contactName1 = config.value;
-                                } else if ([config.name isEqualToString:JY_SYSTEM_CONTACT_NAME_2]) {
-                                    [JYSystemConfigModel sharedModel].contactName2 = config.value;
-                                } else if ([config.name isEqualToString:JY_SYSTEM_CONTACT_NAME_3]) {
-                                    [JYSystemConfigModel sharedModel].contactName3 = config.value;
-                                } else if ([config.name isEqualToString:JY_SYSTEM_CONTACT_SCHEME_1]) {
-                                    [JYSystemConfigModel sharedModel].contactScheme1 = config.value;
-                                } else if ([config.name isEqualToString:JY_SYSTEM_CONTACT_SCHEME_2]) {
-                                    [JYSystemConfigModel sharedModel].contactScheme2 = config.value;
-                                } else if ([config.name isEqualToString:JY_SYSTEM_CONTACT_SCHEME_3]) {
-                                    [JYSystemConfigModel sharedModel].contactScheme3 = config.value;
-                                } else if ([config.name isEqualToString:JY_SYSTEM_BAIDUYU_URL]) {
-                                    [JYSystemConfigModel sharedModel].baiduyuUrl = config.value;
-                                } else if ([config.name isEqualToString:JY_SYSTEM_BAIDUYU_CODE]) {
-                                    [JYSystemConfigModel sharedModel].baiduyuCode = config.value;
+                                } else if ([config.name isEqualToString:JY_SYSTEM_PAYPOINT_INFO]) {
+                                    [[config.value componentsSeparatedByString:@"|"] enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                                        NSArray *array = [obj componentsSeparatedByString:@":"];
+                                        if (idx == 0) {
+                                            [JYSystemConfigModel sharedModel].vipMonthA = [[array lastObject] integerValue];
+                                            [JYSystemConfigModel sharedModel].vipPriceA = [[array firstObject] integerValue];
+                                        } else if (idx == 1) {
+                                            [JYSystemConfigModel sharedModel].vipMonthB = [[array lastObject] integerValue];
+                                            [JYSystemConfigModel sharedModel].vipPriceB = [[array firstObject] integerValue];
+                                        } else if (idx == 2) {
+                                            [JYSystemConfigModel sharedModel].vipMonthC = [[array lastObject] integerValue];
+                                            [JYSystemConfigModel sharedModel].vipPriceC = [[array firstObject] integerValue];
+                                        }
+                                    }];
                                 }
+                            
+                                
+//                                else if ([config.name isEqualToString:JY_SYSTEM_CONTACT_NAME_1]) {
+//                                    [JYSystemConfigModel sharedModel].contactName1 = config.value;
+//                                } else if ([config.name isEqualToString:JY_SYSTEM_CONTACT_NAME_2]) {
+//                                    [JYSystemConfigModel sharedModel].contactName2 = config.value;
+//                                } else if ([config.name isEqualToString:JY_SYSTEM_CONTACT_NAME_3]) {
+//                                    [JYSystemConfigModel sharedModel].contactName3 = config.value;
+//                                } else if ([config.name isEqualToString:JY_SYSTEM_CONTACT_SCHEME_1]) {
+//                                    [JYSystemConfigModel sharedModel].contactScheme1 = config.value;
+//                                } else if ([config.name isEqualToString:JY_SYSTEM_CONTACT_SCHEME_2]) {
+//                                    [JYSystemConfigModel sharedModel].contactScheme2 = config.value;
+//                                } else if ([config.name isEqualToString:JY_SYSTEM_CONTACT_SCHEME_3]) {
+//                                    [JYSystemConfigModel sharedModel].contactScheme3 = config.value;
+//                                } else if ([config.name isEqualToString:JY_SYSTEM_BAIDUYU_URL]) {
+//                                    [JYSystemConfigModel sharedModel].baiduyuUrl = config.value;
+//                                } else if ([config.name isEqualToString:JY_SYSTEM_BAIDUYU_CODE]) {
+//                                    [JYSystemConfigModel sharedModel].baiduyuCode = config.value;
+//                                }
                                 
                                 //刷新价格缓存
 //                                [PPCacheModel updateSystemConfigModelWithSystemConfigModel:[PPSystemConfigModel sharedModel]];

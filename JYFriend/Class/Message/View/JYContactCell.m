@@ -108,7 +108,7 @@
 }
 
 - (void)setRecentTimeStr:(NSString *)recentTimeStr {
-    _timeLabel.text = recentTimeStr;
+    _timeLabel.text = [JYUtil compareCurrentTime:recentTimeStr];
 }
 
 - (void)setRecentMessage:(NSString *)recentMessage {

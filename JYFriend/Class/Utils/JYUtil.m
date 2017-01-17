@@ -22,6 +22,7 @@ static NSString *const kLaunchSeqKeyName          = @"JY_launchseq_keyname";
 static NSString *const kImageTokenKeyName         = @"safiajfoaiefr$^%^$E&&$*&$*";
 static NSString *const kImageTokenCryptPassword   = @"wafei@#$%^%$^$wfsssfsf";
 static NSString *const kUserVipExpireTimeKeyName  = @"kUserVipExpireTimeKeyName";
+static NSString *const kRecommednLastDayKeyName   = @"kRecommednLastDayKeyName";
 
 
 @implementation JYUtil
@@ -79,20 +80,25 @@ static NSString *const kUserVipExpireTimeKeyName  = @"kUserVipExpireTimeKeyName"
 }
 
 + (BOOL)isVip {
-    NSDate *expireDate = [[NSUserDefaults standardUserDefaults] objectForKey:kUserVipExpireTimeKeyName];
+    NSDate *expireDate = [self expireDateTime];
     if (expireDate) {
-        return [expireDate isEarlierThanDate:[NSDate date]];
+        return [expireDate isLaterThanDate:[NSDate date]];
     } else {
         return NO;
     }
 }
 
++ (NSDate *)expireDateTime {
+    NSDate *expireDate = [[NSUserDefaults standardUserDefaults] objectForKey:kUserVipExpireTimeKeyName];
+    return expireDate;
+}
+
 + (void)setVipExpireTime:(NSString *)expireTime {
-    NSDate *date = [self dateFromString:expireTime WithDateFormat:@""];
-    
+    NSDate *date = [self dateFromString:expireTime WithDateFormat:kDateFormatShort];
     [[NSUserDefaults standardUserDefaults] setObject:date forKey:kUserVipExpireTimeKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
 
 #pragma mark - 图片加密
 
@@ -255,9 +261,51 @@ static NSString *const kUserVipExpireTimeKeyName  = @"kUserVipExpireTimeKeyName"
 }
 
 + (NSDate *)currentDate {
-    NSDate *systemDate = [NSDate date];
-//    NSDate *currentDate = [systemDate dateByAddingTimeInterval:[[NSTimeZone localTimeZone] secondsFromGMTForDate:systemDate]];
-    return systemDate;
+    return [NSDate date];
+}
+
++ (NSString *)compareCurrentTime:(NSString *)compareDateString
+{
+    NSDate *compareDate = [self dateFromString:compareDateString WithDateFormat:KDateFormatLong];
+    
+    NSTimeInterval  timeInterval = [compareDate timeIntervalSinceNow];
+    
+    timeInterval = -timeInterval;
+    long temp = 0;
+    NSString *result;
+    if (timeInterval < 60) {
+        result = [NSString stringWithFormat:@"刚刚"];
+    }
+    else if((temp = timeInterval/60) <60){
+        result = [NSString stringWithFormat:@"%ld分前",temp];
+    }
+    
+    else if((temp = temp/60) <24){
+        result = [NSString stringWithFormat:@"%ld小前",temp];
+    }
+    
+    else if((temp = temp/24) <30){
+        result = [NSString stringWithFormat:@"%ld天前",temp];
+    }
+    
+    else if((temp = temp/30) <12){
+        result = [NSString stringWithFormat:@"%ld月前",temp];
+    }
+    else{
+        temp = temp/12;
+        result = [NSString stringWithFormat:@"%ld年前",temp];
+    }
+    
+    return  result;
+}
+
++ (NSDate *)isLastDate {
+    NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kRecommednLastDayKeyName];
+    if (!lastDate) {
+        lastDate = [self currentDate];
+        [[NSUserDefaults standardUserDefaults] setObject:lastDate forKey:kRecommednLastDayKeyName];
+    }
+    return lastDate;
 }
 
 #pragma mark -- 其他

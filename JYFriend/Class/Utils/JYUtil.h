@@ -29,6 +29,7 @@
 + (void)setImageToken:(NSString *)imageToken;
 
 + (BOOL)isVip;
++ (NSDate *)expireDateTime;
 + (void)setVipExpireTime:(NSString *)expireTime;
 
 + (BOOL)isIpad;
@@ -46,7 +47,8 @@
 + (NSString *)timeStringFromDate:(NSDate *)date WithDateFormat:(NSString *)dateFormat;
 + (BOOL)shouldRefreshContentWithKey:(NSString *)refreshKey timeInterval:(NSUInteger)timeInterval;
 + (NSDate *)currentDate;
-
++ (NSString *)compareCurrentTime:(NSString *)compareDateString;
++ (NSDate *)isLastDate;
 
 + (id)getValueWithKeyName:(NSString *)keyName;
 + (void)setValue:(id)object withKeyName:(NSString *)keyName;

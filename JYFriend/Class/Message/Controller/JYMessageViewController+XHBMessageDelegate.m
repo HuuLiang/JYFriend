@@ -12,9 +12,12 @@
 #import "JYLocalPhotoUtils.h"
 #import "JYUserImageCache.h"
 #import "JYVideoChatViewController.h"
+#import "JYMessageNoticeCell.h"
+#import "JYPaymentViewController.h"
+#import "JYNavigationController.h"
 
-static NSString *const kJYFriendMessageNormalCellKeyName    = @"kJYFriendMessageNormalCellKeyName";
-static NSString *const kJYFriendMessageVipCellKeyName       = @"kJYFriendMessageVipCellKeyName";
+static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessageNoticeCellKeyName";
+//static NSString *const kJYFriendMessageVipCellKeyName       = @"kJYFriendMessageVipCellKeyName";
 
 
 @interface JYMessageViewController () <JYLocalPhotoUtilsDelegate>
@@ -48,8 +51,7 @@ static NSString *const kJYFriendMessageVipCellKeyName       = @"kJYFriendMessage
 }
 
 - (void)registerCustomCell {
-    [self.messageTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kJYFriendMessageNormalCellKeyName];
-    [self.messageTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kJYFriendMessageVipCellKeyName];
+    [self.messageTableView registerClass:[JYMessageNoticeCell class] forCellReuseIdentifier:kJYFriendMessageNoticeCellKeyName];
 }
 
 #pragma mark - XHMessageTableViewControllerDelegate
@@ -113,17 +115,25 @@ static NSString *const kJYFriendMessageVipCellKeyName       = @"kJYFriendMessage
 
 //配置自定义cell高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath targetMessage:(id<XHMessageModel>)message {
-    return 40;
+    return kWidth(120);
 }
 
 //配置自定义cell样式
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath targetMessage:(id<XHMessageModel>)message {
     message = (XHMessage *)message;
-    UITableViewCell *cell;
-    if (message.messageMediaType == XHBubbleMessageMediaTypeCustomNormal) {
-        cell = [tableView dequeueReusableCellWithIdentifier:kJYFriendMessageNormalCellKeyName forIndexPath:indexPath];
-    } else if (message.messageMediaType == XHBubbleMessageMediaTypeCustomVIP) {
-        cell = [tableView dequeueReusableCellWithIdentifier:kJYFriendMessageVipCellKeyName forIndexPath:indexPath];
+    JYMessageNoticeCell *cell;
+    if (message.messageMediaType == XHBubbleMessageMediaTypeCustomNormal || message.messageMediaType == XHBubbleMessageMediaTypeCustomVIP) {
+        cell = (JYMessageNoticeCell *)[tableView dequeueReusableCellWithIdentifier:kJYFriendMessageNoticeCellKeyName forIndexPath:indexPath];
+        cell.title = message.text;
+//        @weakify(self);
+        cell.payAction = ^(id sender) {
+//            @strongify(self);
+            if (message.messageMediaType == XHBubbleMessageMediaTypeCustomNormal) {
+                JYPaymentViewController *payVC = [[JYPaymentViewController alloc] init];
+                JYNavigationController *payNav = [[JYNavigationController alloc] initWithRootViewController:payVC];
+                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:payNav animated:YES completion:nil];
+            }
+        };
     }
     return cell;
 }
@@ -218,21 +228,22 @@ static NSString *const kJYFriendMessageVipCellKeyName       = @"kJYFriendMessage
  *  @param index         被点击的位置
  */
 - (void)didSelecteShareMenuItem:(XHShareMenuItem *)shareMenuItem atIndex:(NSInteger)index {
-
-    [JYLocalPhotoUtils shareManager].delegate = self;
-    if (index == 0) {
-        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary inViewController:self popoverPoint:CGPointZero isVideo:NO];
-    }else if(index == 1){
-        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum inViewController:self popoverPoint:CGPointZero isVideo:YES];
-    }else if (index == 2){
-      [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeCamera inViewController:self popoverPoint:CGPointZero isVideo:NO];
-    }else if (index == 3){
-    
-        JYVideoChatViewController *chatvVC = [[JYVideoChatViewController alloc] init];
-        [self presentViewController:chatvVC animated:YES completion:nil];
+    if ([JYUtil isVip]) {
+        [JYLocalPhotoUtils shareManager].delegate = self;
+        if (index == 0) {
+            [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary inViewController:self popoverPoint:CGPointZero isVideo:NO];
+        }else if(index == 1){
+            [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum inViewController:self popoverPoint:CGPointZero isVideo:YES];
+        }else if (index == 2){
+            [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeCamera inViewController:self popoverPoint:CGPointZero isVideo:NO];
+        }else if (index == 3){
+            JYVideoChatViewController *chatvVC = [[JYVideoChatViewController alloc] init];
+            [self presentViewController:chatvVC animated:YES completion:nil];
+        }
+    } else {
+        JYMessageModel *messageModel = [[JYMessageModel alloc] init];
+        [self addChatMessage:messageModel];
     }
-    
-    
 }
 
 #pragma mark - XHEmotionManagerViewDelegate,XHEmotionManagerViewDataSource
@@ -263,7 +274,6 @@ static NSString *const kJYFriendMessageVipCellKeyName       = @"kJYFriendMessage
 
 - (void)JYLocalPhotoUtilsWithPicker:(UIImagePickerController *)picker DidFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
     [self didSendPhoto:image fromSender:[JYUser currentUser].userId onDate:[NSDate date]];
 }
 

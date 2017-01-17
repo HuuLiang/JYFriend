@@ -29,7 +29,7 @@
     [super viewDidLoad];
     
     _bgImgV = [[UIImageView alloc] init];
-    _bgImgV.image = [UIImage imageNamed:@"login_background"];
+    _bgImgV.image = [UIImage imageNamed:@"login_background.jpg"];
     _bgImgV.contentMode = UIViewContentModeScaleToFill;
     _bgImgV.userInteractionEnabled = YES;
     [self.view addSubview:_bgImgV];

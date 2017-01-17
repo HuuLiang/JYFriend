@@ -13,6 +13,7 @@
 #import "JYPayTypeCell.h"
 #import <QBPaymentManager.h>
 #import "JYSystemConfigModel.h"
+#import "JYUpdateUserVipModel.h"
 
 static NSString *const kPayNewDynamicCellIdentifier = @"jy_new_dynamic_cell_identifier";
 static NSString *const kPayHeaderCellIdentifier = @"jy_pay_header_cell_indetifier";
@@ -47,10 +48,12 @@ typedef NS_ENUM(NSUInteger , JYPayTypeRow) {
 }
 @property (nonatomic) QBBaseModel *baseModel;
 @property (nonatomic,copy) dispatch_block_t completionHandler;
+@property (nonatomic) JYUpdateUserVipModel *updateVipModel;
 @end
 
 @implementation JYPaymentViewController
 QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
+QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
 
 #pragma mark - PayFunctions
 
@@ -83,11 +86,11 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
     
     NSUInteger price = 0;
     if (vipType == JYVipTypeMonth) {
-        price = [JYSystemConfigModel sharedModel].payAmount;
+        price = [JYSystemConfigModel sharedModel].vipPriceA;
     } else if (vipType == JYVipTypeQuarter) {
-        price = [JYSystemConfigModel sharedModel].payzsAmount;
+        price = [JYSystemConfigModel sharedModel].vipPriceB;
     } else if (vipType == JYVipTypeYear) {
-        price = [JYSystemConfigModel sharedModel].payhjAmount;
+        price = [JYSystemConfigModel sharedModel].vipPriceC;
     }
     
     orderInfo.orderPrice = price;
@@ -139,6 +142,7 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
 //        if ([JYUtil currentVipLevel] == PPVipLevelVipA && ![PP_CHANNEL_NO isEqualToString:@"IOS_XIUXIU_0001"]) {
 //            [PPUtil showSpreadBanner];
 //        }
+        [self.updateVipModel updateUserVipInfo:paymentInfo.payPointType CompletionHandler:nil];
         
     } else if (result == QBPayResultCancelled) {
         [[JYHudManager manager] showHudWithText:@"支付取消"];
@@ -195,7 +199,6 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
         }];
     }
     _defaultIndexPath = [NSIndexPath indexPathForRow:JYPayPointRowYear inSection:JYPayCellSectionPayPointCell];
-    [_layoutTableView selectRowAtIndexPath:_defaultIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -248,9 +251,14 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
             cell.orderPayType = QBOrderPayTypeAlipay;
         }
         
-        cell.payAction = ^(void){
-        
-        
+        @weakify(self);
+        cell.payAction = ^(NSNumber *payType){
+            @strongify(self);
+            if ([payType unsignedIntegerValue] == QBOrderPayTypeWeChatPay) {
+                [self payForPaymentType:QBOrderPayTypeWeChatPay vipLevel:self->_defaultIndexPath.row];
+            } else if ([payType unsignedIntegerValue] == QBOrderPayTypeAlipay) {
+                [self payForPaymentType:QBOrderPayTypeAlipay vipLevel:self->_defaultIndexPath.row];
+            }
         };
         
         return cell;
@@ -283,11 +291,12 @@ QBDefineLazyPropertyInitialization(QBBaseModel, baseModel)
         _defaultIndexPath = indexPath;
     } else if (indexPath.section == JYPayCellSectionPayTypeCell) {
         JYVipType vipType = (JYVipType)_defaultIndexPath.row;
-        if (indexPath.row == JYPayTypeRowWechat) {
-            [self payForPaymentType:QBOrderPayTypeWeChatPay vipLevel:vipType];
-        } else if (indexPath.row == JYPayTypeRowAlipay) {
-            [self payForPaymentType:QBOrderPayTypeAlipay vipLevel:vipType];
-        }
+//        if (indexPath.row == JYPayTypeRowWechat) {
+//            [self payForPaymentType:QBOrderPayTypeWeChatPay vipLevel:vipType];
+//        } else if (indexPath.row == JYPayTypeRowAlipay) {
+//            [self payForPaymentType:QBOrderPayTypeAlipay vipLevel:vipType];
+//        }
+        [self.updateVipModel updateUserVipInfo:vipType CompletionHandler:nil];
     }
 }
 

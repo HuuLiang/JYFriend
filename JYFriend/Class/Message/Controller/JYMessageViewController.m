@@ -17,7 +17,8 @@
 
 @interface JYMessageViewController ()
 {
-    BOOL currentUserSendingPhoto;
+    BOOL currentUserSendingPhoto; //判断用户是否在发送图片决定是否重新加载数据
+    BOOL shouldLoadVipNotice;     //判断是否需要加载称为vip的提示
 }
 @property (nonatomic,retain) NSMutableArray<JYMessageModel *> *chatMessages;
 @property (nonatomic) JYSendMessageModel *sendMessageModel;
@@ -49,9 +50,11 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     self.title = self.user.nickName;
     self.messageSender = [JYUser currentUser].userId;
     
-    
+    [self registerCustomCell];
     [self configEmotions];
     [self setXHShareMenu];
+    
+    shouldLoadVipNotice = YES;
 }
 
 /**
@@ -88,7 +91,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     
     JYMessageModel *lastMessage = [self.chatMessages lastObject];
     JYContactModel *contactModel = [JYContactModel findContactInfoWithUserId:self.user.userId];
-    if (contactModel && lastMessage) {
+    if (contactModel && lastMessage.messageType < JYMessageTypeNormal) {
         if (![contactModel.recentTime isEqualToString:lastMessage.messageTime]) {
             //时间
             contactModel.recentTime = lastMessage.messageTime;
@@ -148,6 +151,22 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         }
         [self.messages addObject:message];
     }];
+    
+    if (shouldLoadVipNotice && [JYUtil isVip]) {
+        JYMessageModel *vipMessage = [[JYMessageModel alloc] init];
+        vipMessage.messageTime = [JYUtil timeStringFromDate:[JYUtil currentDate] WithDateFormat:KDateFormatLong];
+        vipMessage.messageType = JYMessageTypeVIP;
+        vipMessage.messageContent = [NSString stringWithFormat:@"恭喜你！你已经成为VIP会员。会员有效期至%@",[JYUtil timeStringFromDate:[JYUtil expireDateTime] WithDateFormat:kDateFormatChina]];
+        vipMessage.receiveUserId = [JYUser currentUser].userId;
+        vipMessage.sendUserId = self.user.userId;
+        
+        XHMessage *message = [[XHMessage alloc] initWithText:vipMessage.messageContent sender:vipMessage.sendUserId timestamp:[JYUtil currentDate]];
+        message.messageMediaType = XHBubbleMessageMediaTypeCustomVIP;
+        [self.messages addObject:message];
+        
+        shouldLoadVipNotice = NO;
+    }
+    
 }
 
 
@@ -222,42 +241,20 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 
 //加入信息到数据源
 - (void)addChatMessage:(JYMessageModel *)chatMessage {
-    {
-        //向服务器发送消息
-        
-        NSString *msg = nil;
-        NSString *contentType = nil;
-        if (chatMessage.messageType == JYMessageTypeText) {
-            msg = chatMessage.messageContent;
-            contentType = @"TEXT";
-        } else if (chatMessage.messageType == JYMessageTypePhoto) {
-            msg = [[SDImageCache sharedImageCache] defaultCachePathForKey:chatMessage.photokey];
-            contentType = @"IMG";
-        } else if (chatMessage.messageType == JYMessageTypeVioce) {
-            msg = chatMessage.messageContent;
-            contentType = @"VOICE";
-        } else if (chatMessage.messageType == JYMessageTypeEmotion) {
-            msg = chatMessage.messageContent;
-            contentType = @"IMG";
-        }
-        
-//        @weakify(self);
-        [self.sendMessageModel fetchRebotReplyMessagesWithRobotId:self.user.userId
-                                                              msg:msg
-                                                      ContentType:contentType
-                                                          msgType:JYUserCreateMessageTypeChat
-                                                CompletionHandler:^(BOOL success, id obj)
-         {
-//            @strongify(self);
-            if (success) {
-                [[JYAutoContactManager manager] saveReplyRobots:obj];
-            }
-        }];
+    
+    if (![JYUtil isVip]) {
+        //不是vip 发送VIP提示
+        chatMessage.messageContent = @"对方是VIP，您无法给TA发送信息。点击开通VIP，与TA畅聊。";
+        chatMessage.messageType = JYMessageTypeNormal;
+    } else {
+        [self sendMessageToServerWithInfo:chatMessage];
     }
-
     
     [self.chatMessages addObject:chatMessage];
-    [chatMessage saveOrUpdate];
+    
+    if (chatMessage.messageType < JYMessageTypeNormal) {
+        [chatMessage saveOrUpdate];
+    }
     
     if (self.isViewLoaded) {
         XHMessage *xhMsg;
@@ -301,7 +298,35 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     }
 }
 
-
+//向服务器发送消息
+- (void)sendMessageToServerWithInfo:(JYMessageModel *)chatMessage {
+    NSString *msg = nil;
+    NSString *contentType = nil;
+    if (chatMessage.messageType == JYMessageTypeText) {
+        msg = chatMessage.messageContent;
+        contentType = @"TEXT";
+    } else if (chatMessage.messageType == JYMessageTypePhoto) {
+        msg = [[SDImageCache sharedImageCache] defaultCachePathForKey:chatMessage.photokey];
+        contentType = @"IMG";
+    } else if (chatMessage.messageType == JYMessageTypeVioce) {
+        msg = chatMessage.messageContent;
+        contentType = @"VOICE";
+    } else if (chatMessage.messageType == JYMessageTypeEmotion) {
+        msg = chatMessage.messageContent;
+        contentType = @"IMG";
+    }
+    
+    [self.sendMessageModel fetchRebotReplyMessagesWithRobotId:self.user.userId
+                                                          msg:msg
+                                                  ContentType:contentType
+                                                      msgType:JYUserCreateMessageTypeChat
+                                            CompletionHandler:^(BOOL success, id obj)
+     {
+         if (success) {
+             [[JYAutoContactManager manager] saveReplyRobots:obj];
+         }
+     }];
+}
 
 
 @end

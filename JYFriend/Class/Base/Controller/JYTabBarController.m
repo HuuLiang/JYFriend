@@ -19,7 +19,6 @@
 #import "JYContactModel.h"
 
 @interface JYTabBarController () <UITabBarControllerDelegate>
-
 @end
 
 @implementation JYTabBarController
@@ -30,7 +29,6 @@
     self.tabBar.layer.borderWidth = 0.5;
     [self setChildViewControlers];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadge:) name:KUpdateContactUnReadMessageNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUserVip:) name:kPaidNotificationName object:nil];
 }
 
 - (void)updateBadge:(NSNotification *)notification {
@@ -54,10 +52,6 @@
             contactNav.tabBarItem.badgeValue = nil;
         }
     });
-}
-
-- (void)updateUserVip:(NSNotification *)notification {
-    
 }
 
 - (void)didReceiveMemoryWarning {

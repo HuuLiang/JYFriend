@@ -9,12 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <QBOrderInfo.h>
 
-typedef void(^payTypeAction)(void);
-
 @interface JYPayTypeCell : UITableViewCell
 
 @property (nonatomic) QBOrderPayType orderPayType;
 
-@property (nonatomic) payTypeAction payAction;
+@property (nonatomic) QBAction payAction;
 
 @end

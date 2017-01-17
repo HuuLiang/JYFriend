@@ -42,7 +42,7 @@
         [_payButton bk_addEventHandler:^(id sender) {
             @strongify(self);
             if (self.payAction) {
-                self.payAction();
+                self.payAction(@(_orderPayType));
             }
         } forControlEvents:UIControlEventTouchUpInside];
         
@@ -51,6 +51,7 @@
 }
 
 - (void)setOrderPayType:(QBOrderPayType)orderPayType {
+    _orderPayType = orderPayType;
     if (orderPayType == QBOrderPayTypeWeChatPay) {
         [_payButton setTitle:@"微信支付" forState:UIControlStateNormal];
         _payButton.backgroundColor = [UIColor colorWithHexString:@"#72BC22"];

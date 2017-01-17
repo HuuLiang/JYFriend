@@ -18,7 +18,7 @@
 #define JY_REST_APP_VERSION         ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]))
 //#define JY_PAYMENT_RESERVE_DATA     [NSString stringWithFormat:@"%@$%@", JY_REST_APPID, JY_CHANNEL_NO]
 
-#define JY_BASE_URL                    @"http://192.168.1.123:8099"//@"http://iv.zcqcmj.com"
+#define JY_BASE_URL                    @"http://t1636b8000.iok.la:29615"//@"http://iv.zcqcmj.com"
 #define JY_STANDBY_BASE_URL            @"http://sfs.dswtg.com/"
 
 
@@ -33,7 +33,7 @@
 #define JY_INTERACTIVE_URL             @"/mfwcps/interactive.htm"               //交互  关注  粉丝  访问我的
 #define JY_BATCHGREET_URL              @"/mfwcps/batchGreetCreate.htm"          //批量打招呼
 #define JY_MESSAGECREATE_URL           @"/mfwcps/messageCreate.htm"             //消息新增
-
+#define JY_VIPUPDATE_URL               @"/mfwcps/updateUserVip.htm"             //升级VIP
 
 //#define JY_TRAIL_URL                   @"/iosvideo/homePage.htm"
 //#define JY_VIPA_URL                    @"/iosvideo/vipVideo.htm"
