@@ -109,12 +109,13 @@
     if (vipTitle) {
         [self.vipBtn setTitle:vipTitle forState:UIControlStateNormal];
         _vipBtn.hidden = NO;
-    }else {
-        if (_vipBtn) {
-            _vipBtn.hidden = YES;
-            [_vipBtn removeFromSuperview];
-        }
     }
+//    else {
+//        if (_vipBtn) {
+//            _vipBtn.hidden = YES;
+//            [_vipBtn removeFromSuperview];
+//        }
+//    }
 
 }
 

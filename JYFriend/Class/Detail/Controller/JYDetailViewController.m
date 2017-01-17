@@ -24,6 +24,7 @@ static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
 static NSString *const kDetailUserInfoCellIndetifier = @"detailuserInfoCell_indetifier";
 static NSString *const kHomeTownCellIdetifier = @"hometownCell_indetifier";
 static NSString *const kSectionHeaderIndetifier = @"sectionHeader_indetifier";
+static NSString *const kDetailUserInfoCellKtVipIdentifier = @"detail_userinfocell_ktvip_identifier";
 
 static NSString *const kSendPacketUserIds = @"jy_has_send_packet_user_id_key";
 static CGFloat const kPhotoItemSpce = 6.;
@@ -181,6 +182,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     [_layoutCollectionView registerClass:[JYNewDynamicCell class] forCellWithReuseIdentifier:kNewDynamicCellIdentifier];
     [_layoutCollectionView registerClass:[JYDetailUserInfoCell class] forCellWithReuseIdentifier:kDetailUserInfoCellIndetifier];
     [_layoutCollectionView registerClass:[JYHomeTownCell class] forCellWithReuseIdentifier:kHomeTownCellIdetifier];
+    [_layoutCollectionView registerClass:[JYDetailUserInfoCell class] forCellWithReuseIdentifier:kDetailUserInfoCellKtVipIdentifier];
     [_layoutCollectionView registerClass:[UICollectionReusableView  class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kSectionHeaderIndetifier];
     
     _layoutCollectionView.contentInset = UIEdgeInsetsMake(0, 0, kWidth(88.), 0);
@@ -399,16 +401,17 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         cell.detailTitle = nil;
         cell.vipTitle = nil;
         if (indexPath.item == JYSectetInfoItemTitle) {
-            cell.title = @"私密资料";
+            JYDetailUserInfoCell *vipCell = [collectionView dequeueReusableCellWithReuseIdentifier:kDetailUserInfoCellKtVipIdentifier forIndexPath:indexPath];
+            vipCell.title = @"私密资料";
 //             cell.detailTitle = nil;
 //            [cell.vipBtn setTitle:@"成为VIP会员" forState:UIControlStateNormal];
-            cell.vipTitle = [JYUtil isVip] ? @"续费VIP会员" : @"成为VIP会员";
+            vipCell.vipTitle = [JYUtil isVip] ? @"续费VIP会员" : @"成为VIP会员";
             @weakify(self);
-            cell.vipAction = ^(id sender){
+            vipCell.vipAction = ^(id sender){
                 @strongify(self);
                 [self presentPayViewController];
             };
-            return cell;
+            return vipCell;
         }else if (indexPath.item == JYSectetInfoItemWechat){
             
             cell.detailTitle = [NSString stringWithFormat:@"微   信: %@", [JYUser currentUser].isVip.integerValue ? self.detailModel.userInfo.weixinNum : @"仅限VIP会员查看"];
