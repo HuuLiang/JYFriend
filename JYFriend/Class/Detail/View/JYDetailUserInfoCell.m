@@ -66,7 +66,11 @@
     }
     _vipBtn = [UIButton buttonWithType: UIButtonTypeCustom];
     _vipBtn.backgroundColor = [UIColor colorWithHexString:@"#e147a5"];
-    [_vipBtn setTitle:@"成为VIP" forState:UIControlStateNormal];
+    if (kCurrentUser.isVip.integerValue == 0) {
+        [_vipBtn setTitle:@"成为VIP" forState:UIControlStateNormal];
+    }else{
+        [_vipBtn setTitle:@"续费VIP" forState:UIControlStateNormal];
+    }
     [_vipBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _vipBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(24.)];
     _vipBtn.layer.cornerRadius = 3.;

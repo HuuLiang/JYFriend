@@ -25,6 +25,7 @@ static NSString *const kDetailUserInfoCellIndetifier = @"detailuserInfoCell_inde
 static NSString *const kHomeTownCellIdetifier = @"hometownCell_indetifier";
 static NSString *const kSectionHeaderIndetifier = @"sectionHeader_indetifier";
 
+static NSString *const kSendPacketUserIds = @"jy_has_send_packet_user_id_key";
 static CGFloat const kPhotoItemSpce = 6.;
 static CGFloat const kPhotoLineSpace = 10.;
 
@@ -86,6 +87,7 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
 @property (nonatomic,retain) JYUserDetailModel *detailModel;
 @property (nonatomic,retain) JYSendMessageModel *sendMessageModel;
 
+@property (nonatomic) BOOL isSendPacket;//是否已经给该机器人发送过红包
 @end
 
 @implementation JYDetailViewController
@@ -199,8 +201,17 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     [_layoutCollectionView JY_triggerPullToRefresh];
     
 }
+/**
+ 支付完成刷新UI
+ */
 - (void)payResultSuccess {
+    self.isSendPacket = YES;
     [_layoutCollectionView reloadData];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *sendPacketUsers = [NSMutableArray arrayWithArray:[defaults objectForKey:kSendPacketUserIds]];
+    [sendPacketUsers addObject:self.detailModel.userInfo.userId];
+    [defaults setObject:sendPacketUsers forKey:kSendPacketUserIds];
+    [defaults synchronize];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -213,12 +224,15 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
 }
 
-
+/**
+ 加载模型
+ */
 - (void)loadModels {
     @weakify(self);
     [self.detailModel fetchUserDetailModelWithViewUserId:self->_userId CompleteHandler:^(BOOL success, JYUserDetail *useDetai) {
     if (success) {
         @strongify(self);
+        self.isSendPacket = [(NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:kSendPacketUserIds] containsObject:useDetai.user.userId];
         [self->_layoutCollectionView reloadData];
         [self->_layoutCollectionView JY_endPullToRefresh];
         _bottomView.attentionBtnSelect = useDetai.user.attention.integerValue == 0 ? NO : YES;
@@ -306,10 +320,12 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     
     if (indexPath.section == photoSection) {
         JYPhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPhotoCollectionViewCellIdentifier forIndexPath:indexPath];
-        if (indexPath.item == 0) {
-            cell.isFirstPhoto = YES;
-        }else {
-            cell.isFirstPhoto = NO;
+        if (!self.isSendPacket) {
+            if (indexPath.item == 0 ) {
+                cell.isFirstPhoto = YES;
+            }else {
+                cell.isFirstPhoto = NO;
+            }
         }
         cell.imageUrl = self.detailModel.userPhoto[indexPath.item].smallPhoto;
         cell.isVideoImage = NO;
@@ -387,8 +403,10 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 //             cell.detailTitle = nil;
 //            [cell.vipBtn setTitle:@"成为VIP会员" forState:UIControlStateNormal];
             cell.vipTitle = @"成为VIP会员";
+            @weakify(self);
             cell.vipAction = ^(id sender){
-            
+                @strongify(self);
+                [self presentPayViewController];
             };
             return cell;
         }else if (indexPath.item == JYSectetInfoItemWechat){
@@ -585,7 +603,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     
     if (indexPath.section == photoSection) {
 
-        if (kCurrentUser.isVip.integerValue == 0 ) {
+        if (kCurrentUser.isVip.integerValue == 0 || !self.isSendPacket) {
             if (indexPath.item == 0) {
                  [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
             }else {
@@ -593,7 +611,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             }
             
         }else {
-            [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
+            [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:NO];
         }
     }else if (indexPath.section == JYSectionTypeSectetInfo + hasPhoto + hasVideo) {
     //播放视频
