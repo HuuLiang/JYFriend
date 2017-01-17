@@ -17,8 +17,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
+    if ([JYUtil isVip]) {
+        UIView *vipTimeView = [self addVipTimeView];
+        [self.view addSubview:vipTimeView];
+        {
+        [vipTimeView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.mas_equalTo(self.view);
+            make.top.mas_equalTo(self.view).mas_offset(kWidth(20));
+            make.height.mas_equalTo(kWidth(120));
+        }];
+        }
+    }else {
     [self creatTitleLabel];
     [self creatDredgeVipBtn];
+    }
 }
 
 - (void)creatTitleLabel {
@@ -64,6 +76,48 @@
         [self presentPayViewController];
     } forControlEvents:UIControlEventTouchUpInside];
 
+}
+
+
+- (UIView *)addVipTimeView {
+    UIView *view  = [[UIView alloc] init];
+    view.backgroundColor = [UIColor whiteColor];
+    UIButton *ktVipBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    ktVipBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(30)];
+    [ktVipBtn setTitle:@"续费" forState:UIControlStateNormal];
+    [ktVipBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    ktVipBtn.layer.cornerRadius = 5.;
+    ktVipBtn.clipsToBounds = YES;
+    [ktVipBtn setBackgroundColor:kColor(@"#E147a5")];
+    [view addSubview:ktVipBtn];
+    {
+    [ktVipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(view);
+        make.right.mas_equalTo(view).mas_offset(kWidth(-30));
+        make.size.mas_equalTo(CGSizeMake(kWidth(140), kWidth(70)));
+    }];
+    }
+    @weakify(self);
+    [ktVipBtn bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        [self presentPayViewController];
+        
+    } forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.textColor = kColor(@"#666666");
+    titleLabel.font = [UIFont systemFontOfSize:kWidth(30)];
+    titleLabel.text = [NSString stringWithFormat:@"您的会员截止日期: %@",[JYUtil timeStringFromDate:[JYUtil expireDateTime] WithDateFormat:kDateFormatShort]];
+    [view addSubview:titleLabel];
+    {
+        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.mas_equalTo(view);
+            make.left.mas_equalTo(view).mas_offset(kWidth(30));
+            make.right.mas_equalTo(ktVipBtn.mas_left).mas_offset(kWidth(-30));
+        }];
+    }
+    return view;
 }
 
 

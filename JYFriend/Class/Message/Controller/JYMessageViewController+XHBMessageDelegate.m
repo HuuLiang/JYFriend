@@ -256,7 +256,7 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
         JYMessageModel *messageModel = [[JYMessageModel alloc] init];
         [self addChatMessage:messageModel];
 }
-
+}
 #pragma mark - XHEmotionManagerViewDelegate,XHEmotionManagerViewDataSource
 
 /**
