@@ -51,7 +51,8 @@ typedef NS_ENUM(NSUInteger, JYUserCreateMessageType) {
 typedef NS_ENUM(NSUInteger,JYVipType) {
     JYVipTypeYear = 0,
     JYVipTypeQuarter = 1,
-    JYVipTypeMonth = 2
+    JYVipTypeMonth = 2,
+    JYVipTypePacket =3 //发红包
 };
 
 #define tableViewCellheight  MAX(kScreenHeight*0.06,44)

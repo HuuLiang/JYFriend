@@ -14,6 +14,7 @@
 #import "JYUserCreateMessageModel.h"
 #import "JYContactModel.h"
 #import "JYAutoContactManager.h"
+#import "JYUserCreateMessageModel.h"
 
 static NSString *const kRecommendCellReusableIdentifier = @"RecommendCellReusableIdentifier";
 static NSString *const kRecommendHeaderViewReusableIdentifier = @"RecommendHeaderViewReusableIdentifier";
@@ -32,6 +33,7 @@ static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFoote
 QBDefineLazyPropertyInitialization(JYCharacterModel, characterModel)
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 QBDefineLazyPropertyInitialization(JYUserGreetModel, userGreetModel)
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

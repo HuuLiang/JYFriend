@@ -17,6 +17,7 @@
 #import "JYLocalVideoUtils.h"
 #import "JYRedPackPopViewController.h"
 #import "JYMessageViewController.h"
+#import "JYUserCreateMessageModel.h"
 
 static NSString *const kPhotoCollectionViewCellIdentifier = @"PhotoCollectionViewCell_Identifier";
 static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
@@ -24,6 +25,7 @@ static NSString *const kDetailUserInfoCellIndetifier = @"detailuserInfoCell_inde
 static NSString *const kHomeTownCellIdetifier = @"hometownCell_indetifier";
 static NSString *const kSectionHeaderIndetifier = @"sectionHeader_indetifier";
 
+static NSString *const kSendPacketUserIds = @"jy_has_send_packet_user_id_key";
 static CGFloat const kPhotoItemSpce = 6.;
 static CGFloat const kPhotoLineSpace = 10.;
 
@@ -83,12 +85,14 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
 
 @property (nonatomic,retain) JYDetailBottotmView *bottomView;//底部视图
 @property (nonatomic,retain) JYUserDetailModel *detailModel;
+@property (nonatomic,retain) JYSendMessageModel *sendMessageModel;
 
+@property (nonatomic) BOOL isSendPacket;//是否已经给该机器人发送过红包
 @end
 
 @implementation JYDetailViewController
 QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
-
+QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 
 - (instancetype)initWithUserId:(NSString *)userId time:(NSString *)time distance:(NSString *)distance
 {
@@ -111,16 +115,25 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
                                  [JYDetailBottomModel creatBottomModelWith:@"发消息" withImage:@"detail_message_icon"],
                                  [JYDetailBottomModel creatBottomModelWith:@"打招呼" withImage:@"detail_greet_icon"]];
     @weakify(self);
+   __block JYUserCreateMessageType messageType;
     _bottomView.action = ^(UIButton *btn){
+                @strongify(self);
         if ([btn.titleLabel.text isEqualToString:@"关注TA"]) {
-            btn.selected = !btn.selected;
+            if (btn.selected) {
+                return ;
+            }else {
+                btn.selected = !btn.selected;
+            }
             CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
             animation.values = @[@(0.4),@(0.7),@(1.0),@(1.5)];
             animation.keyTimes = @[@(0.0),@(0.3),@(0.7),@(1.0)];
             animation.calculationMode = kCAAnimationLinear;
             [btn.imageView.layer addAnimation:animation forKey:@"SHOW"];
+            
+            messageType = JYUserCreateMessageTypeFollow;
+            
         }else if ([btn.titleLabel.text isEqualToString:@"发消息"]){
-            @strongify(self);
+    
            JYUser *user = [[JYUser alloc] init];
             JYUserInfoModel *userInfo =  self.detailModel.userInfo;
             user.userId = userInfo.userId;
@@ -128,8 +141,22 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
             userInfo.logoUrl = userInfo.logoUrl;
             [JYMessageViewController showMessageWithUser:user inViewController:self];
         }else if ([btn.titleLabel.text isEqualToString:@"打招呼"]){
-        
+            messageType = JYUserCreateMessageTypeGreet;
+            if (self.detailModel.userInfo.greetSb.integerValue == 1) {
+                return;
+            }
+            
         }
+           [self.sendMessageModel fetchRebotReplyMessagesWithRobotId:self.detailModel.userInfo.userId msg:nil ContentType:@"Text" msgType:messageType CompletionHandler:^(BOOL success, id obj) {
+               if (success) {
+                   if (messageType == JYUserCreateMessageTypeFollow) {
+                       [[JYHudManager manager] showHudWithText:@"关注成功"];
+                   }else if (messageType == JYUserCreateMessageTypeGreet){
+                   
+                       [[JYHudManager manager] showHudWithText:@"打招呼成功"];
+                   }
+               }
+           }];
     };
     
     [self.view addSubview:_bottomView];
@@ -172,20 +199,47 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
     }];
     
     [_layoutCollectionView JY_triggerPullToRefresh];
+    
+}
+/**
+ 支付完成刷新UI
+ */
+- (void)payResultSuccess {
+    self.isSendPacket = YES;
+    [_layoutCollectionView reloadData];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *sendPacketUsers = [NSMutableArray arrayWithArray:[defaults objectForKey:kSendPacketUserIds]];
+    [sendPacketUsers addObject:self.detailModel.userInfo.userId];
+    [defaults setObject:sendPacketUsers forKey:kSendPacketUserIds];
+    [defaults synchronize];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(payResultSuccess) name:kPaidNotificationName object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
+}
+
+/**
+ 加载模型
+ */
 - (void)loadModels {
     @weakify(self);
     [self.detailModel fetchUserDetailModelWithViewUserId:self->_userId CompleteHandler:^(BOOL success, JYUserDetail *useDetai) {
     if (success) {
         @strongify(self);
+        self.isSendPacket = [(NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:kSendPacketUserIds] containsObject:useDetai.user.userId];
         [self->_layoutCollectionView reloadData];
         [self->_layoutCollectionView JY_endPullToRefresh];
+        _bottomView.attentionBtnSelect = useDetai.user.attention.integerValue == 0 ? NO : YES;
     }
 }];
 
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -266,10 +320,12 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
     
     if (indexPath.section == photoSection) {
         JYPhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPhotoCollectionViewCellIdentifier forIndexPath:indexPath];
-        if (indexPath.item == 0) {
-            cell.isFirstPhoto = YES;
-        }else {
-            cell.isFirstPhoto = NO;
+        if (!self.isSendPacket) {
+            if (indexPath.item == 0 ) {
+                cell.isFirstPhoto = YES;
+            }else {
+                cell.isFirstPhoto = NO;
+            }
         }
         cell.imageUrl = self.detailModel.userPhoto[indexPath.item].smallPhoto;
         cell.isVideoImage = NO;
@@ -347,8 +403,10 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 //             cell.detailTitle = nil;
 //            [cell.vipBtn setTitle:@"成为VIP会员" forState:UIControlStateNormal];
             cell.vipTitle = @"成为VIP会员";
+            @weakify(self);
             cell.vipAction = ^(id sender){
-            
+                @strongify(self);
+                [self presentPayViewController];
             };
             return cell;
         }else if (indexPath.item == JYSectetInfoItemWechat){
@@ -545,7 +603,7 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
     
     if (indexPath.section == photoSection) {
 
-        if (kCurrentUser.isVip.integerValue == 0 ) {
+        if (kCurrentUser.isVip.integerValue == 0 || !self.isSendPacket) {
             if (indexPath.item == 0) {
                  [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
             }else {
@@ -553,15 +611,12 @@ QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
             }
             
         }else {
-            [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
+            [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:NO];
         }
     }else if (indexPath.section == JYSectionTypeSectetInfo + hasPhoto + hasVideo) {
     //播放视频
     
     }
-    
-
-
 }
 /**
  用户相册的图片数组

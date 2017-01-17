@@ -50,6 +50,18 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
     [self.emotionManagerView reloadData];
 }
 
+/**
+ 点击加号里面
+ */
+- (void)setXHShareMenu{
+    
+    XHShareMenuItem *pictureItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:@"message_photo"] title:@"图片" titleColor:[UIColor redColor] titleFont:[UIFont systemFontOfSize:kWidth(30)]];
+    
+    XHShareMenuItem *photographItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:@"message_camera"] title:@"拍照" titleColor:[UIColor redColor] titleFont:[UIFont systemFontOfSize:kWidth(30)]];
+    XHShareMenuItem *videoChatItem = [[XHShareMenuItem alloc] initWithNormalIconImage:[UIImage imageNamed:@"message_video_chat"] title:@"视频聊天" titleColor:[UIColor redColor] titleFont:[UIFont systemFontOfSize:kWidth(30)]];
+    self.shareMenuItems = @[pictureItem,photographItem,videoChatItem];
+}
+
 - (void)registerCustomCell {
     [self.messageTableView registerClass:[JYMessageNoticeCell class] forCellReuseIdentifier:kJYFriendMessageNoticeCellKeyName];
 }
@@ -243,7 +255,6 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
     } else {
         JYMessageModel *messageModel = [[JYMessageModel alloc] init];
         [self addChatMessage:messageModel];
-    }
 }
 
 #pragma mark - XHEmotionManagerViewDelegate,XHEmotionManagerViewDataSource

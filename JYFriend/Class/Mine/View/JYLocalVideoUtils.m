@@ -38,28 +38,17 @@
     NSTimeInterval start = [startD timeIntervalSince1970]*1;
     NSTimeInterval end = [endD timeIntervalSince1970]*1;
     NSTimeInterval value = end - start;
-    int second = (int)value %60;//秒
-    int minute = (int)value /60%60;
-    int house = (int)value / (24 * 3600)%3600;
-    int day = (int)value / (24 * 3600);
-    NSString *str;
-    if (day != 0) {
-        str = [NSString stringWithFormat:@"%d",day *D_DAY + house*D_HOUR + minute*D_MINUTE +second];
-    }else if (day==0 && house != 0) {
-        str = [NSString stringWithFormat:@"%d",house*D_HOUR + minute*D_MINUTE +second];
-    }else if (day== 0 && house== 0 && minute!=0) {
-        str = [NSString stringWithFormat:@"%d",minute*D_MINUTE +second];
-    }else{
-        str = [NSString stringWithFormat:@"%d",second];
-    }
-    return str.integerValue;
+    return value;
 }
 
 + (NSString *)fetchTimeIntervalToCurrentTimeWithStartTime:(NSString *)startTime{
     if (!startTime) {
         return nil;
     }
-   NSInteger timeInterVal = [self dateTimeDifferenceWithStartTime:[JYUtil timeStringFromDate:[JYUtil dateFromString:startTime WithDateFormat:@"yyyy年MM月dd日 HH:mm:ss"] WithDateFormat:kTimeFormat] endTime:[self currentTime]];
+    startTime = [JYUtil timeStringFromDate:[JYUtil dateFromString:startTime WithDateFormat:@"yyyy年MM月dd日 HH:mm:ss"] WithDateFormat:kTimeFormat];
+    NSString *currentTime = [self currentTime];
+    
+   NSInteger timeInterVal = [self dateTimeDifferenceWithStartTime:startTime endTime:currentTime];
     NSInteger month = timeInterVal / (D_DAY*30);
     NSInteger week = timeInterVal / D_WEEK;
     NSInteger day = timeInterVal / D_DAY;

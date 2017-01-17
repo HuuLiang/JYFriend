@@ -8,6 +8,7 @@
 
 #import "JYBaseViewController.h"
 
+
 @interface JYRedPackPopViewController : JYBaseViewController
 
 - (void)popRedPackViewWithCurrentViewCtroller:(UIViewController *)currentViewCtroller;

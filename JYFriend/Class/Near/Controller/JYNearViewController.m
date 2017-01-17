@@ -14,6 +14,10 @@
 #import "JYDetailViewController.h"
 #import "JYNearPesonModel.h"
 #import "JYLocalVideoUtils.h"
+#import "JYContactModel.h"
+#import "JYUserCreateMessageModel.h"
+#import "JYAutoContactManager.h"
+
 
 static NSString *const kNearPersonCellIdentifier = @"knearpersoncell_identifier";
 static NSString *const kSexTypeLocalCacheKey = @"kjysextype_local_cache_key";
@@ -28,7 +32,7 @@ static NSUInteger const kDefaultSize = 20;
 }
 
 @property (nonatomic,retain) JYNearBottomView *bottomView;//批量打招呼
-@property (nonatomic,retain) NSMutableArray  *allSelectCells;//所有选中的cell的indexPath
+@property (nonatomic,retain) NSMutableArray  <NSIndexPath *>*allSelectCells;//所有选中的cell的indexPath
 @property (nonatomic,retain) UIActionSheet *actionSheetView;
 @property (nonatomic,retain) CLLocationManager  *locationManager;//定位
 @property (nonatomic,retain) JYNotFetchUserlocalView *notLocalView;//没有登录时的view
@@ -39,6 +43,7 @@ static NSUInteger const kDefaultSize = 20;
 @property (nonatomic,retain) NSArray <JYUserInfoModel *>*allPersons;
 @property (nonatomic,retain) NSMutableArray <JYUserInfoModel *>*dataSource;
 @property (nonatomic,retain) NSArray <JYUserInfoModel *>*currentSexPersons;
+@property (nonatomic) JYUserGreetModel *userGreetModel;
 
 @end
 
@@ -47,6 +52,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, allSelectCells)
 QBDefineLazyPropertyInitialization(CLLocationManager, locationManager)
 QBDefineLazyPropertyInitialization(JYNearPesonModel, personModel)
 QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
+QBDefineLazyPropertyInitialization(JYUserGreetModel, userGreetModel)
 /**
  未获定位权限时的界面
  */
@@ -82,7 +88,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     @weakify(self);
     _bottomView.action = ^(id sender) {
         @strongify(self);
-        [self tableViewEditing];
+//        [self tableViewEditing];
+        [self batchGreetUsers];//批量打招呼
     };
     [self.view addSubview:_bottomView];
     {
@@ -95,6 +102,31 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     
     return _bottomView;
 }
+//批量打招呼
+- (void)batchGreetUsers {
+    @weakify(self);
+     NSMutableArray *selectedUsers = [[NSMutableArray alloc] init];
+    NSMutableArray *userIds = [NSMutableArray array];
+    [self.allSelectCells enumerateObjectsUsingBlock:^(NSIndexPath * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        @strongify(self);
+        JYUserInfoModel *userInfoModel = self.currentSexPersons[obj.item];
+        [selectedUsers addObject:userInfoModel];
+        [userIds addObject:userInfoModel.userId];
+    }];
+    //先向消息列表中加入选中的机器人的打招呼语言
+    [JYContactModel insertGreetContact:selectedUsers];
+    [self.userGreetModel fetchRobotsReplyMessagesWithBatchRobotId:userIds CompletionHandler:^(BOOL success, id obj) {
+//        @strongify(self);
+        if (success) {
+            //把返回的机器人及其回复信息放入缓存 定时取出并且推送给用户
+            [[JYAutoContactManager manager] saveReplyRobots:obj];
+        }
+        //关闭推荐
+    }];
+
+       [self tableViewEditing];
+}
+
 
 - (UIActionSheet *)actionSheetView {
     if (_actionSheetView) {
@@ -189,7 +221,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)loadModels {
     @weakify(self);
     if ([[NSUserDefaults standardUserDefaults] objectForKey:kRefreshTimeInterval] && [JYLocalVideoUtils dateTimeDifferenceWithStartTime:[[NSUserDefaults standardUserDefaults] objectForKey:kRefreshTimeInterval] endTime:[JYLocalVideoUtils currentTime]] <= 180) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             @strongify(self);
             [self->_layoutTableView reloadData];
             [self pageLoadModelWithPersonSex:self.sexType isPullDown:YES];
@@ -291,15 +323,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
  */
 - (void)requestLocationAuthority {
     
-//    if (!locationEnable ||  locationStatus == kCLAuthorizationStatusNotDetermined) {
         if ([UIDevice currentDevice].systemVersion.floatValue >=8) {
-//            _locationManager = [[CLLocationManager alloc] init];
-//            _locationManager.delegate = self;
-            //获取授权认证
-//            [locationManager requestAlwaysAuthorization];
             [self.locationManager requestWhenInUseAuthorization];
-            
-//        }
     }
 
 }
@@ -326,7 +351,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    // Dispose of any resources that can be recreated
 }
 
 

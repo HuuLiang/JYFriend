@@ -81,4 +81,18 @@ QBDefineLazyPropertyInitialization(NSMutableArray, detailButtons)
     }
 }
 
+- (void)setAttentionBtnSelect:(BOOL)attentionBtnSelect {
+    _attentionBtnSelect = attentionBtnSelect;
+    if (attentionBtnSelect) {
+        [self.detailButtons enumerateObjectsUsingBlock:^(JYDetailBottomButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj.titleLabel.text isEqualToString:@"关注TA"]) {
+                obj.selected = YES;
+                *stop = YES;
+            }
+        }];
+    }
+
+}
+
+
 @end

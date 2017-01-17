@@ -35,6 +35,11 @@ static NSString *const kPPVideoSystemConfigPayYearKeyName     = @"PP_SystemConfi
     return [JYSystemConfigResponse class];
 }
 
+- (QBURLRequestMethod)requestMethod {
+
+    return QBURLPostRequest;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     self = [super init];

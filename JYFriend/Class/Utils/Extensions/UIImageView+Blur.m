@@ -14,7 +14,8 @@ static const void *kImageBlurEffectViewKey = &kImageBlurEffectViewKey;
 
 - (void)JY_AddBlurWithAlpha:(CGFloat)alpha {
     
-    if (objc_getAssociatedObject(self, kImageBlurEffectViewKey)){
+    UIVisualEffectView *effectView = objc_getAssociatedObject(self, kImageBlurEffectViewKey);
+    if (effectView){
         return;
     };
     UIView *effView;
@@ -58,6 +59,7 @@ static const void *kImageBlurEffectViewKey = &kImageBlurEffectViewKey;
     UIView *view = objc_getAssociatedObject(self, kImageBlurEffectViewKey);
     if (view) {
     [view removeFromSuperview];
+      objc_setAssociatedObject(self, kImageBlurEffectViewKey, nil, OBJC_ASSOCIATION_RETAIN);
     }
 }
 
