@@ -25,6 +25,5 @@
 @property (nonatomic) NSString *starSign;
 @property (nonatomic) NSString *phone;
 @property (nonatomic) NSString *km;
-@property (nonatomic) BOOL greet; //是否打招呼
-@property (nonatomic) BOOL follow; //是否关注
+
 @end

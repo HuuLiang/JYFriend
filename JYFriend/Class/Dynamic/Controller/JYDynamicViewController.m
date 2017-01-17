@@ -271,7 +271,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMsgModel)
         dynamicCell.userImgAction = ^(id obj) {
             @strongify(self);
             JYDynamic *dynamic = self.dataSource[indexPath.item];
-            [self pushDetailViewControllerWithUserId:dynamic.userId time:[JYUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:dynamic.timeInterval] WithDateFormat:KDateFormatLong] distance:nil];
+            [self pushDetailViewControllerWithUserId:dynamic.userId time:[JYUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:dynamic.timeInterval] WithDateFormat:KDateFormatLong] distance:nil nickName:dynamic.nickName];
         };
     }
     return dynamicCell;

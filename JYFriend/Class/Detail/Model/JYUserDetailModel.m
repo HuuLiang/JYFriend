@@ -53,6 +53,8 @@
             self.userInfo = detail.user;
             self.userVideo = detail.userVideo;
             self.mood = detail.mood;
+            self.greet = detail.greet;
+            self.follow = detail.follow;
         }
         if (handler) {
             handler(respStatus == QBURLResponseSuccess , self.response);

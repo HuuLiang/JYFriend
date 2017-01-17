@@ -71,6 +71,7 @@ QBDefineLazyPropertyInitialization(JYInteractiveModel, interactiveModel)
         @strongify(self);
         [self loadData];
     }];
+    [_layoutCollectionView JY_triggerPullToRefresh];
 }
 
 - (void)didReceiveMemoryWarning {

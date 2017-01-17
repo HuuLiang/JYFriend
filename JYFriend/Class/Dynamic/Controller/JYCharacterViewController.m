@@ -120,7 +120,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.item < self.dataSource.count) {
         JYCharacter *character = self.dataSource[indexPath.item];
-        [self pushDetailViewControllerWithUserId:character.userId time:nil distance:nil];
+        [self pushDetailViewControllerWithUserId:character.userId time:nil distance:nil nickName:character.nickName];
     }
 }
 

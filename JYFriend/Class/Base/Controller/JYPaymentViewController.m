@@ -63,7 +63,7 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
     self.baseModel = baseModel;
     
     _redPackPrice = [NSNumber numberWithInteger:price];
-    [self payForPaymentType:QBOrderPayTypeWeChatPay vipLevel:vipType];
+    [self payForPaymentType:QBOrderPayTypeAlipay vipLevel:vipType];//默认支付宝支付
 
 }
 
@@ -74,7 +74,7 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
                                                     contentInfo:[self createContentInfo]
                                                     beginAction:^(QBPaymentInfo * paymentInfo) {
                                                         if (paymentInfo) {
-//                                                            [[QBStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo forPayAction:QBStatsPayActionGoToPay andTabIndex:[JYUtil currentTabPageIndex] subTabIndex:[JYUtil currentSubTabPageIndex]];
+ 
                                                         }
                                                     } completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo) {
                                                         @strongify(self);
@@ -104,12 +104,12 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
     } else if (vipType == JYVipTypeYear) {
         price = [JYSystemConfigModel sharedModel].vipPriceC;
     }
-//    price = 200;
     
     if (_redPackPrice) {
         price = [_redPackPrice integerValue];
     }
     
+//    price = 200;
     orderInfo.orderPrice = price;
     
     NSString *orderDescription = @"VIP";

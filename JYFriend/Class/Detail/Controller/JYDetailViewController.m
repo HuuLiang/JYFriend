@@ -87,6 +87,7 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
 @property (nonatomic,retain) JYDetailBottotmView *bottomView;//底部视图
 @property (nonatomic,retain) JYUserDetailModel *detailModel;
 @property (nonatomic,retain) JYSendMessageModel *sendMessageModel;
+@property (nonatomic)  BOOL isFollow;//是否打招呼
 
 @property (nonatomic) BOOL isSendPacket;//是否已经给该机器人发送过红包
 @end
@@ -95,13 +96,14 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
 QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 
-- (instancetype)initWithUserId:(NSString *)userId time:(NSString *)time distance:(NSString *)distance
+- (instancetype)initWithUserId:(NSString *)userId time:(NSString *)time distance:(NSString *)distance nickName:(NSString *)nickName
 {
     self = [super init];
     if (self) {
         _userId = userId;
         _time   = time;
         _distance = distance;
+        self.navigationItem.title = nickName;
     }
     return self;
 }
@@ -144,18 +146,20 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             
         }else if ([btn.titleLabel.text isEqualToString:@"打招呼"]){
             messageType = JYUserCreateMessageTypeGreet;
-            if (self.detailModel.userInfo.greet) {
+            if (self.isFollow) {
                 return;
             }
             
         }
         if (![btn.titleLabel.text isEqualToString:@"发消息"]) {
+            @weakify(self);
             [self.sendMessageModel fetchRebotReplyMessagesWithRobotId:self.detailModel.userInfo.userId msg:nil ContentType:@"Text" msgType:messageType CompletionHandler:^(BOOL success, id obj) {
+                @strongify(self);
                 if (success) {
                     if (messageType == JYUserCreateMessageTypeFollow) {
                         [[JYHudManager manager] showHudWithText:@"关注成功"];
                     }else if (messageType == JYUserCreateMessageTypeGreet){
-                        
+                        self.isFollow = YES;
                         [[JYHudManager manager] showHudWithText:@"打招呼成功"];
                     }
                 }
@@ -241,7 +245,8 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             self.isSendPacket = [(NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:kSendPacketUserIds] containsObject:useDetai.user.userId];
             [self->_layoutCollectionView reloadData];
             [self->_layoutCollectionView JY_endPullToRefresh];
-            _bottomView.attentionBtnSelect = useDetai.user.follow;
+            _bottomView.attentionBtnSelect = useDetai.greet;
+            self.isFollow = useDetai.follow;
         }
     }];
     
@@ -617,7 +622,11 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             if (indexPath.item == 0) {
                 [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
             }else {
+                if (self.isSendPacket || [JYUtil isVip]) {
+                [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
+                }else{
                 [[[JYRedPackPopViewController alloc] init] popRedPackViewWithCurrentViewCtroller:self];
+                }
             }
             
         }else {

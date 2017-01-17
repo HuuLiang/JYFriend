@@ -42,11 +42,11 @@
 }
 
 
-- (void)pushDetailViewControllerWithUserId:(NSString *)userId time:(NSString *)timeStr distance:(NSString *)distance {
+- (void)pushDetailViewControllerWithUserId:(NSString *)userId time:(NSString *)timeStr distance:(NSString *)distance nickName:(NSString *)nickName{
     if (timeStr) {
         timeStr = [JYUtil timeStringFromDate:[JYUtil dateFromString:timeStr WithDateFormat:KDateFormatLong] WithDateFormat:@"yyyy年MM月dd日 hh:mm:ss"];
     }
-    JYDetailViewController *detailVC = [[JYDetailViewController alloc] initWithUserId:userId time:timeStr distance:distance];
+    JYDetailViewController *detailVC = [[JYDetailViewController alloc] initWithUserId:userId time:timeStr distance:distance nickName:nickName];
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 

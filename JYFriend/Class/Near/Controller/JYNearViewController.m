@@ -400,7 +400,7 @@ QBDefineLazyPropertyInitialization(JYUserGreetModel, userGreetModel)
     }else {
         if (indexPath.row < self.dataSource.count) {
             JYUserInfoModel *user = self.dataSource[indexPath.row];
-            [self pushDetailViewControllerWithUserId:user.userId time:nil distance:user.km];
+            [self pushDetailViewControllerWithUserId:user.userId time:nil distance:user.km nickName:user.nickName];
         }
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];

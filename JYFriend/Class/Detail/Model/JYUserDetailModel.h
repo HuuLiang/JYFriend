@@ -31,6 +31,8 @@ typedef void(^JYUserDetailCompleteHandler)(BOOL success , JYUserDetail *useDetai
 @property (nonatomic,retain) JYUserVideo *userVideo;
 @property (nonatomic,retain) JYUserInfoModel *user;
 @property (nonatomic,retain) JYUserDetailMoodModel *mood;
+@property (nonatomic) BOOL greet; //是否打招呼
+@property (nonatomic) BOOL follow; //是否关注
 
 @end
 
@@ -41,6 +43,8 @@ typedef void(^JYUserDetailCompleteHandler)(BOOL success , JYUserDetail *useDetai
 @property (nonatomic,retain) JYUserVideo *userVideo;
 @property (nonatomic,retain) JYUserInfoModel *userInfo;
 @property (nonatomic,retain) JYUserDetailMoodModel *mood;
+@property (nonatomic) BOOL greet; //是否打招呼
+@property (nonatomic) BOOL follow; //是否关注
 
 - (BOOL)fetchUserDetailModelWithViewUserId:(NSString *)viewUserId CompleteHandler:(JYUserDetailCompleteHandler)handler;
 

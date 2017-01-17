@@ -17,7 +17,7 @@
 - (UIViewController *)playerVCWithVideo:(NSString *)videoUrl;
 
 //跳转到详情页
-- (void)pushDetailViewControllerWithUserId:(NSString *)userId time:(NSString *)timeStr distance:(NSString *)distance;
+- (void)pushDetailViewControllerWithUserId:(NSString *)userId time:(NSString *)timeStr distance:(NSString *)distance nickName:(NSString *)nickName;
 
 //支付弹窗
 - (void)presentPayViewController;
