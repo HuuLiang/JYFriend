@@ -220,7 +220,7 @@ QBDefineLazyPropertyInitialization(JYUserGreetModel, userGreetModel)
  */
 - (void)loadModels {
     @weakify(self);
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kRefreshTimeInterval] && [JYLocalVideoUtils dateTimeDifferenceWithStartTime:[[NSUserDefaults standardUserDefaults] objectForKey:kRefreshTimeInterval] endTime:[JYLocalVideoUtils currentTime]] <= 180) {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kRefreshTimeInterval] && [JYLocalVideoUtils dateTimeDifferenceWithStartTime:[[NSUserDefaults standardUserDefaults] objectForKey:kRefreshTimeInterval] endTime:[JYLocalVideoUtils currentTime]] <= 180 && self.currentSexPersons.count!= 0) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             @strongify(self);
             [self->_layoutTableView reloadData];

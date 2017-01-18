@@ -42,6 +42,11 @@
         
         _genderBtn = [JYNearPersonBtn buttonWithType:UIButtonTypeCustom];
         _genderBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(24.)];
+        UIEdgeInsets imageInsets = _genderBtn.imageEdgeInsets;
+        UIEdgeInsets titleInsets = _genderBtn.titleEdgeInsets;
+        
+        _genderBtn.imageEdgeInsets = UIEdgeInsetsMake(imageInsets.top, imageInsets.left-kWidth(6), imageInsets.bottom, imageInsets.right);
+        _genderBtn.titleEdgeInsets = UIEdgeInsetsMake(titleInsets.top, titleInsets.left, titleInsets.bottom, titleInsets.right-kWidth(6));
         
         [self.contentView addSubview:_genderBtn];
         {
@@ -54,6 +59,7 @@
 
         _nameLabel = [[UILabel alloc] init];
         _nameLabel.font = [UIFont systemFontOfSize:kWidth(32.)];
+        _nameLabel.textColor = kColor(@"#333333");
         [self.contentView addSubview:_nameLabel];
         {
         [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {

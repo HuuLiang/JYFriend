@@ -16,6 +16,15 @@
 @implementation JYNewDynamicCell
 QBDefineLazyPropertyInitialization(NSMutableArray, imageViews)
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+         self.backgroundColor = [UIColor whiteColor];
+    }
+    return self;
+}
+
 - (void)setDetaiMoods:(NSArray<JYUserDetailMood *> *)detaiMoods {
     _detaiMoods = detaiMoods;
     if (detaiMoods.count >0) {

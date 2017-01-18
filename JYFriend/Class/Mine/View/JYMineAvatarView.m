@@ -34,10 +34,11 @@
         [self addSubview:_bgImgV];
         
         _userBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _userBtn.layer.cornerRadius = kWidth(84);
+//        _userBtn.layer.cornerRadius = kWidth(84);
         _userBtn.layer.borderWidth = kWidth(5);
         _userBtn.layer.borderColor = [kColor(@"#ffffff") colorWithAlphaComponent:0.42].CGColor;
-        _userBtn.layer.masksToBounds = YES;
+//        _userBtn.layer.masksToBounds = YES;
+        _userBtn.forceRoundCorner = YES;
         [_userBtn setImage:[[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[JYUser currentUser].userImgKey] forState:UIControlStateNormal];
         [self addSubview:_userBtn];
         
@@ -90,7 +91,7 @@
             [_userBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
                 make.top.equalTo(self).offset(kScreenWidth*53/375);
-                make.size.mas_equalTo(CGSizeMake(kWidth(180), kWidth(180)));
+                make.size.mas_equalTo(CGSizeMake(kWidth(140), kWidth(140)));
             }];
             
             [_followBtn mas_makeConstraints:^(MASConstraintMaker *make) {

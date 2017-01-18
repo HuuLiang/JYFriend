@@ -18,12 +18,21 @@
 
 @implementation JYDetailUserInfoCell
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor whiteColor];
+    }
+    return self;
+}
+
 - (UILabel *)titleLabel {
     if (_titleLabel) {
         return _titleLabel;
     }
     _titleLabel = [[UILabel alloc] init];
-    _titleLabel.font = [UIFont systemFontOfSize:kWidth(28.)];
+    _titleLabel.font = [UIFont systemFontOfSize:kWidth(35.)];
     _titleLabel.textColor = [UIColor colorWithHexString:@"#333333"];
     [self addSubview:_titleLabel];
     {
@@ -31,7 +40,7 @@
         make.centerY.mas_equalTo(self).mas_offset(kWidth(5));
         make.left.mas_equalTo(self).mas_offset(kWidth(30));
         make.right.mas_equalTo(self).mas_offset(kWidth(-30.));
-        make.height.mas_equalTo(kWidth(32.));
+        make.height.mas_equalTo(kWidth(35.));
     }];
     }
     

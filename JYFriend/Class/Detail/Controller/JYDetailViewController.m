@@ -394,19 +394,19 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             //             cell.detailTitle = nil;
             return cell;
         }else if (indexPath.item == JYUserInfoItemName){
-            cell.detailTitle = [NSString stringWithFormat:@"昵   称: %@",self.detailModel.userInfo.nickName];//;
+            cell.detailTitle = [NSString stringWithFormat:@"昵       称:  %@",self.detailModel.userInfo.nickName];//;
             return cell;
         }else if (indexPath.item == JYUserInfoItemAge){
-            cell.detailTitle = [NSString stringWithFormat:@"年   龄: %@",self.detailModel.userInfo.age];
+            cell.detailTitle = [NSString stringWithFormat:@"年       龄:  %@",self.detailModel.userInfo.age];
             return cell;
         }else if (indexPath.item == JYUserInfoItemHeigth){
-            cell.detailTitle = [NSString stringWithFormat:@"身   高: %@",self.detailModel.userInfo.height];
+            cell.detailTitle = [NSString stringWithFormat:@"身       高:  %@",self.detailModel.userInfo.height];
             return cell;
         }else if (indexPath.item == JYUserInfoItemConstellation){
-            cell.detailTitle = [NSString stringWithFormat:@"星   座: %@",self.detailModel.userInfo.starSign];
+            cell.detailTitle = [NSString stringWithFormat:@"星       座:  %@",self.detailModel.userInfo.starSign];
             return cell;
         }else if (indexPath.item == JYUserInfoItemSignature){
-            cell.detailTitle = [NSString stringWithFormat:@"个性签名: %@",self.detailModel.userInfo.note];
+            cell.detailTitle = [NSString stringWithFormat:@"个性签名:  %@",self.detailModel.userInfo.note];
             return cell;
         }
         
@@ -500,7 +500,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         if (indexPath.item == JYUserInfoItemTitle || indexPath.item == JYSectetInfoItemTitle) {
             return CGSizeMake(kScreenWidth, kWidth(90.));
         }else if (indexPath.item == JYUserInfoItemSignature){
-            CGSize size = [[NSString stringWithFormat:@"个性签名: %@",self.detailModel.userInfo.note] sizeWithFont:[UIFont systemFontOfSize:kWidth(28)] maxWidth:(kScreenWidth - kWidth(60))];//根据签名长短来确定行数
+            CGSize size = [[NSString stringWithFormat:@"个性签名:  %@",self.detailModel.userInfo.note] sizeWithFont:[UIFont systemFontOfSize:kWidth(28)] maxWidth:(kScreenWidth - kWidth(60))];//根据签名长短来确定行数
             return CGSizeMake(kScreenWidth, size.height +kWidth(20));
         }
         return CGSizeMake(kScreenWidth, kWidth(55.));
@@ -533,9 +533,10 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     
     if (section == photoSection) {
         return kWidth(kPhotoLineSpace *2);
-    }else if (section == JYSectionTypeHomeTown + hasPhoto + hasDynamic){
-        return kWidth(kPhotoLineSpace );
     }
+//    else if (section == JYSectionTypeHomeTown + hasPhoto + hasDynamic){
+//        return kWidth(kPhotoLineSpace );
+//    }
     return 0;
 }
 

@@ -94,6 +94,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if ([super initWithFrame:frame]) {
+         self.backgroundColor = [UIColor whiteColor];
         _genderBtn = [JYNearPersonBtn buttonWithType:UIButtonTypeCustom];
         _genderBtn.backgroundColor = [UIColor colorWithHexString:@"#e147a5"];
         _genderBtn.titleLabel.font =  [UIFont systemFontOfSize:kWidth(24.)];
@@ -107,7 +108,7 @@
         }];
         }
         _heightLabel = [[UILabel alloc] init];
-        _heightLabel.backgroundColor = [UIColor colorWithHexString:@"##fd774d"];
+        _heightLabel.backgroundColor = [UIColor colorWithHexString:@"#e147a5"];
         _heightLabel.textColor = [UIColor whiteColor];
         _heightLabel.font = [UIFont systemFontOfSize:kWidth(24.)];
         [self addSubview:_heightLabel];

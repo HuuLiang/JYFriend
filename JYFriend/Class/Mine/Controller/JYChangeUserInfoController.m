@@ -86,7 +86,8 @@ typedef NS_ENUM(NSInteger,JYUserInfoContactRow) {
         }];
         
     }];
-    self.navigationController.navigationBar.tintColor = [UIColor blueColor];
+    self.navigationItem.rightBarButtonItem.tintColor = kColor(@"#e147a5");
+//    self.navigationController.navigationBar.tintColor = [UIColor blueColor];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
