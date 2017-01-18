@@ -18,6 +18,7 @@
 #import "JYRedPackPopViewController.h"
 #import "JYMessageViewController.h"
 #import "JYUserCreateMessageModel.h"
+#import "JYContactModel.h"
 
 static NSString *const kPhotoCollectionViewCellIdentifier = @"PhotoCollectionViewCell_Identifier";
 static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
@@ -161,6 +162,8 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
                     }else if (messageType == JYUserCreateMessageTypeGreet){
                         self.isFollow = YES;
                         [[JYHudManager manager] showHudWithText:@"打招呼成功"];
+                        //先向消息列表中加入选中的机器人的打招呼语言
+                        [JYContactModel insertGreetContact:@[obj]];
                     }
                 }
             }];

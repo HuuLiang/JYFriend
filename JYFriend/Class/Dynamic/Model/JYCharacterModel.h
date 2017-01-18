@@ -24,4 +24,6 @@
 
 @interface JYCharacterModel : QBEncryptedURLRequest
 - (BOOL)fetchChararctersInfoWithRobotsCount:(NSInteger)count CompletionHandler:(QBCompletionHandler)handler;
+- (BOOL)fetchFiguresWithPage:(NSInteger)page pageSize:(NSInteger)pageSize completeHandler:(QBCompletionHandler)handler;
+
 @end

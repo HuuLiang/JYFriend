@@ -10,8 +10,11 @@
 #import "JYCharacterCell.h"
 #import "JYDetailViewController.h"
 #import "JYCharacterModel.h"
+#import "JYLocalVideoUtils.h"
 
 static NSString *const kCharacterCellReusableIdentifier = @"CharacterCellReusableIdentifier";
+static NSInteger kPageSize = 12;
+static NSInteger kRefreshTimeInterval = 60;//两次下拉刷新的时间间隔60s
 
 @interface JYCharacterViewController () <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
@@ -19,6 +22,9 @@ static NSString *const kCharacterCellReusableIdentifier = @"CharacterCellReusabl
 }
 @property (nonatomic) JYCharacterModel *characterModel;
 @property (nonatomic) NSMutableArray *dataSource;
+@property (nonatomic) BOOL isFirstRefresh;//是否是每次启动第一次加载
+@property (nonatomic) NSString *refreshTime;//刷新时间控制
+
 @end
 
 @implementation JYCharacterViewController
@@ -27,7 +33,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.isFirstRefresh = YES;
     UICollectionViewFlowLayout *mainLayout = [[UICollectionViewFlowLayout alloc] init];
     mainLayout.minimumLineSpacing = kWidth(20);
     mainLayout.minimumInteritemSpacing = kWidth(10);
@@ -48,12 +54,25 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     @weakify(self);
     [_layoutCollectionView JY_addPullToRefreshWithHandler:^{
         @strongify(self);
-        [self loadDataWithRefresh:YES];
+        if (self.isFirstRefresh) {
+            [self loadModelWithIsRefresh:YES];
+        }else {
+            NSInteger timeInterval = [JYLocalVideoUtils dateTimeDifferenceWithStartTime:self.refreshTime endTime:[JYLocalVideoUtils currentTime]];
+            if (timeInterval > kRefreshTimeInterval) {
+                [self loadDataWithRefresh:YES];
+            }else {
+                [self->_layoutCollectionView JY_triggerPullToRefresh];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self->_layoutCollectionView JY_endPullToRefresh];
+                });
+            }
+        }
     }];
     
     [_layoutCollectionView JY_addPagingRefreshWithHandler:^{
         @strongify(self);
-        [self loadDataWithRefresh:NO];
+//        [self loadDataWithRefresh:NO];
+        [self loadModelWithIsRefresh:NO];
     }];
     
     [_layoutCollectionView JY_triggerPullToRefresh];
@@ -68,17 +87,66 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     [self.characterModel fetchChararctersInfoWithRobotsCount:33 CompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
         if (success) {
-            if (isRefresh) {
-                [self.dataSource removeAllObjects];
-                [self.dataSource addObjectsFromArray:obj];
-            } else {
-                [self.dataSource addObjectsFromArray:obj];
-            }
+//            if (isRefresh) {
+//                [self.dataSource removeAllObjects];
+//                [self.dataSource addObjectsFromArray:obj];
+//            } else {
+//                [self.dataSource addObjectsFromArray:obj];
+//            }
+            self.refreshTime = [JYLocalVideoUtils currentTime];
+            [self refreshFetchReplaceModelWithModels:obj needCounts:3];//随机去三个模型替换
             [self->_layoutCollectionView reloadData];
         }
         [self->_layoutCollectionView JY_endPullToRefresh];
     }];
 }
+
+- (void)loadModelWithIsRefresh:(BOOL)isRefresh {
+    static NSInteger page = 1;
+    @weakify(self);
+    [self.characterModel fetchFiguresWithPage:page++ pageSize:kPageSize completeHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            self.isFirstRefresh = NO;
+            self.refreshTime = [JYLocalVideoUtils currentTime];
+            if (isRefresh) {
+                [self.dataSource removeAllObjects];
+            }
+            [self.dataSource addObjectsFromArray:obj];
+            [self->_layoutCollectionView reloadData];
+        }
+        [self->_layoutCollectionView JY_endPullToRefresh];
+    }];
+
+}
+/**
+ 随机取三个模型替换
+ */
+- (void)refreshFetchReplaceModelWithModels:(NSArray *)model needCounts:(NSInteger)needCounts {
+    
+    NSMutableArray *userIds = [NSMutableArray arrayWithCapacity:self.dataSource.count];
+    [self.dataSource enumerateObjectsUsingBlock:^(JYCharacter *character, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (character.userId) {
+            [userIds addObject:character.userId];
+        }
+    }];
+    NSMutableArray *needModes = [NSMutableArray arrayWithCapacity:needCounts];
+    while (needModes.count <needCounts) {
+          int random = arc4random_uniform((int)model.count);
+        JYCharacter *character = model[random];
+        if (![userIds containsObject:character.userId]) {
+            [needModes addObject:character];
+            [userIds addObject:character.userId];
+        }
+    }
+    
+    for (int i = 0; i< needCounts; i++) {
+        int key = self.dataSource.count < 15 ? (int)self.dataSource.count : 15;
+        int random = arc4random_uniform(key);
+        [self.dataSource replaceObjectAtIndex:random withObject:needModes[i]];
+    }
+}
+
 
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 

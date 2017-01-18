@@ -59,4 +59,23 @@
     return success;
 }
 
+- (BOOL)fetchFiguresWithPage:(NSInteger)page pageSize:(NSInteger)pageSize completeHandler:(QBCompletionHandler)handler {
+    NSDictionary *params = @{@"userId" : [JYUtil userId] ? : @"",
+                             @"page" : @(page),
+                             @"pageSize" : @(pageSize)};
+    BOOL result = [self requestURLPath:JY_CHARACTER_FIGURE_URL standbyURLPath:JY_CHARACTER_FIGURE_URL withParams:params responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
+         JYCharacterResponse *resp = nil;
+        if (respStatus == QBURLResponseSuccess) {
+            resp = self.response;
+        }
+        if (handler) {
+            handler(respStatus == QBURLResponseSuccess,resp.userList);
+        }
+        
+    }];
+    return result;
+}
+
+
+
 @end
