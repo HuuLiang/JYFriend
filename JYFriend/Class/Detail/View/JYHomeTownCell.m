@@ -94,6 +94,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if ([super initWithFrame:frame]) {
+         self.backgroundColor = [UIColor whiteColor];
         _genderBtn = [JYNearPersonBtn buttonWithType:UIButtonTypeCustom];
         _genderBtn.backgroundColor = [UIColor colorWithHexString:@"#e147a5"];
         _genderBtn.titleLabel.font =  [UIFont systemFontOfSize:kWidth(24.)];
@@ -107,7 +108,7 @@
         }];
         }
         _heightLabel = [[UILabel alloc] init];
-        _heightLabel.backgroundColor = [UIColor colorWithHexString:@"##fd774d"];
+        _heightLabel.backgroundColor = [UIColor colorWithHexString:@"#e147a5"];
         _heightLabel.textColor = [UIColor whiteColor];
         _heightLabel.font = [UIFont systemFontOfSize:kWidth(24.)];
         [self addSubview:_heightLabel];
@@ -118,42 +119,47 @@
             make.size.mas_equalTo(CGSizeMake(kWidth(88.), kWidth(32.)));
         }];
         }
+        
+        UIView *lineView = [[UIView alloc] init];
+        lineView.backgroundColor = [UIColor lightGrayColor];
+        [self addSubview:lineView];
+        {
+            [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.mas_equalTo(self).mas_offset(kWidth(-200));
+                make.centerY.mas_equalTo(self);
+                make.height.mas_equalTo(kWidth(self.bounds.size.height *0.85));
+                make.width.mas_equalTo(kWidth(1));
+            }];
+        }
+        
         UILabel *homeLabel = [[UILabel alloc] init];
-        homeLabel.textAlignment = NSTextAlignmentRight;
+        homeLabel.textAlignment = NSTextAlignmentCenter;
         homeLabel.textColor = [UIColor colorWithHexString:@"#333333"];
         homeLabel.font = [UIFont systemFontOfSize:kWidth(30)];
         homeLabel.text = @"家乡";
         [self addSubview:homeLabel];
         {
         [homeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(self).mas_offset(kWidth(-30));
+            make.right.mas_equalTo(self).mas_offset(kWidth(-10));
             make.centerY.mas_equalTo(_genderBtn);
-            make.size.mas_equalTo(CGSizeMake(kWidth(80), kWidth(32)));
+//            make.size.mas_equalTo(CGSizeMake(kWidth(80), kWidth(32)));
+            make.left.mas_equalTo(lineView.mas_right).mas_offset(kWidth(10));
+            make.height.mas_equalTo(kWidth(32.));
         }];
         }
         
         _homeTownLabel = [[UILabel alloc] init];
         _homeTownLabel.font = [UIFont systemFontOfSize:kWidth(28.)];
         _homeTownLabel.textColor = [UIColor colorWithHexString:@"#999999"];
-        _homeTownLabel.textAlignment = NSTextAlignmentRight;
+        _homeTownLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_homeTownLabel];
         {
         [_homeTownLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(homeLabel.mas_bottom).mas_offset(kWidth(28.));
-            make.right.mas_equalTo(homeLabel);
-            make.size.mas_equalTo(CGSizeMake(kWidth(150), kWidth(25.)));
-        }];
-        }
-        
-        UIView *lineView = [[UIView alloc] init];
-        lineView.backgroundColor = [UIColor lightGrayColor];
-        [self addSubview:lineView];
-        {
-        [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(_homeTownLabel.mas_left).mas_offset(kWidth(-1));
-            make.centerY.mas_equalTo(self);
-            make.height.mas_equalTo(kWidth(self.bounds.size.height *0.85));
-            make.width.mas_equalTo(kWidth(1));
+//            make.right.mas_equalTo(homeLabel);
+//            make.size.mas_equalTo(CGSizeMake(kWidth(150), kWidth(25.)));
+            make.left.right.mas_equalTo(homeLabel);
+            make.height.mas_equalTo(kWidth(25));
         }];
         }
     }

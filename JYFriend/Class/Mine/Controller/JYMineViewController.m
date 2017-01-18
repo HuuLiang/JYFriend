@@ -76,7 +76,7 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
         }];
     }
     
-    _avtarView = [[JYMineAvatarView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenWidth *220/275)];
+    _avtarView = [[JYMineAvatarView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenWidth *220/375.)];
     _avtarView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.66];
     _tableView.tableHeaderView = _avtarView;
     @weakify(self);
@@ -144,26 +144,26 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
         
         if (indexPath.section == JYMineFunctinSection) {
             if (indexPath.row == JYMineFunctionVipRow) {
-                cell.iconImage = [UIImage imageNamed:@""];
+                cell.iconImage = [UIImage imageNamed:@"mine_ktvip_icon"];
                 cell.title = @"开通VIP";
             } else if(indexPath.row == JYMineFunctionRobotRow){
-                cell.iconImage = [UIImage imageNamed:@""];
+                cell.iconImage = [UIImage imageNamed:@"mine_huechys_icon"];
                 cell.title = @"红娘助手";
             } else if (indexPath.row == JYMineFunctionGuestRow) {
-                cell.iconImage = [UIImage imageNamed:@""];
+                cell.iconImage = [UIImage imageNamed:@"mine_visit_icon"];
                 cell.title = @"访问我的人";
             }
         } else if (indexPath.section == JYMineDetailSection) {
             if (indexPath.row == JYMineDetailAlbumRow) {
-                cell.iconImage = [UIImage imageNamed:@""];
+                cell.iconImage = [UIImage imageNamed:@"mine_photo_icon"];
                 cell.title = @"我的相册";
             } else if (indexPath.row == JYMineDetailVideoRow) {
-                cell.iconImage = [UIImage imageNamed:@""];
+                cell.iconImage = [UIImage imageNamed:@"mine_video_icon"];
                 cell.title = @"视频认证";
             }
         } else if (indexPath.section == JYMineEditSection) {
             if (indexPath.row == JYMineEditUpdateRow)  {
-                cell.iconImage = [UIImage imageNamed:@""];
+                cell.iconImage = [UIImage imageNamed:@"mine_changeinfo_icon"];
                 cell.title = @"修改资料";
             }
         }

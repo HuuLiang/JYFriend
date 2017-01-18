@@ -39,6 +39,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+         self.backgroundColor = [UIColor whiteColor];
         _currentImageView = [[UIImageView alloc] init];
         _currentImageView.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:_currentImageView];
