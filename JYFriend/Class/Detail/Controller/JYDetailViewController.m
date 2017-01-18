@@ -483,7 +483,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     }
     
     if (indexPath.section == photoSection) {
-        CGFloat width = (kScreenWidth - kWidth(kPhotoItemSpce*2) *2 - kWidth(30.)*2 )/3.;
+        CGFloat width = (kScreenWidth - kPhotoItemSpce*2 - 15*2. )/3.;
         return CGSizeMake(width, width);
     }else if (indexPath.section == JYSectionTypeHomeTown + hasPhoto){
         return CGSizeMake(kScreenWidth, kWidth(150));
@@ -561,7 +561,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     }
     
     if (section == photoSection) {
-        return kWidth(kPhotoItemSpce *2);
+        return kPhotoItemSpce;
     }else if (section == JYSectionTypeHomeTown + hasPhoto + hasDynamic){
         return kWidth(kPhotoItemSpce);
     }
@@ -584,7 +584,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         hasDynamic = 1;
     }
     if (section == photoSection) {
-        return  UIEdgeInsetsMake(kWidth(20.), kWidth(30.), kWidth(10.), kWidth(30.));
+        return  UIEdgeInsetsMake(kWidth(20.), 15., kWidth(10.), 15.);
     }else if (section == JYSectionTypeSectetInfo + hasPhoto + hasVideo){
         return UIEdgeInsetsMake(0, 0, kWidth(20), 0);
     }

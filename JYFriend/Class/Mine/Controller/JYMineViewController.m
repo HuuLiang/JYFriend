@@ -182,6 +182,7 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
     } else {
         return 10;
     }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
