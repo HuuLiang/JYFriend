@@ -56,14 +56,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, viewControllers)
                            context:nil];
     self.navigationItem.titleView = _segmentedControl;
 
-    @weakify(self);
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"动态" style:UIBarButtonItemStylePlain handler:^(id sender) {
-        @strongify(self);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"dynamic_create"] style:UIBarButtonItemStylePlain handler:^(id sender) {
         //发表动态
-      JYSendDynamicViewController *sendVC = [[JYSendDynamicViewController alloc] init];
+        JYSendDynamicViewController *sendVC = [[JYSendDynamicViewController alloc] init];
         [self.navigationController pushViewController:sendVC animated:YES];
-        
     }];
+    
     
     if (![JYUtil isToday]) {
         JYRecommendViewController *recommendVC = [[JYRecommendViewController alloc] init];
