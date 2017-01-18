@@ -355,7 +355,11 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         cell.distance = self->_distance;//距离
         cell.vip = self.detailModel.userInfo.isVip.integerValue;
         cell.time = [JYLocalVideoUtils fetchTimeIntervalToCurrentTimeWithStartTime:self->_time];
-        cell.homeTown = [NSString stringWithFormat:@"%@%@",self.detailModel.userInfo.province,self.detailModel.userInfo.city];
+        NSString *home = [NSString stringWithFormat:@"%@%@",self.detailModel.userInfo.province,self.detailModel.userInfo.city];
+        if (self.detailModel.userInfo.province.length == 0 && self.detailModel.userInfo.city.length == 0) {
+            home = @"未填写";
+        }
+        cell.homeTown = [NSString stringWithFormat:@"%@",home];
         return cell;
         
     } else if (indexPath.section == JYSectionTypeHomeTown + hasPhoto + hasDynamic){
