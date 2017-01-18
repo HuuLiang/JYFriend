@@ -16,7 +16,7 @@
 
 
 #define resetTime   (60*60*6)     //重置缓存时间
-#define refreshTime (60*5)        //刷新数据时间
+#define refreshTime (60*3)        //刷新数据时间
 
 static NSString *const kJYDynamicResetTimeKeyName     = @"kJYDynamicResetTimeKeyName";
 static NSString *const kJYDynamicRefreshTimeKeyName   = @"kJYDynamicRefreshTimeKeyName";
@@ -49,7 +49,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMsgModel)
     self.dataSource =  [NSMutableArray arrayWithArray:[JYDynamic allDynamics]];
     //如果缓存无数据 就一次加载较多的数据
     if (self.dataSource.count == 0) {
-        [self loadDataWithOffset:0 limit:15 isRefresh:YES];
+        [self loadDataWithOffset:0 limit:10 isRefresh:YES];
     }
     
     _offset = [[JYUtil getValueWithKeyName:kJYDynamicOffsetKeyName] unsignedIntegerValue];
@@ -75,14 +75,14 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMsgModel)
         @strongify(self);
         //刷新数据 时间未到 就结束刷新动画 否则加载2条数据
         if ([JYUtil shouldRefreshContentWithKey:kJYDynamicRefreshTimeKeyName timeInterval:refreshTime]) {
-            [self loadDataWithOffset:self.dataSource.count limit:2 isRefresh:YES];
+            [self loadDataWithOffset:self.dataSource.count limit:1 isRefresh:YES];
         } else {
             [self->_layoutCollectionView JY_endPullToRefresh];
         }
     }];
     
     [_layoutCollectionView JY_addPagingRefreshWithHandler:^{
-        [self loadDataWithOffset:self.dataSource.count limit:5 isRefresh:NO];
+        [self loadDataWithOffset:self.dataSource.count limit:3 isRefresh:NO];
     }];
     
     [_layoutCollectionView JY_triggerPullToRefresh];
@@ -96,7 +96,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMsgModel)
     [super viewWillAppear:animated];
     //页面出现若到了下拉刷新时限 则加载2条数据
     if ([JYUtil shouldRefreshContentWithKey:kJYDynamicRefreshTimeKeyName timeInterval:refreshTime]) {
-        [self loadDataWithOffset:self.dataSource.count limit:2 isRefresh:YES];
+        [self loadDataWithOffset:self.dataSource.count limit:1 isRefresh:YES];
     }
 }
 
@@ -162,6 +162,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMsgModel)
                     [self.dataSource addObject:obj];
                 } else {
                     if (isFront) {
+                        randomTime = random() % 150 + 30;
                         JYDynamic *firstObj = [self.dataSource firstObject];
                         obj.timeInterval = firstObj.timeInterval + randomTime;
                         [self.dataSource insertObject:obj atIndex:0];
