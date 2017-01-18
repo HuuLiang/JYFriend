@@ -281,7 +281,7 @@ static NSString *const kRecommednLastDayKeyName   = @"kRecommednLastDayKeyName";
     }
     
     else if((temp = temp/60) <24){
-        result = [NSString stringWithFormat:@"%ld小前",temp];
+        result = [NSString stringWithFormat:@"%ld小时前",temp];
     }
     
     else if((temp = temp/24) <30){
@@ -304,7 +304,7 @@ static NSString *const kRecommednLastDayKeyName   = @"kRecommednLastDayKeyName";
     if (!lastDate) {
         lastDate = [self currentDate];
         [[NSUserDefaults standardUserDefaults] setObject:lastDate forKey:kRecommednLastDayKeyName];
-        return YES;
+        return NO;
     }
     return [lastDate isToday];
 }

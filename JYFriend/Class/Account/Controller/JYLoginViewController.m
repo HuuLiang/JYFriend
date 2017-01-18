@@ -43,7 +43,7 @@
     [self setUserPasswordTextField];
     [self setLoginButton];
     
-    [self userFindPassWord];
+//    [self userFindPassWord];
     [self userRegister];
 }
 
@@ -116,28 +116,28 @@
 }
 
 //忘记密码
-- (void)userFindPassWord {
-    _findPasswordLabel = [[UILabel alloc] init];
-    _findPasswordLabel.text = @"忘记密码";
-    _findPasswordLabel.font = [UIFont systemFontOfSize:kWidth(30)];
-    _findPasswordLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
-    _findPasswordLabel.userInteractionEnabled = YES;
-    [self.view addSubview:_findPasswordLabel];
-    {
-        [_findPasswordLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_loginBtn.mas_left);
-            make.top.equalTo(_loginBtn.mas_bottom).offset(kWidth(24));
-            make.height.mas_equalTo(kWidth(30));
-        }];
-    }
-    
-    @weakify(self);
-    [_findPasswordLabel bk_whenTapped:^{
-        @strongify(self);
-        //找回密码
-        
-    }];
-}
+//- (void)userFindPassWord {
+//    _findPasswordLabel = [[UILabel alloc] init];
+//    _findPasswordLabel.text = @"忘记密码";
+//    _findPasswordLabel.font = [UIFont systemFontOfSize:kWidth(30)];
+//    _findPasswordLabel.textColor = [UIColor colorWithHexString:@"#ffffff"];
+//    _findPasswordLabel.userInteractionEnabled = YES;
+//    [self.view addSubview:_findPasswordLabel];
+//    {
+//        [_findPasswordLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(_loginBtn.mas_left);
+//            make.top.equalTo(_loginBtn.mas_bottom).offset(kWidth(24));
+//            make.height.mas_equalTo(kWidth(30));
+//        }];
+//    }
+//    
+//    @weakify(self);
+//    [_findPasswordLabel bk_whenTapped:^{
+//        @strongify(self);
+//        //找回密码
+//        
+//    }];
+//}
 
 //注册
 - (void)userRegister {

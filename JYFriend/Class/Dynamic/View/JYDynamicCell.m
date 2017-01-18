@@ -180,7 +180,7 @@
 
 - (void)setTimeInterval:(NSInteger)timeInterval {
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInterval];
-    _timeLabel.text = [JYUtil timeStringFromDate:date WithDateFormat:@"MM月dd日hh:mm"];
+    _timeLabel.text = [JYUtil timeStringFromDate:date WithDateFormat:@"MM月dd日HH:mm"];
 }
 
 - (void)setContent:(NSString *)content {
