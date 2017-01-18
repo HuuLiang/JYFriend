@@ -163,12 +163,12 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
                         self.isFollow = YES;
                         [[JYHudManager manager] showHudWithText:@"打招呼成功"];
                         //先向消息列表中加入选中的机器人的打招呼语言
-                        [JYContactModel insertGreetContact:@[obj]];
+                        if (obj) [JYContactModel insertGreetContact:@[obj]];
                     }
                 }
             }];
         }
-
+        
     };
     
     [self.view addSubview:_bottomView];
@@ -626,9 +626,9 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
                 [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
             }else {
                 if (self.isSendPacket || [JYUtil isVip]) {
-                [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
+                    [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
                 }else{
-                [[[JYRedPackPopViewController alloc] init] popRedPackViewWithCurrentViewCtroller:self];
+                    [[[JYRedPackPopViewController alloc] init] popRedPackViewWithCurrentViewCtroller:self];
                 }
             }
             
