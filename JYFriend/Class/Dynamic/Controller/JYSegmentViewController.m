@@ -65,11 +65,10 @@ QBDefineLazyPropertyInitialization(NSMutableArray, viewControllers)
         
     }];
     
-    if ([JYUtil isYesterDay]) {
+    if (![JYUtil isToday]) {
         JYRecommendViewController *recommendVC = [[JYRecommendViewController alloc] init];
         [recommendVC showInViewController:self];
     }
-
 }
 
 - (NSUInteger)currentIndex {

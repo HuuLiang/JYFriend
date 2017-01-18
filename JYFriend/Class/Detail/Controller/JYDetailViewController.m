@@ -141,8 +141,8 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             JYUser *user = [[JYUser alloc] init];
             JYUserInfoModel *userInfo =  self.detailModel.userInfo;
             user.userId = userInfo.userId;
-            userInfo.nickName = userInfo.nickName;
-            userInfo.logoUrl = userInfo.logoUrl;
+            user.nickName = userInfo.nickName;
+            user.userImgKey = userInfo.logoUrl;
             [JYMessageViewController showMessageWithUser:user inViewController:self];
             
         }else if ([btn.titleLabel.text isEqualToString:@"打招呼"]){

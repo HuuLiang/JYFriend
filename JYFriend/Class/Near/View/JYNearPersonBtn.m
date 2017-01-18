@@ -20,7 +20,7 @@
 
 - (CGFloat)scale {
     
-    return kScreenWidth/375.;
+    return kScreenWidth*0.9/375.;
 }
 
 @end

@@ -32,16 +32,17 @@
         shadowView.backgroundColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.3];
         [self.contentView addSubview:shadowView];
         
-        _nickNameLabel = [[UILabel alloc] init];
-        _nickNameLabel.textColor = kColor(@"#ffffff");
-        _nickNameLabel.font = [UIFont systemFontOfSize:kWidth(28)];
-        [shadowView addSubview:_nickNameLabel];
-        
         _ageLabel = [[UILabel alloc] init];
         _ageLabel.textColor = kColor(@"#ffffff");
         _ageLabel.font = [UIFont systemFontOfSize:kWidth(28)];
         _ageLabel.textAlignment = NSTextAlignmentRight;
         [shadowView addSubview:_ageLabel];
+        
+        _nickNameLabel = [[UILabel alloc] init];
+        _nickNameLabel.textColor = kColor(@"#ffffff");
+        _nickNameLabel.font = [UIFont systemFontOfSize:kWidth(28)];
+        [shadowView addSubview:_nickNameLabel];
+
         
         {
             [_userImgV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -53,15 +54,18 @@
                 make.height.mas_equalTo(kWidth(50));
             }];
             
+            [_ageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.bottom.equalTo(shadowView);
+                make.width.mas_equalTo(kWidth(70));
+                make.right.equalTo(shadowView.mas_right).offset(-kWidth(5));
+            }];
+            
             [_nickNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.bottom.equalTo(shadowView);
+                make.right.equalTo(shadowView.mas_right).offset(-kWidth(75));
                 make.left.equalTo(shadowView).offset(kWidth(10));
             }];
             
-            [_ageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.bottom.equalTo(shadowView);
-                make.right.equalTo(shadowView.mas_right).offset(-kWidth(10));
-            }];
         }
     }
     return self;
@@ -76,7 +80,7 @@
 }
 
 - (void)setAgeStr:(NSString *)ageStr {
-    _ageLabel.text = ageStr;
+    _ageLabel.text = [NSString stringWithFormat:@"%@岁",ageStr];
 }
 
 @end

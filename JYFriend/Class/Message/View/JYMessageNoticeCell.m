@@ -49,7 +49,8 @@
             [_descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_grayView).offset(kWidth(20));
                 make.right.equalTo(_grayView.mas_right).offset(-kWidth(20));
-                make.top.equalTo(_grayView).offset(kWidth(14));
+                make.centerY.equalTo(_grayView);
+                make.height.mas_equalTo(60);
             }];
         }
         

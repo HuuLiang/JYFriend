@@ -127,7 +127,7 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
 
 //配置自定义cell高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath targetMessage:(id<XHMessageModel>)message {
-    return kWidth(120);
+    return kWidth(90)+20;
 }
 
 //配置自定义cell样式

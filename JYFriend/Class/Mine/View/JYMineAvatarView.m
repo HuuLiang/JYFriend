@@ -90,7 +90,7 @@
             [_userBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
                 make.top.equalTo(self).offset(kScreenWidth*53/375);
-                make.size.mas_equalTo(CGSizeMake(kWidth(180), kWidth(180)));
+                make.size.mas_equalTo(CGSizeMake(kWidth(160), kWidth(160)));
             }];
             
             [_followBtn mas_makeConstraints:^(MASConstraintMaker *make) {

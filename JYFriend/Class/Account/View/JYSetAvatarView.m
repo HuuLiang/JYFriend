@@ -64,7 +64,7 @@
     
     CGSize size = [_photoBtn.titleLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, _photoBtn.titleLabel.frame.size.height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : _photoBtn.titleLabel.font} context:nil].size;
     
-    if ([JYUtil deviceType] > JYDeviceType_iPhone5) {
+    if ([JYUtil deviceType] >= JYDeviceType_iPhone6) {
         _photoBtn.imageEdgeInsets =UIEdgeInsetsMake(-0.5*size.height-10, 0.5*size.width, 0.5*size.height, -0.5*size.width);
         _photoBtn.titleEdgeInsets =UIEdgeInsetsMake(0.5*_photoBtn.imageView.frame.size.height+10, -0.5*_photoBtn.imageView.frame.size.width, -0.5*_photoBtn.imageView.frame.size.height, 0.5*_photoBtn.imageView.frame.size.width);
     } else {

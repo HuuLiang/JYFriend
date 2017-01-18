@@ -58,6 +58,7 @@
         [self.contentView addSubview:_nickNameLabel];
         
         _genderBtn = [JYNearPersonBtn buttonWithType:UIButtonTypeCustom];
+        _genderBtn.titleLabel.font = [UIFont systemFontOfSize:kWidth(25)];
         [_genderBtn setTitleColor:kColor(@"#ffffff") forState:UIControlStateNormal];
         [_genderBtn setBackgroundColor:kColor(@"#E147A5")];
         [self.contentView addSubview:_genderBtn];
@@ -68,7 +69,7 @@
         [self.contentView addSubview:_timeLabel];
         
         _focusButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_focusButton setTitle:@"已关注" forState:UIControlStateSelected];
+        _focusButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(28)];
         _focusButton.layer.borderWidth = 1;
         _focusButton.layer.cornerRadius = kWidth(4);
         _focusButton.layer.masksToBounds = YES;
@@ -86,10 +87,7 @@
         
         
         _greetButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_greetButton setTitleColor:kColor(@"#E147A5") forState:UIControlStateNormal];
-        [_greetButton setTitleColor:kColor(@"#E6E6E6") forState:UIControlStateSelected];
-        [_greetButton setTitle:@"打招呼" forState:UIControlStateNormal];
-        [_greetButton setTitle:@"已招呼" forState:UIControlStateSelected];
+        _greetButton.titleLabel.font = [UIFont systemFontOfSize:kWidth(28)];
         _greetButton.layer.borderWidth = 1;
         _greetButton.layer.cornerRadius = kWidth(4);
         _greetButton.layer.masksToBounds = YES;
@@ -124,18 +122,13 @@
                 make.left.equalTo(_userImgV.mas_right).offset(kWidth(18));
                 make.top.equalTo(self.contentView).offset(kWidth(38));
                 make.height.mas_equalTo(kWidth(32));
+                make.right.lessThanOrEqualTo(_focusButton.mas_left).offset(-kWidth(104));
             }];
             
             [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_nickNameLabel);
                 make.top.equalTo(_nickNameLabel.mas_bottom).offset(kWidth(14));
                 make.height.mas_equalTo(kWidth(28));
-            }];
-            
-            [_genderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.equalTo(_nickNameLabel);
-                make.left.equalTo(_nickNameLabel.mas_right).offset(kWidth(10));
-                make.size.mas_equalTo(CGSizeMake(kWidth(80), kWidth(32)));
             }];
             
             [_greetButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -149,6 +142,14 @@
                 make.centerY.equalTo(_greetButton);
                 make.size.mas_equalTo(CGSizeMake(kWidth(116), kWidth(52)));
             }];
+
+            
+            [_genderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(_nickNameLabel);
+                make.left.equalTo(_nickNameLabel.mas_right).offset(kWidth(10));
+                make.size.mas_equalTo(CGSizeMake(kWidth(76), kWidth(32)));
+            }];
+            
             
             [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.contentView).offset(kWidth(30));
@@ -230,26 +231,45 @@
     if (dynamicType == JYDynamicTypeOnePhoto) {
         
         _imgVA = [[UIImageView alloc] init];
+        _imgVA.contentMode = UIViewContentModeScaleAspectFill;
+        _imgVA.layer.masksToBounds = YES;
         [self.contentView addSubview:_imgVA];
     } else if (dynamicType == JYDynamicTypeTwoPhotos) {
         
         _imgVA = [[UIImageView alloc] init];
+        _imgVA.contentMode = UIViewContentModeScaleAspectFill;
+        _imgVA.layer.masksToBounds = YES;
+
         [self.contentView addSubview:_imgVA];
         
         _imgVB = [[UIImageView alloc] init];
+        _imgVB.contentMode = UIViewContentModeScaleAspectFill;
+        _imgVB.layer.masksToBounds = YES;
+
         [self.contentView addSubview:_imgVB];
     } else if (dynamicType == JYDynamicTypeThreePhotos) {
         
         _imgVA = [[UIImageView alloc] init];
+        _imgVA.contentMode = UIViewContentModeScaleAspectFill;
+        _imgVA.layer.masksToBounds = YES;
+
         [self.contentView addSubview:_imgVA];
         
         _imgVB = [[UIImageView alloc] init];
+        _imgVB.contentMode = UIViewContentModeScaleAspectFill;
+        _imgVB.layer.masksToBounds = YES;
+
         [self.contentView addSubview:_imgVB];
         
         _imgVC = [[UIImageView alloc] init];
+        _imgVC.contentMode = UIViewContentModeScaleAspectFill;
+        _imgVC.layer.masksToBounds = YES;
+
         [self.contentView addSubview:_imgVC];
     } else if (dynamicType == JYDynamicTypeVideo) {
         _imgVA = [[UIImageView alloc] init];
+        _imgVA.contentMode = UIViewContentModeScaleAspectFill;
+        _imgVA.layer.masksToBounds = YES;
         [self.contentView addSubview:_imgVA];
         
         _playIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dynamic_play"]];
@@ -318,6 +338,17 @@
             [_imgVC sd_setImageWithURL:[NSURL URLWithString:obj.thumbnail]];
         }
     }];
+}
+
+- (void)drawRect:(CGRect)rect {
+    [super drawRect:rect];
+    
+    UIEdgeInsets imageInsets = _genderBtn.imageEdgeInsets;
+    UIEdgeInsets titleInsets = _genderBtn.titleEdgeInsets;
+    
+    _genderBtn.imageEdgeInsets = UIEdgeInsetsMake(imageInsets.top, imageInsets.left-kWidth(4), imageInsets.bottom, imageInsets.right);
+    _genderBtn.titleEdgeInsets = UIEdgeInsetsMake(titleInsets.top, titleInsets.left, titleInsets.bottom, titleInsets.right-kWidth(4));
+    
 }
 
 
