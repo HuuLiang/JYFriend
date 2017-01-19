@@ -97,6 +97,12 @@
     QBSafelyCallBlock(self.action,self);
 }
 
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didScrollToIndex:(NSInteger)index {
+    if (self.scrollAction) {
+        self.scrollAction(@(index));
+    }
+}
+
 - (void)setImages:(NSArray<UIImage *> *)images {
     _images = images;
     _bannerView.localizationImageNamesGroup = images;

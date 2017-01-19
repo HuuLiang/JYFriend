@@ -43,7 +43,34 @@ static NSInteger const kUploadTiem = 0.2;
       self.RZvideoView.alpha = 1;
 
     }
+    
+}
 
+- (void)creatRightBarButtonItem {
+    @weakify(self);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"删除" style:UIBarButtonItemStyleDone handler:^(id sender) {
+      
+        [UIAlertView bk_showAlertViewWithTitle:@"是否删除当前相册" message:nil cancelButtonTitle:@"取消" otherButtonTitles:@[@"删除"]  handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            @strongify(self);
+            if (buttonIndex == 1) {
+                [[SDImageCache sharedImageCache] removeImageForKey:kVideoImageCacheKey fromDisk:YES];
+                   self.RZvideoView.alpha = 1;
+                if (self->_successVideoView) {
+                    self->_successVideoView.hidden = YES;
+                    [self->_successVideoView removeFromSuperview];
+                }
+                if (self->_holdRZVideoView) {
+                    self->_holdRZVideoView.hidden = YES;
+                    [self->_holdRZVideoView removeFromSuperview];
+                }
+                [self removeRightBarButtonItem];
+            }
+        }];
+    }];
+}
+
+- (void)removeRightBarButtonItem {
+    self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (UIView *)successVideoView {
@@ -104,7 +131,7 @@ static NSInteger const kUploadTiem = 0.2;
 //        @strongify(self);
 //       [self presentViewController:[self playerVCWithVideo:[JYLocalVideoUtils getJYLocalVideoPathModelUserLocalVideoPath]] animated:YES completion:nil];
 //    }];
-
+    [self creatRightBarButtonItem];
     return _successVideoView;
 }
 

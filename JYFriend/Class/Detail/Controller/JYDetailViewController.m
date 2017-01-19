@@ -702,6 +702,14 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         }];
         
     };
+    @weakify(self);
+    bigImageView.scrollAction = ^(NSNumber *index){
+        @strongify(self);
+        if (index.integerValue >= 1 && isNeedBlur) {
+        [[[JYRedPackPopViewController alloc] init] popRedPackViewWithCurrentViewCtroller:self];
+        }
+    };
+    
     [self.view.window addSubview:bigImageView];
     bigImageView.alpha = 0;
     [UIView animateWithDuration:0.5 animations:^{

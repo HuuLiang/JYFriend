@@ -22,4 +22,6 @@
 - (instancetype)initWithImageGroup:(NSArray *)imageGroup frame:(CGRect)frame isLocalImage:(BOOL)isLocalImage isNeedBlur:(BOOL)isNeedBlur userId:(NSString *)userId;
 @property (nonatomic,copy) QBAction action;
 
+@property (nonatomic,copy) QBAction scrollAction;
+
 @end

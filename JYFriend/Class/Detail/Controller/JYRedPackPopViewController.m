@@ -72,7 +72,7 @@
         self.packView.price = 5;
         self.packView.hidden = NO;
         self.packView.frame = CGRectMake(0, -kScreenHeight, kScreenWidth, kScreenHeight);
-        [currentViewCtroller.view addSubview:self.packView];
+        [currentViewCtroller.view.window addSubview:self.packView];
     }
     [self.packView willMoveToWindow:currentViewCtroller.view.window];
     [UIView animateWithDuration:0.5 animations:^{
