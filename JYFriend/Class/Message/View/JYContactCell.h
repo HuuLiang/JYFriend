@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MGSwipeTableCell.h>
 
-@interface JYContactCell : UITableViewCell
+@interface JYContactCell : MGSwipeTableCell
 @property (nonatomic) QBAction touchUserImgVAction;
 @property (nonatomic) NSString *userImgStr;
 @property (nonatomic) NSString *nickNameStr;

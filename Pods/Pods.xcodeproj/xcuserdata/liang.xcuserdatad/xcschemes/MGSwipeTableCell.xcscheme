@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '45051E088E557DA41B7749E9E701A40F'
-               BlueprintName = 'SFHFKeychainUtils'
+               BlueprintIdentifier = '43AFBF4F2CD231A7499E3B7813A16837'
+               BlueprintName = 'MGSwipeTableCell'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libSFHFKeychainUtils.a'>
+               BuildableName = 'libMGSwipeTableCell.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

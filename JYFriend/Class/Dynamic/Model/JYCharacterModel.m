@@ -39,7 +39,7 @@
 }
 
 - (BOOL)fetchChararctersInfoWithRobotsCount:(NSInteger)count CompletionHandler:(QBCompletionHandler)handler {
-    NSDictionary *params = @{@"sex":[JYUserSexStringGet objectAtIndex:[JYUser currentUser].userSex],
+    NSDictionary *params = @{@"userId":[JYUser currentUser].userId,
                              @"number":@(count)};
     
     BOOL success = [self requestURLPath:JY_CHARACTER_URL
