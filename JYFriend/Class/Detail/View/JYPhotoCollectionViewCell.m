@@ -7,7 +7,6 @@
 //
 
 #import "JYPhotoCollectionViewCell.h"
-#import "UIImageView+Blur.h"
 
 @interface JYPhotoCollectionViewCell ()
 {
@@ -52,10 +51,11 @@
     return self;
 }
 
-- (void)setImageUrl:(NSString *)imageUrl {
-    _imageUrl = imageUrl;
-    [_currentImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
-}
+//- (void)setImageUrl:(NSString *)imageUrl {
+//    _imageUrl = imageUrl;
+//    [_currentImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+//
+//}
 
 - (void)setIsVideoImage:(BOOL)isVideoImage {
     _isVideoImage = isVideoImage;
@@ -69,17 +69,25 @@
     }
 }
 
-- (void)setIsFirstPhoto:(BOOL)isFirstPhoto {
-    _isFirstPhoto = isFirstPhoto;
-    if (![JYUtil isVip]) {
-        if (isFirstPhoto) {
-            [_currentImageView JY_RemoveBlur];
-        }else {
-            
-            [_currentImageView JY_AddBlurWithAlpha:0.9];
+- (void)setImageUrl:(NSString *)imageUrl isFirstPhoto:(BOOL)isFirstPhoto isSendPacket:(BOOL)isSendPacket{
+    [_currentImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (image && !isFirstPhoto && ![JYUtil isVip] && !isSendPacket) {
+            _currentImageView.image = [image blurWithIsSmallPicture:YES];
         }
-    }
-
+    }];
 }
+
+//- (void)setIsFirstPhoto:(BOOL)isFirstPhoto {
+//    _isFirstPhoto = isFirstPhoto;
+//    if (![JYUtil isVip]) {
+//        if (isFirstPhoto) {
+//            [_currentImageView JY_RemoveBlur];
+//        }else {
+//            
+//            [_currentImageView JY_AddBlurWithAlpha:0.9];
+//        }
+//    }
+//
+//}
 
 @end

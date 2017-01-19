@@ -32,7 +32,6 @@
 
 #import "SDCollectionViewCell.h"
 #import "UIView+SDExtension.h"
-#import "UIImageView+Blur.h"
 
 @implementation SDCollectionViewCell
 {
@@ -90,20 +89,6 @@
     if (_titleLabel.hidden) {
         _titleLabel.hidden = NO;
     }
-}
-
-- (void)setIsFisrtPicture:(BOOL)isFisrtPicture {
-    _isFisrtPicture = isFisrtPicture;
-    
-    if (![JYUtil isVip] && ![JYUtil isSendPacketWithUserId:self.userId]) {
-        if (isFisrtPicture) {
-            [_imageView JY_RemoveBlur];
-        }else {
-            
-            [_imageView JY_AddBlurWithAlpha:0.98];
-        }
-    }
-
 }
 
 - (void)layoutSubviews

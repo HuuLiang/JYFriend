@@ -41,9 +41,9 @@
 @property (nonatomic, strong) UIFont *titleLabelTextFont;
 @property (nonatomic, strong) UIColor *titleLabelBackgroundColor;
 @property (nonatomic, assign) CGFloat titleLabelHeight;
-@property (nonatomic) BOOL isFisrtPicture;
-//当前查看的机器人的userId
-@property (nonatomic) NSString *userId;
+//@property (nonatomic) BOOL isFisrtPicture;
+////当前查看的机器人的userId
+//@property (nonatomic) NSString *userId;
 
 @property (nonatomic, assign) BOOL hasConfigured;
 

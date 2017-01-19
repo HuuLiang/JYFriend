@@ -15,7 +15,6 @@
 		B32317101E1E3A0A00932531 /* JYDetailBottotmView.m in Sources */ = {isa = PBXBuildFile; fileRef = B323170F1E1E3A0A00932531 /* JYDetailBottotmView.m */; };
 		B32317131E1E3D3100932531 /* JYDetailBottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B32317121E1E3D3100932531 /* JYDetailBottomButton.m */; };
 		B324B7EF1E2B227C0058E3FC /* JYVideoChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = B324B7EE1E2B227C0058E3FC /* JYVideoChatView.m */; };
-		B33B181E1E2B56F7003803C4 /* UIImageView+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B181D1E2B56F7003803C4 /* UIImageView+Blur.m */; };
 		B33B18211E2B67FF003803C4 /* JYRedPacketView.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B18201E2B67FF003803C4 /* JYRedPacketView.m */; };
 		B33B18271E2B6FF1003803C4 /* JYRedPackPopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B18261E2B6FF1003803C4 /* JYRedPackPopViewController.m */; };
 		B33B182A1E2B9083003803C4 /* JYPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33B18291E2B9083003803C4 /* JYPaymentViewController.m */; };
@@ -43,6 +42,7 @@
 		B373355E1E2780BF009637D1 /* UIView+FrameEx.m in Sources */ = {isa = PBXBuildFile; fileRef = B373355D1E2780BF009637D1 /* UIView+FrameEx.m */; };
 		B376331A1E30B2DA000B1758 /* JYSystemHelperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B37633191E30B2DA000B1758 /* JYSystemHelperViewController.m */; };
 		B376331D1E30B8EC000B1758 /* JYSystemHelperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B376331C1E30B8EC000B1758 /* JYSystemHelperCell.m */; };
+		B37633201E30E67C000B1758 /* UIImage+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = B376331F1E30E67C000B1758 /* UIImage+Blur.m */; };
 		B39531881E1385C900B5C78E /* JYDredgeVipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B39531871E1385C900B5C78E /* JYDredgeVipViewController.m */; };
 		B395318B1E13993600B5C78E /* JYMyPhotosController.m in Sources */ = {isa = PBXBuildFile; fileRef = B395318A1E13993600B5C78E /* JYMyPhotosController.m */; };
 		B395318E1E13A18400B5C78E /* JYMyPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B395318D1E13A18400B5C78E /* JYMyPhotoCell.m */; };
@@ -368,8 +368,6 @@
 		B32317121E1E3D3100932531 /* JYDetailBottomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDetailBottomButton.m; sourceTree = "<group>"; };
 		B324B7ED1E2B227C0058E3FC /* JYVideoChatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYVideoChatView.h; sourceTree = "<group>"; };
 		B324B7EE1E2B227C0058E3FC /* JYVideoChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYVideoChatView.m; sourceTree = "<group>"; };
-		B33B181C1E2B56F7003803C4 /* UIImageView+Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Blur.h"; sourceTree = "<group>"; };
-		B33B181D1E2B56F7003803C4 /* UIImageView+Blur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Blur.m"; sourceTree = "<group>"; };
 		B33B181F1E2B67FF003803C4 /* JYRedPacketView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRedPacketView.h; sourceTree = "<group>"; };
 		B33B18201E2B67FF003803C4 /* JYRedPacketView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRedPacketView.m; sourceTree = "<group>"; };
 		B33B18251E2B6FF1003803C4 /* JYRedPackPopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRedPackPopViewController.h; sourceTree = "<group>"; };
@@ -424,6 +422,8 @@
 		B37633191E30B2DA000B1758 /* JYSystemHelperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSystemHelperViewController.m; sourceTree = "<group>"; };
 		B376331B1E30B8EC000B1758 /* JYSystemHelperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSystemHelperCell.h; sourceTree = "<group>"; };
 		B376331C1E30B8EC000B1758 /* JYSystemHelperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSystemHelperCell.m; sourceTree = "<group>"; };
+		B376331E1E30E67C000B1758 /* UIImage+Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blur.h"; sourceTree = "<group>"; };
+		B376331F1E30E67C000B1758 /* UIImage+Blur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Blur.m"; sourceTree = "<group>"; };
 		B39531861E1385C900B5C78E /* JYDredgeVipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYDredgeVipViewController.h; sourceTree = "<group>"; };
 		B39531871E1385C900B5C78E /* JYDredgeVipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYDredgeVipViewController.m; sourceTree = "<group>"; };
 		B39531891E13993500B5C78E /* JYMyPhotosController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMyPhotosController.h; sourceTree = "<group>"; };
@@ -2059,8 +2059,6 @@
 				ECCFA0991DEC0D17000F4E7A /* NSObject+PropertyAccessInspecting.m */,
 				EC9843DF1E07ACC600754471 /* UIView+RoundCorner.h */,
 				EC9843E01E07ACC600754471 /* UIView+RoundCorner.m */,
-				B33B181C1E2B56F7003803C4 /* UIImageView+Blur.h */,
-				B33B181D1E2B56F7003803C4 /* UIImageView+Blur.m */,
 				ECF118B91E20CB0F0077BB5F /* UIView+Loading.h */,
 				ECF118BA1E20CB0F0077BB5F /* UIView+Loading.m */,
 				B39531911E13A63C00B5C78E /* UIImage+JYResource.h */,
@@ -2071,6 +2069,8 @@
 				B3195E601E16258500193D4F /* UIScrollView+Refresh.m */,
 				B36E6E801E2CCB9200FF0CCC /* NSString+Size.h */,
 				B36E6E811E2CCB9200FF0CCC /* NSString+Size.m */,
+				B376331E1E30E67C000B1758 /* UIImage+Blur.h */,
+				B376331F1E30E67C000B1758 /* UIImage+Blur.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2501,6 +2501,7 @@
 				EC88F8201E10B7B5009AAEED /* SETextSelectionView.m in Sources */,
 				EC88F8271E10B7B5009AAEED /* XHMessageInputView.m in Sources */,
 				EC88F8171E10B7B4009AAEED /* SESelectionGrabber.m in Sources */,
+				B37633201E30E67C000B1758 /* UIImage+Blur.m in Sources */,
 				B3A079791E0CFE5300395817 /* JYNearPersonBtn.m in Sources */,
 				EC88F86A1E111148009AAEED /* JYRecommendHeaderView.m in Sources */,
 				EC24A2F81E0E463E000B77A9 /* VPImageCropperViewController.m in Sources */,
@@ -2548,7 +2549,6 @@
 				EC88F81F1E10B7B5009AAEED /* SETextSelection.m in Sources */,
 				EC88F8101E10B7B4009AAEED /* FLAnimatedImage.m in Sources */,
 				B3E6FC221E12A1CD0076ADE9 /* JYNewDynamicCell.m in Sources */,
-				B33B181E1E2B56F7003803C4 /* UIImageView+Blur.m in Sources */,
 				EC88F85E1E10FBE7009AAEED /* JYCharacterCell.m in Sources */,
 				EC4A2EF81E27A1DE00A8C768 /* JYAutoContactManager.m in Sources */,
 				ECC094131E25C7C800A1DCCD /* NSArray+Log.m in Sources */,

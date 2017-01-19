@@ -569,21 +569,21 @@ NSString * const ID = @"cycleCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SDCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
-    cell.userId = self.userId;//当前机器人的userid
-    if (self.isNeedBlur) {
-        if (indexPath.item == 0) {
-            cell.isFisrtPicture = YES;
-        }else {
-            cell.isFisrtPicture = NO;
-        }
-    }
     long itemIndex = indexPath.item % self.imagePathsGroup.count;
     
     NSString *imagePath = self.imagePathsGroup[itemIndex];
     
     if (!self.onlyDisplayText && [imagePath isKindOfClass:[NSString class]]) {
         if ([imagePath hasPrefix:@"http"]) {
-            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imagePath] placeholderImage:self.placeholderImage options:itemIndex == 0 ? SDWebImageHighPriority : 0];
+//            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imagePath] placeholderImage:self.placeholderImage options:itemIndex == 0 ? SDWebImageHighPriority : 0];
+            UIImageView *imageView = cell.imageView;
+            @weakify(self);
+            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imagePath] placeholderImage:self.placeholderImage completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                @strongify(self);////添加滤镜
+                if (image && self.isNeedBlur && indexPath.item != 0 &&![JYUtil isVip] && ![JYUtil isSendPacketWithUserId:self.userId]) {                    imageView.image = [image blurWithIsSmallPicture:NO];
+                }
+            }];
+            
         } else {
             UIImage *image = [UIImage imageNamed:imagePath];
             if (!image) {

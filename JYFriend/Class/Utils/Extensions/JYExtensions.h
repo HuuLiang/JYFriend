@@ -23,4 +23,5 @@
 #import "UIView+Loading.h"
 #import "UIView+FrameEx.h"
 #import "NSString+Size.h"
+#import "UIImage+Blur.h"
 #endif /* JYExtensions_h */

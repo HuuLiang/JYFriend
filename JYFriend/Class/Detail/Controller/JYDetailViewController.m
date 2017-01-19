@@ -338,14 +338,19 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     
     if (indexPath.section == photoSection) {
         JYPhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPhotoCollectionViewCellIdentifier forIndexPath:indexPath];
-        if (!self.isSendPacket) {
-            if (indexPath.item == 0 ) {
-                cell.isFirstPhoto = YES;
-            }else {
-                cell.isFirstPhoto = NO;
-            }
+//        if (!self.isSendPacket) {
+//            if (indexPath.item == 0 ) {
+//                cell.isFirstPhoto = YES;
+//            }else {
+//                cell.isFirstPhoto = NO;
+//            }
+//        }
+        if (indexPath.item == 0) {
+          [cell setImageUrl:self.detailModel.userPhoto[indexPath.item].smallPhoto isFirstPhoto:YES isSendPacket:self.isSendPacket];
+        }else {
+        [cell setImageUrl:self.detailModel.userPhoto[indexPath.item].smallPhoto isFirstPhoto:NO isSendPacket:self.isSendPacket];
         }
-        cell.imageUrl = self.detailModel.userPhoto[indexPath.item].smallPhoto;
+       
         cell.isVideoImage = NO;
         return cell;
     }else if (indexPath.section == JYSectionTypeHomeTown + hasPhoto){
