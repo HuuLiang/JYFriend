@@ -16,6 +16,7 @@
 #import "JYChangeUserInfoController.h"
 #import "JYInteractiveViewController.h"
 #import "VPImageCropperViewController.h"
+#import "JYSystemHelperViewController.h"
 #import "JYUserImageCache.h"
 #import "JYLocalPhotoUtils.h"
 
@@ -213,6 +214,8 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
             [self.navigationController pushViewController:vipVC animated:YES];
             
         } else if (indexPath.row == JYMineFunctionRobotRow) {
+            JYSystemHelperViewController *helperVC = [[JYSystemHelperViewController alloc] init];
+            [self.navigationController pushViewController:helperVC animated:YES];
             
         } else if (indexPath.row == JYMineFunctionGuestRow) {
             [self pushIntoInteractiveViewControllerWithType:JYMineUsersTypeVisitor];
