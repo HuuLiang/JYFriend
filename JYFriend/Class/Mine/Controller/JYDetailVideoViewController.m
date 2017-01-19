@@ -140,7 +140,7 @@ static NSInteger const kUploadTiem = 0.2;
 //    @weakify(self);
     [rzImageBtn bk_addEventHandler:^(id sender) {
         [JYLocalPhotoUtils shareManager].delegate = self;
-        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum inViewController:self popoverPoint:self.currentCellPoint isVideo:YES];
+        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum inViewController:self popoverPoint:self.currentCellPoint isVideo:YES allowsEditing:YES];
         
     } forControlEvents:UIControlEventTouchUpInside];
     {

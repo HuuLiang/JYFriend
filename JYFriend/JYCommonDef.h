@@ -38,6 +38,7 @@ typedef NS_ENUM(NSUInteger, JYMineUsersType) {
     JYMineUsersTypeFollow,//关注
     JYMineUsersTypeFans, //粉丝
     JYMineUsersTypeVisitor, //访客
+    JYMineUsersTypeHeader,//头像
     JYMineUsersTypeCount
 };
 

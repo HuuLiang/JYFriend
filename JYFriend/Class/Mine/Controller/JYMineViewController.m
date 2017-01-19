@@ -15,6 +15,9 @@
 #import "JYDetailVideoViewController.h"
 #import "JYChangeUserInfoController.h"
 #import "JYInteractiveViewController.h"
+#import "VPImageCropperViewController.h"
+#import "JYUserImageCache.h"
+#import "JYLocalPhotoUtils.h"
 
 typedef NS_ENUM(NSUInteger, JYMineSection) {
     JYMineFunctinSection,//功能分组
@@ -45,7 +48,7 @@ static NSString *const kMineCellReusableIdentifier = @"MineCellReusableIdentifie
 static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdentifier";
 
 
-@interface JYMineViewController () <UITableViewDelegate,UITableViewDataSource>
+@interface JYMineViewController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,JYLocalPhotoUtilsDelegate,VPImageCropperDelegate>
 {
     UITableView *   _tableView;
     JYMineAvatarView *_avtarView;
@@ -84,6 +87,10 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
         @strongify(self);
         if ([mineUsersType unsignedIntegerValue] == JYMineUsersTypeFollow || [mineUsersType unsignedIntegerValue] == JYMineUsersTypeFans) {
             [self pushIntoInteractiveViewControllerWithType:[mineUsersType unsignedIntegerValue]];
+        }else if (mineUsersType.integerValue == JYMineUsersTypeHeader){
+            //图片获取
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"请选择图片获取方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"选择相册",@"选择相机", nil];
+            [actionSheet showInView:self.tabBarController.tabBar];
         }
     };
     [self setCurrentContenInfo];
@@ -227,4 +234,49 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
         }
     }
 }
+
+#pragma mark VPImageCropperDelegate
+- (void)imageCropper:(VPImageCropperViewController *)cropperViewController didFinished:(UIImage *)editedImage {
+    self->_avtarView.userImg = editedImage;
+    
+    NSString *userPhotoKey = [JYUserImageCache writeToFileWithImage:editedImage needSaveImageName:NO];
+    [JYUser currentUser].userImgKey = userPhotoKey;
+    [[JYUser currentUser] saveOrUpdate];
+    [cropperViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imageCropperDidCancel:(VPImageCropperViewController *)cropperViewController {
+    [cropperViewController dismissViewControllerAnimated:YES completion:nil];
+}
+#pragma mark UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    UIImagePickerControllerSourceType type;
+    if (buttonIndex == 0) {
+        //相册
+        type = UIImagePickerControllerSourceTypePhotoLibrary;
+    }else if (buttonIndex == 1){//相机
+        type = UIImagePickerControllerSourceTypeCamera;
+    }
+    
+    if (type == UIImagePickerControllerSourceTypePhotoLibrary || type == UIImagePickerControllerSourceTypeCamera) {
+        [JYLocalPhotoUtils shareManager].delegate = self;
+        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:type inViewController:self popoverPoint:CGPointZero  isVideo:NO allowsEditing:NO];
+    }
+}
+
+#pragma mark JYLocalPhotoUtilsDelegate 相机相册访问
+
+- (void)JYLocalPhotoUtilsWithPicker:(UIImagePickerController *)picker DidFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    @weakify(self);
+    [picker dismissViewControllerAnimated:YES completion:^() {
+        @strongify(self);
+        UIImage *portraitImg = [info objectForKey:UIImagePickerControllerOriginalImage];
+        // 裁剪
+        VPImageCropperViewController *imgEditorVC = [[VPImageCropperViewController alloc] initWithImage:portraitImg cropFrame:CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.width *13/11) limitScaleRatio:3.0];
+        imgEditorVC.delegate = self;
+        [self presentViewController:imgEditorVC animated:YES completion:nil];
+    }];
+    
+}
+
 @end

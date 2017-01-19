@@ -25,11 +25,11 @@
     return _instance;
 }
 
-- (void)getImageWithSourceType:(UIImagePickerControllerSourceType)sourceType inViewController:(UIViewController *)viewController popoverPoint:(CGPoint)popoverPoint isVideo:(BOOL)isVideo{
+- (void)getImageWithSourceType:(UIImagePickerControllerSourceType)sourceType inViewController:(UIViewController *)viewController popoverPoint:(CGPoint)popoverPoint isVideo:(BOOL)isVideo allowsEditing:(BOOL)allowsEditing{
     if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.allowsEditing = YES;
-        picker.editing = YES;
+        picker.allowsEditing = allowsEditing;
+//        picker.editing = YES;
         picker.delegate = self;
         picker.sourceType = sourceType;
         if (isVideo) picker.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, nil];//判断是否是视频

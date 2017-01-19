@@ -158,7 +158,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     if (buttonIndex == 0 || buttonIndex == 1) {
         
     [JYLocalPhotoUtils shareManager].delegate = self;
-    [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary inViewController:self.curentVC popoverPoint:CGPointZero  isVideo:isVideo];
+    [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary inViewController:self.curentVC popoverPoint:CGPointZero  isVideo:isVideo allowsEditing:YES];
     }
 }
 
