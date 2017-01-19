@@ -569,6 +569,7 @@ NSString * const ID = @"cycleCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SDCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
+    cell.userId = self.userId;//当前机器人的userid
     if (self.isNeedBlur) {
         if (indexPath.item == 0) {
             cell.isFisrtPicture = YES;

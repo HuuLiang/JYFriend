@@ -27,7 +27,6 @@ static NSString *const kHomeTownCellIdetifier = @"hometownCell_indetifier";
 static NSString *const kSectionHeaderIndetifier = @"sectionHeader_indetifier";
 static NSString *const kDetailUserInfoCellKtVipIdentifier = @"detail_userinfocell_ktvip_identifier";
 
-static NSString *const kSendPacketUserIds = @"jy_has_send_packet_user_id_key";
 static CGFloat const kPhotoItemSpce = 6.;
 static CGFloat const kPhotoLineSpace = 10.;
 
@@ -220,11 +219,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 - (void)payResultSuccess {
     self.isSendPacket = YES;
     [_layoutCollectionView reloadData];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *sendPacketUsers = [NSMutableArray arrayWithArray:[defaults objectForKey:kSendPacketUserIds]];
-    [sendPacketUsers addObject:self.detailModel.userInfo.userId];
-    [defaults setObject:sendPacketUsers forKey:kSendPacketUserIds];
-    [defaults synchronize];
+    [JYUtil saveSendPacketUserId:self.detailModel.userInfo.userId];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -245,7 +240,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     [self.detailModel fetchUserDetailModelWithViewUserId:self->_userId CompleteHandler:^(BOOL success, JYUserDetail *useDetai) {
         if (success) {
             @strongify(self);
-            self.isSendPacket = [(NSArray *)[[NSUserDefaults standardUserDefaults] objectForKey:kSendPacketUserIds] containsObject:useDetai.user.userId];
+            self.isSendPacket = [JYUtil isSendPacketWithUserId:useDetai.user.userId];
             [self->_layoutCollectionView reloadData];
             [self->_layoutCollectionView JY_endPullToRefresh];
             _bottomView.attentionBtnSelect = useDetai.greet;
@@ -676,7 +671,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
  图片浏览器
  */
 - (void)photoBrowseWithImageGroup:(NSArray *)imageGroup currentIndex:(NSInteger)currentIndex isNeedBlur:(BOOL)isNeedBlur{
-    JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:imageGroup frame:self.view.window.frame isLocalImage:NO isNeedBlur:isNeedBlur];
+    JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:imageGroup frame:self.view.window.frame isLocalImage:NO isNeedBlur:isNeedBlur userId:self.detailModel.userInfo.userId];
     bigImageView.backgroundColor = [UIColor whiteColor];
     bigImageView.shouldAutoScroll = NO;
     bigImageView.shouldInfiniteScroll = NO;

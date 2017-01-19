@@ -15,7 +15,7 @@
 }
 
 @property (nonatomic,retain) UIImageView *playImageView;
-
+@property (nonatomic,retain) UIView *effectView;
 @end
 
 @implementation JYPhotoCollectionViewCell
@@ -40,7 +40,7 @@
     self = [super initWithFrame:frame];
     if (self) {
          self.backgroundColor = [UIColor whiteColor];
-        _currentImageView = [[UIImageView alloc] init];
+        _currentImageView = [[UIImageView alloc] initWithFrame:self.contentView.bounds];
         _currentImageView.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:_currentImageView];
         {
@@ -76,11 +76,10 @@
             [_currentImageView JY_RemoveBlur];
         }else {
             
-            [_currentImageView JY_AddBlurWithAlpha:0.75];
+            [_currentImageView JY_AddBlurWithAlpha:0.9];
         }
     }
 
 }
-
 
 @end

@@ -31,6 +31,8 @@
 + (BOOL)isVip;
 + (NSDate *)expireDateTime;
 + (void)setVipExpireTime:(NSString *)expireTime;
++ (BOOL)isSendPacketWithUserId:(NSString *)userId;//判断是否给该机器人发送过红包
++ (void)saveSendPacketUserId:(NSString *)userId;//把发送过红包的用户缓存起来
 
 + (BOOL)isIpad;
 + (NSString *)appVersion;

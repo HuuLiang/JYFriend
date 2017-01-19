@@ -23,7 +23,7 @@ static NSString *const kImageTokenKeyName         = @"safiajfoaiefr$^%^$E&&$*&$*
 static NSString *const kImageTokenCryptPassword   = @"wafei@#$%^%$^$wfsssfsf";
 static NSString *const kUserVipExpireTimeKeyName  = @"kUserVipExpireTimeKeyName";
 static NSString *const kRecommednLastDayKeyName   = @"kRecommednLastDayKeyName";
-
+static NSString *const kCurrentUserIsSendPackey   = @"kcurrent_user_is_sendPacket_key";
 
 @implementation JYUtil
 
@@ -332,6 +332,30 @@ static NSString *const kRecommednLastDayKeyName   = @"kRecommednLastDayKeyName";
     [standbyUrl appendString:@".json"];
     
     return standbyUrl;
+}
+//判断是否像改用户发送过红包
++ (BOOL)isSendPacketWithUserId:(NSString *)userId {
+    if (!userId) {
+        return NO;
+    }
+    NSMutableArray *userIds = [[NSUserDefaults standardUserDefaults] objectForKey:kCurrentUserIsSendPackey];
+    if ([userIds containsObject:userId]) {
+        return YES;
+    }
+    return NO;
+}
+//把发送过红包的用户缓存起来
++ (void)saveSendPacketUserId:(NSString *)userId {
+    if (!userId) {
+        return;
+    }
+    NSMutableArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:kCurrentUserIsSendPackey];
+    if (!arr) {
+        arr = [NSMutableArray array];
+    }
+    [arr addObject:userId];
+    [[NSUserDefaults standardUserDefaults] setObject:arr forKey:kCurrentUserIsSendPackey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 //+ (NSUInteger)currentTabPageIndex {

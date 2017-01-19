@@ -165,7 +165,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
         [self.photoActionSheet showFromTabBar:self.tabBarController.tabBar];
     }else {
         //图片放大浏览
-        JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:self.dataSource frame:self.view.window.frame isLocalImage:YES isNeedBlur:NO];
+        JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:self.dataSource frame:self.view.window.frame isLocalImage:YES isNeedBlur:NO userId:nil];
         bigImageView.backgroundColor = [UIColor whiteColor];
         bigImageView.shouldAutoScroll = NO;
         bigImageView.shouldInfiniteScroll = NO;

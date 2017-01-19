@@ -70,7 +70,7 @@
 
 - (void)setupImageView
 {
-    UIImageView *imageView = [[UIImageView alloc] init];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.contentView.bounds];
     _imageView = imageView;
     [self.contentView addSubview:imageView];
 }
@@ -95,12 +95,12 @@
 - (void)setIsFisrtPicture:(BOOL)isFisrtPicture {
     _isFisrtPicture = isFisrtPicture;
     
-    if (![JYUtil isVip]) {
+    if (![JYUtil isVip] && ![JYUtil isSendPacketWithUserId:self.userId]) {
         if (isFisrtPicture) {
             [_imageView JY_RemoveBlur];
         }else {
             
-            [_imageView JY_AddBlurWithAlpha:0.85];
+            [_imageView JY_AddBlurWithAlpha:0.98];
         }
     }
 

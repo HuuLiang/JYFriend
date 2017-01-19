@@ -19,29 +19,31 @@ static const void *kImageBlurEffectViewKey = &kImageBlurEffectViewKey;
         return;
     };
     UIView *effView;
-    if ([UIDevice currentDevice].systemVersion.floatValue>=8.0) {
-        /**  毛玻璃特效类型
-         *  UIBlurEffectStyleExtraLight,
-         *  UIBlurEffectStyleLight,
-         *  UIBlurEffectStyleDark
-         */
-        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    if ([UIDevice currentDevice].systemVersion.floatValue<8.0) {
         
-        //  毛玻璃视图
-        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        effView = effectView;
-        objc_setAssociatedObject(self, kImageBlurEffectViewKey, effectView, OBJC_ASSOCIATION_RETAIN);
-        //添加到要有毛玻璃特效的控件中
-        [self addSubview:effectView];
+         [self BlurWithEffectView:effView withAlpha:alpha];
         
-        [effectView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self);
-        }];
-        //设置模糊透明度
-        effectView.alpha = alpha;
     }else{
-        [self BlurWithEffectView:effView withAlpha:alpha];
-        
+       
+               /**  毛玻璃特效类型
+                *  UIBlurEffectStyleExtraLight,
+                *  UIBlurEffectStyleLight,
+                *  UIBlurEffectStyleDark
+                */
+               UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+               
+               //  毛玻璃视图
+               UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+               effView = effectView;
+               objc_setAssociatedObject(self, kImageBlurEffectViewKey, effectView, OBJC_ASSOCIATION_RETAIN);
+               //添加到要有毛玻璃特效的控件中
+               [self addSubview:effectView];
+               
+               [effectView mas_makeConstraints:^(MASConstraintMaker *make) {
+                   make.edges.equalTo(self);
+               }];
+               //设置模糊透明度
+               effectView.alpha = alpha;
     }
 
 }
@@ -51,7 +53,7 @@ static const void *kImageBlurEffectViewKey = &kImageBlurEffectViewKey;
         toolbar.barStyle = UIBarStyleBlackTranslucent;
         effectView = toolbar;
         [self addSubview:toolbar];
-      objc_setAssociatedObject(self, kImageBlurEffectViewKey, effectView, OBJC_ASSOCIATION_RETAIN);
+        objc_setAssociatedObject(self, kImageBlurEffectViewKey, effectView, OBJC_ASSOCIATION_RETAIN);
         toolbar.alpha = alpha;
 }
 

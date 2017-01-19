@@ -173,6 +173,8 @@ typedef enum {
 
 //是否需要加滤镜
 @property (nonatomic) BOOL isNeedBlur;
+//当前查看的机器人的userId
+@property (nonatomic) NSString *userId;
 
 //////////////////////  清除缓存接口  //////////////////////
 
