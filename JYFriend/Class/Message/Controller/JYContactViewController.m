@@ -13,6 +13,7 @@
 #import "JYDetailViewController.h"
 #import "JYMessageModel.h"
 #import "JYAutoContactManager.h"
+#import "MGSwipeButton.h"
 
 typedef NS_ENUM(NSUInteger, JYUserState) {
     JYUserStick = 0,//置顶用户
@@ -22,7 +23,7 @@ typedef NS_ENUM(NSUInteger, JYUserState) {
 
 static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIdentifier";
 
-@interface JYContactViewController () <UITableViewDelegate,UITableViewDataSource>
+@interface JYContactViewController () <UITableViewDelegate,UITableViewDataSource,MGSwipeTableCellDelegate>
 {
     UITableView *_tableVC;
 }
@@ -142,6 +143,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
             contactCell.recentMessage = contact.recentMessage;
             contactCell.isStick = contact.isStick;
             contactCell.unreadMessage = contact.unreadMessages;
+            contactCell.delegate = self;
         }
     }
     return contactCell;
@@ -149,71 +151,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return kWidth(140);
-}
-
-- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    @weakify(self);
-    JYContactModel *contact;
-    if (indexPath.section == JYUserStick) {
-        contact = self.stickContacts[indexPath.row];
-    } else if (indexPath.section == JYUserNormal) {
-        contact = self.normalContacts[indexPath.row];
-    }
-    if (contact) {
-        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@" 删除 " handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-            @strongify(self);
-            //dataSource 中删除
-            if (indexPath.section == JYUserStick) {
-                [self.stickContacts removeObject:contact];
-            } else if (indexPath.section == JYUserNormal) {
-                [self.normalContacts removeObject:contact];
-            }
-            //删除 动画
-            [self->_tableVC beginUpdates];
-            [self->_tableVC deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
-            [self->_tableVC endUpdates];
-            //数据库中删除
-            [JYContactModel deleteObjects:@[contact]];
-
-        }];
-        deleteAction.backgroundColor = kColor(@"#E55D51");
-        
-        UITableViewRowAction *editRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:contact.isStick ? @"取消置顶" :@" 置顶 " handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-            @strongify(self);
-            [self->_tableVC setEditing:NO];
-            NSIndexPath *newIndexPath;
-            if (contact.isStick) {
-                //从置顶移动到普通 取消置顶
-                [self.stickContacts removeObject:contact];
-                contact.isStick = !contact.isStick;
-                [self.normalContacts insertObject:contact atIndex:0];
-                newIndexPath = [NSIndexPath indexPathForRow:0 inSection:JYUserNormal];
-
-                [self->_tableVC beginUpdates];
-                [self->_tableVC deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
-                [self->_tableVC insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
-                [self->_tableVC endUpdates];
-            } else {
-                //从普通移动到置顶 设置为置顶
-                [self.normalContacts removeObject:contact];
-                contact.isStick = !contact.isStick;
-                [self.stickContacts insertObject:contact atIndex:0];
-                newIndexPath = [NSIndexPath indexPathForRow:0 inSection:JYUserStick];
-                
-                [self->_tableVC beginUpdates];
-                [self->_tableVC deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-                [self->_tableVC insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationRight];
-                [self->_tableVC endUpdates];
-            }
-            JYContactCell *cell = (JYContactCell *)[self->_tableVC cellForRowAtIndexPath:newIndexPath];
-            cell.isStick = contact.isStick;
-            [contact saveOrUpdate];
-        }];
-        editRowAction.backgroundColor = kColor(@"#DEDEDE");
-        
-        return @[deleteAction,editRowAction];
-    }
-    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -235,6 +172,98 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
         
         [JYMessageViewController showMessageWithUser:user inViewController:self];
     }
+}
+
+#pragma mark - MGSwipeTableCellDelegate
+-(NSArray*) swipeTableCell:(MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
+             swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings;
+{
+    swipeSettings.transition = MGSwipeTransitionRotate3D;
+    
+    if (direction == MGSwipeDirectionRightToLeft) {
+        return [self createRightButtonsWithCell:cell];
+    }
+    return nil;
+
+}
+
+-(NSArray *) createRightButtonsWithCell:(MGSwipeTableCell *)cell {
+    NSMutableArray *buttons = [NSMutableArray array];
+    NSIndexPath *indexPath = [self->_tableVC indexPathForCell:cell];
+    //获取indexPath对应的数据
+    JYContactModel *contact;
+    if (indexPath.section == JYUserStick) {
+        contact = self.stickContacts[indexPath.row];
+    } else if (indexPath.section == JYUserNormal) {
+        contact = self.normalContacts[indexPath.row];
+    }
+    
+    if (contact) {
+        //删除标签
+        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@" 删除 "
+                                                     backgroundColor:kColor(@"#E55D51")
+                                                            callback:^BOOL(MGSwipeTableCell * _Nonnull cell)
+        {
+            //dataSource 中删除
+            if (indexPath.section == JYUserStick) {
+                [self.stickContacts removeObject:contact];
+            } else if (indexPath.section == JYUserNormal) {
+                [self.normalContacts removeObject:contact];
+            }
+            //删除 动画
+            [self->_tableVC beginUpdates];
+            [self->_tableVC deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+            [self->_tableVC endUpdates];
+            //数据库中删除
+            [JYContactModel deleteObjects:@[contact]];
+
+            return YES;
+        }];
+        [buttons addObject:deleteButton];
+        
+        //置顶 取消置顶标签
+        MGSwipeButton *stickButton = [MGSwipeButton buttonWithTitle:contact.isStick ? @"取消置顶" :@" 置顶 "
+                                                    backgroundColor:kColor(@"#DEDEDE")
+                                                           callback:^BOOL(MGSwipeTableCell * _Nonnull cell)
+        {
+            [self->_tableVC setEditing:NO];
+            NSIndexPath *newIndexPath;
+            if (contact.isStick) {
+                //从置顶移动到普通 取消置顶
+                [self.stickContacts removeObject:contact];
+                contact.isStick = !contact.isStick;
+                [self.normalContacts insertObject:contact atIndex:0];
+                newIndexPath = [NSIndexPath indexPathForRow:0 inSection:JYUserNormal];
+                
+                [self->_tableVC beginUpdates];
+                [self->_tableVC deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+                [self->_tableVC insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                [self->_tableVC endUpdates];
+            } else {
+                //从普通移动到置顶 设置为置顶
+                [self.normalContacts removeObject:contact];
+                contact.isStick = !contact.isStick;
+                [self.stickContacts insertObject:contact atIndex:0];
+                newIndexPath = [NSIndexPath indexPathForRow:0 inSection:JYUserStick];
+                
+                [self->_tableVC beginUpdates];
+                [self->_tableVC deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                [self->_tableVC insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationRight];
+                [self->_tableVC endUpdates];
+            }
+            JYContactCell *contactCell = (JYContactCell *)[self->_tableVC cellForRowAtIndexPath:newIndexPath];
+            contactCell.isStick = contact.isStick;
+            
+            [contact saveOrUpdate];
+
+            return YES;
+        }];
+        
+        [buttons addObject:stickButton];
+    }
+
+    return buttons.count > 0 ? buttons : nil;
+    
 }
 
 @end

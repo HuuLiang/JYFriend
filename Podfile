@@ -12,4 +12,5 @@ pod 'MBProgressHUD', '~> 0.9.2'
 pod 'SFHFKeychainUtils', '~> 0.0.1'
 pod 'QBPayment', '~> 62' ,:subspecs => ['IappPay']
 pod 'QBStatisticsManager', '~> 0.0.4'
+pod 'MGSwipeTableCell', '~> 1.5.6'
 end

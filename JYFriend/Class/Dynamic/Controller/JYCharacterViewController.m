@@ -173,7 +173,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionViewLayout;
     UIEdgeInsets insets = [self collectionView:collectionView layout:layout insetForSectionAtIndex:indexPath.section];
     CGFloat fullWidth = CGRectGetWidth(collectionView.bounds);
-    if (indexPath.item < 102) {
+    if (indexPath.item < self.dataSource.count) {
         CGFloat width = (fullWidth - insets.left - insets.right - layout.minimumInteritemSpacing * 2) / 3;
         CGFloat height = width * 13 / 11;
         return CGSizeMake((long)width, (long)height);
@@ -182,7 +182,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(kWidth(20), kWidth(30), kWidth(20), kWidth(30));
+    return UIEdgeInsetsMake(kWidth(20), kWidth(15), kWidth(20), kWidth(15));
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

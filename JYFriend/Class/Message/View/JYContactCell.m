@@ -27,6 +27,7 @@
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        
         _userImgV = [[UIImageView alloc] init];
         _userImgV.userInteractionEnabled = YES;
         [self.contentView addSubview:_userImgV];
