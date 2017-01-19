@@ -38,7 +38,7 @@
         _userBtn.layer.borderWidth = kWidth(5);
         _userBtn.layer.borderColor = [kColor(@"#ffffff") colorWithAlphaComponent:0.42].CGColor;
 //        _userBtn.layer.masksToBounds = YES;
-        _userBtn.forceRoundCorner = YES;
+        _userBtn.forceRoundCorner = YES;        
         [_userBtn setImage:[[SDImageCache sharedImageCache] imageFromDiskCacheForKey:[JYUser currentUser].userImgKey] forState:UIControlStateNormal];
         [self addSubview:_userBtn];
         [_userBtn bk_addEventHandler:^(id sender) {

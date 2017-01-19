@@ -19,6 +19,7 @@ static NSInteger kRefreshTimeInterval = 60;//两次下拉刷新的时间间隔60
 @interface JYCharacterViewController () <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UICollectionView *_layoutCollectionView;
+    NSInteger currentPage;
 }
 @property (nonatomic) JYCharacterModel *characterModel;
 @property (nonatomic) NSMutableArray *dataSource;
@@ -34,6 +35,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isFirstRefresh = YES;
+    currentPage = 1;
     UICollectionViewFlowLayout *mainLayout = [[UICollectionViewFlowLayout alloc] init];
     mainLayout.minimumLineSpacing = kWidth(20);
     mainLayout.minimumInteritemSpacing = kWidth(10);
@@ -71,7 +73,6 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     
     [_layoutCollectionView JY_addPagingRefreshWithHandler:^{
         @strongify(self);
-//        [self loadDataWithRefresh:NO];
         [self loadModelWithIsRefresh:NO];
     }];
     
@@ -84,15 +85,9 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)loadDataWithRefresh:(BOOL)isRefresh {
     @weakify(self);
-    [self.characterModel fetchChararctersInfoWithRobotsCount:33 CompletionHandler:^(BOOL success, id obj) {
+    [self.characterModel fetchChararctersInfoWithRobotsCount:12 CompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
         if (success) {
-//            if (isRefresh) {
-//                [self.dataSource removeAllObjects];
-//                [self.dataSource addObjectsFromArray:obj];
-//            } else {
-//                [self.dataSource addObjectsFromArray:obj];
-//            }
             self.refreshTime = [JYLocalVideoUtils currentTime];
             [self refreshFetchReplaceModelWithModels:obj needCounts:3];//随机去三个模型替换
             [self->_layoutCollectionView reloadData];
@@ -102,9 +97,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 }
 
 - (void)loadModelWithIsRefresh:(BOOL)isRefresh {
-    static NSInteger page = 1;
     @weakify(self);
-    [self.characterModel fetchFiguresWithPage:page++ pageSize:kPageSize completeHandler:^(BOOL success, id obj) {
+    [self.characterModel fetchFiguresWithPage:currentPage++ pageSize:kPageSize completeHandler:^(BOOL success, NSArray * obj) {
         @strongify(self);
         if (success) {
             self.isFirstRefresh = NO;
@@ -112,12 +106,14 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
             if (isRefresh) {
                 [self.dataSource removeAllObjects];
             }
+            if (obj.count == 0) {
+                currentPage = 1;
+            }
             [self.dataSource addObjectsFromArray:obj];
             [self->_layoutCollectionView reloadData];
         }
         [self->_layoutCollectionView JY_endPullToRefresh];
     }];
-
 }
 /**
  随机取三个模型替换

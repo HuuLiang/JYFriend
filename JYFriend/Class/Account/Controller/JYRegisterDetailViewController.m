@@ -92,20 +92,6 @@ static NSString *const kDetailHeaderViewReusableIdentifier = @"DetailHeaderViewR
     @weakify(self);
     _nextButton = [[JYNextButton alloc] initWithTitle:@"下一步" action:^{
         @strongify(self);
-        NSLog(@"下一步");
-        if (![JYUser currentUser].height) {
-            [JYUser currentUser].height = @"未填写";
-        }
-        
-        if (![JYUser currentUser].homeTown) {
-            [JYUser currentUser].homeTown = @"未填写";
-        }
-        
-//        if (![JYUser currentUser].birthday) {
-//            [JYUser currentUser].birthday = @"未填写";
-//        }
-        
-        [[JYUser currentUser] saveOrUpdate];
         JYRegisterPhoneNumberViewController *phoneNumVC = [[JYRegisterPhoneNumberViewController alloc] initWithTitle:@"注册"];
         [self.navigationController pushViewController:phoneNumVC animated:YES];
     }];

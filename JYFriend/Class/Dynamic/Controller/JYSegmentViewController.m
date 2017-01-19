@@ -12,6 +12,9 @@
 #import "JYRecommendViewController.h"
 #import "JYSendDynamicViewController.h"
 
+static NSString *const kRecommendLastDayKeyName   = @"kRecommednLastDayKeyName";
+
+
 @interface JYSegmentViewController () <UIPageViewControllerDelegate,UIPageViewControllerDataSource>
 {
     UISegmentedControl *_segmentedControl;
@@ -63,7 +66,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, viewControllers)
     }];
     
     
-    if (![JYUtil isToday]) {
+    if (![JYUtil isTodayWithKeyName:kRecommendLastDayKeyName]) {
         JYRecommendViewController *recommendVC = [[JYRecommendViewController alloc] init];
         [recommendVC showInViewController:self];
     }

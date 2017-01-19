@@ -287,11 +287,11 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
     if (indexPath.section == JYPayCellSectionNewDynamicCell) {
         return kWidth(64);
     } else if (indexPath.section == JYPayCellSectionTitleCell){
-        return kWidth(170);
+        return [JYUtil deviceType] < JYDeviceType_iPhone5 ? kWidth(150) : kWidth(170);
     } else if (indexPath.section == JYPayCellSectionPayPointCell){
-        return kWidth(200);
+        return [JYUtil deviceType] < JYDeviceType_iPhone5 ? kWidth(170) : kWidth(200);
     } else if (indexPath.section == JYPayCellSectionPayTypeCell){
-        return kWidth(130);
+        return [JYUtil deviceType] < JYDeviceType_iPhone5 ? kWidth(120) : kWidth(200);
     }
     
     return 0;

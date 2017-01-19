@@ -28,12 +28,12 @@
         _titleLabel.textColor = kColor(@"#e147a5");
         _titleLabel.font = [UIFont systemFontOfSize:kWidth(26.)];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:_titleLabel];
+        [self.contentView addSubview:_titleLabel];
         {
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.mas_equalTo(self);
-            make.bottom.mas_equalTo(self).mas_offset(kWidth(-8));
-            make.height.mas_equalTo(kWidth(26.));
+            make.left.right.equalTo(self.contentView);
+            make.bottom.equalTo(self.contentView);
+            make.height.mas_equalTo(kWidth(26));
             
         }];
         }
@@ -45,7 +45,7 @@
         {
         [_headerImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.top.mas_equalTo(self);
-            make.bottom.mas_equalTo(_titleLabel.mas_top).mas_offset(kWidth(-24));
+            make.bottom.equalTo(_titleLabel.mas_top).mas_offset(kWidth(-24));
         }];
         }
       

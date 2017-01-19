@@ -22,7 +22,6 @@ static NSString *const kLaunchSeqKeyName          = @"JY_launchseq_keyname";
 static NSString *const kImageTokenKeyName         = @"safiajfoaiefr$^%^$E&&$*&$*";
 static NSString *const kImageTokenCryptPassword   = @"wafei@#$%^%$^$wfsssfsf";
 static NSString *const kUserVipExpireTimeKeyName  = @"kUserVipExpireTimeKeyName";
-static NSString *const kRecommednLastDayKeyName   = @"kRecommednLastDayKeyName";
 static NSString *const kCurrentUserIsSendPackey   = @"kcurrent_user_is_sendPacket_key";
 
 @implementation JYUtil
@@ -299,17 +298,17 @@ static NSString *const kCurrentUserIsSendPackey   = @"kcurrent_user_is_sendPacke
     return  result;
 }
 
-+ (BOOL)isToday {
-    NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:kRecommednLastDayKeyName];
++ (BOOL)isTodayWithKeyName:(NSString *)keyName {
+    NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:keyName];
     if (!lastDate) {
         lastDate = [self currentDate];
-        [[NSUserDefaults standardUserDefaults] setObject:lastDate forKey:kRecommednLastDayKeyName];
+        [[NSUserDefaults standardUserDefaults] setObject:lastDate forKey:keyName];
         [[NSUserDefaults standardUserDefaults] synchronize];
         return NO;
     }
     BOOL isToday = [lastDate isToday];
     if (!isToday) {
-        [[NSUserDefaults standardUserDefaults] setObject:[self currentDate] forKey:kRecommednLastDayKeyName];
+        [[NSUserDefaults standardUserDefaults] setObject:[self currentDate] forKey:keyName];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     return isToday;
