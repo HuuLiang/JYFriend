@@ -14,6 +14,10 @@
     return YES;
 }
 
++ (NSArray *)transients {
+    return @[@"isSelected",@"age"];
+}
+
 @end
 
 
@@ -63,7 +67,9 @@
     NSDictionary *params = @{@"userId" : [JYUtil userId] ? : @"",
                              @"page" : @(page),
                              @"pageSize" : @(pageSize)};
-    BOOL result = [self requestURLPath:JY_CHARACTER_FIGURE_URL standbyURLPath:JY_CHARACTER_FIGURE_URL withParams:params responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
+    BOOL result = [self requestURLPath:JY_CHARACTER_FIGURE_URL
+                        standbyURLPath:JY_CHARACTER_FIGURE_URL
+                            withParams:params responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
          JYCharacterResponse *resp = nil;
         if (respStatus == QBURLResponseSuccess) {
             resp = self.response;

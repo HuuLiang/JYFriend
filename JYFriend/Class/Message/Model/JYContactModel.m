@@ -35,7 +35,7 @@
             contact.nickName = obj.nickName;
             contact.alreadyGreet = YES;
         }
-        contact.recentMessage = @"你好啊，可以聊聊么。";
+        contact.recentMessage = @"对TA打了个招呼";
         contact.recentTime = [JYUtil timeStringFromDate:[JYUtil currentDate] WithDateFormat:KDateFormatLong];
         [contact saveOrUpdate];
         

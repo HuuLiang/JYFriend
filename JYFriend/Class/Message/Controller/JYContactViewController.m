@@ -214,6 +214,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
             [self->_tableVC beginUpdates];
             [self->_tableVC deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
             [self->_tableVC endUpdates];
+            [self updataBadgeWith:contact];
             //数据库中删除
             [JYContactModel deleteObjects:@[contact]];
 
@@ -263,7 +264,21 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
     }
 
     return buttons.count > 0 ? buttons : nil;
+}
+
+- (void)updataBadgeWith:(JYContactModel *)contact {
+    NSInteger unreadMessages =  [self.navigationController.tabBarItem.badgeValue integerValue] - contact.unreadMessages;
     
+    if (unreadMessages > 0) {
+        if (unreadMessages < 100) {
+            self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];
+        } else {
+            self.navigationController.tabBarItem.badgeValue = @"99+";
+        }
+    } else {
+        self.navigationController.tabBarItem.badgeValue = nil;
+    }
+
 }
 
 @end

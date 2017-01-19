@@ -82,7 +82,7 @@ QBDefineLazyPropertyInitialization(JYRegisterUserModel, userModel)
 }
 
 - (void)setPhoneNumberTextField {
-    NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:@"请输入的手机号"
+    NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:@"请输入您的手机号"
                                                                               attributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#999999"],
                                                                                            NSFontAttributeName:[UIFont systemFontOfSize:kWidth(30)]}];
     
@@ -113,7 +113,7 @@ QBDefineLazyPropertyInitialization(JYRegisterUserModel, userModel)
 }
 
 - (void)setPasswordField {
-    NSAttributedString *attri = [[NSAttributedString alloc] initWithString:@"请输入的手机号"
+    NSAttributedString *attri = [[NSAttributedString alloc] initWithString:@"请输入密码"
                                                                               attributes:@{NSForegroundColorAttributeName:kColor(@"#999999"),
                                                                                            NSFontAttributeName:[UIFont systemFontOfSize:kWidth(30)]}];
     
@@ -148,8 +148,9 @@ QBDefineLazyPropertyInitialization(JYRegisterUserModel, userModel)
         @strongify(self);
         //验证并跳转到主界面
         if ([self checkFieldContent]) {
-            [JYUser currentUser].account = _phoneNumberField.text;
-            [JYUser currentUser].password = _passwordField.text;
+            [JYUser currentUser].account = self->_phoneNumberField.text;
+            [JYUser currentUser].password = self->_passwordField.text;
+            
             [self registerUserInfo];
         }
     }];
@@ -191,6 +192,7 @@ QBDefineLazyPropertyInitialization(JYRegisterUserModel, userModel)
             [JYUser currentUser].userId = obj;
             [JYUtil setRegisteredWithUserId:obj];
             [[JYUser currentUser] saveOrUpdate];
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginNotificationName object:nil];
         }
     }];

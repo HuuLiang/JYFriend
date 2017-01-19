@@ -67,13 +67,13 @@
             
             [_title mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_frameView).offset(kWidth(30));
-                make.top.equalTo(_frameView).offset(kWidth(42));
+                make.top.equalTo(_frameView).offset([JYUtil deviceType] < JYDeviceType_iPhone5 ? kWidth(22) : kWidth(42));
                 make.height.mas_equalTo(kWidth(40));
             }];
             
             [_subTitle mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_frameView).offset(kWidth(30));
-                make.bottom.equalTo(_frameView.mas_bottom).offset(-kWidth(42));
+                make.bottom.equalTo(_frameView.mas_bottom).offset([JYUtil deviceType] < JYDeviceType_iPhone5 ? kWidth(-22) : kWidth(-42));
                 make.height.mas_equalTo(kWidth(30));
             }];
             

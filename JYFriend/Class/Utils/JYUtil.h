@@ -50,7 +50,7 @@
 + (BOOL)shouldRefreshContentWithKey:(NSString *)refreshKey timeInterval:(NSUInteger)timeInterval;
 + (NSDate *)currentDate;
 + (NSString *)compareCurrentTime:(NSString *)compareDateString;
-+ (BOOL)isToday;
++ (BOOL)isTodayWithKeyName:(NSString *)keyName;
 
 + (id)getValueWithKeyName:(NSString *)keyName;
 + (void)setValue:(id)object withKeyName:(NSString *)keyName;

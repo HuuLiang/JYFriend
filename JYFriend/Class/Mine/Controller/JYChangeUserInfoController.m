@@ -285,7 +285,7 @@ typedef NS_ENUM(NSInteger,JYUserInfoContactRow) {
             return cell;
         }else if (indexPath.row == JYUserInfoContactRowPhone){
         cell.title = @"手机";
-            cell.userInfo = [JYUser currentUser].phoneNum;
+            cell.userInfo = [JYUser currentUser].account;
             cell.delegate = self;
             return cell;
         }

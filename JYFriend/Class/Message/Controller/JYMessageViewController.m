@@ -70,7 +70,6 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     } else {
         currentUserSendingPhoto = NO;
     }
-    [self scrollToBottomAnimated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -97,62 +96,70 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 }
 
 - (void)reloadChatMessages {
-    self.chatMessages = [JYMessageModel allMessagesForUser:self.user.userId].mutableCopy;
-    
-    [self.messages removeAllObjects];
-    [self.chatMessages enumerateObjectsUsingBlock:^(JYMessageModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        XHMessage *message;
-        NSDate *date = [JYUtil dateFromString:obj.messageTime WithDateFormat:KDateFormatLong];
-        if (obj.messageType == JYMessageTypeText) {
-            message = [[XHMessage alloc] initWithText:obj.messageContent
-                                                              sender:obj.sendUserId
-                                                           timestamp:date];
-            message.messageMediaType = XHBubbleMessageMediaTypeText;
-        } else if (obj.messageType == JYMessageTypePhoto) {
-            message = [[XHMessage alloc] initWithPhoto:obj.photokey ? [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:obj.photokey] : nil
-                                          thumbnailUrl:obj.photokey ? nil : obj.messageContent
-                                        originPhotoUrl:obj.photokey ? nil : obj.messageContent
-                                                sender:obj.sendUserId
-                                             timestamp:date];
-        } else if (obj.messageType == JYMessageTypeVioce) {
-            message = [[XHMessage alloc] initWithVoicePath:obj.messageContent
-                                                  voiceUrl:nil
-                                             voiceDuration:obj.standbyContent
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        self.chatMessages = [JYMessageModel allMessagesForUser:self.user.userId].mutableCopy;
+        [self.messages removeAllObjects];
+        [self.chatMessages enumerateObjectsUsingBlock:^(JYMessageModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            XHMessage *message;
+            NSDate *date = [JYUtil dateFromString:obj.messageTime WithDateFormat:KDateFormatLong];
+            if (obj.messageType == JYMessageTypeText) {
+                message = [[XHMessage alloc] initWithText:obj.messageContent
+                                                   sender:obj.sendUserId
+                                                timestamp:date];
+                message.messageMediaType = XHBubbleMessageMediaTypeText;
+            } else if (obj.messageType == JYMessageTypePhoto) {
+                message = [[XHMessage alloc] initWithPhoto:obj.photokey ? [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:obj.photokey] : nil
+                                              thumbnailUrl:obj.photokey ? nil : obj.messageContent
+                                            originPhotoUrl:obj.photokey ? nil : obj.messageContent
                                                     sender:obj.sendUserId
                                                  timestamp:date];
-        } else if (obj.messageType == JYMessageTypeEmotion) {
-            message = [[XHMessage alloc] initWithEmotionPath:obj.messageContent
-                                                      sender:obj.sendUserId
-                                                   timestamp:date];
-        } else if (obj.messageType >= JYMessageTypeNormal) {
-            message = [[XHMessage alloc] initWithText:obj.messageContent
-                                               sender:obj.sendUserId
-                                            timestamp:date];
-            message.messageMediaType = XHBubbleMessageMediaTypeCustom;
+            } else if (obj.messageType == JYMessageTypeVioce) {
+                message = [[XHMessage alloc] initWithVoicePath:obj.messageContent
+                                                      voiceUrl:nil
+                                                 voiceDuration:obj.standbyContent
+                                                        sender:obj.sendUserId
+                                                     timestamp:date];
+            } else if (obj.messageType == JYMessageTypeEmotion) {
+                message = [[XHMessage alloc] initWithEmotionPath:obj.messageContent
+                                                          sender:obj.sendUserId
+                                                       timestamp:date];
+            } else if (obj.messageType >= JYMessageTypeNormal) {
+                message = [[XHMessage alloc] initWithText:obj.messageContent
+                                                   sender:obj.sendUserId
+                                                timestamp:date];
+                message.messageMediaType = XHBubbleMessageMediaTypeCustom;
+            }
+            
+            if ([obj.sendUserId isEqualToString:[JYUser currentUser].userId]) {
+                message.bubbleMessageType = XHBubbleMessageTypeSending;
+            } else {
+                message.bubbleMessageType = XHBubbleMessageTypeReceiving;
+            }
+            [self.messages addObject:message];
+        }];
+        
+        if (shouldLoadVipNotice && [JYUtil isVip]) {
+            JYMessageModel *vipMessage = [[JYMessageModel alloc] init];
+            vipMessage.messageTime = [JYUtil timeStringFromDate:[JYUtil currentDate] WithDateFormat:KDateFormatLong];
+            vipMessage.messageType = JYMessageTypeVIP;
+            vipMessage.messageContent = [NSString stringWithFormat:@"恭喜你！你已经成为VIP会员。会员有效期至%@",[JYUtil timeStringFromDate:[JYUtil expireDateTime] WithDateFormat:kDateFormatChina]];
+            vipMessage.receiveUserId = [JYUser currentUser].userId;
+            vipMessage.sendUserId = self.user.userId;
+            
+            XHMessage *message = [[XHMessage alloc] initWithText:vipMessage.messageContent sender:vipMessage.sendUserId timestamp:[JYUtil currentDate]];
+            message.messageMediaType = XHBubbleMessageMediaTypeCustomVIP;
+            [self.messages addObject:message];
+            
+            shouldLoadVipNotice = NO;
         }
         
-        if ([obj.sendUserId isEqualToString:[JYUser currentUser].userId]) {
-            message.bubbleMessageType = XHBubbleMessageTypeSending;
-        } else {
-            message.bubbleMessageType = XHBubbleMessageTypeReceiving;
-        }
-        [self.messages addObject:message];
-    }];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self.messageTableView reloadData];
+            [self scrollToBottomAnimated:NO];
+        });
+    });
     
-    if (shouldLoadVipNotice && [JYUtil isVip]) {
-        JYMessageModel *vipMessage = [[JYMessageModel alloc] init];
-        vipMessage.messageTime = [JYUtil timeStringFromDate:[JYUtil currentDate] WithDateFormat:KDateFormatLong];
-        vipMessage.messageType = JYMessageTypeVIP;
-        vipMessage.messageContent = [NSString stringWithFormat:@"恭喜你！你已经成为VIP会员。会员有效期至%@",[JYUtil timeStringFromDate:[JYUtil expireDateTime] WithDateFormat:kDateFormatChina]];
-        vipMessage.receiveUserId = [JYUser currentUser].userId;
-        vipMessage.sendUserId = self.user.userId;
-        
-        XHMessage *message = [[XHMessage alloc] initWithText:vipMessage.messageContent sender:vipMessage.sendUserId timestamp:[JYUtil currentDate]];
-        message.messageMediaType = XHBubbleMessageMediaTypeCustomVIP;
-        [self.messages addObject:message];
-        
-        shouldLoadVipNotice = NO;
-    }
+
     
 }
 

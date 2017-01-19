@@ -20,9 +20,11 @@ static NSString *const kRecommendCellReusableIdentifier = @"RecommendCellReusabl
 static NSString *const kRecommendHeaderViewReusableIdentifier = @"RecommendHeaderViewReusableIdentifier";
 static NSString *const kRecommendFooterViewReusableIdentifier = @"RecommendFooterViewReusableIdentifier";
 
+
 @interface JYRecommendViewController () <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UICollectionView *_layoutCollectionView;
+    UIButton         *_closeBtn;
 }
 @property (nonatomic) NSMutableArray *dataSource;
 @property (nonatomic) JYCharacterModel *characterModel;
@@ -54,12 +56,30 @@ QBDefineLazyPropertyInitialization(JYUserGreetModel, userGreetModel)
         [_layoutCollectionView registerClass:[JYRecommendFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kRecommendFooterViewReusableIdentifier];
     
     [self.view addSubview:_layoutCollectionView];
+    
+    _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_closeBtn setBackgroundImage:[UIImage imageNamed:@"dynamic_close_icon"] forState:UIControlStateNormal];
+    [self.view addSubview:_closeBtn];
+    
+    @weakify(self);
+    [_closeBtn bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        [self hide];
+    } forControlEvents:UIControlEventTouchUpInside];
+    
     {
         [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self.view);
             make.size.mas_equalTo(CGSizeMake(kScreenWidth * 0.8, kScreenWidth*0.8 * 18 / 30 + kWidth(300)));
         }];
+        
+        [_closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(_layoutCollectionView.mas_right).offset(-kWidth(14));
+            make.bottom.equalTo(_layoutCollectionView.mas_top);
+            make.size.mas_equalTo(CGSizeMake(kWidth(40), kWidth(82)));
+        }];
     }
+    
     
     
     [self reloadData];

@@ -18,7 +18,7 @@
 #define JY_REST_APP_VERSION         ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]))
 //#define JY_PAYMENT_RESERVE_DATA     [NSString stringWithFormat:@"%@$%@", JY_REST_APPID, JY_CHANNEL_NO]
 
-#define JY_BASE_URL                    @"http://t1636b8000.iok.la:29615"//@"http://iv.zcqcmj.com"
+#define JY_BASE_URL                    @"http://192.168.1.123:8099"//@"http://iv.zcqcmj.com"
 #define JY_STANDBY_BASE_URL            @"http://sfs.dswtg.com/"
 
 
