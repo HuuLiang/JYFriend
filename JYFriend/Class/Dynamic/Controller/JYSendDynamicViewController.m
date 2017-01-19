@@ -136,6 +136,4 @@ QBDefineLazyPropertyInitialization(NSArray, userDynamic)
     }
     return 0;
 }
-
-
 @end

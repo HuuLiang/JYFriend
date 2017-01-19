@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^dynamicPhototBrowser)(BOOL isVideo,NSInteger index);
+
 @interface JYDynamicCell : UICollectionViewCell
 
 //- (void)updateCellContentWithInfo:(JYDynamic *)dynamic;
@@ -27,5 +29,7 @@
 @property (nonatomic) QBAction buttonAction;
 
 @property (nonatomic) QBAction userImgAction;
+
+@property (nonatomic) dynamicPhototBrowser photoBrowser;
 
 @end

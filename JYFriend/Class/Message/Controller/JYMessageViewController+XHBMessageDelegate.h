@@ -15,4 +15,6 @@
 - (void)registerCustomCell;
 
 - (void)setXHShareMenu;
+
+- (void)setupPopMenuTitles;
 @end

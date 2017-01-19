@@ -115,7 +115,7 @@ static const CGFloat kXHUserNameLabelHeight = 20;
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
-    return (action == @selector(copyed:) || action == @selector(transpond:) || action == @selector(favorites:) || action == @selector(more:));
+    return (action == @selector(copyed:) || action == @selector(transpond:) || action == @selector(favorites:) || action == @selector(more:)) || action == @selector(deleteMsg:);
 }
 
 #pragma mark - Menu Actions
@@ -136,6 +136,13 @@ static const CGFloat kXHUserNameLabelHeight = 20;
 
 - (void)more:(id)sender {
     DLog(@"Cell was more");
+}
+
+- (void)deleteMsg:(id)sender {
+    DLog(@"Cell was delete");
+    if ([self.delegate respondsToSelector:@selector(menuDidSelectedAtBubbleMessageMenuSelecteType:atIndexPath:)]) {
+        [self.delegate menuDidSelectedAtBubbleMessageMenuSelecteType:XHBubbleMessageMenuSelecteTypeDelete atIndexPath:self.indexPath];
+    }
 }
 
 #pragma mark - Setters
@@ -284,38 +291,72 @@ static const CGFloat kXHUserNameLabelHeight = 20;
     
     NSArray *popMenuTitles = [[XHConfigurationHelper appearance] popMenuTitles];
     NSMutableArray *menuItems = [[NSMutableArray alloc] init];
-    for (int i = 0; i < popMenuTitles.count; i ++) {
-        NSString *title = popMenuTitles[i];
+    [popMenuTitles enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         SEL action = nil;
-        switch (i) {
-            case 0: {
-                if ([self.messageBubbleView.message messageMediaType] == XHBubbleMessageMediaTypeText) {
-                    action = @selector(copyed:);
-                }
-                break;
+        if ([self.messageBubbleView.message messageMediaType] == XHBubbleMessageMediaTypeText && [obj isEqualToString:@"复制"]) {
+            action = @selector(copyed:);
+            UIMenuItem *item = [[UIMenuItem alloc] initWithTitle:obj action:action];
+            if (item) {
+                [menuItems addObject:item];
             }
-            case 1: {
-                action = @selector(transpond:);
-                break;
-            }
-            case 2: {
-                action = @selector(favorites:);
-                break;
-            }
-            case 3: {
-                action = @selector(more:);
-                break;
-            }
-            default:
-                break;
-        }
-        if (action) {
-            UIMenuItem *item = [[UIMenuItem alloc] initWithTitle:title action:action];
+        } else if ([obj isEqualToString:@"删除"] && [self.messageBubbleView.message messageMediaType] < XHBubbleMessageMediaTypeCustom ) {
+            action = @selector(deleteMsg:);
+            UIMenuItem *item = [[UIMenuItem alloc] initWithTitle:obj action:action];
             if (item) {
                 [menuItems addObject:item];
             }
         }
-    }
+    }];
+//    for (NSString *obj in popMenuTitles) {
+//        SEL action = nil;
+//        if ([self.messageBubbleView.message messageMediaType] == XHBubbleMessageMediaTypeText && [obj isEqualToString:@"复制"]) {
+//            action = @selector(copyed:);
+//            UIMenuItem *item = [[UIMenuItem alloc] initWithTitle:obj action:action];
+//            if (item) {
+//                [menuItems addObject:item];
+//            }
+//        } else if ([obj isEqualToString:@"删除"] && [self.messageBubbleView.message messageMediaType] < XHBubbleMessageMediaTypeCustom ) {
+//            action = @selector(deleteMsg:);
+//            UIMenuItem *item = [[UIMenuItem alloc] initWithTitle:obj action:action];
+//            if (item) {
+//                [menuItems addObject:item];
+//            }
+//        }
+//
+//    }
+    
+//    for (int i = 0; i < popMenuTitles.count; i ++) {
+//        NSString *title = popMenuTitles[i];
+//        SEL action = nil;
+//        switch (i) {
+//            case 0: {
+//                if ([self.messageBubbleView.message messageMediaType] == XHBubbleMessageMediaTypeText) {
+//                    action = @selector(copyed:);
+//                }
+//                break;
+//            }
+//            case 1: {
+//                action = @selector(transpond:);
+//                break;
+//            }
+//            case 2: {
+//                action = @selector(favorites:);
+//                break;
+//            }
+//            case 3: {
+//                action = @selector(more:);
+//                break;
+//            }
+//            default:
+//                break;
+//        }
+//        if (action) {
+//            UIMenuItem *item = [[UIMenuItem alloc] initWithTitle:title action:action];
+//            if (item) {
+//                [menuItems addObject:item];
+//            }
+//        }
+//    }
     
     UIMenuController *menu = [UIMenuController sharedMenuController];
     [menu setMenuItems:menuItems];
