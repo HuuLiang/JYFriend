@@ -46,14 +46,14 @@ QBDefineLazyPropertyInitialization(NSArray, userDynamic)
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"发布" style:UIBarButtonItemStylePlain handler:^(id sender) {
         @strongify(self);
         //保存用户动态
-        if (self.userDynamic.count > 0){
+        if ([JYUtil isVip]) {
             
             [self saveUserDynamic];
         }else {
-            if (self->_sendDynamicCell.textView.text.length > 0) {
-                [JYDynamicCacheUtil saveUserDynamicWithUserState:self->_sendDynamicCell.textView.text imageUrls:nil];
-            }
+            [[JYHudManager manager] showHudWithText:@"只有VIP会员才可以发布动态"];
         }
+        
+
         
     }];
     
@@ -80,7 +80,7 @@ QBDefineLazyPropertyInitialization(NSArray, userDynamic)
     }
     if (self.userDynamic.count == 0 && self->_sendDynamicCell.textView.text.length > 0) {
     [JYDynamicCacheUtil saveUserDynamicWithUserState:self->_sendDynamicCell.textView.text imageUrls:nil];
-        [[JYHudManager manager] showHudWithText:@"发布状态成功"];
+        [[JYHudManager manager] showHudWithText:@"发布成功,请耐心等待审核"];
         [self.navigationController popViewControllerAnimated:YES];
         return;
     }
@@ -98,7 +98,7 @@ QBDefineLazyPropertyInitialization(NSArray, userDynamic)
     if (images.count > 0) {
         [JYDynamicCacheUtil saveUserDynamicWithUserState:self->_sendDynamicCell.textView.text imageUrls:images];
     }
-    [[JYHudManager manager] showHudWithText:@"发布状态成功"];
+    [[JYHudManager manager] showHudWithText:@"发布成功,请耐心等待审核"];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

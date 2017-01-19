@@ -148,6 +148,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
         }else if ([btn.titleLabel.text isEqualToString:@"打招呼"]){
             messageType = JYUserCreateMessageTypeGreet;
             if (self.isFollow) {
+                [[JYHudManager manager] showHudWithText:@"已经向该用户打过招呼"];
                 return;
             }
             
