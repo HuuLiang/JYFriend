@@ -93,9 +93,6 @@ static NSString *const kDetailHeaderViewReusableIdentifier = @"DetailHeaderViewR
     _nextButton = [[JYNextButton alloc] initWithTitle:@"下一步" action:^{
         @strongify(self);
         NSLog(@"下一步");
-        if (![JYUser currentUser].userImgKey) {
-            [JYUser currentUser].userImgKey = @"";
-        }
         if (![JYUser currentUser].height) {
             [JYUser currentUser].height = @"未填写";
         }

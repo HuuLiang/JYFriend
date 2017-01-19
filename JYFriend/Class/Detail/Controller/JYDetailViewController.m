@@ -433,13 +433,13 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             return vipCell;
         }else if (indexPath.item == JYSectetInfoItemWechat){
             
-            cell.detailTitle = [NSString stringWithFormat:@"微   信: %@", [JYUser currentUser].isVip.integerValue ? self.detailModel.userInfo.weixinNum : @"仅限VIP会员查看"];
+            cell.detailTitle = [NSString stringWithFormat:@"微   信: %@", [JYUtil isVip] ? self.detailModel.userInfo.weixinNum : @"仅限VIP会员查看"];
             return cell;
         }else if (indexPath.item == JYSectetInfoItemQQ){
-            cell.detailTitle = [NSString stringWithFormat:@"Q    Q: %@",[JYUser currentUser].isVip.integerValue ? self.detailModel.userInfo.qq : @"仅限VIP会员查看"];
+            cell.detailTitle = [NSString stringWithFormat:@"Q    Q: %@",[JYUtil isVip] ? self.detailModel.userInfo.qq : @"仅限VIP会员查看"];
             return cell;
         }else if (indexPath.item == JYSectetInfoItemPhone){
-            cell.detailTitle = [NSString stringWithFormat:@"手机号: %@",[JYUser currentUser].isVip.integerValue ? self.detailModel.userInfo.phone : @"仅限VIP会员查看"];
+            cell.detailTitle = [NSString stringWithFormat:@"手机号: %@",[JYUtil isVip] ? self.detailModel.userInfo.phone : @"仅限VIP会员查看"];
             return cell;
         }
         

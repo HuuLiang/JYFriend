@@ -249,9 +249,9 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
     if ([JYUtil isVip]) {
         [JYLocalPhotoUtils shareManager].delegate = self;
         if (index == 0) {
-            [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary inViewController:self popoverPoint:CGPointZero isVideo:NO];
+            [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary inViewController:self popoverPoint:CGPointZero isVideo:NO allowsEditing:YES];
         }else if (index == 1){
-            [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeCamera inViewController:self popoverPoint:CGPointZero isVideo:NO];
+            [[JYLocalPhotoUtils shareManager] getImageWithSourceType:UIImagePickerControllerSourceTypeCamera inViewController:self popoverPoint:CGPointZero isVideo:NO allowsEditing:YES];
         }else if (index == 2){
             JYVideoChatViewController *chatvVC = [[JYVideoChatViewController alloc] init];
             [self presentViewController:chatvVC animated:YES completion:nil];

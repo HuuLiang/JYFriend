@@ -114,6 +114,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+   
 }
 
 
@@ -208,7 +209,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
     
     if (type == UIImagePickerControllerSourceTypePhotoLibrary || type == UIImagePickerControllerSourceTypeCamera) {
         [JYLocalPhotoUtils shareManager].delegate = self;
-        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:type inViewController:self popoverPoint:self.currentCellPoint  isVideo:NO];
+        [[JYLocalPhotoUtils shareManager] getImageWithSourceType:type inViewController:self popoverPoint:self.currentCellPoint  isVideo:NO allowsEditing:YES];
     }
     
 }
