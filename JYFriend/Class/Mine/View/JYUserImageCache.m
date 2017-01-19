@@ -33,26 +33,7 @@ static NSString *const kJYImageCacheImageName = @"jiaoyou_imagemodel_imagechche_
 
 + (NSString *)writeToFileWithImage:(UIImage *)image needSaveImageName:(BOOL)needSaveName{
     
-        UIGraphicsBeginImageContext(CGSizeMake(image.size.width*0.9, image.size.height*0.9));
-        [image drawInRect:CGRectMake(0,0,image.size.width*0.9,image.size.height*0.9)];
-//        UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        //~>下面代码通过循环将图片稳定在400k以内
-        NSData *data1 = UIImageJPEGRepresentation(image ,1);
-       NSData *imageData = data1;
-        long long alength= imageData.length;
-        NSInteger i = 0;
-        for (NSInteger j = 0 ; j < 10; j ++) {
-            if (alength/1024 > 300) {
-                i ++;
-                NSData *data1 = UIImageJPEGRepresentation(image ,1-i * 0.1);
-               imageData = data1;
-                alength= imageData.length;
-//                QBLog(@"alength%lldk",alength/1024);
-            }else{
-                break;
-            }
-        }
+    NSData *imageData = [self zipImageWithImage:image];//对图片进行压缩
     UIImage *newImage = [UIImage imageWithData:imageData];
     
 //    QBLog(@"newImage%@",newImage)
@@ -68,6 +49,55 @@ static NSString *const kJYImageCacheImageName = @"jiaoyou_imagemodel_imagechche_
     return imageDataMd5;
 }
 
++ (NSData *)zipImageWithImage:(UIImage *)image
+{
+    if (!image) {
+        return nil;
+    }
+    CGFloat maxFileSize = 80*1024;
+    CGFloat compression = 0.6f;
+    NSData *compressedData = UIImageJPEGRepresentation(image, compression);
+    UIImage *newImage = image;
+    while ([compressedData length] > maxFileSize) {
+        if ([JYUtil deviceType] > JYDeviceType_iPhone4S) {
+             compression *= 0.8f;
+        }
+        newImage = [[self class] compressImage:newImage newWidth:newImage.size.width*compression];
+        compressedData = UIImageJPEGRepresentation(newImage, compression);
+    }
+    return compressedData;
+}
+
++ (UIImage *)compressImage:(UIImage *)image newWidth:(CGFloat)newImageWidth
+{
+    if (!image) return nil;
+    float imageWidth = image.size.width;
+    float imageHeight = image.size.height;
+    float width = newImageWidth;
+    float height = image.size.height/(image.size.width/width);
+    
+    float widthScale = imageWidth /width;
+    float heightScale = imageHeight /height;
+    
+    // 创建一个bitmap的context
+    // 并把它设置成为当前正在使用的context
+    UIGraphicsBeginImageContext(CGSizeMake(width, height));
+    
+    if (widthScale > heightScale) {
+        [image drawInRect:CGRectMake(0, 0, imageWidth /heightScale , height)];
+    }
+    else {
+        [image drawInRect:CGRectMake(0, 0, width , imageHeight /widthScale)];
+    }
+    
+    // 从当前context中创建一个改变大小后的图片
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    // 使当前的context出堆栈
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+    
+}
 
 + (void)saveImageWithImageName:(NSString *)imageName {
 

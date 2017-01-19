@@ -114,6 +114,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, dataSource)
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+   
 }
 
 
