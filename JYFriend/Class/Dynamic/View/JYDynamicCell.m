@@ -326,15 +326,43 @@
             make.size.mas_equalTo(CGSizeMake(kWidth(100), kWidth(100)));
         }];
     }
+    
+    @weakify(self);
+    if ([self.contentView.subviews containsObject:_imgVA]) {
+        [_imgVA bk_whenTapped:^{
+            @strongify(self);
+            if (self.photoBrowser) {
+                self.photoBrowser(dynamicType == JYDynamicTypeVideo,0);
+            }
+        }];
+    } else if ([self.contentView.subviews containsObject:_imgVB]) {
+        [_imgVB bk_whenTapped:^{
+            @strongify(self);
+            if (self.photoBrowser) {
+                self.photoBrowser(dynamicType == JYDynamicTypeVideo,1);
+            }
+        }];
+    } else if ([self.contentView.subviews containsObject:_imgVC]) {
+        [_imgVC bk_whenTapped:^{
+            @strongify(self);
+            if (self.photoBrowser) {
+                self.photoBrowser(dynamicType == JYDynamicTypeVideo,2);
+            }
+        }];
+    }
+    
 }
 
 - (void)setMoodUrl:(NSArray *)moodUrl {
     [moodUrl enumerateObjectsUsingBlock:^(JYDynamicUrl * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx == 0) {
+            _imgVA.userInteractionEnabled = YES;
             [_imgVA sd_setImageWithURL:[NSURL URLWithString:obj.thumbnail]];
         } else if (idx == 1) {
+            _imgVB.userInteractionEnabled = YES;
             [_imgVB sd_setImageWithURL:[NSURL URLWithString:obj.thumbnail]];
         } else if (idx == 2) {
+            _imgVC.userInteractionEnabled = YES;
             [_imgVC sd_setImageWithURL:[NSURL URLWithString:obj.thumbnail]];
         }
     }];

@@ -304,9 +304,15 @@ static NSString *const kCurrentUserIsSendPackey   = @"kcurrent_user_is_sendPacke
     if (!lastDate) {
         lastDate = [self currentDate];
         [[NSUserDefaults standardUserDefaults] setObject:lastDate forKey:kRecommednLastDayKeyName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         return NO;
     }
-    return [lastDate isToday];
+    BOOL isToday = [lastDate isToday];
+    if (!isToday) {
+        [[NSUserDefaults standardUserDefaults] setObject:[self currentDate] forKey:kRecommednLastDayKeyName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    return isToday;
 }
 
 #pragma mark -- 其他

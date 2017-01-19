@@ -62,6 +62,10 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
     self.shareMenuItems = @[pictureItem,photographItem,videoChatItem];
 }
 
+- (void)setupPopMenuTitles {
+    [[XHConfigurationHelper appearance] setupPopMenuTitles:@[@"复制",@"删除"]];
+}
+
 - (void)registerCustomCell {
     [self.messageTableView registerClass:[JYMessageNoticeCell class] forCellReuseIdentifier:kJYFriendMessageNoticeCellKeyName];
 }
@@ -225,8 +229,10 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
  *
  *  @param bubbleMessageMenuSelecteType 点击item后，确定点击类型
  */
-- (void)menuDidSelectedAtBubbleMessageMenuSelecteType:(XHBubbleMessageMenuSelecteType)bubbleMessageMenuSelecteType {
-    
+- (void)menuDidSelectedAtBubbleMessageMenuSelecteType:(XHBubbleMessageMenuSelecteType)bubbleMessageMenuSelecteType atIndexPath:(NSIndexPath *)indexPath {
+    if (bubbleMessageMenuSelecteType == XHBubbleMessageMenuSelecteTypeDelete) {
+        [self deleteMessageAtIndexPath:indexPath];
+    }
 }
 
 #pragma mark - XHMessageInputViewDelegate

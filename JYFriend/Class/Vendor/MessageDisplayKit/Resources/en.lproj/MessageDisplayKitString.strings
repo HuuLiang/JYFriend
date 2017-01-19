@@ -7,6 +7,7 @@
 */
 "copy" = "copy";
 "transpond" = "transpond";
+"deleteMsg" = "deleteMsg";
 "favorites" = "favorites";
 "more" = "more";
 "Location" = "Location";

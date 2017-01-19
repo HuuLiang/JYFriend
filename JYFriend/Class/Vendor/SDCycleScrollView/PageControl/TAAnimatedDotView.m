@@ -73,7 +73,7 @@ static CGFloat const kAnimateDuration = 1;
 {
     [UIView animateWithDuration:kAnimateDuration delay:0 usingSpringWithDamping:.5 initialSpringVelocity:-20 options:UIViewAnimationOptionCurveLinear animations:^{
         self.backgroundColor = _dotColor;
-        self.transform = CGAffineTransformMakeScale(1.4, 1.4);
+        self.transform = CGAffineTransformMakeScale(1.0, 1.0);
     } completion:nil];
 }
 

@@ -13,6 +13,7 @@
 #import "JYAutoContactManager.h"
 #import "JYContactModel.h"
 #import "JYCharacterModel.h"
+#import "JYMyPhotoBigImageView.h"
 
 
 #define resetTime   (60*60*6)     //重置缓存时间
@@ -274,6 +275,21 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMsgModel)
             JYDynamic *dynamic = self.dataSource[indexPath.item];
             [self pushDetailViewControllerWithUserId:dynamic.userId time:[JYUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:dynamic.timeInterval] WithDateFormat:KDateFormatLong] distance:nil nickName:dynamic.nickName];
         };
+        dynamicCell.photoBrowser = ^(BOOL isVideo,NSInteger index) {
+            @strongify(self);
+            if (isVideo) {
+                //播放视频链接
+                JYDynamicUrl *dynamicUrl = [dynamic.moodUrl firstObject];
+                [self playerVCWithVideo:dynamicUrl.url];
+                
+            } else {
+                NSMutableArray *imgUrls = [NSMutableArray array];
+                [dynamic.moodUrl enumerateObjectsUsingBlock:^(JYDynamicUrl * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [imgUrls addObject:obj.url];
+                }];
+                [self photoBrowseWithImageGroup:imgUrls currentIndex:index isNeedBlur:NO];
+            }
+        };
     }
     return dynamicCell;
 }
@@ -300,4 +316,31 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMsgModel)
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
 //    [[QBStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
 }
+
+//图片浏览
+- (void)photoBrowseWithImageGroup:(NSArray *)imageGroup currentIndex:(NSInteger)currentIndex isNeedBlur:(BOOL)isNeedBlur{
+    JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:imageGroup frame:self.view.window.frame isLocalImage:NO isNeedBlur:isNeedBlur userId:nil];
+    bigImageView.backgroundColor = [UIColor whiteColor];
+    bigImageView.shouldAutoScroll = NO;
+    bigImageView.shouldInfiniteScroll = NO;
+    bigImageView.pageControlYAspect = 0.8;
+    bigImageView.currentIndex = currentIndex;
+    
+    @weakify(bigImageView);
+    bigImageView.action = ^(id sender){
+        @strongify(bigImageView);
+        [UIView animateWithDuration:0.5 animations:^{
+            bigImageView.alpha = 0;
+        } completion:^(BOOL finished) {
+            
+            [bigImageView removeFromSuperview];
+        }];
+    };
+    [self.view.window addSubview:bigImageView];
+    bigImageView.alpha = 0;
+    [UIView animateWithDuration:0.5 animations:^{
+        bigImageView.alpha = 1;
+    }];
+}
+
 @end

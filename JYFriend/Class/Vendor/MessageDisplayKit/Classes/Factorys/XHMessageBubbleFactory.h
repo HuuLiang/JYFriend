@@ -48,6 +48,8 @@ typedef NS_ENUM(NSInteger, XHBubbleMessageMenuSelecteType) {
     XHBubbleMessageMenuSelecteTypeVoiceFavorites = 12,
     XHBubbleMessageMenuSelecteTypeVoiceTurnToText = 13,
     XHBubbleMessageMenuSelecteTypeVoiceMore = 14,
+    
+    XHBubbleMessageMenuSelecteTypeDelete = 15,
 };
 
 @interface XHMessageBubbleFactory : NSObject

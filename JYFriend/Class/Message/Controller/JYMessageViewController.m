@@ -53,6 +53,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     [self registerCustomCell];
     [self configEmotions];
     [self setXHShareMenu];
+    [self setupPopMenuTitles];
     
     shouldLoadVipNotice = YES;
 }
@@ -229,11 +230,15 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
 - (void)addChatMessage:(JYMessageModel *)chatMessage {
     
     if (![JYUtil isVip]) {
-        //不是vip 发送VIP提示
-        chatMessage.messageContent = @"对方是VIP，您无法给TA发送信息。点击开通VIP，与TA畅聊。";
-        chatMessage.messageType = JYMessageTypeNormal;
+        //判断是不是VIP 不是vip 判断是不是今天的第一条 是 发送  不是 发送VIP提示
+        if ([self isFirstMessageEveryDayWith:chatMessage]) {
+            [self sendMessageToServerWithInfo:chatMessage];
+        } else {
+            chatMessage.messageContent = @"对方是VIP，您无法给TA发送信息。点击开通VIP，与TA畅聊。";
+            chatMessage.messageType = JYMessageTypeNormal;
+        }
     } else {
-        [self sendMessageToServerWithInfo:chatMessage];
+        [self sendMessageToServerWithInfo:chatMessage]; 
     }
     
     [self.chatMessages addObject:chatMessage];
@@ -284,6 +289,19 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     }
 }
 
+- (void)deleteMessageAtIndexPath:(NSIndexPath *)indexPath {
+    JYMessageModel *messageModel = self.chatMessages[indexPath.row];
+//    if ([messageModel.sendUserId isEqualToString:[JYUser currentUser].userId]) {
+        [messageModel deleteObject];
+        [self.chatMessages removeObjectAtIndex:indexPath.row];
+        [self.messages removeObjectAtIndex:indexPath.row];
+        
+        [self.messageTableView beginUpdates];
+        [self.messageTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self.messageTableView endUpdates];
+//    }
+}
+
 //向服务器发送消息
 - (void)sendMessageToServerWithInfo:(JYMessageModel *)chatMessage {
     NSString *msg = nil;
@@ -314,5 +332,8 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
      }];
 }
 
+- (BOOL)isFirstMessageEveryDayWith:(JYMessageModel *)message {
+    return [JYUserFirstMessage isFirstMessageWithUserId:message.receiveUserId msgTime:message.messageTime];
+}
 
 @end

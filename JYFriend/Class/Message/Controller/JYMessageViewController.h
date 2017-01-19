@@ -44,6 +44,7 @@
 
 - (void)addChatMessage:(JYMessageModel *)chatMessage;
 
+- (void)deleteMessageAtIndexPath:(NSIndexPath *)indexPath;
 
 //extern NSString *const kJYFriendMessageNormalCellKeyName;
 //extern NSString *const kJYFriendMessageVipCellKeyName;

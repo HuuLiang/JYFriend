@@ -44,8 +44,15 @@ typedef NS_ENUM(NSUInteger, JYMessageType) {
 //+ (instancetype)chatMessage;
 + (NSArray<JYMessageModel *> *)allMessagesForUser:(NSString *)userId;
 
+
 //+ (instancetype)chatMessageFromPushedMessage:(YPBPushedMessage *)message;
+@end
 
+@interface JYUserFirstMessage : JKDBModel
+@property (nonatomic) NSString *userId;
+@property (nonatomic) NSString *time;
 
++ (BOOL)isFirstMessageWithUserId:(NSString *)userId msgTime:(NSString *)time;
 
 @end
+

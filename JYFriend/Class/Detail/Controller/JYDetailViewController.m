@@ -19,6 +19,7 @@
 #import "JYMessageViewController.h"
 #import "JYUserCreateMessageModel.h"
 #import "JYContactModel.h"
+#import "JYCharacterModel.h"
 
 static NSString *const kPhotoCollectionViewCellIdentifier = @"PhotoCollectionViewCell_Identifier";
 static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
@@ -162,7 +163,11 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
                         self.isFollow = YES;
                         [[JYHudManager manager] showHudWithText:@"打招呼成功"];
                         //先向消息列表中加入选中的机器人的打招呼语言
-                        if (obj) [JYContactModel insertGreetContact:@[obj]];
+                        JYCharacter *character = [[JYCharacter alloc] init];
+                        character.nickName = self.detailModel.userInfo.nickName;
+                        character.logoUrl = self.detailModel.userInfo.logoUrl;
+                        character.userId = self.detailModel.userInfo.userId;
+                        [JYContactModel insertGreetContact:@[character]];
                     }
                 }
             }];

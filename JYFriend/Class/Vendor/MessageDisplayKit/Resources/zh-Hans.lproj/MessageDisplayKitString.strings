@@ -7,6 +7,7 @@
 */
 "copy" = "复制";
 "transpond" = "转发";
+"deleteMsg" = "删除";
 "favorites" = "收藏";
 "more" = "更多";
 "Location" = "地理位置";
