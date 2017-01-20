@@ -189,6 +189,10 @@ QBDefineLazyPropertyInitialization(JYRegisterUserModel, userModel)
 - (void)registerUserInfo {
     [self.userModel registerUserWithUserInfo:[JYUser currentUser] completionHandler:^(BOOL success, id obj) {
         if (success) {
+            NSString *objStr = obj;
+            if (!obj ||  objStr.length == 0) {
+                return ;
+            }
             [JYUser currentUser].userId = obj;
             [JYUtil setRegisteredWithUserId:obj];
             [[JYUser currentUser] saveOrUpdate];

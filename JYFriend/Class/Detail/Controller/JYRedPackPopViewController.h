@@ -11,6 +11,6 @@
 
 @interface JYRedPackPopViewController : JYBaseViewController
 
-- (void)popRedPackViewWithCurrentViewCtroller:(UIViewController *)currentViewCtroller;
+- (void)popRedPackViewWithCurrentViewCtroller:(UIViewController *)currentViewCtroller payAction:(QBAction)payAction;
 
 @end

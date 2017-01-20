@@ -93,13 +93,15 @@
 #pragma mark - SDCycleScrollViewDelegate
 
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
-//    SafelyCallBlock(self.selectionAction, index, self);
-    QBSafelyCallBlock(self.action,self);
+    if (self.action) {
+        self.action(self);
+    }
+    
 }
 
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didScrollToIndex:(NSInteger)index {
     if (self.scrollAction) {
-        self.scrollAction(@(index));
+        self.scrollAction(self,@(index));
     }
 }
 
