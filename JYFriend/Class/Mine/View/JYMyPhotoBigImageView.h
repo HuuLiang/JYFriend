@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-//typedef void(^JYSelectionAction)(NSInteger index, id obj);
+typedef void(^JYScrollAction)(id obj , NSNumber *index);
 
 @interface JYMyPhotoBigImageView : UIView
 
@@ -22,6 +22,6 @@
 - (instancetype)initWithImageGroup:(NSArray *)imageGroup frame:(CGRect)frame isLocalImage:(BOOL)isLocalImage isNeedBlur:(BOOL)isNeedBlur userId:(NSString *)userId;
 @property (nonatomic,copy) QBAction action;
 
-@property (nonatomic,copy) QBAction scrollAction;
+@property (nonatomic,copy) JYScrollAction scrollAction;
 
 @end

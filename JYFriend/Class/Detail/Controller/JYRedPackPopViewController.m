@@ -12,6 +12,7 @@
 @interface JYRedPackPopViewController ()
 
 @property (nonatomic,retain) JYRedPacketView *packView;
+@property (nonatomic,copy)QBAction payAction;
 @end
 
 @implementation JYRedPackPopViewController
@@ -29,6 +30,7 @@
     
     _packView.ktVipAction = ^(id sender){
         @strongify(self);
+         QBSafelyCallBlock(self.payAction,self);
         [self presentPayViewController];
          [self hiddenPackView];
     };
@@ -36,6 +38,7 @@
     _packView.sendPacketAction = ^(id sender){
         @strongify(self);
         [self hiddenPackView];
+        QBSafelyCallBlock(self.payAction,self);
         QBBaseModel *baseModel = [[QBBaseModel alloc] init];
         baseModel.realColumnId = @(235345);
         baseModel.channelType = @(1);
@@ -53,12 +56,13 @@
     
 }
 
-- (void)popRedPackViewWithCurrentViewCtroller:(UIViewController *)currentViewCtroller{
+- (void)popRedPackViewWithCurrentViewCtroller:(UIViewController *)currentViewCtroller payAction:(QBAction)payAction{
+        self.payAction = payAction;
     if (self.view.superview) {
         [self.view removeFromSuperview];
     }
     if (_packView && [currentViewCtroller.view.window.subviews containsObject:_packView]) {
-        [self showPopPackView];
+        [self showPopPackViewWithCurrentVc:currentViewCtroller];
         return;
     }
     if (![currentViewCtroller.childViewControllers containsObject:self]) {
@@ -68,15 +72,16 @@
         self.packView.frame = CGRectMake(0, -kScreenHeight, kScreenWidth, kScreenHeight);
         [currentViewCtroller.view.window addSubview:self.packView];
     }
-    [self.packView willMoveToWindow:currentViewCtroller.view.window];
-    [self showPopPackView];
+  
+    [self showPopPackViewWithCurrentVc:currentViewCtroller];
     
 }
 
 
-- (void)showPopPackView {
+- (void)showPopPackViewWithCurrentVc:(UIViewController *)currentViewCtroller{
     @weakify(self);
     self.packView.hidden = NO;
+      [currentViewCtroller.view.window bringSubviewToFront:self.packView];
     [UIView animateWithDuration:0.5 animations:^{
         @strongify(self);
         self.packView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);

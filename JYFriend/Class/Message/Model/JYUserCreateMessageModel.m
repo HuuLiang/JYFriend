@@ -95,8 +95,8 @@
     }
     
     NSDictionary *params = @{@"msg":message,
-                             @"sendUserId":[JYUser currentUser].userId,
-                             @"receiveUserId":receiverId,
+                             @"sendUserId":[JYUser currentUser].userId ? : @"",
+                             @"receiveUserId":receiverId ? : @"",
                              @"msgType":msgType,
                              @"contentType":contentType};
     

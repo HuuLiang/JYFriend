@@ -641,7 +641,7 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
                 if (self.isSendPacket || [JYUtil isVip]) {
                     [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
                 }else{
-                    [self.packePopView popRedPackViewWithCurrentViewCtroller:self];
+                    [self.packePopView popRedPackViewWithCurrentViewCtroller:self payAction:nil];
                 }
             }
             
@@ -691,24 +691,17 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
     bigImageView.pageControlYAspect = 0.8;
     bigImageView.currentIndex = currentIndex;
     
-    @weakify(bigImageView);
-    bigImageView.action = ^(id sender){
-        @strongify(bigImageView);
-        
-        [UIView animateWithDuration:0.5 animations:^{
-            bigImageView.alpha = 0;
-            
-        } completion:^(BOOL finished) {
-            
-            [bigImageView removeFromSuperview];
-        }];
-        
-    };
     @weakify(self);
-    bigImageView.scrollAction = ^(NSNumber *index){
+    bigImageView.action = ^(JYMyPhotoBigImageView *bigImageView ){
         @strongify(self);
-        if (index.integerValue >= 1 && isNeedBlur) {
-        [self.packePopView popRedPackViewWithCurrentViewCtroller:self];
+        [self bigImageHiddenWithBigImage:bigImageView];
+    };
+    bigImageView.scrollAction = ^(JYMyPhotoBigImageView *bigImageView ,NSNumber *index){
+        @strongify(self);
+        if (index.integerValue >= 1 && isNeedBlur && ![JYUtil isVip] && !self.isSendPacket) {
+        [self.packePopView popRedPackViewWithCurrentViewCtroller:self payAction:^(id obj) {
+            [self bigImageHiddenWithBigImage:bigImageView];
+        }];
         }
     };
     
@@ -717,8 +710,16 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
     [UIView animateWithDuration:0.5 animations:^{
         bigImageView.alpha = 1;
     }];
-    
-    
+}
+
+- (void)bigImageHiddenWithBigImage:(JYMyPhotoBigImageView *)bigImageView{
+    [UIView animateWithDuration:0.5 animations:^{
+        bigImageView.alpha = 0;
+        
+    } completion:^(BOOL finished) {
+        
+        [bigImageView removeFromSuperview];
+    }];
 }
 
 @end
