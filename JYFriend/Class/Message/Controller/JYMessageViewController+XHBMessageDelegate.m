@@ -222,7 +222,7 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
 
 //图片浏览
 - (void)photoBrowseWithImageGroup:(NSArray *)imageGroup currentIndex:(NSInteger)currentIndex isNeedBlur:(BOOL)isNeedBlur{
-    JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:imageGroup frame:self.view.window.frame isLocalImage:NO isNeedBlur:isNeedBlur userId:nil];
+    JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:imageGroup frame:self.view.window.frame isLocalImage:YES isNeedBlur:isNeedBlur userId:nil];
     bigImageView.backgroundColor = [UIColor whiteColor];
     bigImageView.shouldAutoScroll = NO;
     bigImageView.shouldInfiniteScroll = NO;
