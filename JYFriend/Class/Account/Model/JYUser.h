@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger,JYUserSex) {
 
 //是否是人
 @property (nonatomic) BOOL          isHuman;
+
 //用户id
 @property (nonatomic) NSString      *userId;
 //头像

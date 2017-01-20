@@ -29,19 +29,19 @@
 
 - (BOOL)registerUserWithUserInfo:(JYUser *)user completionHandler:(QBCompletionHandler)handler {
     
-    if (user.birthday == nil || user.birthday.length == 0 || [user.birthday isEqualToString:@""]) {
-        user.birthday = @"";
-    } else {
+//    if (user.birthday == nil || user.birthday.length == 0 || [user.birthday isEqualToString:@""]) {
+//        user.birthday = @"";
+//    } else {
         user.birthday = [JYUtil timeStringFromDate:[JYUtil dateFromString:user.birthday WithDateFormat:kDateFormatChina] WithDateFormat:kDateFormatShort];
-    }
-    
-    if (user.homeTown == nil || user.homeTown.length == 0) {
-        user.homeTown = @"未填写";
-    }
-    
-    if (user.height == nil || user.height == 0) {
-        user.height = @"未填写";
-    }
+//    }
+//    
+//    if (user.homeTown == nil || user.homeTown.length == 0) {
+//        user.homeTown = @"未填写";
+//    }
+//    
+//    if (user.height == nil || user.height == 0) {
+//        user.height = @"未填写";
+//    }
     
     NSDictionary *params = @{@"uuid":[JYUtil UUID] ? [JYUtil UUID] : @"",
                              @"nickName":user.nickName,

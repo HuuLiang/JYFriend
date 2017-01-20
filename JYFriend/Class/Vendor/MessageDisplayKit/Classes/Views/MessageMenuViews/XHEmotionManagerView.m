@@ -75,7 +75,7 @@
     
     
     if (!_emotionCollectionView) {
-        UICollectionView *emotionCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - kXHEmotionPageControlHeight - kXHEmotionSectionBarHeight) collectionViewLayout:[[XHEmotionCollectionViewFlowLayout alloc] init]];
+        UICollectionView *emotionCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) /*- kXHEmotionPageControlHeight - kXHEmotionSectionBarHeight*/) collectionViewLayout:[[XHEmotionCollectionViewFlowLayout alloc] init]];
         emotionCollectionView.backgroundColor = self.backgroundColor;
         [emotionCollectionView registerClass:[XHEmotionCollectionViewCell class] forCellWithReuseIdentifier:kXHEmotionCollectionViewCellIdentifier];
         emotionCollectionView.showsHorizontalScrollIndicator = NO;
@@ -88,25 +88,25 @@
         self.emotionCollectionView = emotionCollectionView;
     }
     
-    if (!_emotionPageControl) {
-        UIPageControl *emotionPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.emotionCollectionView.frame), CGRectGetWidth(self.bounds), kXHEmotionPageControlHeight)];
-        emotionPageControl.currentPageIndicatorTintColor = [UIColor colorWithWhite:0.471 alpha:1.000];
-        emotionPageControl.pageIndicatorTintColor = [UIColor colorWithWhite:0.678 alpha:1.000];
-        emotionPageControl.backgroundColor = self.backgroundColor;
-        emotionPageControl.hidesForSinglePage = YES;
-        emotionPageControl.defersCurrentPageDisplay = YES;
-        [self addSubview:emotionPageControl];
-        self.emotionPageControl = emotionPageControl;
-    }
+//    if (!_emotionPageControl) {
+//        UIPageControl *emotionPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.emotionCollectionView.frame), CGRectGetWidth(self.bounds), kXHEmotionPageControlHeight)];
+//        emotionPageControl.currentPageIndicatorTintColor = [UIColor colorWithWhite:0.471 alpha:1.000];
+//        emotionPageControl.pageIndicatorTintColor = [UIColor colorWithWhite:0.678 alpha:1.000];
+//        emotionPageControl.backgroundColor = self.backgroundColor;
+//        emotionPageControl.hidesForSinglePage = YES;
+//        emotionPageControl.defersCurrentPageDisplay = YES;
+//        [self addSubview:emotionPageControl];
+//        self.emotionPageControl = emotionPageControl;
+//    }
     
-    if (!_emotionSectionBar) {
-        XHEmotionSectionBar *emotionSectionBar = [[XHEmotionSectionBar alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.emotionPageControl.frame), CGRectGetWidth(self.bounds), kXHEmotionSectionBarHeight) showEmotionStoreButton:self.isShowEmotionStoreButton];
-        emotionSectionBar.delegate = self;
-        emotionSectionBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        emotionSectionBar.backgroundColor = [UIColor colorWithWhite:0.886 alpha:1.000];
-        [self addSubview:emotionSectionBar];
-        self.emotionSectionBar = emotionSectionBar;
-    }
+//    if (!_emotionSectionBar) {
+//        XHEmotionSectionBar *emotionSectionBar = [[XHEmotionSectionBar alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.emotionPageControl.frame), CGRectGetWidth(self.bounds), kXHEmotionSectionBarHeight) showEmotionStoreButton:self.isShowEmotionStoreButton];
+//        emotionSectionBar.delegate = self;
+//        emotionSectionBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//        emotionSectionBar.backgroundColor = [UIColor colorWithWhite:0.886 alpha:1.000];
+//        [self addSubview:emotionSectionBar];
+//        self.emotionSectionBar = emotionSectionBar;
+//    }
 }
 
 - (void)awakeFromNib {
@@ -157,7 +157,7 @@
 #pragma UICollectionView DataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

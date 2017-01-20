@@ -92,6 +92,17 @@ static NSString *const kDetailHeaderViewReusableIdentifier = @"DetailHeaderViewR
     @weakify(self);
     _nextButton = [[JYNextButton alloc] initWithTitle:@"下一步" action:^{
         @strongify(self);
+        if ([JYUser currentUser].birthday == nil) {
+            [[JYHudManager manager] showHudWithText:@"生日未填写"];
+            return ;
+        } else if ([JYUser currentUser].height == nil) {
+            [[JYHudManager manager] showHudWithText:@"身高未填写"];
+            return ;
+        } else if ([JYUser currentUser].homeTown == nil) {
+            [[JYHudManager manager] showHudWithText:@"家乡未填写"];
+            return ;
+        }
+        
         JYRegisterPhoneNumberViewController *phoneNumVC = [[JYRegisterPhoneNumberViewController alloc] initWithTitle:@"注册"];
         [self.navigationController pushViewController:phoneNumVC animated:YES];
     }];

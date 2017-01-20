@@ -15,6 +15,8 @@
 #import "JYMessageNoticeCell.h"
 #import "JYPaymentViewController.h"
 #import "JYNavigationController.h"
+#import "JYMyPhotoBigImageView.h"
+
 
 static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessageNoticeCellKeyName";
 //static NSString *const kJYFriendMessageVipCellKeyName       = @"kJYFriendMessageVipCellKeyName";
@@ -29,21 +31,50 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
 //配置gif
 - (void)configEmotions {
     NSMutableArray *emotionManagers = [NSMutableArray array];
-    for (NSInteger i = 0; i < 10; i ++) {
-        XHEmotionManager *emotionManager = [[XHEmotionManager alloc] init];
-        emotionManager.emotionName = [NSString stringWithFormat:@"表情%ld", (long)i];
-        NSMutableArray *emotions = [NSMutableArray array];
-        for (NSInteger j = 0; j < 55; j ++) {
-            XHEmotion *emotion = [[XHEmotion alloc] init];
-            NSString *imageName = [NSString stringWithFormat:@"e%ld.gif", (long)j + 100];
-            emotion.emotionPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"e%ld", (long)j+100] ofType:@"gif"];
-            emotion.emotionConverPhoto = [UIImage imageNamed:imageName];
-            [emotions addObject:emotion];
-        }
-        emotionManager.emotions = emotions;
-        
-        [emotionManagers addObject:emotionManager];
+//    for (NSInteger i = 0; i < 10; i ++) {
+//        XHEmotionManager *emotionManager = [[XHEmotionManager alloc] init];
+//        emotionManager.emotionName = [NSString stringWithFormat:@"表情%ld", (long)i];
+//        NSMutableArray *emotions = [NSMutableArray array];
+//        for (NSInteger j = 0; j < 55; j ++) {
+//            XHEmotion *emotion = [[XHEmotion alloc] init];
+//            NSString *imageName = [NSString stringWithFormat:@"e%ld.gif", (long)j + 100];
+//            emotion.emotionPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"e%ld", (long)j+100] ofType:@"gif"];
+//            emotion.emotionConverPhoto = [UIImage imageNamed:imageName];
+//            [emotions addObject:emotion];
+//        }
+//        emotionManager.emotions = emotions;
+//        
+//        [emotionManagers addObject:emotionManager];
+//    }
+    //加载小黄脸
+//    XHEmotionManager *smallEmotionManager = [[XHEmotionManager alloc] init];
+//    smallEmotionManager.emotionName = @"小黄脸";
+//    NSMutableArray *smallemotions = [NSMutableArray array];
+//    for (NSInteger j = 1; j <= 36; j ++) {
+//        XHEmotion *emotion = [[XHEmotion alloc] init];
+//        NSString *imageName = [NSString stringWithFormat:@"emoji_%ld.png", (long)j];
+//        emotion.emotionPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"emoji_%ld", (long)j] ofType:@"png"];
+//        emotion.emotionConverPhoto = [UIImage imageNamed:imageName];
+//        [smallemotions addObject:emotion];
+//    }
+//    smallEmotionManager.emotions = smallemotions;
+//    [emotionManagers addObject:smallEmotionManager];
+    
+    //加载大黄脸
+    XHEmotionManager *bigEmotionManager = [[XHEmotionManager alloc] init];
+    bigEmotionManager.emotionName = @"大黄脸";
+    NSMutableArray *bigEmotions = [NSMutableArray array];
+    for (NSInteger j = 0; j < 55; j ++) {
+        XHEmotion *emotion = [[XHEmotion alloc] init];
+        NSString *imageName = [NSString stringWithFormat:@"e%ld.gif", (long)j + 100];
+        emotion.emotionPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"e%ld", (long)j+100] ofType:@"gif"];
+        emotion.emotionConverPhoto = [UIImage imageNamed:imageName];
+        [bigEmotions addObject:emotion];
     }
+    bigEmotionManager.emotions = bigEmotions;
+    [emotionManagers addObject:bigEmotionManager];
+
+    
     self.emotionManagers = emotionManagers;
     self.emotionManagerView.isShowEmotionStoreButton = NO;
     
@@ -165,7 +196,9 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
  */
 - (void)multiMediaMessageDidSelectedOnMessage:(id <XHMessageModel>)message atIndexPath:(NSIndexPath *)indexPath onMessageTableViewCell:(XHMessageTableViewCell *)messageTableViewCell {
     if (message.messageMediaType == XHBubbleMessageMediaTypePhoto) {
-        //放大
+        //图片浏览
+        
+        [self photoBrowseWithImageGroup:@[message.photo] currentIndex:0 isNeedBlur:NO];
     } else if (message.messageMediaType == XHBubbleMessageMediaTypeVoice) {        
         message.isRead = YES;
         messageTableViewCell.messageBubbleView.voiceUnreadDotImageView.hidden = YES;
@@ -186,6 +219,33 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
         
     }
 }
+
+//图片浏览
+- (void)photoBrowseWithImageGroup:(NSArray *)imageGroup currentIndex:(NSInteger)currentIndex isNeedBlur:(BOOL)isNeedBlur{
+    JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:imageGroup frame:self.view.window.frame isLocalImage:NO isNeedBlur:isNeedBlur userId:nil];
+    bigImageView.backgroundColor = [UIColor whiteColor];
+    bigImageView.shouldAutoScroll = NO;
+    bigImageView.shouldInfiniteScroll = NO;
+    bigImageView.pageControlYAspect = 0.8;
+    bigImageView.currentIndex = currentIndex;
+    
+    @weakify(bigImageView);
+    bigImageView.action = ^(id sender){
+        @strongify(bigImageView);
+        [UIView animateWithDuration:0.5 animations:^{
+            bigImageView.alpha = 0;
+        } completion:^(BOOL finished) {
+            
+            [bigImageView removeFromSuperview];
+        }];
+    };
+    [self.view.window addSubview:bigImageView];
+    bigImageView.alpha = 0;
+    [UIView animateWithDuration:0.5 animations:^{
+        bigImageView.alpha = 1;
+    }];
+}
+
 
 #pragma mark - XHAudioPlayerHelper Delegate
 
@@ -272,6 +332,8 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
  */
 - (void)didSelecteEmotion:(XHEmotion *)emotion atIndexPath:(NSIndexPath *)indexPath {
     [self didSendEmotion:emotion.emotionPath fromSender:[JYUser currentUser].userId onDate:[NSDate date]];
+//    UIImage *image = [UIImage imageWithContentsOfFile:emotion.emotionPath];
+//    [self didSendPhoto:image fromSender:[JYUser currentUser].userId onDate:[NSDate date]];
 }
 
 - (XHEmotionManager *)emotionManagerForColumn:(NSInteger)column {

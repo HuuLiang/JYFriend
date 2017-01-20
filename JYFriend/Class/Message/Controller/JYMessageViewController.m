@@ -66,7 +66,6 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     [super viewWillAppear:animated];
     if (!currentUserSendingPhoto) {
         [self reloadChatMessages];
-        [self.messageTableView reloadData];
     } else {
         currentUserSendingPhoto = NO;
     }
@@ -108,9 +107,9 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
                                                 timestamp:date];
                 message.messageMediaType = XHBubbleMessageMediaTypeText;
             } else if (obj.messageType == JYMessageTypePhoto) {
-                message = [[XHMessage alloc] initWithPhoto:obj.photokey ? [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:obj.photokey] : nil
-                                              thumbnailUrl:obj.photokey ? nil : obj.messageContent
-                                            originPhotoUrl:obj.photokey ? nil : obj.messageContent
+                message = [[XHMessage alloc] initWithPhoto:obj.photokey.length > 0 ? [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:obj.photokey] : nil
+                                              thumbnailUrl:obj.photokey.length > 0 ? nil : obj.messageContent
+                                            originPhotoUrl:obj.photokey.length > 0 ? nil : obj.messageContent
                                                     sender:obj.sendUserId
                                                  timestamp:date];
             } else if (obj.messageType == JYMessageTypeVioce) {
@@ -238,7 +237,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     
     if (![JYUtil isVip]) {
         //判断是不是VIP 不是vip 判断是不是今天的第一条 是 发送  不是 发送VIP提示
-        if ([self isFirstMessageEveryDayWith:chatMessage]) {
+        if ([self isFirstMessageEveryDayWith:chatMessage] && (chatMessage.messageType == JYMessageTypeText || chatMessage.messageType == JYMessageTypeEmotion)) {
             [self sendMessageToServerWithInfo:chatMessage];
         } else {
             chatMessage.messageContent = @"对方是VIP，您无法给TA发送信息。点击开通VIP，与TA畅聊。";

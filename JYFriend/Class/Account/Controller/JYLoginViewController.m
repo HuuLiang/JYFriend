@@ -28,8 +28,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[JYUser currentUser] deleteObject];
-    
     _bgImgV = [[UIImageView alloc] init];
     _bgImgV.image = [UIImage imageNamed:@"login_background.jpg"];
     _bgImgV.contentMode = UIViewContentModeScaleToFill;

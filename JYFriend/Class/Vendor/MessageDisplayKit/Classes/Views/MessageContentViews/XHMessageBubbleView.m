@@ -104,7 +104,7 @@
 
 // 计算Emotion的高度
 + (CGSize)neededSizeForEmotion {
-    return CGSizeMake(100, 100);
+    return CGSizeMake(40, 40);
 }
 
 // 计算LocalPostion的高度
@@ -503,7 +503,7 @@
             if (currentType == XHBubbleMessageMediaTypeEmotion) {
                 CGRect emotionImageViewFrame = bubbleFrame;
                 emotionImageViewFrame.size = [XHMessageBubbleView neededSizeForEmotion];
-                self.emotionImageView.frame = emotionImageViewFrame;
+                self.emotionImageView.frame = CGRectMake(emotionImageViewFrame.origin.x, emotionImageViewFrame.origin.y+10, emotionImageViewFrame.size.width, emotionImageViewFrame.size.height);//emotionImageViewFrame;
             }
             break;
         }
