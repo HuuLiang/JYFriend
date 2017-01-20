@@ -48,16 +48,6 @@
     return _packView;
 }
 
-- (void)hiddenPackView{
-    [UIView animateWithDuration:0.5 animations:^{
-        _packView.frame = CGRectMake(0, -kScreenHeight, kScreenWidth, kScreenHeight);
-    }completion:^(BOOL finished) {
-        _packView.hidden = YES;
-    }];
-
-}
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -67,6 +57,10 @@
     if (self.view.superview) {
         [self.view removeFromSuperview];
     }
+    if (_packView && [currentViewCtroller.view.window.subviews containsObject:_packView]) {
+        [self showPopPackView];
+        return;
+    }
     if (![currentViewCtroller.childViewControllers containsObject:self]) {
         [currentViewCtroller addChildViewController:self];
         self.packView.price = 5;
@@ -75,13 +69,31 @@
         [currentViewCtroller.view.window addSubview:self.packView];
     }
     [self.packView willMoveToWindow:currentViewCtroller.view.window];
+    [self showPopPackView];
+    
+}
+
+
+- (void)showPopPackView {
+    @weakify(self);
+    self.packView.hidden = NO;
     [UIView animateWithDuration:0.5 animations:^{
-           self.packView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
-    } completion:^(BOOL finished) {
-        
+        @strongify(self);
+        self.packView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
+    }];
+
+}
+
+- (void)hiddenPackView{
+    [UIView animateWithDuration:0.5 animations:^{
+        _packView.frame = CGRectMake(0, -kScreenHeight, kScreenWidth, kScreenHeight);
+    }completion:^(BOOL finished) {
+        _packView.hidden = YES;
     }];
     
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

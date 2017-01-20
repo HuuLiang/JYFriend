@@ -91,11 +91,13 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
 @property (nonatomic)  BOOL isFollow;//是否打招呼
 
 @property (nonatomic) BOOL isSendPacket;//是否已经给该机器人发送过红包
+@property (nonatomic,retain) JYRedPackPopViewController *packePopView;
 @end
 
 @implementation JYDetailViewController
 QBDefineLazyPropertyInitialization(JYUserDetailModel, detailModel)
 QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
+QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
 
 - (instancetype)initWithUserId:(NSString *)userId time:(NSString *)time distance:(NSString *)distance nickName:(NSString *)nickName
 {
@@ -639,7 +641,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
                 if (self.isSendPacket || [JYUtil isVip]) {
                     [self photoBrowseWithImageGroup:[self photoImageGroupWithUserPhotosModel:self.detailModel.userPhoto] currentIndex:indexPath.item isNeedBlur:YES];
                 }else{
-                    [[[JYRedPackPopViewController alloc] init] popRedPackViewWithCurrentViewCtroller:self];
+                    [self.packePopView popRedPackViewWithCurrentViewCtroller:self];
                 }
             }
             
@@ -706,7 +708,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     bigImageView.scrollAction = ^(NSNumber *index){
         @strongify(self);
         if (index.integerValue >= 1 && isNeedBlur) {
-        [[[JYRedPackPopViewController alloc] init] popRedPackViewWithCurrentViewCtroller:self];
+        [self.packePopView popRedPackViewWithCurrentViewCtroller:self];
         }
     };
     
