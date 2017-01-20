@@ -241,7 +241,21 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == JYPayCellSectionNewDynamicCell) {
         JYPayNewDynamicCell *newDynamicCell = [tableView dequeueReusableCellWithIdentifier:kPayNewDynamicCellIdentifier forIndexPath:indexPath];
-        newDynamicCell.scrollContents = @[@"111",@"222",@"333",@"444",@"555",@"666",@"777"];
+        newDynamicCell.scrollContents = @[@"【一克拉的眼泪】获得100元话费",
+                                          @"【一抹蓝】获得30元话费",
+                                          @"【带你回家吧】获得30元话费",
+                                          @"【晓玉】获得100元话费",
+                                          @"【爱我老二】获得30元话费",
+                                          @"【不苦姐姐】获得30元话费",
+                                          @"【老实人】获得30元话费",
+                                          @"【有胆你就来】获得100元话费",
+                                          @"【曼曼】获得30元话费",
+                                          @"【憨板子】获得30元话费",
+                                          @"【温柔乡】获得30元话费",
+                                          @"【七日情人】获得100元话费",
+                                          @"【忘了我】获得30元话费",
+                                          @"【由衷】获得100元话费",
+                                          @"【天下共你】获得30元话费"];
         return newDynamicCell;
     } else if (indexPath.section == JYPayCellSectionTitleCell) {
         JYPayHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:kPayHeaderCellIdentifier forIndexPath:indexPath];
