@@ -113,7 +113,7 @@ QBDefineLazyPropertyInitialization(JYCharacterModel, characterModel)
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        CGFloat width = (kScreenWidth - kWidth(40)*2 - kWidth(98)*2)/3.;
+        CGFloat width = (kScreenWidth - kWidth(40)*2 - kWidth(90)*2)/3.;
         return CGSizeMake((long)width, (long)(width+kWidth(50)));
     } else {
         return CGSizeZero;
@@ -167,7 +167,7 @@ QBDefineLazyPropertyInitialization(JYCharacterModel, characterModel)
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     if (section == 0) {
-        return UIEdgeInsetsMake(0, kWidth(98), kWidth(10), kWidth(98));
+        return UIEdgeInsetsMake(0, kWidth(90), kWidth(10), kWidth(90));
     }
     return UIEdgeInsetsZero;
 }

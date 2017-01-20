@@ -308,12 +308,12 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
         _defaultIndexPath = indexPath;
     } else if (indexPath.section == JYPayCellSectionPayTypeCell) {
         JYVipType vipType = (JYVipType)_defaultIndexPath.row;
-//        if (indexPath.row == JYPayTypeRowWechat) {
-//            [self payForPaymentType:QBOrderPayTypeWeChatPay vipLevel:vipType];
-//        } else if (indexPath.row == JYPayTypeRowAlipay) {
-//            [self payForPaymentType:QBOrderPayTypeAlipay vipLevel:vipType];
-//        }
-        [self.updateVipModel updateUserVipInfo:vipType CompletionHandler:nil];
+        if (indexPath.row == JYPayTypeRowWechat) {
+            [self payForPaymentType:QBOrderPayTypeWeChatPay vipLevel:vipType];
+        } else if (indexPath.row == JYPayTypeRowAlipay) {
+            [self payForPaymentType:QBOrderPayTypeAlipay vipLevel:vipType];
+        }
+//        [self.updateVipModel updateUserVipInfo:vipType CompletionHandler:nil];
     }
 }
 

@@ -31,7 +31,9 @@
         [self.contentView addSubview:_titleLabel];
         {
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self.contentView);
+//            make.left.right.equalTo(self.contentView);
+            make.width.mas_equalTo(frame.size.width*1.2);
+            make.centerX.equalTo(self.contentView);
             make.bottom.equalTo(self.contentView);
             make.height.mas_equalTo(kWidth(26));
             

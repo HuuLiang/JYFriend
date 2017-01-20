@@ -115,8 +115,8 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
                 _avtarView.userImg = image;
             }
         }
-        _avtarView.follow = @"20";
-        _avtarView.fans = @"30";
+        _avtarView.follow = [NSString stringWithFormat:@"%ld",[JYUtil getInteractiveCountWithUserType:JYMineUsersTypeFollow]];
+        _avtarView.fans = [NSString stringWithFormat:@"%ld",[JYUtil getInteractiveCountWithUserType:JYMineUsersTypeFans]];
         _avtarView.nickName = [JYUser currentUser].nickName;
         _avtarView.signature = [JYUser currentUser].signature;
     }

@@ -24,6 +24,10 @@ static NSString *const kImageTokenCryptPassword   = @"wafei@#$%^%$^$wfsssfsf";
 static NSString *const kUserVipExpireTimeKeyName  = @"kUserVipExpireTimeKeyName";
 static NSString *const kCurrentUserIsSendPackey   = @"kcurrent_user_is_sendPacket_key";
 
+static NSString *const kInteractiveFollowKeyName  = @"kInteractiveFollowKeyName";
+static NSString *const kInteractiveFansKeyName  = @"kInteractiveFansKeyName";
+static NSString *const kInteractiveVisiterKeyName  = @"kInteractiveVisiterKeyName";
+
 @implementation JYUtil
 
 #pragma mark -- 注册激活
@@ -361,6 +365,34 @@ static NSString *const kCurrentUserIsSendPackey   = @"kcurrent_user_is_sendPacke
     [arr addObject:userId];
     [[NSUserDefaults standardUserDefaults] setObject:arr forKey:kCurrentUserIsSendPackey];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (void)setInteractiveCount:(NSInteger)count WithUserType:(JYMineUsersType)type {
+    NSString *keyName = nil;
+    if (type == JYMineUsersTypeFollow) {
+        keyName = kInteractiveFollowKeyName;
+    } else if (type == JYMineUsersTypeFans) {
+        keyName = kInteractiveFansKeyName;
+    } else if (type == JYMineUsersTypeVisitor) {
+        keyName = kInteractiveVisiterKeyName;
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@(count) forKey:keyName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (NSInteger)getInteractiveCountWithUserType:(JYMineUsersType)type {
+    NSString *keyName = nil;
+    if (type == JYMineUsersTypeFollow) {
+        keyName = kInteractiveFollowKeyName;
+    } else if (type == JYMineUsersTypeFans) {
+        keyName = kInteractiveFansKeyName;
+    } else if (type == JYMineUsersTypeVisitor) {
+        keyName = kInteractiveVisiterKeyName;
+    }
+    
+    NSInteger count = [[[NSUserDefaults standardUserDefaults] objectForKey:keyName] integerValue];
+    return count;
 }
 
 //+ (NSUInteger)currentTabPageIndex {

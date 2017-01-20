@@ -56,5 +56,6 @@
 + (void)setValue:(id)object withKeyName:(NSString *)keyName;
 + (NSString *)getStandByUrlPathWithOriginalUrl:(NSString *)url params:(NSDictionary *)params;
 
-
++ (void)setInteractiveCount:(NSInteger)count WithUserType:(JYMineUsersType)type;
++ (NSInteger)getInteractiveCountWithUserType:(JYMineUsersType)type;
 @end

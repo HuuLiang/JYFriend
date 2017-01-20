@@ -76,16 +76,16 @@ QBDefineLazyPropertyInitialization(JYInteractiveModel, interactiveModel)
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
 }
 
 - (void)loadData {
     @weakify(self);
-    [self.interactiveModel fetchInteractiveInfoWithType:usersType CompletionHandler:^(BOOL success, id obj) {
+    [self.interactiveModel fetchInteractiveInfoWithType:usersType CompletionHandler:^(BOOL success, NSArray * obj) {
         @strongify(self);
         if (success) {
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:obj];
+            [JYUtil setInteractiveCount:obj.count WithUserType:usersType];
         }
         [self->_layoutCollectionView reloadData];
         [self->_layoutCollectionView JY_endPullToRefresh];
