@@ -60,12 +60,13 @@ static NSString *const kAliPaySchemeUrl = @"JYFriendAliPayUrlScheme";
             [[JYActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *uuid) {
                 if (success) {
                     [JYUtil setRegisteredWithUUID:uuid];
-                    [[JYUserAccessModel sharedModel] requestUserAccess];
+//                    [[JYUserAccessModel sharedModel] requestUserAccess];
                 }
             }];
-        } else {
-            [[JYUserAccessModel sharedModel] requestUserAccess];
         }
+//        else {
+//            [[JYUserAccessModel sharedModel] requestUserAccess];
+//        }
         
         //网络错误提示
         if ([QBNetworkInfo sharedInfo].networkStatus <= QBNetworkStatusNotReachable && (![JYUtil isRegisteredUUID] || ![JYSystemConfigModel sharedModel].loaded)) {

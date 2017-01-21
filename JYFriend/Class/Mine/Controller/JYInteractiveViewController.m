@@ -113,7 +113,10 @@ QBDefineLazyPropertyInitialization(JYInteractiveModel, interactiveModel)
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    if (indexPath.item < self.dataSource.count) {
+        JYInteractiveUser *user = self.dataSource[indexPath.item];
+        [self pushDetailViewControllerWithUserId:user.userId time:nil distance:nil nickName:nil];
+    }
 }
 
 @end

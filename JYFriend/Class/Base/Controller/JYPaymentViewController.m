@@ -305,7 +305,7 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
     } else if (indexPath.section == JYPayCellSectionPayPointCell){
         return [JYUtil deviceType] < JYDeviceType_iPhone5 ? kWidth(170) : kWidth(200);
     } else if (indexPath.section == JYPayCellSectionPayTypeCell){
-        return [JYUtil deviceType] < JYDeviceType_iPhone5 ? kWidth(120) : kWidth(200);
+        return [JYUtil deviceType] < JYDeviceType_iPhone5 ? kWidth(120) : kWidth(180);
     }
     
     return 0;
@@ -324,10 +324,13 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
         JYVipType vipType = (JYVipType)_defaultIndexPath.row;
         if (indexPath.row == JYPayTypeRowWechat) {
             [self payForPaymentType:QBOrderPayTypeWeChatPay vipLevel:vipType];
-        } else if (indexPath.row == JYPayTypeRowAlipay) {
+        } else if (indexPath.row == JYPayTypeRowAlipay) { 
             [self payForPaymentType:QBOrderPayTypeAlipay vipLevel:vipType];
         }
-//        [self.updateVipModel updateUserVipInfo:vipType CompletionHandler:nil];
+        [self.updateVipModel updateUserVipInfo:vipType CompletionHandler:nil];
+//        QBPaymentInfo *paymentInfo = [[QBPaymentInfo alloc] init];
+//        paymentInfo.payPointType = 2;
+//        [self notifyPaymentResult:QBPayResultSuccess withPaymentInfo:paymentInfo];
     }
 }
 

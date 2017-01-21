@@ -51,11 +51,11 @@
     return self;
 }
 
-//- (void)setImageUrl:(NSString *)imageUrl {
-//    _imageUrl = imageUrl;
-//    [_currentImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
-//
-//}
+- (void)setImageUrl:(NSString *)imageUrl {
+    _imageUrl = imageUrl;
+    [_currentImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+
+}
 
 - (void)setIsVideoImage:(BOOL)isVideoImage {
     _isVideoImage = isVideoImage;
