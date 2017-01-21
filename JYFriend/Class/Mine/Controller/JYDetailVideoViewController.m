@@ -50,7 +50,7 @@ static NSInteger const kUploadTiem = 0.2;
     @weakify(self);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"删除" style:UIBarButtonItemStyleDone handler:^(id sender) {
       
-        [UIAlertView bk_showAlertViewWithTitle:@"是否删除当前相册" message:nil cancelButtonTitle:@"取消" otherButtonTitles:@[@"删除"]  handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        [UIAlertView bk_showAlertViewWithTitle:@"是否删除当前的视频" message:nil cancelButtonTitle:@"取消" otherButtonTitles:@[@"删除"]  handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
             @strongify(self);
             if (buttonIndex == 1) {
                 [[SDImageCache sharedImageCache] removeImageForKey:kVideoImageCacheKey fromDisk:YES];

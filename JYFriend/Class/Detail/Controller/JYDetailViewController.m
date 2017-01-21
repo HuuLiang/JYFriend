@@ -219,6 +219,7 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
     }];
     
     [_layoutCollectionView JY_triggerPullToRefresh];
+    [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(payResultSuccess) name:kPaidNotificationName object:nil];
     
 }
 /**
@@ -230,13 +231,8 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
     [JYUtil saveSendPacketUserId:self.detailModel.userInfo.userId];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(payResultSuccess) name:kPaidNotificationName object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+- (void)dealloc
+{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
 }
 
