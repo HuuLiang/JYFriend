@@ -55,6 +55,12 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     [self setXHShareMenu];
     [self setupPopMenuTitles];
     
+    shouldLoadVipNotice = NO;
+    
+    [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(changeLoadVipNotice) name:kPaidNotificationName object:nil];
+}
+
+- (void)changeLoadVipNotice {
     shouldLoadVipNotice = YES;
 }
 
@@ -69,6 +75,10 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     } else {
         currentUserSendingPhoto = NO;
     }
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPaidNotificationName object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

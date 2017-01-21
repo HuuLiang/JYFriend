@@ -19,7 +19,7 @@
 //#define JY_PAYMENT_RESERVE_DATA     [NSString stringWithFormat:@"%@$%@", JY_REST_APPID, JY_CHANNEL_NO]
 
 #define JY_BASE_URL                    @"http://mcps.dswtg.com"//@"http://iv.zcqcmj.com"
-#define JY_STANDBY_BASE_URL            @"http://sfs.dswtg.com/"
+#define JY_STANDBY_BASE_URL            @"http://sfs.dswtg.com"
 
 #define JY_ACTIVATION_URL              @"/mfwcps/jihuo.htm"                     //激活
 #define JY_ACCESS_URL                  @"/mfwcps/userAccess.htm"                //登录次数
