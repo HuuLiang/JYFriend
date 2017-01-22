@@ -215,7 +215,7 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
         }];
     }
     
-    self.bottomView.backgroundColor = [UIColor colorWithHexString:@"#E147a5"];
+//    self.bottomView.backgroundColor = [UIColor colorWithHexString:@"#E147a5"];
     @weakify(self);
     [_layoutCollectionView JY_addPullToRefreshWithHandler:^{
         @strongify(self);
@@ -251,12 +251,23 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
             self.isSendPacket = [JYUtil isSendPacketWithUserId:useDetai.user.userId];
             [self->_layoutCollectionView reloadData];
             [self->_layoutCollectionView JY_endPullToRefresh];
-            _bottomView.attentionBtnSelect = useDetai.follow;
+//            _bottomView.attentionBtnSelect = useDetai.follow;
             self.isGreet = useDetai.greet;
             self.navigationItem.title  = useDetai.user.nickName;
+            [self loadBottomViewWithIsFollow:useDetai.follow];
         }
     }];
     
+}
+
+- (void)loadBottomViewWithIsFollow:(BOOL)isFollow{
+    @weakify(self);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        @strongify(self);
+        self.bottomView.backgroundColor = [UIColor colorWithHexString:@"#E147a5"];
+            self.bottomView.attentionBtnSelect = isFollow;
+    });
+
 }
 
 - (void)didReceiveMemoryWarning {
