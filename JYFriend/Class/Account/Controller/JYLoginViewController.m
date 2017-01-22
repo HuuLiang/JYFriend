@@ -152,7 +152,8 @@
         [_registerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(_loginBtn.mas_right);
             make.top.equalTo(_loginBtn.mas_bottom).offset(kWidth(24));
-            make.height.mas_equalTo(kWidth(30));
+//            make.height.mas_equalTo(kWidth(30));
+            make.size.mas_equalTo(CGSizeMake(kWidth(150), kWidth(40)));
         }];
     }
     

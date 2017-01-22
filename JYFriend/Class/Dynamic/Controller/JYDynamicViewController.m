@@ -49,7 +49,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMsgModel)
     //预先加载所有缓存数据
     self.dataSource =  [NSMutableArray arrayWithArray:[JYDynamic allDynamics]];
     //如果缓存无数据 就一次加载较多的数据
-    if (self.dataSource.count == 0) {
+    if (self.dataSource.count == 0 && [JYUtil shouldRefreshContentWithKey:kJYDynamicRefreshTimeKeyName timeInterval:refreshTime]) {
         [self loadDataWithOffset:0 limit:10 isRefresh:YES];
     }
     
