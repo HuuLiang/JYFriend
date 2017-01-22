@@ -9,7 +9,9 @@
 #import "JYDredgeVipViewController.h"
 
 @interface JYDredgeVipViewController ()
-
+{
+    UILabel *_expireLabel;
+}
 @end
 
 @implementation JYDredgeVipViewController
@@ -30,6 +32,13 @@
     }else {
     [self creatTitleLabel];
     [self creatDredgeVipBtn];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (_expireLabel) {
+        _expireLabel.text = [NSString stringWithFormat:@"您的会员截止日期: %@",[JYUtil timeStringFromDate:[JYUtil expireDateTime] WithDateFormat:kDateFormatShort]];
     }
 }
 
@@ -105,13 +114,13 @@
     } forControlEvents:UIControlEventTouchUpInside];
     
     
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.textColor = kColor(@"#666666");
-    titleLabel.font = [UIFont systemFontOfSize:kWidth(30)];
-    titleLabel.text = [NSString stringWithFormat:@"您的会员截止日期: %@",[JYUtil timeStringFromDate:[JYUtil expireDateTime] WithDateFormat:kDateFormatShort]];
-    [view addSubview:titleLabel];
+    _expireLabel = [[UILabel alloc] init];
+    _expireLabel.textColor = kColor(@"#666666");
+    _expireLabel.font = [UIFont systemFontOfSize:kWidth(30)];
+    _expireLabel.text = [NSString stringWithFormat:@"您的会员截止日期: %@",[JYUtil timeStringFromDate:[JYUtil expireDateTime] WithDateFormat:kDateFormatShort]];
+    [view addSubview:_expireLabel];
     {
-        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        [_expireLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.mas_equalTo(view);
             make.left.mas_equalTo(view).mas_offset(kWidth(30));
             make.right.mas_equalTo(ktVipBtn.mas_left).mas_offset(kWidth(-30));

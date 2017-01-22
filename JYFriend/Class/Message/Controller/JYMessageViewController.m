@@ -147,7 +147,7 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             [self.messages addObject:message];
         }];
         
-        if (shouldLoadVipNotice && [JYUtil isVip]) {
+        if (shouldLoadVipNotice) {
             JYMessageModel *vipMessage = [[JYMessageModel alloc] init];
             vipMessage.messageTime = [JYUtil timeStringFromDate:[JYUtil currentDate] WithDateFormat:KDateFormatLong];
             vipMessage.messageType = JYMessageTypeVIP;

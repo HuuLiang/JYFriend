@@ -155,10 +155,18 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
         [[JYHudManager manager] showHudWithText:@"支付成功"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];
         
+        NSInteger months = 0;
+        if (paymentInfo.payPointType == JYVipTypeYear) {
+            months = 12;
+        } else if (paymentInfo.payPointType == JYVipTypeQuarter) {
+            months = 3;
+        } else if (paymentInfo.payPointType == JYVipTypeMonth) {
+            months = 1;
+        }
         
-//        if ([JYUtil currentVipLevel] == PPVipLevelVipA && ![PP_CHANNEL_NO isEqualToString:@"IOS_XIUXIU_0001"]) {
-//            [PPUtil showSpreadBanner];
-//        }
+        NSDate *expireDate = [[JYUtil expireDateTime] dateByAddingMonths:months];
+        [JYUtil setVipExpireTime:[JYUtil timeStringFromDate:expireDate WithDateFormat:kDateFormatShort]];
+        
         [self.updateVipModel updateUserVipInfo:paymentInfo.payPointType CompletionHandler:nil];
         
     } else if (result == QBPayResultCancelled) {
@@ -305,7 +313,7 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
     } else if (indexPath.section == JYPayCellSectionPayPointCell){
         return [JYUtil deviceType] < JYDeviceType_iPhone5 ? kWidth(170) : kWidth(200);
     } else if (indexPath.section == JYPayCellSectionPayTypeCell){
-        return [JYUtil deviceType] < JYDeviceType_iPhone5 ? kWidth(120) : kWidth(200);
+        return [JYUtil deviceType] < JYDeviceType_iPhone5 ? kWidth(120) : kWidth(180);
     }
     
     return 0;
@@ -324,10 +332,13 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
         JYVipType vipType = (JYVipType)_defaultIndexPath.row;
         if (indexPath.row == JYPayTypeRowWechat) {
             [self payForPaymentType:QBOrderPayTypeWeChatPay vipLevel:vipType];
-        } else if (indexPath.row == JYPayTypeRowAlipay) {
+        } else if (indexPath.row == JYPayTypeRowAlipay) { 
             [self payForPaymentType:QBOrderPayTypeAlipay vipLevel:vipType];
         }
 //        [self.updateVipModel updateUserVipInfo:vipType CompletionHandler:nil];
+//        QBPaymentInfo *paymentInfo = [[QBPaymentInfo alloc] init];
+//        paymentInfo.payPointType = 2;
+//        [self notifyPaymentResult:QBPayResultSuccess withPaymentInfo:paymentInfo];
     }
 }
 
