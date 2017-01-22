@@ -198,7 +198,7 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"充值称为会员"
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"充值成为会员"
                                                                                 style:UIBarButtonItemStylePlain
                                                                               handler:nil];
     [self.navigationItem.leftBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kWidth(36)],
