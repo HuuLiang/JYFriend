@@ -20,6 +20,8 @@
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithHexString:@"#666666"]];
 //    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:[LSJUtil isIpad] ? 21 : kWidth(36)],
 //                                                           NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#222222"]}];
+    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"navi_back"]];
+    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"navi_back"]];
     
     [UIViewController aspect_hookSelector:@selector(viewDidLoad)
                               withOptions:AspectPositionAfter
