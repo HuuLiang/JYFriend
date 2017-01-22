@@ -86,7 +86,15 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     
     JYMessageModel *lastMessage = [self.chatMessages lastObject];
     JYContactModel *contactModel = [JYContactModel findContactInfoWithUserId:self.user.userId];
-    if (contactModel && lastMessage.messageType < JYMessageTypeNormal) {
+    
+    if (contactModel == nil) {
+        contactModel = [[JYContactModel alloc] init];
+        contactModel.logoUrl = self.user.userImgKey;
+        contactModel.nickName = self.user.nickName;
+        contactModel.userId = self.user.userId;
+    }
+    
+    if (contactModel && lastMessage.messageType < JYMessageTypeNormal && lastMessage != nil) {
         if (![contactModel.recentTime isEqualToString:lastMessage.messageTime]) {
             //时间
             contactModel.recentTime = lastMessage.messageTime;
@@ -100,6 +108,8 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             }
             contactModel.unreadMessages = 0;
         }
+    } else {
+        contactModel.recentTime = [JYUtil timeStringFromDate:[JYUtil currentDate] WithDateFormat:KDateFormatLong];
     }
     [contactModel saveOrUpdate];
 }
