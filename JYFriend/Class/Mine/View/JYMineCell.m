@@ -15,6 +15,14 @@
     if (self) {
         self.textLabel.font = [UIFont systemFontOfSize:16.];
         self.textLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+        {
+            [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.contentView).mas_offset(kWidth(30));
+            make.top.bottom.mas_equalTo(self.contentView);
+            make.width.mas_equalTo(kWidth(88.));
+           }];
+    }
+        self.imageView.contentMode = UIViewContentModeLeft;
     }
     return self;
 }
