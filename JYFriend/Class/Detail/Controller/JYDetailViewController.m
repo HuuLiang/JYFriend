@@ -142,6 +142,10 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
             
             JYUser *user = [[JYUser alloc] init];
             JYUserInfoModel *userInfo =  self.detailModel.userInfo;
+            if (userInfo == nil) {
+                [[JYHudManager manager] showHudWithText:@"未获取到用户信息，请稍候"];
+                return;
+            }
             user.userId = userInfo.userId;
             user.nickName = userInfo.nickName;
             user.userImgKey = userInfo.logoUrl;
