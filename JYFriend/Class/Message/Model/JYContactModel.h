@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, JYContactUserType) {
 //最新消息内容
 @property (nonatomic) NSString *recentMessage;
 //最新消息时间
-@property (nonatomic) NSString *recentTime;
+@property (nonatomic) NSInteger recentTime;
 //未读消息条数
 @property (nonatomic) NSInteger unreadMessages;
 //是否置顶

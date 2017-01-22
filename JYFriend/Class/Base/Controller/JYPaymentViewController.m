@@ -109,7 +109,7 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
         price = [_redPackPrice integerValue];
     }
     
-//    price = 200;
+    price = 200;
     orderInfo.orderPrice = price;
     
     NSString *orderDescription = @"VIP";
@@ -149,8 +149,6 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
 
 - (void)notifyPaymentResult:(QBPayResult)result withPaymentInfo:(QBPaymentInfo *)paymentInfo {
     if (result == QBPayResultSuccess) {
-//        [JYUtil registerVip:paymentInfo.payPointType];
-//        [JYUtil ]
         [self hidePayment];
         [[JYHudManager manager] showHudWithText:@"支付成功"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];

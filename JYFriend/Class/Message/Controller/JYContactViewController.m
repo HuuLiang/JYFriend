@@ -53,6 +53,8 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
     [_tableVC reloadData];
     
     [self reloadContactsWithUIReload:NO];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadDataSource) name:KUpdateContactUnReadMessageNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,6 +64,12 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (!self.isMovingToParentViewController) {
+        [self reloadContactsWithUIReload:YES];
+    }
+}
+
+- (void)reloadDataSource {
+    if (self.isViewLoaded) {
         [self reloadContactsWithUIReload:YES];
     }
 }
@@ -139,7 +147,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
             };
             contactCell.userImgStr = contact.logoUrl;
             contactCell.nickNameStr = contact.nickName;
-            contactCell.recentTimeStr = contact.recentTime;
+            contactCell.recentTimeStr = [JYUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:contact.recentTime] WithDateFormat:KDateFormatLong];
             contactCell.recentMessage = contact.recentMessage;
             contactCell.isStick = contact.isStick;
             contactCell.unreadMessage = contact.unreadMessages;

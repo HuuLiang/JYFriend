@@ -96,7 +96,7 @@ static const NSUInteger kRollingTimeInterval = 5;
                 JYMessageModel *msgModel = [[JYMessageModel alloc] init];
                 msgModel.sendUserId = obj.userId;
                 msgModel.receiveUserId = [JYUser currentUser].userId;
-                msgModel.messageTime = [JYUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:obj.replyTime] WithDateFormat:@"yyyyMMddhhmmss"];
+                msgModel.messageTime = [JYUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:obj.replyTime] WithDateFormat:KDateFormatLong];
                 msgModel.messageType = [obj.msgType integerValue];
                 msgModel.messageContent = obj.msg;
                 [msgModel saveOrUpdate];
@@ -113,7 +113,7 @@ static const NSUInteger kRollingTimeInterval = 5;
                     obj.msg = [NSString stringWithFormat:@"%@向您发送了一张图片",obj.nickName];
                 }
                 contact.recentMessage = obj.msg;
-                contact.recentTime = [JYUtil timeStringFromDate:[JYUtil currentDate] WithDateFormat:@"yyyyMMdd HH:mm:ss"];
+                contact.recentTime = [[JYUtil currentDate] timeIntervalSince1970];
                 contact.unreadMessages += 1;
                 [contact saveOrUpdate];
                 //删除已经回复过的缓存

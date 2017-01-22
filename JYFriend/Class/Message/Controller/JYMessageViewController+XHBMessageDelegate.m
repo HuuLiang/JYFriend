@@ -197,9 +197,12 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
 - (void)multiMediaMessageDidSelectedOnMessage:(id <XHMessageModel>)message atIndexPath:(NSIndexPath *)indexPath onMessageTableViewCell:(XHMessageTableViewCell *)messageTableViewCell {
     if (message.messageMediaType == XHBubbleMessageMediaTypePhoto) {
         //图片浏览
-        
-        [self photoBrowseWithImageGroup:@[message.photo] currentIndex:0 isNeedBlur:NO];
-    } else if (message.messageMediaType == XHBubbleMessageMediaTypeVoice) {        
+        if (message.photo) {
+            [self photoBrowseWithImageGroup:@[message.photo] currentIndex:0 isNeedBlur:NO isLocalImage:YES];
+        } else {
+            [self photoBrowseWithImageGroup:@[message.originPhotoUrl] currentIndex:0 isNeedBlur:NO isLocalImage:NO];
+        }
+    } else if (message.messageMediaType == XHBubbleMessageMediaTypeVoice) {
         message.isRead = YES;
         messageTableViewCell.messageBubbleView.voiceUnreadDotImageView.hidden = YES;
         
@@ -221,8 +224,8 @@ static NSString *const kJYFriendMessageNoticeCellKeyName    = @"kJYFriendMessage
 }
 
 //图片浏览
-- (void)photoBrowseWithImageGroup:(NSArray *)imageGroup currentIndex:(NSInteger)currentIndex isNeedBlur:(BOOL)isNeedBlur{
-    JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:imageGroup frame:self.view.window.frame isLocalImage:YES isNeedBlur:isNeedBlur userId:nil];
+- (void)photoBrowseWithImageGroup:(NSArray *)imageGroup currentIndex:(NSInteger)currentIndex isNeedBlur:(BOOL)isNeedBlur isLocalImage:(BOOL)isLocalImage {
+    JYMyPhotoBigImageView *bigImageView = [[JYMyPhotoBigImageView alloc] initWithImageGroup:imageGroup frame:self.view.window.frame isLocalImage:isLocalImage isNeedBlur:isNeedBlur userId:nil];
     bigImageView.backgroundColor = [UIColor whiteColor];
     bigImageView.shouldAutoScroll = NO;
     bigImageView.shouldInfiniteScroll = NO;

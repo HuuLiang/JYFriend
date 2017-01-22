@@ -95,9 +95,9 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
     }
     
     if (contactModel && lastMessage.messageType < JYMessageTypeNormal && lastMessage != nil) {
-        if (![contactModel.recentTime isEqualToString:lastMessage.messageTime]) {
+        if (![[JYUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:contactModel.recentTime] WithDateFormat:KDateFormatLong] isEqualToString:lastMessage.messageTime]) {
             //时间
-            contactModel.recentTime = lastMessage.messageTime;
+            contactModel.recentTime = [[JYUtil dateFromString:lastMessage.messageTime WithDateFormat:KDateFormatLong] timeIntervalSince1970];
             //内容
             if (lastMessage.messageType == JYMessageTypeText) {
                 contactModel.recentMessage = lastMessage.messageContent;
@@ -106,11 +106,12 @@ QBDefineLazyPropertyInitialization(JYSendMessageModel, sendMessageModel)
             } else if (lastMessage.messageType == JYMessageTypeVioce) {
                 contactModel.recentMessage = @"[语音消息]";
             }
-            contactModel.unreadMessages = 0;
         }
     } else {
-        contactModel.recentTime = [JYUtil timeStringFromDate:[JYUtil currentDate] WithDateFormat:KDateFormatLong];
+        contactModel.recentTime = [[JYUtil currentDate] timeIntervalSince1970];
     }
+    contactModel.unreadMessages = 0;
+
     [contactModel saveOrUpdate];
 }
 

@@ -36,14 +36,14 @@
             contact.alreadyGreet = YES;
         }
         contact.recentMessage = @"对TA打了个招呼";
-        contact.recentTime = [JYUtil timeStringFromDate:[JYUtil currentDate] WithDateFormat:KDateFormatLong];
+        contact.recentTime = [[JYUtil currentDate] timeIntervalSince1970];
         [contact saveOrUpdate];
         
         //向聊天信息缓存中加入信息
         JYMessageModel *message = [[JYMessageModel alloc] init];
         message.sendUserId = [JYUser currentUser].userId;
         message.receiveUserId = obj.userId;
-        message.messageTime = contact.recentTime;
+        message.messageTime = [JYUtil timeStringFromDate:[NSDate dateWithTimeIntervalSince1970:contact.recentTime] WithDateFormat:KDateFormatLong];
         message.messageType = JYMessageTypeText;
         message.messageContent = contact.recentMessage;
         [message saveOrUpdate];
