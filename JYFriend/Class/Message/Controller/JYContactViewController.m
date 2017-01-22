@@ -142,8 +142,7 @@ QBDefineLazyPropertyInitialization(NSMutableArray, normalContacts)
             contactCell.touchUserImgVAction = ^(id obj) {
                 @strongify(self);
                 //用户详情
-                JYDetailViewController *detailVC = [[JYDetailViewController alloc] init];
-                [self.navigationController pushViewController:detailVC animated:YES];
+                [self pushDetailViewControllerWithUserId:contact.userId time:nil distance:nil nickName:contact.nickName];
             };
             contactCell.userImgStr = contact.logoUrl;
             contactCell.nickNameStr = contact.nickName;
