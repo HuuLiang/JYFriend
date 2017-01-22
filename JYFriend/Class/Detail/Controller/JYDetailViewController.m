@@ -88,7 +88,7 @@ typedef NS_ENUM(NSInteger , JYVideoItem) {
 @property (nonatomic,retain) JYDetailBottotmView *bottomView;//底部视图
 @property (nonatomic,retain) JYUserDetailModel *detailModel;
 @property (nonatomic,retain) JYSendMessageModel *sendMessageModel;
-@property (nonatomic)  BOOL isFollow;//是否打招呼
+@property (nonatomic)  BOOL isGreet;//是否打招呼
 
 @property (nonatomic) BOOL isSendPacket;//是否已经给该机器人发送过红包
 @property (nonatomic,retain) JYRedPackPopViewController *packePopView;
@@ -149,7 +149,7 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
             
         }else if ([btn.titleLabel.text isEqualToString:@"打招呼"]){
             messageType = JYUserCreateMessageTypeGreet;
-            if (self.isFollow) {
+            if (self.isGreet) {
                 [[JYHudManager manager] showHudWithText:@"已经向该用户打过招呼"];
                 return;
             }
@@ -163,7 +163,7 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
                     if (messageType == JYUserCreateMessageTypeFollow) {
                         [[JYHudManager manager] showHudWithText:@"关注成功"];
                     }else if (messageType == JYUserCreateMessageTypeGreet){
-                        self.isFollow = YES;
+                        self.isGreet = YES;
                         [[JYHudManager manager] showHudWithText:@"打招呼成功"];
                         //先向消息列表中加入选中的机器人的打招呼语言
                         JYCharacter *character = [[JYCharacter alloc] init];
@@ -248,7 +248,7 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
             [self->_layoutCollectionView reloadData];
             [self->_layoutCollectionView JY_endPullToRefresh];
             _bottomView.attentionBtnSelect = useDetai.greet;
-            self.isFollow = useDetai.follow;
+            self.isGreet = useDetai.greet;
             self.navigationItem.title  = useDetai.user.nickName;
         }
     }];

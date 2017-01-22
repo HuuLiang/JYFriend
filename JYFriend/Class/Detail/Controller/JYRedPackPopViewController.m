@@ -13,9 +13,11 @@
 
 @property (nonatomic,retain) JYRedPacketView *packView;
 @property (nonatomic,copy)QBAction payAction;
+@property (nonatomic,retain) JYPaymentViewController *paymentVC;
 @end
 
 @implementation JYRedPackPopViewController
+QBDefineLazyPropertyInitialization(JYPaymentViewController, paymentVC)
 
 - (JYRedPacketView *)packView {
     if (_packView) {
@@ -45,7 +47,7 @@
         baseModel.programType= @(2);
         baseModel.programId = @(234);
         baseModel.programLocation = @(45);
-        [[[JYPaymentViewController alloc] init] payForWithBaseModel:baseModel vipLevel:JYVipTypePacket price:500];
+        [self.paymentVC payForWithBaseModel:baseModel vipLevel:JYVipTypePacket price:500];
     };
     
     return _packView;

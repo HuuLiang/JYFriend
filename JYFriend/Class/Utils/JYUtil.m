@@ -358,7 +358,7 @@ static NSString *const kInteractiveVisiterKeyName  = @"kInteractiveVisiterKeyNam
 }
 //把发送过红包的用户缓存起来
 + (void)saveSendPacketUserId:(NSString *)userId {
-    if (!userId) {
+    if (userId == nil) {
         return;
     }
     NSMutableArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:kCurrentUserIsSendPackey];
