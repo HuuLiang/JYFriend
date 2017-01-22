@@ -251,7 +251,7 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
             self.isSendPacket = [JYUtil isSendPacketWithUserId:useDetai.user.userId];
             [self->_layoutCollectionView reloadData];
             [self->_layoutCollectionView JY_endPullToRefresh];
-            _bottomView.attentionBtnSelect = useDetai.greet;
+            _bottomView.attentionBtnSelect = useDetai.follow;
             self.isGreet = useDetai.greet;
             self.navigationItem.title  = useDetai.user.nickName;
         }
