@@ -12,7 +12,7 @@
 
 static NSString *const kVideoImageCacheKey = @"kvideoimage_cache_key";
 static NSString *const kLastUpdateVideoTiem = @"klastupdate_video_time";//上传时间
-static NSInteger const kUploadTiem = 0.2;
+static NSInteger const kUploadTiem = 30;//视频审核时间以分钟计
 
 @interface JYDetailVideoViewController ()<JYLocalPhotoUtilsDelegate>
 
@@ -34,7 +34,7 @@ static NSInteger const kUploadTiem = 0.2;
     NSInteger updateTime = [JYLocalVideoUtils dateTimeDifferenceWithStartTime:[[NSUserDefaults standardUserDefaults] objectForKey:kLastUpdateVideoTiem] endTime:[JYLocalVideoUtils currentTime]];
     
     if (image) {
-        if (updateTime >= kUploadTiem *D_MINUTE) {
+        if (updateTime >= kUploadTiem *60) {
             self.successVideoView.alpha = 1;
         }else{
             self.holdRZVideoView.alpha = 1;
