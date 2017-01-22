@@ -29,12 +29,12 @@
     if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.allowsEditing = allowsEditing;
-//        picker.editing = YES;
+
         picker.delegate = self;
         picker.sourceType = sourceType;
         if (isVideo) picker.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, nil];//判断是否是视频
         if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-            picker.mediaTypes =  [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+            picker.mediaTypes =  @[(NSString *)kUTTypeImage];//[UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
         }
         if ([JYUtil isIpad]) {
             dispatch_async(dispatch_get_main_queue(), ^{

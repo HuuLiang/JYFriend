@@ -279,7 +279,6 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
         imgEditorVC.delegate = self;
         [self presentViewController:imgEditorVC animated:YES completion:nil];
     }];
-    
 }
 
 @end
