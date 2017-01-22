@@ -25,11 +25,12 @@
                               withOptions:AspectPositionAfter
                                usingBlock:^(id<AspectInfo> aspectInfo){
                                    UIViewController *thisVC = [aspectInfo instance];
-                                   if (thisVC.navigationController.viewControllers.count > 1) {
-                                       thisVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"navi_back"] style:UIBarButtonItemStylePlain handler:^(id sender) {
-                                           [thisVC.navigationController popViewControllerAnimated:YES];
-                                       }];
-                                   }
+                                   thisVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"  " style:UIBarButtonItemStylePlain handler:nil];
+//                                   if (thisVC.navigationController.viewControllers.count > 1) {
+//                                       thisVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"navi_back"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+//                                           [thisVC.navigationController popViewControllerAnimated:YES];
+//                                       }];
+//                                   }
                                    thisVC.navigationController.navigationBar.translucent = NO;
                                } error:nil];
     

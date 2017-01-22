@@ -29,6 +29,10 @@
     return self;
 }
 
+- (void)dealloc {
+    QBLog(@"%@ alloc", [self class]);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
