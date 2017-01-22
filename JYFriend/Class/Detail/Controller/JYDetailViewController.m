@@ -249,6 +249,7 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
             [self->_layoutCollectionView JY_endPullToRefresh];
             _bottomView.attentionBtnSelect = useDetai.greet;
             self.isFollow = useDetai.follow;
+            self.navigationItem.title  = useDetai.user.nickName;
         }
     }];
     

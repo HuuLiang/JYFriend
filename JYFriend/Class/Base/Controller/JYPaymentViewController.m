@@ -109,7 +109,7 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
         price = [_redPackPrice integerValue];
     }
     
-    price = 200;
+//    price = 200;
     orderInfo.orderPrice = price;
     
     NSString *orderDescription = @"VIP";
