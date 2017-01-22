@@ -63,10 +63,9 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
     self.baseModel = baseModel;
     
     _redPackPrice = [NSNumber numberWithInteger:price];
-    [self payForPaymentType:QBOrderPayTypeAlipay vipLevel:vipType];//默认支付宝支付
+    [self payForPaymentType:QBOrderPayTypeWeChatPay vipLevel:vipType];//默认支付宝支付
 
 }
-
 
 - (void)payForPaymentType:(QBOrderPayType)orderPayType vipLevel:(JYVipType)vipType {
     @weakify(self);
