@@ -93,6 +93,9 @@ static NSString *const kInteractiveVisiterKeyName  = @"kInteractiveVisiterKeyNam
 
 + (NSDate *)expireDateTime {
     NSDate *expireDate = [[NSUserDefaults standardUserDefaults] objectForKey:kUserVipExpireTimeKeyName];
+    if (!expireDate) {
+        expireDate = [NSDate date];
+    }
     return expireDate;
 }
 
