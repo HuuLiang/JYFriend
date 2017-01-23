@@ -46,8 +46,8 @@
     [self checkNetworkInfoState];
     //友盟统计
     [self setupMobStatistics];
-    //检查用户注册
-    [self checkUserIsLogin];
+//    //检查用户注册
+//    [self checkUserIsLogin];
     
     return YES;
 }

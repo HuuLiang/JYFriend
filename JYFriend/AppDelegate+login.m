@@ -57,16 +57,10 @@ static NSString *const kAliPaySchemeUrl = @"JYFriendAliPayUrlScheme";
         
         //激活信息
         if (reachable && ![JYUtil isRegisteredUUID]) {
-            [[JYActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *uuid) {
-                if (success) {
-                    [JYUtil setRegisteredWithUUID:uuid];
-//                    [[JYUserAccessModel sharedModel] requestUserAccess];
-                }
-            }];
+            [self registerUUID];
+        } else {
+            [self checkUserIsLogin];
         }
-//        else {
-//            [[JYUserAccessModel sharedModel] requestUserAccess];
-//        }
         
         //网络错误提示
         if ([QBNetworkInfo sharedInfo].networkStatus <= QBNetworkStatusNotReachable && (![JYUtil isRegisteredUUID] || ![JYSystemConfigModel sharedModel].loaded)) {
@@ -128,19 +122,33 @@ static NSString *const kAliPaySchemeUrl = @"JYFriendAliPayUrlScheme";
     [MobClick startWithConfigure:UMConfigInstance];
 }
 
+- (void)registerUUID {
+    [[JYActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *uuid) {
+        if (success) {
+            [JYUtil setRegisteredWithUUID:uuid];
+            [self checkUserIsLogin];
+        }
+    }];
+
+}
+
 - (void)checkUserIsLogin {
     
-    if ([JYUtil isRegisteredUserId]) {
+//    if ([JYUtil isRegisteredUserId]) {
+//        self.window.rootViewController = self.rootViewController;
+//    } else {
+//        JYLoginViewController *loginVC = [[JYLoginViewController alloc] init];
+//        JYNavigationController *loginNav = [[JYNavigationController alloc] initWithRootViewController:loginVC];
+//        self.window.rootViewController = loginNav;
+//    }
+    
+    if ([JYUtil isRegisteredUUID]) {
         self.window.rootViewController = self.rootViewController;
-    } else {
-        JYLoginViewController *loginVC = [[JYLoginViewController alloc] init];
-        JYNavigationController *loginNav = [[JYNavigationController alloc] initWithRootViewController:loginVC];
-        self.window.rootViewController = loginNav;
     }
     
     [self.window makeKeyAndVisible];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userloginSuccess:) name:kUserLoginNotificationName object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userloginSuccess:) name:kUserLoginNotificationName object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(responseErrorInfo:) name:kQBNetworkingErrorNotification object:nil];
 }
@@ -161,14 +169,14 @@ static NSString *const kAliPaySchemeUrl = @"JYFriendAliPayUrlScheme";
     }];
 }
 
-- (void)userloginSuccess:(NSNotification *)notification {
-    if (self.window.rootViewController.presentedViewController == nil) {
-        [self.window.rootViewController presentViewController:self.rootViewController animated:YES completion:^{
-            self.window.rootViewController = self.rootViewController;
-            [self.window makeKeyAndVisible];
-        }];
-    }
-}
+//- (void)userloginSuccess:(NSNotification *)notification {
+//    if (self.window.rootViewController.presentedViewController == nil) {
+//        [self.window.rootViewController presentViewController:self.rootViewController animated:YES completion:^{
+//            self.window.rootViewController = self.rootViewController;
+//            [self.window makeKeyAndVisible];
+//        }];
+//    }
+//}
 
 - (void)responseErrorInfo:(NSNotification *)notification {
     

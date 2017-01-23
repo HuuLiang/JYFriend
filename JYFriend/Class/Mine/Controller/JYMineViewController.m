@@ -19,6 +19,8 @@
 #import "JYSystemHelperViewController.h"
 #import "JYUserImageCache.h"
 #import "JYLocalPhotoUtils.h"
+#import "JYLoginViewController.h"
+#import "JYNavigationController.h"
 
 typedef NS_ENUM(NSUInteger, JYMineSection) {
     JYMineFunctinSection,//功能分组
@@ -232,8 +234,14 @@ static NSString *const kHeaderViewReusableIdentifier = @"HeaderViewReusableIdent
         }
     } else if (indexPath.section == JYMineEditSection) {
         if (indexPath.row == JYMineEditUpdateRow) {
-            JYChangeUserInfoController *InfoVC = [[JYChangeUserInfoController alloc] init];
-            [self.navigationController pushViewController:InfoVC animated:YES];
+            if ([JYUtil isRegisteredUserId]) {
+                JYChangeUserInfoController *InfoVC = [[JYChangeUserInfoController alloc] init];
+                [self.navigationController pushViewController:InfoVC animated:YES];
+            } else {
+                JYLoginViewController *loginVC = [[JYLoginViewController alloc] init];
+                JYNavigationController *loginNav = [[JYNavigationController alloc] initWithRootViewController:loginVC];
+                [self.navigationController presentViewController:loginNav animated:YES completion:nil];
+            }
         }
     }
 }
