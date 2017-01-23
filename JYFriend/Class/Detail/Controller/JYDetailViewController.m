@@ -20,6 +20,7 @@
 #import "JYUserCreateMessageModel.h"
 #import "JYContactModel.h"
 #import "JYCharacterModel.h"
+#import <QBPaymentInfo.h>
 
 static NSString *const kPhotoCollectionViewCellIdentifier = @"PhotoCollectionViewCell_Identifier";
 static NSString *const kNewDynamicCellIdentifier = @"newDynamicCell_Identifier";
@@ -223,16 +224,19 @@ QBDefineLazyPropertyInitialization(JYRedPackPopViewController, packePopView)
     }];
     
     [_layoutCollectionView JY_triggerPullToRefresh];
-    [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(payResultSuccess) name:kPaidNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(payResultSuccess:) name:kPaidNotificationName object:nil];
     
 }
 /**
  支付完成刷新UI
  */
-- (void)payResultSuccess {
+- (void)payResultSuccess:(NSNotification *)notifation {
     self.isSendPacket = YES;
     [_layoutCollectionView reloadData];
-    [JYUtil saveSendPacketUserId:self.detailModel.userInfo.userId];
+    QBPaymentInfo *paymentInfo = notifation.object;
+    if (paymentInfo.payPointType == 3) {
+        [JYUtil saveSendPacketUserId:self.detailModel.userInfo.userId];
+    }
 }
 
 - (void)dealloc

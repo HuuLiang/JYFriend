@@ -361,7 +361,7 @@ static NSString *const kInteractiveVisiterKeyName  = @"kInteractiveVisiterKeyNam
     if (userId == nil) {
         return;
     }
-    NSMutableArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:kCurrentUserIsSendPackey];
+    NSMutableArray *arr = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:kCurrentUserIsSendPackey]];
     if (!arr) {
         arr = [NSMutableArray array];
     }

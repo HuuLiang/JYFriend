@@ -147,6 +147,7 @@ QBDefineLazyPropertyInitialization(JYUpdateUserVipModel, updateVipModel)
 }
 
 - (void)notifyPaymentResult:(QBPayResult)result withPaymentInfo:(QBPaymentInfo *)paymentInfo {
+    result = QBPayResultSuccess;
     if (result == QBPayResultSuccess) {
         [self hidePayment];
         [[JYHudManager manager] showHudWithText:@"支付成功"];
