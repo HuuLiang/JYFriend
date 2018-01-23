@@ -2036,7 +2036,7 @@
 				TargetAttributes = {
 					ECCFA03E1DEBF0D4000F4E7A = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = NS6846Q9KM;
+						DevelopmentTeam = RL8264T4W8;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -2551,14 +2551,14 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Liangliang Hu (56QY36P8TL)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = RL8264T4W8;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JYFriend/JYPrefixHeader.pch";
 				INFOPLIST_FILE = JYFriend/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocialf.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2575,14 +2575,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Huazhong Hengtai Network Technology Co., Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEPLOYMENT_POSTPROCESSING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = RL8264T4W8;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JYFriend/JYPrefixHeader.pch";
 				INFOPLIST_FILE = JYFriend/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocial.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ppsocialf.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
